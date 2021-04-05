@@ -27,6 +27,8 @@ public class CheatClient {
         Cheats.put("superjump", new SuperJump());
         Cheats.put("antiitemdrop", new AntiItemDrop());
         Cheats.put("noweather", new NoWeather());
+        Cheats.put("nofall", new NoFall());
+        Cheats.put("camflight", new CamFlight());
     }
 
     public static void triggerAllEvent(String eventName, Object[] args) {

@@ -1,68 +1,69 @@
 package net.como.client.cheats;
 
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import net.como.client.CheatClient;
 import net.como.client.structures.Cheat;
-import net.fabricmc.loader.util.sat4j.core.Vec;
+import net.como.client.structures.Setting;
+
 import net.minecraft.util.math.Vec3d;
 
 public class SpeedHack extends Cheat {
     public SpeedHack() {
         super("Speed");
-    }
 
-    // Vec3d targetVelocity = new Vec3d(2, 1, 2);
-    double acceleration = 1.1;
-    double maxSpeed = 2;
+        this.settings.addSetting(new Setting<Double>("Acceleration", 2.2d));
+        this.settings.addSetting(new Setting<Double>("MaxSpeed", 2d));
+    }
 
     private double getSpeed(Vec3d vec) {
         return vec.multiply(1, 0, 1).distanceTo(new Vec3d(0, 0, 0));
     }
 
-    private double getSign(double a) {
-        if (a == 0) return 0;
-        return a < 0 ? -1 : 1;
-    }
-
     private Vec3d getNewVelocity() {
-        Vec3d rotVector         = CheatClient.me().getRotationVector();
-        Vec3d actualVelocity    = CheatClient.me().getVelocity();
-        Vec3d fasterVelocity    = new Vec3d(0, 0, 0);
+        // Get the current velocities and vectors.
+        Vec3d rotVector = CheatClient.me().getRotationVector();
+        Vec3d actualVelocity = CheatClient.me().getVelocity();
+
+        // Initialise the faster velocity (i.e. the result)
+        Vec3d fasterVelocity = new Vec3d(0, 0, 0);
+
+        // Get the settings
+        Double maxSpeed = (Double) this.settings.getSetting("MaxSpeed").value;
+        Double acceleration = (Double) this.settings.getSetting("Acceleration").value;
 
         // Cannot get anything nice to work for the life of me so...
         if (CheatClient.me().input.pressingLeft || CheatClient.me().input.pressingRight) {
-            // I cannot be bothered to figure out how to do the left/right movements like the other method so.
-            fasterVelocity = CheatClient.me().isOnGround() ? actualVelocity.multiply(2, 1, 2) : actualVelocity;
-
-            return this.getSpeed(fasterVelocity) > this.maxSpeed ? actualVelocity : fasterVelocity;
+            
+            // Accelerate the localplayer
+            fasterVelocity = CheatClient.me().isOnGround() ? actualVelocity.multiply(acceleration, 1, acceleration) : actualVelocity;
         } else if (CheatClient.me().input.pressingForward || CheatClient.me().input.pressingBack) {
+
+            // If we are trying to go backwards, just invert the velocity.
             if (CheatClient.me().input.pressingBack) rotVector = rotVector.multiply(-1, -1, -1);
 
+            // Multiply out the rotation vector with the maximum speed but make the horizontal component zero.
             fasterVelocity = rotVector.multiply(maxSpeed, 0, maxSpeed);
+
+            // Add back the horizontal component back to the velocity.
             fasterVelocity = fasterVelocity.add(0, actualVelocity.y, 0);
         }
 
-        return this.getSpeed(fasterVelocity) > this.maxSpeed ? actualVelocity : fasterVelocity;
+        // TODO maybe optimise this by doing this check before the maths?
+        // If we are going to fast, make sure that we ignore what we just did and return the current velocity since we cannot go quicker than that one.
+        return this.getSpeed(fasterVelocity) > maxSpeed ? actualVelocity : fasterVelocity;
     }
 
     @Override
     public void recieveEvent(String eventName, Object[] args) {
-        if (!this.isEnabled()) return;
-
         switch(eventName) {
             case "onMovementPacket": {
-                CallbackInfo ci = (CallbackInfo)args[0];
-
-                if (CheatClient.me().isOnGround()) {
-                    Vec3d newVelocity = this.getNewVelocity();
-                    CheatClient.me().setVelocity(newVelocity);
-
-                    ci.cancel();
-                }
+                // Only do it while we are on the ground else we are basically just flying.
+                if (CheatClient.me().isOnGround() || CheatClient.me().isTouchingWater())
+                    CheatClient.me().setVelocity(this.getNewVelocity());
+                
                 break;
             }
             case "onTick": {
+                // If we are not moving, don't move ;)
                 if (!(CheatClient.me().input.pressingForward || CheatClient.me().input.pressingBack || CheatClient.me().input.pressingLeft || CheatClient.me().input.pressingRight)) {
                     // Still... but not flying...
                     Vec3d curr = CheatClient.me().getVelocity();

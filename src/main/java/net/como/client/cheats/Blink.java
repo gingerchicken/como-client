@@ -14,9 +14,9 @@ public class Blink extends Cheat {
     public void recieveEvent(String eventName, Object[] args) {
         switch (eventName) {
             case "onMovementPacket": {
-                if (!this.isEnabled()) break;
-
                 CallbackInfo ci = (CallbackInfo)args[0];
+
+                // Just don't send movement packets.
                 ci.cancel();
             }
         }

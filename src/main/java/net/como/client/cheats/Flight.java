@@ -11,6 +11,7 @@ public class Flight extends Cheat {
 
     public boolean defaultFlight = false;
 
+    // TODO Add this on spawn?
     @Override
     public void activate() {
         CheatClient.me().abilities.allowFlying = true;

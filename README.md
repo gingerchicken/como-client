@@ -19,6 +19,7 @@ I will make sure to make more as time goes on but these are the current modules 
 - Speed
 - Superjump
 - HideTotem/SmallTotem
+- NoFall
 
 ### Thanks
 While developing this I was aided by the source code of the [Wurst Project](https://github.com/Wurst-Imperium/Wurst7), since this was my first ever mod for Minecraft that I had made, I was quite unfamiliar with the way the APIs work etc. therefore, by looking at Wurst's source code, I could quickly understand the API and start making this mod.
