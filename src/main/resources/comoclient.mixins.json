@@ -11,7 +11,8 @@
     "ChatHudMixin",
     "HeldItemRendererMixin",
     "WorldRendererMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "BossBarHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1
