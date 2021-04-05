@@ -15,12 +15,13 @@ public class AntiChatbot extends Cheat {
     }
 
     // I tried to think of the rubbish that is spammed in 2b2t chat
-    private int minLength             = 3;
+    private int minLength = 3;
 
     // Potential Future settings
-    private String[] bannedKeywords   = new String[]{"discord", ".xyz", ".org", ".com", "shop", "kits", "free"};
-    private boolean blockUpperCase    = true;
-    private float maxUpperPercentage  = 0.5f;
+    // TODO make these settings
+    private String[] bannedKeywords = new String[]{"discord", ".xyz", ".org", ".com", "shop", "kits", "free"};
+    private boolean blockUpperCase = true;
+    private float maxUpperPercentage = 0.5f;
 
     private HashMap<String, HashMap<String, Integer>> playerMessageFreq = new HashMap<String, HashMap<String, Integer>>();
     private HashMap<String, Integer> playerMessageTotals = new HashMap<String, Integer>();
@@ -47,11 +48,8 @@ public class AntiChatbot extends Cheat {
 
                 Integer totalUniqueClasses = freqs.size();
     
+                // TODO maybe mark the account as a bot?
                 float probOfNewMessage = (float)totalUniqueClasses/(float)totalMessages;
-
-                System.out.println(totalMessages);
-                System.out.println(probOfNewMessage);
-
                 if (probOfNewMessage < 0.25f) return true;
             }
         }
@@ -99,7 +97,7 @@ public class AntiChatbot extends Cheat {
                 if (this.isBot(rawMessage)) {
                     System.out.println("(BLOCKED MESSAGE) " + rawMessage);
 
-                    ci.cancel();   
+                    ci.cancel();
                 }
             }
         }

@@ -10,8 +10,6 @@ package net.como.client.utils;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.CheatClient;
-import net.como.client.structures.Cheat;
-import net.fabricmc.loader.util.sat4j.core.Vec;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.entity.Entity;
@@ -21,10 +19,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.chunk.Chunk;
 
-public enum RenderUtils
-{
-	;
-	
+public class RenderUtils {
 	private static final Box DEFAULT_AABB = new Box(0, 0, 0, 1, 1, 1);
 	
 	public static void scissorBox(int startX, int startY, int endX, int endY)

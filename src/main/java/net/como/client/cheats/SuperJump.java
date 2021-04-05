@@ -4,13 +4,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.CheatClient;
 import net.como.client.structures.Cheat;
+import net.como.client.structures.Setting;
 
 public class SuperJump extends Cheat {
     public SuperJump() {
         super("Super Jump");
-    }
 
-    private double upwardVelocity = 2;
+        this.settings.addSetting(new Setting<Double>("UpwardSpeed", 2d));
+    }
 
     @Override
     public void recieveEvent(String eventName, Object[] args) {
@@ -19,9 +20,13 @@ public class SuperJump extends Cheat {
         switch(eventName) {
             case "onJump": {
                 CallbackInfo ci = (CallbackInfo)args[0];
-
                 ci.cancel();
-                CheatClient.me().addVelocity(0, this.upwardVelocity*2, 0);
+
+                // Get the upward speed.
+                Double upwardSpeed = (Double)this.settings.getSetting("UpwardSpeed").value;
+
+                // Add the new speed.
+                CheatClient.me().addVelocity(0, upwardSpeed, 0);
             }
         }
     }

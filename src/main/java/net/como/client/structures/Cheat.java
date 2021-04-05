@@ -1,13 +1,12 @@
 package net.como.client.structures;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.como.client.CheatClient;
 
 public class Cheat {
     private String name;
     private boolean enabled;
+
+    public Settings settings = new Settings();
 
     public String description;
     
