@@ -10,7 +10,7 @@ public class SuperJump extends Cheat {
     public SuperJump() {
         super("Super Jump");
 
-        this.settings.addSetting(new Setting<Double>("UpwardSpeed", 2d));
+        this.settings.addSetting(new Setting("UpwardSpeed", 2d));
     }
 
     @Override

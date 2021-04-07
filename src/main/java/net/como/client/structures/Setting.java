@@ -1,12 +1,12 @@
 package net.como.client.structures;
 
-public class Setting<T> {
-    public final T defaultValue;
-    public T value;
+public class Setting {
+    public final Object defaultValue;
+    public Object value;
 
     public final String name;
 
-    public Setting(String name, T defaultValue) {
+    public Setting(String name, Object defaultValue) {
         this.defaultValue = defaultValue;
         this.name = name;
 

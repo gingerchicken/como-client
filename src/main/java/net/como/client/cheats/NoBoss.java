@@ -10,6 +10,7 @@ public class NoBoss extends Cheat {
         super("NoBoss");
     }
 
+    @SuppressWarnings("unchecked")
     public void recieveEvent(String eventName, Object[] args) {
         switch (eventName) {
             case "onBossBarHudRender": {

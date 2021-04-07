@@ -14,11 +14,11 @@ public class ElytraFlight extends Cheat {
     public ElytraFlight() {
         super("Elytra Flight");
 
-        this.settings.addSetting(new Setting<Double>("MaxSpeed", 10d));
+        this.settings.addSetting(new Setting("MaxSpeed", 10d));
         // In theory, this is not the acceleration but rather a ratio between the old velocity and the new velocity - but I guess it is quicker to call it acceleration :P
-        this.settings.addSetting(new Setting<Double>("Acceleration", 1.1d));
+        this.settings.addSetting(new Setting("Acceleration", 1.1d));
         
-        this.settings.addSetting(new Setting<Boolean>("LegitMode", false));
+        this.settings.addSetting(new Setting("LegitMode", false));
     }
 
     private void moveLegitMode() {

@@ -9,7 +9,7 @@ public class CamFlight extends Cheat {
     public CamFlight() {
         super("Camera Flight");
 
-        settings.addSetting(new Setting<Double>("Speed", 5d));
+        settings.addSetting(new Setting("Speed", 5d));
     }
 
     public void recieveEvent(String eventName, Object[] args) {
