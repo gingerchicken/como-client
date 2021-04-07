@@ -21,8 +21,6 @@ public class TotemHide extends Cheat {
     
     @Override
     public void recieveEvent(String eventName, Object[] args) {
-        if (!this.isEnabled()) return;
-
         switch (eventName) {
             case "onRenderItem": {
                 // Get the entity arguemnt
@@ -36,6 +34,8 @@ public class TotemHide extends Cheat {
                 ModelTransformation.Mode renderMode  = (ModelTransformation.Mode)args[2];
                 MatrixStack matrices                 = (MatrixStack)args[4];
                 CallbackInfo ci                      = (CallbackInfo)args[7];
+
+                // LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci
 
                 // Only do it if it is in the lefthand first person
                 if (renderMode == ModelTransformation.Mode.FIRST_PERSON_LEFT_HAND) {
