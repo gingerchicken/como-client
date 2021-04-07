@@ -10,8 +10,8 @@ public class SpeedHack extends Cheat {
     public SpeedHack() {
         super("Speed");
 
-        this.settings.addSetting(new Setting<Double>("Acceleration", 2.2d));
-        this.settings.addSetting(new Setting<Double>("MaxSpeed", 2d));
+        this.settings.addSetting(new Setting("Acceleration", 2.2d));
+        this.settings.addSetting(new Setting("MaxSpeed", 2d));
     }
 
     private double getSpeed(Vec3d vec) {

@@ -17,7 +17,8 @@ public class EntityESP extends Cheat {
     public EntityESP() {
         super("Entity ESP");
 
-        this.settings.addSetting(new Setting<Double>("BoxPadding", 0d));
+        this.settings.addSetting(new Setting("BoundingBox", true));
+        this.settings.addSetting(new Setting("BoxPadding", 0d));
     }
 
     private int mobBox;
@@ -46,6 +47,7 @@ public class EntityESP extends Cheat {
         switch (eventName) {
             // TODO maybe this won't render entities if they are not rendered?
             case "onRenderEntity": {
+                // Get Arguments
                 Entity entity   = (Entity)args[0];
                 float tickDelta = (float) args[4];
 
@@ -66,8 +68,13 @@ public class EntityESP extends Cheat {
                 int regionX = (camPos.getX() >> 9) * 512;
                 int regionZ = (camPos.getZ() >> 9) * 512;
                 
-                this.renderBox(entity, tickDelta, regionX, regionZ);
+                // Get settings
+                Boolean drawBoundingBox = (Boolean)this.settings.getSetting("BoundingBox").value;
 
+                // Check the settings
+                if (drawBoundingBox) this.renderBox(entity, tickDelta, regionX, regionZ);
+
+                // Pop the stack
                 GL11.glPopMatrix();
                 
                 // GL resets
