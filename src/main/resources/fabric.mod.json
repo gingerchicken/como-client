@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "comoclient",
+  "id": "como-client",
   "version": "${version}",
 
   "name": "Como Client",
-  "description": "Based Mod.",
+  "description": "A Minecraft \"hacked client\" in the form of a Fabric mod developed with the aim of giving its users an advantage in most (if not all) situations (but since I made it it probably won't to be honest...), while still aiming to be as simplistic as possible.",
   "authors": [
-    "HowITsDone"
+    "gingerchicken"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://example.com/pls-no-bully-i-dont-own-a-domain",
+    "sources": "https://github.com/gingerchicken/como-client"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/comoclient/icon.png",
+  "license": "GNU-3.0",
+  "icon": "assets/como-client/icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -23,7 +23,7 @@
     ]
   },
   "mixins": [
-    "comoclient.mixins.json"
+    "como-client.mixins.json"
   ],
 
   "depends": {
