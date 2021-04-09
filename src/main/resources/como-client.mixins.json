@@ -12,7 +12,11 @@
     "HeldItemRendererMixin",
     "WorldRendererMixin",
     "PlayerEntityMixin",
-    "BossBarHudMixin"
+    "BossBarHudMixin",
+    "BlockEntityRenderDispatcherMixin",
+    "BlockModelRendererMixin",
+    "BlockMixin",
+    "AbstractBlockStateMixin"
   ],
   "injectors": {
     "defaultRequire": 1
