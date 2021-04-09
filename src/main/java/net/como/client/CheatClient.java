@@ -31,6 +31,8 @@ public class CheatClient {
         Cheats.put("camflight", new CamFlight());
         Cheats.put("noboss", new NoBoss());
         Cheats.put("elytraflight", new ElytraFlight());
+        Cheats.put("xray", new XRay());
+        Cheats.put("noenchantbook", new NoEnchantmentBook());
     }
 
     public static void triggerAllEvent(String eventName, Object[] args) {
