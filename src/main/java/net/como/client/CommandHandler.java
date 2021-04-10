@@ -66,6 +66,24 @@ public class CommandHandler {
                                 }
                                 
                                 setting.value = realValue;
+
+                                return 0;
+                            }
+                            case "java.lang.Integer": {
+                                Integer realValue = null;
+
+                                try {
+                                    realValue = Integer.valueOf(value);
+                                } catch (Exception e) { }
+
+                                if (realValue == null) {
+                                    CheatClient.displayChatMessage(String.format("%sInvalid Value: recieved NaN as a parameter", ChatUtils.RED));
+                                    return 1;
+                                }
+                                
+                                setting.value = realValue;
+
+                                return 0;
                             }
 
                         }
