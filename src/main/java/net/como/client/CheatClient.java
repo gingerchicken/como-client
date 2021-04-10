@@ -33,6 +33,7 @@ public class CheatClient {
         Cheats.put("elytraflight", new ElytraFlight());
         Cheats.put("xray", new XRay());
         Cheats.put("noenchantbook", new NoEnchantmentBook());
+        Cheats.put("nobreak", new NoBreak());
     }
 
     public static void triggerAllEvent(String eventName, Object[] args) {

@@ -16,7 +16,8 @@
     "BlockEntityRenderDispatcherMixin",
     "BlockModelRendererMixin",
     "BlockMixin",
-    "AbstractBlockStateMixin"
+    "AbstractBlockStateMixin",
+    "ClientPlayNetworkHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
