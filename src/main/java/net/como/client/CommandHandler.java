@@ -1,5 +1,7 @@
 package net.como.client;
 
+import java.util.HashMap;
+
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.structures.Cheat;
@@ -9,7 +11,7 @@ import net.como.client.utils.*;
 public class CommandHandler {
     public String delimiter;
     public int handle(String rawMessage, CallbackInfo ci) {
-        // TODO Just replace this tbf - make a better command system.
+        // TODO Just replace this tbf - make a better command system. (added issue!)
 
         // -1 unhandled but not command
         if (!rawMessage.startsWith(this.delimiter)) return -1;
@@ -46,7 +48,6 @@ public class CommandHandler {
                         switch (setting.value.getClass().getName()) {
                             case "java.lang.Boolean": {
                                 boolean realValue = value.equals("true");
-                                // System.out.println(value.equals("true"));
                                 
                                 setting.value = realValue;
                                 System.out.println(setting.value);
@@ -85,8 +86,38 @@ public class CommandHandler {
 
                                 return 0;
                             }
+                            case "java.util.HashMap": {
+                                // TODO Just redo this entire file but like I am going to assume that it is <String, Boolean>
+                                // I created an issue regarding the rubbish that is this file
+                                HashMap<String, Boolean> map = (HashMap<String, Boolean>)setting.value;
 
+                                if (args.length <= 4) {
+                                    CheatClient.displayChatMessage(String.format("%sInvalid Value: expected [action key], only recieved action", ChatUtils.RED));
+                                    return 1;
+                                }
+
+                                String action = value.toLowerCase();
+                                String key = args[4];
+
+                                switch (action) {
+                                    case "add": {
+                                        map.put(key, true);
+
+                                        break;
+                                    }
+                                    case "remove": {
+                                        map.remove(key);
+
+                                        break;
+                                    }
+                                }
+
+                                setting.value = map;
+                                return 0;
+                                
+                            }
                         }
+
                         return 1;
                     }
                     default: {

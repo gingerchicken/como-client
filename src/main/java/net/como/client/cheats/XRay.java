@@ -7,27 +7,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.como.client.CheatClient;
 import net.como.client.structures.Cheat;
+import net.como.client.structures.Setting;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.BlockPos;
 import net.como.client.utils.BlockUtils;
 
 public class XRay extends Cheat {
-    private HashMap<String, Boolean> desiredBlocks;
     private Double normalGamma;
 
     public XRay() {
         super("XRay");
+
+        settings.addSetting(new Setting("DesiredBlocks", new HashMap<String, Boolean>()));
     }
 
     @Override
     public void activate() {
-        this.desiredBlocks = new HashMap<String, Boolean>();
-
-        this.desiredBlocks.put("minecraft:diamond_ore", true);
-        this.desiredBlocks.put("minecraft:iron_ore", true);
-        this.desiredBlocks.put("minecraft:coal_ore", true);
-
         MinecraftClient client = CheatClient.getClient();
         client.worldRenderer.reload();
 
@@ -46,7 +42,7 @@ public class XRay extends Cheat {
     }
 
     private Boolean isDesiredBlock(String blockId) {
-        return (this.desiredBlocks.containsKey(blockId));
+        return (((HashMap<String, Boolean>)this.settings.getSetting("DesiredBlocks").value).containsKey(blockId));
     }
 
     @SuppressWarnings("unchecked")
