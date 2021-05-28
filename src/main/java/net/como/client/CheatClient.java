@@ -34,6 +34,7 @@ public class CheatClient {
         Cheats.put("xray", new XRay());
         Cheats.put("noenchantbook", new NoEnchantmentBook());
         Cheats.put("nobreak", new NoBreak());
+        Cheats.put("autoshear", new AutoShear());
     }
 
     public static void triggerAllEvent(String eventName, Object[] args) {
