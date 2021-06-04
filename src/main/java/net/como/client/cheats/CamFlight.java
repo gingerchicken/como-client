@@ -10,6 +10,8 @@ public class CamFlight extends Cheat {
         super("Camera Flight");
 
         settings.addSetting(new Setting("Speed", 5d));
+
+        this.description = "Fly quickly where ever your camera is looking.";
     }
 
     public void recieveEvent(String eventName, Object[] args) {

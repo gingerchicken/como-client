@@ -11,6 +11,8 @@ public class SuperJump extends Cheat {
         super("Super Jump");
 
         this.settings.addSetting(new Setting("UpwardSpeed", 2d));
+
+        this.description = "Jump higher than you should.";
     }
 
     @Override

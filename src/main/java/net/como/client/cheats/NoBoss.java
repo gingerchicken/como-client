@@ -8,6 +8,8 @@ import net.como.client.structures.Cheat;
 public class NoBoss extends Cheat {
     public NoBoss() {
         super("NoBoss");
+
+        this.description = "Hide annoying boss bars and their effects.";
     }
 
     @SuppressWarnings("unchecked")

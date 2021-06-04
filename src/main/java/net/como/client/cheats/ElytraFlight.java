@@ -19,6 +19,8 @@ public class ElytraFlight extends Cheat {
         this.settings.addSetting(new Setting("Acceleration", 1.1d));
         
         this.settings.addSetting(new Setting("LegitMode", false));
+
+        this.description = "Fly with the elytra but without needing fireworks etc.";
     }
 
     private void moveLegitMode() {

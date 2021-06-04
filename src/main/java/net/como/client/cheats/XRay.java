@@ -20,6 +20,7 @@ public class XRay extends Cheat {
         super("XRay");
 
         settings.addSetting(new Setting("DesiredBlocks", new HashMap<String, Boolean>()));
+        this.description = "See ores through the floor.";
     }
 
     @Override

@@ -16,6 +16,8 @@ public class NoBreak extends Cheat {
 
         // TODO maybe add mending only setting?
         this.settings.addSetting(new Setting("MinDurability", 1));
+
+        this.description = "Prevent your pickaxes from accidentally breaking.";
     }
 
     @Override

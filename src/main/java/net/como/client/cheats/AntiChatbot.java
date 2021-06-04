@@ -12,6 +12,8 @@ public class AntiChatbot extends Cheat {
 
     public AntiChatbot() {
         super("Anti-Chatbot");
+
+        this.description = "Hide potential chat spammers and advertisement messages.";
     }
 
     // I tried to think of the rubbish that is spammed in 2b2t chat

@@ -8,8 +8,11 @@ public class Blink extends Cheat {
 
     public Blink() {
         super("Blink Mode");
+
+        this.description = "Delay your packets being sent.";
     }
 
+    // TODO this is not how blink works lol - store the packets and send them.
     @Override
     public void recieveEvent(String eventName, Object[] args) {
         switch (eventName) {
