@@ -7,6 +7,8 @@ import net.como.client.structures.Cheat;
 public class NoWeather extends Cheat {
     public NoWeather() {
         super("Anti-British");
+
+        this.description = "Hides the rain.";
     }
 
     public void recieveEvent(String eventName, Object[] args) {

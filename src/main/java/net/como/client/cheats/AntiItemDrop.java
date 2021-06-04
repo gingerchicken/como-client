@@ -8,6 +8,8 @@ import net.minecraft.entity.Entity;
 public class AntiItemDrop extends Cheat {
     public AntiItemDrop() {
         super("Anti-Dropped Item Renderer");
+
+        this.description = "Hide all dropped items so then your friends cannot kill your client repeatedly.";
     }
 
     public void recieveEvent(String eventName, Object[] args) {

@@ -17,6 +17,8 @@ public class TotemHide extends Cheat {
         super("Totem Hide");
 
         settings.addSetting(new Setting("SmallMode", false));
+
+        this.description = "Change the display of the totem.";
     }
     
     @Override

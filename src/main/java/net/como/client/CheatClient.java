@@ -2,10 +2,13 @@ package net.como.client;
 
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.cheats.*;
+import net.como.client.commands.CheatCommand;
+import net.como.client.commands.CommandHandler;
 import net.como.client.utils.*;
 
 import net.como.client.structures.Cheat;
@@ -15,6 +18,14 @@ import net.minecraft.client.network.ClientPlayerEntity;
 public class CheatClient {
     private static String CHAT_PREFIX = ChatUtils.WHITE + "[" + ChatUtils.GREEN + "ComoClient" + ChatUtils.WHITE + "] ";
     public static CommandHandler commandHandler = new CommandHandler(".");
+
+    private static void registerCheatCommands() {
+        // Add all of the cheats as commands.
+        for (Entry<String, Cheat> entry : Cheats.entrySet()) {
+
+            commandHandler.registerCommand(new CheatCommand(entry.getKey(), entry.getValue()));
+        }
+    }
 
     public static HashMap<String, Cheat> Cheats = new HashMap<String, Cheat>();
     static {
@@ -35,6 +46,8 @@ public class CheatClient {
         Cheats.put("noenchantbook", new NoEnchantmentBook());
         Cheats.put("nobreak", new NoBreak());
         Cheats.put("autoshear", new AutoShear());
+
+        registerCheatCommands();
     }
 
     public static void triggerAllEvent(String eventName, Object[] args) {
@@ -44,7 +57,24 @@ public class CheatClient {
                 String message  = (String)args[0];
                 CallbackInfo ci = (CallbackInfo)args[1];
 
-                commandHandler.handle(message, ci);
+                // Command Handling
+                Integer commandHandlerOutput = commandHandler.handle(message, ci);
+
+                switch (commandHandlerOutput) {
+                    case -1:
+                        break;
+                    
+                    case 0: {
+                        // TODO have it display the command's help text.
+                        CheatClient.displayChatMessage(String.format("%sUnknown Command: Use 'help' for a list of commands.", ChatUtils.RED));
+                    }
+
+                    default: {
+                        ci.cancel();
+                    }
+                }
+
+                System.out.println(commandHandlerOutput);
             }
         }
 

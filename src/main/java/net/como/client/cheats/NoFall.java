@@ -8,6 +8,8 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 public class NoFall extends Cheat {
     public NoFall() {
         super("NoFall");
+
+        this.description = "Take less fall damage.";
     }
 
     @Override

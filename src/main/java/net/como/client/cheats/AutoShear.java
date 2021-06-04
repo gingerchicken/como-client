@@ -17,6 +17,8 @@ public class AutoShear extends Cheat {
 
         settings.addSetting(new Setting("MaxDistance", 3d));
         settings.addSetting(new Setting("DesiredColours", new HashMap<String, Boolean>()));
+
+        this.description = "Shear sheep with a specific colour of wool automatically.";
     }
 
     public void shear(SheepEntity sheep) {
@@ -40,7 +42,7 @@ public class AutoShear extends Cheat {
                 // Make sure that we are holding shears
                 if (!(CheatClient.me().getMainHandStack().getItem() instanceof net.minecraft.item.ShearsItem)) break;
 
-                Entity entity   = (Entity)args[0];
+                Entity entity = (Entity)args[0];
                 
                 // Make sure it is a sheep.
                 if (!(entity instanceof SheepEntity)) break;

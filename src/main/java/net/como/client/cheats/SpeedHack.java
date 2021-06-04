@@ -12,6 +12,8 @@ public class SpeedHack extends Cheat {
 
         this.settings.addSetting(new Setting("Acceleration", 2.2d));
         this.settings.addSetting(new Setting("MaxSpeed", 2d));
+
+        this.description = "Go quicker than normal.";
     }
 
     private double getSpeed(Vec3d vec) {
@@ -62,7 +64,7 @@ public class SpeedHack extends Cheat {
                 
                 break;
             }
-            case "onTick": {
+            case "onClientTick": {
                 // If we are not moving, don't move ;)
                 if (!(CheatClient.me().input.pressingForward || CheatClient.me().input.pressingBack || CheatClient.me().input.pressingLeft || CheatClient.me().input.pressingRight)) {
                     // Still... but not flying...

@@ -19,6 +19,8 @@ public class EntityESP extends Cheat {
 
         this.settings.addSetting(new Setting("BoundingBox", true));
         this.settings.addSetting(new Setting("BoxPadding", 0d));
+
+        this.description = "Know where entities are more easily.";
     }
 
     private int mobBox;
