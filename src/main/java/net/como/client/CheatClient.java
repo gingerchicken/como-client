@@ -46,6 +46,7 @@ public class CheatClient {
         Cheats.put("noenchantbook", new NoEnchantmentBook());
         Cheats.put("nobreak", new NoBreak());
         Cheats.put("autoshear", new AutoShear());
+        Cheats.put("tapemeasure", new TapeMeasure());
 
         registerCheatCommands();
     }
