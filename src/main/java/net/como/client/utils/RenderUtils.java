@@ -32,6 +32,11 @@ public class RenderUtils {
 		);
 	}
 
+	// TODO Cache this or remove it, this is for my dumb brain and debugging reasons
+	public static void g11COLORRGB(Float r, Float g, Float b, Float a) {
+		GL11.glColor4f(r/255f, g/255f, b/255f, a/255f);
+	}
+
 	public static void scissorBox(int startX, int startY, int endX, int endY) {
 		MinecraftClient mc = CheatClient.getClient();
 

@@ -1,10 +1,14 @@
 package net.como.client.cheats;
 
+import org.lwjgl.opengl.GL11;
+
 import net.como.client.structures.Cheat;
 import net.como.client.structures.Setting;
 import net.como.client.utils.ChatUtils;
+import net.como.client.utils.RenderUtils;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 public class TapeMeasure extends Cheat {
 
@@ -56,9 +60,68 @@ public class TapeMeasure extends Cheat {
         super.activate();
     }
 
+    private void renderReadings() {
+        // GL settings
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glLineWidth(2);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        
+        // Render Section
+        GL11.glPushMatrix();
+        RenderUtils.applyRegionalRenderOffset();
+        
+        BlockPos camPos = RenderUtils.getCameraBlockPos();
+        int regionX = (camPos.getX() >> 9) * 512;
+        int regionZ = (camPos.getZ() >> 9) * 512;
+
+        // // Check the settings
+        this.renderLength(regionX, regionZ);
+
+        // Pop the stack
+        GL11.glPopMatrix();
+        
+        // GL resets
+        GL11.glColor4f(1, 1, 1, 1);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+    }
+
+    // TODO maybe move this to some form of Util?
+    private Vec3d blockPosToVec3d(BlockPos bP) {
+        return new Vec3d(bP.getX() + 0.5, bP.getY() + 0.5, bP.getZ() + 0.5);
+    }
+
+    private void renderLength(int regionX, int regionZ) {
+		Vec3d start = this.blockPosToVec3d(this.start);
+        Vec3d end   = this.blockPosToVec3d(this.end);
+
+		GL11.glBegin(GL11.GL_LINES);
+
+        RenderUtils.g11COLORRGB(3f, 244f, 252f, 255f);
+
+        GL11.glVertex3d(start.x - regionX, start.y, start.z - regionZ);
+        GL11.glVertex3d(end.x - regionX, end.y, end.z - regionZ);
+        
+
+		GL11.glEnd();
+	}
+
     @Override
     public void recieveEvent(String event, Object[] args) {
         switch (event) {
+            // TODO add a hook that renders only when one frame is rendered as this is horrible :(
+            case "onRenderEntity": {
+                if (clickCount < 2 || clickCount % 2 != 0) break;
+
+                renderReadings();
+                break;
+            }
             case "onSendPacket": {
                 if (args[0] instanceof net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket) {
                     PlayerActionC2SPacket packet = (PlayerActionC2SPacket)args[0];
@@ -88,6 +151,8 @@ public class TapeMeasure extends Cheat {
                     else this.handleVecDistance(delta);
 
                     clickCount++;
+
+                    return;
                 }
             }
         }

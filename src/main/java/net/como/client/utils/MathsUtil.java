@@ -20,6 +20,10 @@ public class MathsUtil {
         return Math.toRadians(entity.yaw);
     }
 
+    public static Double pitchInRadians(Entity entity) {
+        return Math.toRadians(entity.pitch);
+    }
+
     public static Vec3d getVelocityRelYaw(Double yaw) {
         return new Vec3d(-Math.sin(yaw), 0, Math.cos(yaw));
     }
