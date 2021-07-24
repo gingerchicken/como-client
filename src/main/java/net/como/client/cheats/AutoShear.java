@@ -30,7 +30,7 @@ public class AutoShear extends Cheat {
         // Make sure that we want that wool
         if (!desiredColours.containsKey(sheepColour)) return;
 
-        PlayerInteractEntityC2SPacket shearPacket = new PlayerInteractEntityC2SPacket(sheep, Hand.MAIN_HAND, CheatClient.me().isSneaking());
+        PlayerInteractEntityC2SPacket shearPacket = PlayerInteractEntityC2SPacket.interact(sheep, CheatClient.me().isSneaking(), Hand.MAIN_HAND); // = new PlayerInteractEntityC2SPacket(sheep, Hand.MAIN_HAND, CheatClient.me().isSneaking());
         CheatClient.me().networkHandler.sendPacket(shearPacket);
 
         // TODO I swear that there are more packets that are normally sent to the server when this occurs?  Please double check because I don't want to make ACs cry for such a small thing.

@@ -7,22 +7,28 @@
  */
 package net.como.client.utils;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.CheatClient;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.client.gl.VertexBuffer;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.BufferRenderer;
+import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.chunk.Chunk;
 
 public class RenderUtils {
-	private static final Box DEFAULT_AABB = new Box(0, 0, 0, 1, 1, 1);
-	
 	// TODO name this accordingly as currently I have no clue to what this actually does...
 	public static Vec3d whackifyPos(Entity e, double regionX, double regionZ, double partialTicks) {
 		return new Vec3d(
@@ -37,29 +43,32 @@ public class RenderUtils {
 		GL11.glColor4f(r/255f, g/255f, b/255f, a/255f);
 	}
 
-	public static void scissorBox(int startX, int startY, int endX, int endY) {
-		MinecraftClient mc = CheatClient.getClient();
-
-		int width     = endX - startX;
-		int height 	  = endY - startY;
-		int bottomY   = mc.currentScreen.height - endY;
-		double factor = mc.getWindow().getScaleFactor();
+	private static final Box DEFAULT_BOX = new Box(0, 0, 0, 1, 1, 1);
+	
+	public static void scissorBox(int startX, int startY, int endX, int endY)
+	{
+		int width = endX - startX;
+		int height = endY - startY;
+		int bottomY = CheatClient.getClient().currentScreen.height - endY;
+		double factor = CheatClient.getClient().getWindow().getScaleFactor();
 		
-		int scissorX 	  = (int)(startX * factor);
-		int scissorY 	  = (int)(bottomY * factor);
-		int scissorWidth  = (int)(width * factor);
+		int scissorX = (int)(startX * factor);
+		int scissorY = (int)(bottomY * factor);
+		int scissorWidth = (int)(width * factor);
 		int scissorHeight = (int)(height * factor);
-
 		GL11.glScissor(scissorX, scissorY, scissorWidth, scissorHeight);
 	}
 	
-	public static void applyRenderOffset() {
+	public static void applyRenderOffset(MatrixStack matrixStack)
+	{
 		applyCameraRotationOnly();
 		Vec3d camPos = getCameraPos();
-		GL11.glTranslated(-camPos.x, -camPos.y, -camPos.z);
+		
+		matrixStack.translate(-camPos.x, -camPos.y, -camPos.z);
 	}
 	
-	public static void applyRegionalRenderOffset() {
+	public static void applyRegionalRenderOffset(MatrixStack matrixStack)
+	{
 		applyCameraRotationOnly();
 		
 		Vec3d camPos = getCameraPos();
@@ -68,10 +77,13 @@ public class RenderUtils {
 		int regionX = (blockPos.getX() >> 9) * 512;
 		int regionZ = (blockPos.getZ() >> 9) * 512;
 		
-		GL11.glTranslated(regionX - camPos.x, -camPos.y, regionZ - camPos.z);
+		matrixStack.translate(regionX - camPos.x, -camPos.y,
+			regionZ - camPos.z);
 	}
 	
-	public static void applyRegionalRenderOffset(Chunk chunk) {
+	public static void applyRegionalRenderOffset(MatrixStack matrixStack,
+		Chunk chunk)
+	{
 		applyCameraRotationOnly();
 		
 		Vec3d camPos = getCameraPos();
@@ -79,260 +91,607 @@ public class RenderUtils {
 		int regionX = (chunk.getPos().getStartX() >> 9) * 512;
 		int regionZ = (chunk.getPos().getStartZ() >> 9) * 512;
 		
-		GL11.glTranslated(regionX - camPos.x, -camPos.y, regionZ - camPos.z);
+		matrixStack.translate(regionX - camPos.x, -camPos.y,
+			regionZ - camPos.z);
 	}
 	
-	public static void applyCameraRotationOnly() {
-		Camera camera = BlockEntityRenderDispatcher.INSTANCE.camera;
-
-		GL11.glRotated(MathHelper.wrapDegrees(camera.getPitch()), 1, 0, 0);
-		GL11.glRotated(MathHelper.wrapDegrees(camera.getYaw() + 180.0), 0, 1, 0);
+	public static void applyCameraRotationOnly()
+	{
+		// no longer necessary for some reason
+		
+		// Camera camera =
+		// CheatClient.getClient().getBlockEntityRenderDispatcher().camera;
+		// GL11.glRotated(MathHelper.wrapDegrees(camera.getPitch()), 1, 0, 0);
+		// GL11.glRotated(MathHelper.wrapDegrees(camera.getYaw() + 180.0), 0, 1,
+		// 0);
 	}
 	
-	public static Vec3d getCameraPos() {
-		return BlockEntityRenderDispatcher.INSTANCE.camera.getPos();
+	public static Vec3d getCameraPos()
+	{
+		return CheatClient.getClient().getBlockEntityRenderDispatcher().camera.getPos();
 	}
 	
-	public static BlockPos getCameraBlockPos() {
-		return BlockEntityRenderDispatcher.INSTANCE.camera.getBlockPos();
+	public static BlockPos getCameraBlockPos()
+	{
+		return CheatClient.getClient().getBlockEntityRenderDispatcher().camera
+			.getBlockPos();
 	}
 	
-	public static void drawSolidBox() {
-		drawSolidBox(DEFAULT_AABB);
+	public static void drawSolidBox(MatrixStack matrixStack)
+	{
+		drawSolidBox(DEFAULT_BOX, matrixStack);
 	}
 	
-	public static void drawSolidBox(Box bb) {
-		GL11.glBegin(GL11.GL_QUADS);
-
-		GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
+	public static void drawSolidBox(Box bb, MatrixStack matrixStack)
+	{
+		Matrix4f matrix = matrixStack.peek().getModel();
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		RenderSystem.setShader(GameRenderer::getPositionShader);
 		
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
+		bufferBuilder.begin(VertexFormat.DrawMode.QUADS,
+			VertexFormats.POSITION);
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.maxZ)
+			.next();
 		
-		GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.minZ)
+			.next();
 		
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.minZ)
+			.next();
 		
-		GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.maxZ)
+			.next();
 		
-		GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
-
-		GL11.glEnd();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		bufferBuilder.end();
+		BufferRenderer.draw(bufferBuilder);
 	}
 	
-	public static void drawOutlinedBox() {
-		drawOutlinedBox(DEFAULT_AABB);
+	public static void drawSolidBox(Box bb, VertexBuffer vertexBuffer)
+	{
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		
+		bufferBuilder.begin(VertexFormat.DrawMode.QUADS,
+			VertexFormats.POSITION);
+		drawSolidBox(bb, bufferBuilder);
+		bufferBuilder.end();
+		
+		vertexBuffer.upload(bufferBuilder);
 	}
 	
-	public static void drawOutlinedBox(Box bb) {
-		GL11.glBegin(GL11.GL_LINES);
-		GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
+	public static void drawSolidBox(Box bb, BufferBuilder bufferBuilder)
+	{
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.maxZ).next();
 		
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.minZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.minZ).next();
 		
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.minZ).next();
 		
-		GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.maxZ).next();
 		
-		GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.maxZ).next();
 		
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
-		
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
-		
-		GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
-		
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
-		
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
-		
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
-		
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
-
-		GL11.glEnd();
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.minZ).next();
 	}
 	
-	public static void drawCrossBox() {
-		drawCrossBox(DEFAULT_AABB);
+	public static void drawOutlinedBox(MatrixStack matrixStack)
+	{
+		drawOutlinedBox(DEFAULT_BOX, matrixStack);
 	}
 	
-	public static void drawCrossBox(Box bb) {
-		GL11.glBegin(GL11.GL_LINES);
-
-		GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
+	public static void drawOutlinedBox(Box bb, MatrixStack matrixStack)
+	{
+		Matrix4f matrix = matrixStack.peek().getModel();
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		RenderSystem.setShader(GameRenderer::getPositionShader);
 		
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
+			VertexFormats.POSITION);
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.minZ)
+			.next();
 		
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.maxZ)
+			.next();
 		
-		GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.maxZ)
+			.next();
 		
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
+			.next();
 		
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
+			.next();
 		
-		GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.minZ)
+			.next();
 		
-		GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
 		
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
 		
-		GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
-		GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.minZ)
+			.next();
 		
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
-		GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
 		
-		GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
-
-		GL11.glEnd();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		bufferBuilder.end();
+		BufferRenderer.draw(bufferBuilder);
 	}
 	
-	public static void drawNode(Box bb) {
+	public static void drawOutlinedBox(Box bb, VertexBuffer vertexBuffer)
+	{
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
+			VertexFormats.POSITION);
+		drawOutlinedBox(bb, bufferBuilder);
+		bufferBuilder.end();
+		
+		vertexBuffer.upload(bufferBuilder);
+	}
+	
+	public static void drawOutlinedBox(Box bb, BufferBuilder bufferBuilder)
+	{
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.minZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.minZ).next();
+		
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.minZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.minZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.minZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.minZ).next();
+	}
+	
+	public static void drawCrossBox(Box bb, MatrixStack matrixStack)
+	{
+		Matrix4f matrix = matrixStack.peek().getModel();
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
+			VertexFormats.POSITION);
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.maxY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.maxZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		
+		bufferBuilder
+			.vertex(matrix, (float)bb.maxX, (float)bb.minY, (float)bb.maxZ)
+			.next();
+		bufferBuilder
+			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
+			.next();
+		bufferBuilder.end();
+		BufferRenderer.draw(bufferBuilder);
+	}
+	
+	public static void drawCrossBox(Box bb, VertexBuffer vertexBuffer)
+	{
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
+			VertexFormats.POSITION);
+		drawCrossBox(bb, bufferBuilder);
+		bufferBuilder.end();
+		
+		vertexBuffer.upload(bufferBuilder);
+	}
+	
+	public static void drawCrossBox(Box bb, BufferBuilder bufferBuilder)
+	{
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.minZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.minZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.minZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.minZ).next();
+		
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.maxY, bb.minZ).next();
+		bufferBuilder.vertex(bb.minX, bb.maxY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.minZ).next();
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, bb.minY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, bb.minY, bb.minZ).next();
+	}
+	
+	public static void drawNode(Box bb, MatrixStack matrixStack)
+	{
+		Matrix4f matrix = matrixStack.peek().getModel();
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		RenderSystem.setShader(GameRenderer::getPositionShader);
+		
 		double midX = (bb.minX + bb.maxX) / 2;
 		double midY = (bb.minY + bb.maxY) / 2;
 		double midZ = (bb.minZ + bb.maxZ) / 2;
 		
-		GL11.glVertex3d(midX, midY, bb.maxZ);
-		GL11.glVertex3d(bb.minX, midY, midZ);
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
+			VertexFormats.POSITION);
 		
-		GL11.glVertex3d(bb.minX, midY, midZ);
-		GL11.glVertex3d(midX, midY, bb.minZ);
+		bufferBuilder.vertex(matrix, (float)midX, (float)midY, (float)bb.maxZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)bb.minX, (float)midY, (float)midZ)
+			.next();
 		
-		GL11.glVertex3d(midX, midY, bb.minZ);
-		GL11.glVertex3d(bb.maxX, midY, midZ);
+		bufferBuilder.vertex(matrix, (float)bb.minX, (float)midY, (float)midZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)midX, (float)midY, (float)bb.minZ)
+			.next();
 		
-		GL11.glVertex3d(bb.maxX, midY, midZ);
-		GL11.glVertex3d(midX, midY, bb.maxZ);
+		bufferBuilder.vertex(matrix, (float)midX, (float)midY, (float)bb.minZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)bb.maxX, (float)midY, (float)midZ)
+			.next();
 		
-		GL11.glVertex3d(midX, bb.maxY, midZ);
-		GL11.glVertex3d(bb.maxX, midY, midZ);
+		bufferBuilder.vertex(matrix, (float)bb.maxX, (float)midY, (float)midZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)midX, (float)midY, (float)bb.maxZ)
+			.next();
 		
-		GL11.glVertex3d(midX, bb.maxY, midZ);
-		GL11.glVertex3d(bb.minX, midY, midZ);
+		bufferBuilder.vertex(matrix, (float)midX, (float)bb.maxY, (float)midZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)bb.maxX, (float)midY, (float)midZ)
+			.next();
 		
-		GL11.glVertex3d(midX, bb.maxY, midZ);
-		GL11.glVertex3d(midX, midY, bb.minZ);
+		bufferBuilder.vertex(matrix, (float)midX, (float)bb.maxY, (float)midZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)bb.minX, (float)midY, (float)midZ)
+			.next();
 		
-		GL11.glVertex3d(midX, bb.maxY, midZ);
-		GL11.glVertex3d(midX, midY, bb.maxZ);
+		bufferBuilder.vertex(matrix, (float)midX, (float)bb.maxY, (float)midZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)midX, (float)midY, (float)bb.minZ)
+			.next();
 		
-		GL11.glVertex3d(midX, bb.minY, midZ);
-		GL11.glVertex3d(bb.maxX, midY, midZ);
+		bufferBuilder.vertex(matrix, (float)midX, (float)bb.maxY, (float)midZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)midX, (float)midY, (float)bb.maxZ)
+			.next();
 		
-		GL11.glVertex3d(midX, bb.minY, midZ);
-		GL11.glVertex3d(bb.minX, midY, midZ);
+		bufferBuilder.vertex(matrix, (float)midX, (float)bb.minY, (float)midZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)bb.maxX, (float)midY, (float)midZ)
+			.next();
 		
-		GL11.glVertex3d(midX, bb.minY, midZ);
-		GL11.glVertex3d(midX, midY, bb.minZ);
+		bufferBuilder.vertex(matrix, (float)midX, (float)bb.minY, (float)midZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)bb.minX, (float)midY, (float)midZ)
+			.next();
 		
-		GL11.glVertex3d(midX, bb.minY, midZ);
-		GL11.glVertex3d(midX, midY, bb.maxZ);
+		bufferBuilder.vertex(matrix, (float)midX, (float)bb.minY, (float)midZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)midX, (float)midY, (float)bb.minZ)
+			.next();
+		
+		bufferBuilder.vertex(matrix, (float)midX, (float)bb.minY, (float)midZ)
+			.next();
+		bufferBuilder.vertex(matrix, (float)midX, (float)midY, (float)bb.maxZ)
+			.next();
+		
+		bufferBuilder.end();
+		BufferRenderer.draw(bufferBuilder);
 	}
 	
-	public static void drawArrow(Vec3d from, Vec3d to) {
-		double startX = from.x;
-		double startY = from.y;
-		double startZ = from.z;
+	public static void drawNode(Box bb, VertexBuffer vertexBuffer)
+	{
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		
-		double endX = to.x;
-		double endY = to.y;
-		double endZ = to.z;
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
+			VertexFormats.POSITION);
+		drawNode(bb, bufferBuilder);
+		bufferBuilder.end();
 		
-		GL11.glPushMatrix();
-		
-		GL11.glBegin(GL11.GL_LINES);
-
-		GL11.glVertex3d(startX, startY, startZ);
-		GL11.glVertex3d(endX, endY, endZ);
-
-		GL11.glEnd();
-		
-		GL11.glTranslated(endX, endY, endZ);
-		GL11.glScaled(0.1, 0.1, 0.1);
-		
-		double angleX = Math.atan2(endY - startY, startZ - endZ);
-		GL11.glRotated(Math.toDegrees(angleX) + 90, 1, 0, 0);
-		
-		double angleZ = Math.atan2(endX - startX, Math.sqrt(Math.pow(endY - startY, 2) + Math.pow(endZ - startZ, 2)));
-		GL11.glRotated(Math.toDegrees(angleZ), 0, 0, 1);
-		
-		GL11.glBegin(GL11.GL_LINES);
-		GL11.glVertex3d(0, 2, 1);
-		GL11.glVertex3d(-1, 2, 0);
-		
-		GL11.glVertex3d(-1, 2, 0);
-		GL11.glVertex3d(0, 2, -1);
-		
-		GL11.glVertex3d(0, 2, -1);
-		GL11.glVertex3d(1, 2, 0);
-		
-		GL11.glVertex3d(1, 2, 0);
-		GL11.glVertex3d(0, 2, 1);
-		
-		GL11.glVertex3d(1, 2, 0);
-		GL11.glVertex3d(-1, 2, 0);
-		
-		GL11.glVertex3d(0, 2, 1);
-		GL11.glVertex3d(0, 2, -1);
-		
-		GL11.glVertex3d(0, 0, 0);
-		GL11.glVertex3d(1, 2, 0);
-		
-		GL11.glVertex3d(0, 0, 0);
-		GL11.glVertex3d(-1, 2, 0);
-		
-		GL11.glVertex3d(0, 0, 0);
-		GL11.glVertex3d(0, 2, -1);
-		
-		GL11.glVertex3d(0, 0, 0);
-		GL11.glVertex3d(0, 2, 1);
-		GL11.glEnd();
-		
-		GL11.glPopMatrix();
+		vertexBuffer.upload(bufferBuilder);
 	}
-
-	public static void draw3DLine(Vec3d from, Vec3d to) {
+	
+	public static void drawNode(Box bb, BufferBuilder bufferBuilder)
+	{
+		double midX = (bb.minX + bb.maxX) / 2;
+		double midY = (bb.minY + bb.maxY) / 2;
+		double midZ = (bb.minZ + bb.maxZ) / 2;
+		
+		bufferBuilder.vertex(midX, midY, bb.maxZ).next();
+		bufferBuilder.vertex(bb.minX, midY, midZ).next();
+		
+		bufferBuilder.vertex(bb.minX, midY, midZ).next();
+		bufferBuilder.vertex(midX, midY, bb.minZ).next();
+		
+		bufferBuilder.vertex(midX, midY, bb.minZ).next();
+		bufferBuilder.vertex(bb.maxX, midY, midZ).next();
+		
+		bufferBuilder.vertex(bb.maxX, midY, midZ).next();
+		bufferBuilder.vertex(midX, midY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(midX, bb.maxY, midZ).next();
+		bufferBuilder.vertex(bb.maxX, midY, midZ).next();
+		
+		bufferBuilder.vertex(midX, bb.maxY, midZ).next();
+		bufferBuilder.vertex(bb.minX, midY, midZ).next();
+		
+		bufferBuilder.vertex(midX, bb.maxY, midZ).next();
+		bufferBuilder.vertex(midX, midY, bb.minZ).next();
+		
+		bufferBuilder.vertex(midX, bb.maxY, midZ).next();
+		bufferBuilder.vertex(midX, midY, bb.maxZ).next();
+		
+		bufferBuilder.vertex(midX, bb.minY, midZ).next();
+		bufferBuilder.vertex(bb.maxX, midY, midZ).next();
+		
+		bufferBuilder.vertex(midX, bb.minY, midZ).next();
+		bufferBuilder.vertex(bb.minX, midY, midZ).next();
+		
+		bufferBuilder.vertex(midX, bb.minY, midZ).next();
+		bufferBuilder.vertex(midX, midY, bb.minZ).next();
+		
+		bufferBuilder.vertex(midX, bb.minY, midZ).next();
+		bufferBuilder.vertex(midX, midY, bb.maxZ).next();
+	}
+	
+	public static void drawArrow(Vec3d from, Vec3d to, MatrixStack matrixStack)
+	{
+		RenderSystem.setShader(GameRenderer::getPositionShader);
+		
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
+			VertexFormats.POSITION);
+		
 		double startX = from.x;
 		double startY = from.y;
 		double startZ = from.z;
@@ -341,56 +700,138 @@ public class RenderUtils {
 		double endY = to.y;
 		double endZ = to.z;
 		
-		GL11.glPushMatrix();
+		matrixStack.push();
+		Matrix4f matrix = matrixStack.peek().getModel();
 		
-		GL11.glBegin(GL11.GL_LINES);
-
-		GL11.glVertex3d(startX, startY, startZ);
-		GL11.glVertex3d(endX, endY, endZ);
-
-		GL11.glEnd();
+		bufferBuilder
+			.vertex(matrix, (float)startX, (float)startY, (float)startZ).next();
+		bufferBuilder.vertex(matrix, (float)endX, (float)endY, (float)endZ)
+			.next();
 		
-		GL11.glTranslated(endX, endY, endZ);
-		GL11.glScaled(0.1, 0.1, 0.1);
+		matrixStack.translate(endX, endY, endZ);
+		matrixStack.scale(0.1F, 0.1F, 0.1F);
 		
-		double angleX = Math.atan2(endY - startY, startZ - endZ);
-		GL11.glRotated(Math.toDegrees(angleX) + 90, 1, 0, 0);
+		double xDiff = endX - startX;
+		double yDiff = endY - startY;
+		double zDiff = endZ - startZ;
 		
-		double angleZ = Math.atan2(endX - startX, Math.sqrt(Math.pow(endY - startY, 2) + Math.pow(endZ - startZ, 2)));
-		GL11.glRotated(Math.toDegrees(angleZ), 0, 0, 1);
+		float xAngle = (float)(Math.atan2(yDiff, -zDiff) + Math.toRadians(90));
+		matrixStack.multiply(Vec3f.POSITIVE_X.getRadialQuaternion(xAngle));
 		
-		GL11.glBegin(GL11.GL_LINES);
-		GL11.glVertex3d(0, 2, 1);
-		GL11.glVertex3d(-1, 2, 0);
+		double yzDiff = Math.sqrt(yDiff * yDiff + zDiff * zDiff);
+		float zAngle = (float)Math.atan2(xDiff, yzDiff);
+		matrixStack.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion(zAngle));
 		
-		GL11.glVertex3d(-1, 2, 0);
-		GL11.glVertex3d(0, 2, -1);
+		bufferBuilder.vertex(matrix, 0, 2, 1).next();
+		bufferBuilder.vertex(matrix, -1, 2, 0).next();
 		
-		GL11.glVertex3d(0, 2, -1);
-		GL11.glVertex3d(1, 2, 0);
+		bufferBuilder.vertex(matrix, -1, 2, 0).next();
+		bufferBuilder.vertex(matrix, 0, 2, -1).next();
 		
-		GL11.glVertex3d(1, 2, 0);
-		GL11.glVertex3d(0, 2, 1);
+		bufferBuilder.vertex(matrix, 0, 2, -1).next();
+		bufferBuilder.vertex(matrix, 1, 2, 0).next();
 		
-		GL11.glVertex3d(1, 2, 0);
-		GL11.glVertex3d(-1, 2, 0);
+		bufferBuilder.vertex(matrix, 1, 2, 0).next();
+		bufferBuilder.vertex(matrix, 0, 2, 1).next();
 		
-		GL11.glVertex3d(0, 2, 1);
-		GL11.glVertex3d(0, 2, -1);
+		bufferBuilder.vertex(matrix, 1, 2, 0).next();
+		bufferBuilder.vertex(matrix, -1, 2, 0).next();
 		
-		GL11.glVertex3d(0, 0, 0);
-		GL11.glVertex3d(1, 2, 0);
+		bufferBuilder.vertex(matrix, 0, 2, 1).next();
+		bufferBuilder.vertex(matrix, 0, 2, -1).next();
 		
-		GL11.glVertex3d(0, 0, 0);
-		GL11.glVertex3d(-1, 2, 0);
+		bufferBuilder.vertex(matrix, 0, 0, 0).next();
+		bufferBuilder.vertex(matrix, 1, 2, 0).next();
 		
-		GL11.glVertex3d(0, 0, 0);
-		GL11.glVertex3d(0, 2, -1);
+		bufferBuilder.vertex(matrix, 0, 0, 0).next();
+		bufferBuilder.vertex(matrix, -1, 2, 0).next();
 		
-		GL11.glVertex3d(0, 0, 0);
-		GL11.glVertex3d(0, 2, 1);
-		GL11.glEnd();
+		bufferBuilder.vertex(matrix, 0, 0, 0).next();
+		bufferBuilder.vertex(matrix, 0, 2, -1).next();
 		
-		GL11.glPopMatrix();
+		bufferBuilder.vertex(matrix, 0, 0, 0).next();
+		bufferBuilder.vertex(matrix, 0, 2, 1).next();
+		
+		matrixStack.pop();
+		
+		bufferBuilder.end();
+		BufferRenderer.draw(bufferBuilder);
+	}
+	
+	public static void drawArrow(Vec3d from, Vec3d to,
+		VertexBuffer vertexBuffer)
+	{
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
+			VertexFormats.POSITION);
+		
+		drawArrow(from, to, bufferBuilder);
+		
+		bufferBuilder.end();
+		vertexBuffer.upload(bufferBuilder);
+	}
+	
+	public static void drawArrow(Vec3d from, Vec3d to,
+		BufferBuilder bufferBuilder)
+	{
+		double startX = from.x;
+		double startY = from.y;
+		double startZ = from.z;
+		
+		double endX = to.x;
+		double endY = to.y;
+		double endZ = to.z;
+		
+		Matrix4f matrix = new Matrix4f();
+		matrix.loadIdentity();
+		
+		bufferBuilder
+			.vertex(matrix, (float)startX, (float)startY, (float)startZ).next();
+		bufferBuilder.vertex(matrix, (float)endX, (float)endY, (float)endZ)
+			.next();
+		
+		matrix.multiplyByTranslation((float)endX, (float)endY, (float)endZ);
+		matrix.multiply(Matrix4f.scale(0.1F, 0.1F, 0.1F));
+		
+		double xDiff = endX - startX;
+		double yDiff = endY - startY;
+		double zDiff = endZ - startZ;
+		
+		float xAngle = (float)(Math.atan2(yDiff, -zDiff) + Math.toRadians(90));
+		matrix.multiply(Vec3f.POSITIVE_X.getRadialQuaternion(xAngle));
+		
+		double yzDiff = Math.sqrt(yDiff * yDiff + zDiff * zDiff);
+		float zAngle = (float)Math.atan2(xDiff, yzDiff);
+		matrix.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion(zAngle));
+		
+		bufferBuilder.vertex(matrix, 0, 2, 1).next();
+		bufferBuilder.vertex(matrix, -1, 2, 0).next();
+		
+		bufferBuilder.vertex(matrix, -1, 2, 0).next();
+		bufferBuilder.vertex(matrix, 0, 2, -1).next();
+		
+		bufferBuilder.vertex(matrix, 0, 2, -1).next();
+		bufferBuilder.vertex(matrix, 1, 2, 0).next();
+		
+		bufferBuilder.vertex(matrix, 1, 2, 0).next();
+		bufferBuilder.vertex(matrix, 0, 2, 1).next();
+		
+		bufferBuilder.vertex(matrix, 1, 2, 0).next();
+		bufferBuilder.vertex(matrix, -1, 2, 0).next();
+		
+		bufferBuilder.vertex(matrix, 0, 2, 1).next();
+		bufferBuilder.vertex(matrix, 0, 2, -1).next();
+		
+		bufferBuilder.vertex(matrix, 0, 0, 0).next();
+		bufferBuilder.vertex(matrix, 1, 2, 0).next();
+		
+		bufferBuilder.vertex(matrix, 0, 0, 0).next();
+		bufferBuilder.vertex(matrix, -1, 2, 0).next();
+		
+		bufferBuilder.vertex(matrix, 0, 0, 0).next();
+		bufferBuilder.vertex(matrix, 0, 2, -1).next();
+		
+		bufferBuilder.vertex(matrix, 0, 0, 0).next();
+		bufferBuilder.vertex(matrix, 0, 2, 1).next();
 	}
 }
