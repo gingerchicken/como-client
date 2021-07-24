@@ -79,7 +79,7 @@ public class XRay extends Cheat {
 
             case "onShouldDrawBlockSide": {
                 BlockPos blockPos = (BlockPos)args[2];
-                CallbackInfoReturnable<Boolean> cir = (CallbackInfoReturnable<Boolean>)args[4];
+                CallbackInfoReturnable<Boolean> cir = (CallbackInfoReturnable<Boolean>)args[5];
 
                 String blockId = BlockUtils.getName(blockPos);
 

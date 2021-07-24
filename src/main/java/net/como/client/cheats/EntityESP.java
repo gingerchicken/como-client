@@ -7,11 +7,16 @@ import net.como.client.structures.Cheat;
 import net.como.client.structures.Setting;
 
 import net.como.client.utils.RenderUtils;
-
+import net.minecraft.client.gl.VertexBuffer;
+import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.Shader;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Matrix4f;
+
+import com.mojang.blaze3d.systems.RenderSystem;
 
 public class EntityESP extends Cheat {
     public EntityESP() {
@@ -19,29 +24,23 @@ public class EntityESP extends Cheat {
 
         this.settings.addSetting(new Setting("BoundingBox", true));
         this.settings.addSetting(new Setting("BoxPadding", 0d));
+        this.settings.addSetting(new Setting("BlendBoxes", false));
 
         this.description = "Know where entities are more easily.";
     }
 
-    private int mobBox;
+    private VertexBuffer mobBox;
 
     @Override
     public void activate() {
-        // TODO Learn what this means
-        
-        mobBox = GL11.glGenLists(1);
-		GL11.glNewList(mobBox, GL11.GL_COMPILE);
-
+        mobBox = new VertexBuffer();
 		Box bb = new Box(-0.5, 0, -0.5, 0.5, 1, 0.5);
-		RenderUtils.drawOutlinedBox(bb);
-
-		GL11.glEndList();
+		RenderUtils.drawOutlinedBox(bb, mobBox);
     }
 
     @Override
 	public void deactivate() {
-		GL11.glDeleteLists(mobBox, 1);
-		mobBox = 0;
+		if (mobBox != null) mobBox.close();
 	}
 
     @Override
@@ -52,68 +51,79 @@ public class EntityESP extends Cheat {
                 // Get Arguments
                 Entity entity   = (Entity)args[0];
                 float tickDelta = (float) args[4];
+                MatrixStack mStack = (MatrixStack)args[5];
+
+                // Settings
+                Boolean drawBoundingBox = (Boolean)this.settings.getSetting("BoundingBox").value;
+                Boolean blendBoxes = (Boolean)this.settings.getSetting("BlendBoxes").value;
 
                 // GL settings
-                GL11.glEnable(GL11.GL_BLEND);
-                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
                 GL11.glEnable(GL11.GL_LINE_SMOOTH);
-                GL11.glLineWidth(2);
-                GL11.glDisable(GL11.GL_TEXTURE_2D);
                 GL11.glDisable(GL11.GL_DEPTH_TEST);
-                GL11.glDisable(GL11.GL_LIGHTING);
+                // GL Blending settings
+                if (blendBoxes) {
+                    GL11.glEnable(GL11.GL_BLEND);
+                    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+                }
                 
                 // Render Section
-                GL11.glPushMatrix();
-                RenderUtils.applyRegionalRenderOffset();
+                mStack.push();
+                RenderUtils.applyRegionalRenderOffset(mStack);
                 
                 BlockPos camPos = RenderUtils.getCameraBlockPos();
                 int regionX = (camPos.getX() >> 9) * 512;
                 int regionZ = (camPos.getZ() >> 9) * 512;
-                
-                // Get settings
-                Boolean drawBoundingBox = (Boolean)this.settings.getSetting("BoundingBox").value;
 
                 // Check the settings
-                if (drawBoundingBox) this.renderBox(entity, tickDelta, regionX, regionZ);
+                if (drawBoundingBox) this.renderBox(entity, tickDelta, regionX, regionZ, mStack);
 
                 // Pop the stack
-                GL11.glPopMatrix();
+                mStack.pop();
                 
                 // GL resets
-                GL11.glColor4f(1, 1, 1, 1);
+                RenderSystem.setShaderColor(1, 1, 1, 1);
                 GL11.glEnable(GL11.GL_DEPTH_TEST);
-                GL11.glEnable(GL11.GL_TEXTURE_2D);
-                GL11.glDisable(GL11.GL_BLEND);
                 GL11.glDisable(GL11.GL_LINE_SMOOTH);
+
+                // Blending related stuff
+                if (blendBoxes) {
+                    GL11.glDisable(GL11.GL_BLEND);
+                }
             }
         }
     }
 
-    private void renderBox(Entity e, double partialTicks, int regionX, int regionZ) {
+    private void renderBox(Entity e, double partialTicks, int regionX, int regionZ, MatrixStack mStack) {
         // Get our extraSize setting
-		Double extraSize = (Double) this.settings.getSetting("BoxPadding").value;
+		Float extraSize = (float)(double) this.settings.getSetting("BoxPadding").value;
+
+        // Load the renderer
+        RenderSystem.setShader(GameRenderer::getPositionShader);
 
         // Push a new item to the render stack
-        GL11.glPushMatrix();
+        mStack.push();
 
-        // Get the whacky position of the entity
-        Vec3d whackPosEntity = RenderUtils.whackifyPos(e, regionX, regionZ, partialTicks);
-
-        // Set the centre of the box there (I believe could be wrong...)
-        GL11.glTranslated(whackPosEntity.x, whackPosEntity.y, whackPosEntity.z);
+        // Translate the point of rendering
+        mStack.translate(
+            e.prevX + (e.getX() - e.prevX) * partialTicks - regionX,
+            e.prevY + (e.getY() - e.prevY) * partialTicks,
+            e.prevZ + (e.getZ() - e.prevZ) * partialTicks - regionZ
+        );
         
         // Update the size of the box.
-        GL11.glScaled(e.getWidth() + extraSize, e.getHeight() + extraSize, e.getWidth() + extraSize);
-        
+        mStack.scale(e.getWidth() + extraSize, e.getHeight() + extraSize, e.getWidth() + extraSize);
+
         // Make the boxes change colour depending on their distance.
         float f = CheatClient.me().distanceTo(e) / 20F;
-        GL11.glColor4f(2 - f, f, 0, 0.5F);
+        RenderSystem.setShaderColor(2 - f, f, 0, 0.5F);
         
         // Make it so it is our mobBox.
-        GL11.glCallList(mobBox);
+        Shader shader = RenderSystem.getShader();
+        Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
+        mobBox.setShader(mStack.peek().getModel(), matrix4f, shader);
         
         // Pop the stack (i.e. render it)
-        GL11.glPopMatrix();
+        mStack.pop();
 		
 	}
 }

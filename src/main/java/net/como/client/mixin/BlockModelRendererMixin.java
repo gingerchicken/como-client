@@ -18,10 +18,10 @@ import net.minecraft.world.BlockRenderView;
 
 @Mixin(BlockModelRenderer.class)
 public class BlockModelRendererMixin {
-    // @Inject(at = @At("HEAD"), method="render(Lnet/minecraft/world/BlockRenderView;Lnet/minecraft/client/render/model/BakedModel;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;ZLjava/util/Random;JI)Z", cancellable = true)
-    // public void onBlockRender(BlockRenderView world, BakedModel model, BlockState state, BlockPos pos, MatrixStack matrix, VertexConsumer vertexConsumer, Boolean cull, Random random, long seed, int overlay, CallbackInfoReturnable<Boolean> cir) {
-    //     CheatClient.triggerAllEvent("onBlockRender", new Object[]{world, model, state, pos, matrix, vertexConsumer, cull, random, seed, overlay, cir});
-    // }
+    @Inject(at = @At("HEAD"), method="render(Lnet/minecraft/world/BlockRenderView;Lnet/minecraft/client/render/model/BakedModel;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;ZLjava/util/Random;JI)Z", cancellable = true)
+    public void onBlockRender(BlockRenderView world, BakedModel model, BlockState state, BlockPos pos, MatrixStack matrix, VertexConsumer vertexConsumer, boolean cull, Random random, long seed, int overlay, CallbackInfoReturnable<Boolean> cir) {
+        CheatClient.triggerAllEvent("onBlockRender", new Object[]{world, model, state, pos, matrix, vertexConsumer, cull, random, seed, overlay, cir});
+    }
 
     @Inject(at = {@At("HEAD")},
 		method = {
