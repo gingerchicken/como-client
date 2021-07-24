@@ -26,7 +26,7 @@ public class NoFall extends Cheat {
                 if(player.isFallFlying() && player.isSneaking() && player.getVelocity().getY() < -0.5) break;
                 
                 // I believe this just says to the server "ay yo, I am on floor dw 'bout it sweet cheeks :3"
-                player.networkHandler.sendPacket(new PlayerMoveC2SPacket(true));
+                player.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(true));
                 
                 break;
             }

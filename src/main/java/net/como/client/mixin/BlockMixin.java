@@ -17,13 +17,13 @@ import net.minecraft.world.BlockView;
 public abstract class BlockMixin implements ItemConvertible {
 	@Inject(at = {@At("RETURN")}, 
         method = {
-            "shouldDrawSide(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;)Z"
+            "shouldDrawSide(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;Lnet/minecraft/util/math/BlockPos;)Z"
         },
 		cancellable = true
     )
-	private static void onShouldDrawSide(BlockState state, BlockView blockView, BlockPos blockPos, Direction side, CallbackInfoReturnable<Boolean> cir) {
+	private static void onShouldDrawSide(BlockState state, BlockView blockView, BlockPos pos, Direction side, BlockPos blockPos,  CallbackInfoReturnable<Boolean> cir) {
         CheatClient.triggerAllEvent("onShouldDrawBlockSide", new Object[] {
-            state, blockView, blockPos, side, cir
+            state, blockView, pos, side, blockPos, cir
         });
 	}
 	
