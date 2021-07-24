@@ -11,6 +11,7 @@ import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.Matrix4f;
 
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
@@ -35,10 +36,10 @@ public class WorldRendererMixin {
         });
     }
 
-    @Inject(at = @At("HEAD"), method="renderClouds(Lnet/minecraft/client/util/math/MatrixStack;FDDD)V", cancellable = true)
-    private void onRenderClouds(MatrixStack matrices, float tickDelta, double cameraX, double cameraY, double cameraZ, CallbackInfo ci) {
+    @Inject(at = @At("HEAD"), method="renderClouds(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FDDD)V", cancellable = true)
+    private void onRenderClouds(MatrixStack matrices, Matrix4f m4f, float tickDelta, double cameraX, double cameraY, double cameraZ, CallbackInfo ci) {
         CheatClient.triggerAllEvent("onRenderClouds", new Object[] {
-            matrices, tickDelta, cameraX, cameraY, cameraZ, ci
+            matrices, m4f, tickDelta, cameraX, cameraY, cameraZ, ci
         });
     }
 

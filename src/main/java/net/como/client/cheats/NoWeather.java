@@ -1,5 +1,7 @@
 package net.como.client.cheats;
 
+import javax.security.auth.callback.Callback;
+
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.structures.Cheat;

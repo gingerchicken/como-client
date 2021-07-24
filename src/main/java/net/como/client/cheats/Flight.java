@@ -17,11 +17,13 @@ public class Flight extends Cheat {
     // TODO Add this on spawn?
     @Override
     public void activate() {
-        CheatClient.me().abilities.allowFlying = true;
+        // CheatClient.me().abilities.allowFlying = true;
+        CheatClient.me().getAbilities().allowFlying = true;
     }
 
     @Override
     public void deactivate() {
-        CheatClient.me().abilities.allowFlying = false;
+        // CheatClient.me().abilities.allowFlying = false;
+        CheatClient.me().getAbilities().allowFlying = false;
     }
 }

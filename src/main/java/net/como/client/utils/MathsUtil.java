@@ -17,11 +17,11 @@ public class MathsUtil {
 
     public static Double yawInRadians(Entity entity) {
         // All of the trig functions use radians so we must convert to this.
-        return Math.toRadians(entity.yaw);
+        return Math.toRadians(entity.getYaw());
     }
 
     public static Double pitchInRadians(Entity entity) {
-        return Math.toRadians(entity.pitch);
+        return Math.toRadians(entity.getPitch());
     }
 
     public static Vec3d getVelocityRelYaw(Double yaw) {

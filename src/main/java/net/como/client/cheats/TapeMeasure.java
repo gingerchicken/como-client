@@ -1,13 +1,26 @@
 package net.como.client.cheats;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.structures.Cheat;
 import net.como.client.structures.Setting;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.RenderUtils;
+import net.minecraft.client.gl.VertexBuffer;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.BufferRenderer;
+import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.Shader;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
 public class TapeMeasure extends Cheat {
@@ -27,6 +40,8 @@ public class TapeMeasure extends Cheat {
     private void displayMessage(String results) {
         ChatUtils.displayMessage(String.format("%s[%sTapeMeasure%s] %s", ChatUtils.WHITE, ChatUtils.GREEN, ChatUtils.WHITE, results));
     }
+
+    private VertexBuffer blockBox;
 
     private void handlePyDistance(BlockPos deltaVector) {
         Double x = (double)deltaVector.getX();
@@ -57,39 +72,42 @@ public class TapeMeasure extends Cheat {
         this.displayMessage("Hit the two blocks you want to measure the distance between.");
         clickCount = 0;
 
-        super.activate();
+        blockBox = new VertexBuffer();
+		Box bb = new Box(-0.5, 0, -0.5, 0.5, 1, 0.5);
+		RenderUtils.drawOutlinedBox(bb, blockBox);
     }
 
-    private void renderReadings() {
+    @Override
+	public void deactivate() {
+		if (blockBox != null) blockBox.close();
+	}
+
+    private void renderReadings(MatrixStack mStack) {
         // GL settings
         GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glEnable(GL11.GL_LINE_SMOOTH);
-        GL11.glLineWidth(2);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-        GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
         
         // Render Section
-        GL11.glPushMatrix();
-        RenderUtils.applyRegionalRenderOffset();
+        mStack.push();
+        RenderUtils.applyRegionalRenderOffset(mStack);
         
         BlockPos camPos = RenderUtils.getCameraBlockPos();
         int regionX = (camPos.getX() >> 9) * 512;
         int regionZ = (camPos.getZ() >> 9) * 512;
 
         // // Check the settings
-        this.renderLength(regionX, regionZ);
+        this.renderLength(regionX, regionZ, mStack);
 
         // Pop the stack
-        GL11.glPopMatrix();
+        mStack.pop();
         
         // GL resets
-        GL11.glColor4f(1, 1, 1, 1);
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glDisable(GL11.GL_LINE_SMOOTH);
     }
 
     // TODO maybe move this to some form of Util?
@@ -97,19 +115,40 @@ public class TapeMeasure extends Cheat {
         return new Vec3d(bP.getX() + 0.5, bP.getY() + 0.5, bP.getZ() + 0.5);
     }
 
-    private void renderLength(int regionX, int regionZ) {
-		Vec3d start = this.blockPosToVec3d(this.start);
-        Vec3d end   = this.blockPosToVec3d(this.end);
-
-		GL11.glBegin(GL11.GL_LINES);
-
-        RenderUtils.g11COLORRGB(3f, 244f, 252f, 255f);
-
-        GL11.glVertex3d(start.x - regionX, start.y, start.z - regionZ);
-        GL11.glVertex3d(end.x - regionX, end.y, end.z - regionZ);
+    private void renderBlock(BlockPos bPos, int regionX, int regionZ, MatrixStack mStack) {
         
+    }
 
-		GL11.glEnd();
+    private void renderLength(int regionX, int regionZ, MatrixStack mStack) {
+        Vec3d start = this.blockPosToVec3d(this.start);
+        Vec3d end = this.blockPosToVec3d(this.end);
+        
+        // Get our extraSize setting
+		Float extraSize = (float)(double) this.settings.getSetting("BoxPadding").value;
+
+        // Load the renderer
+        RenderSystem.setShader(GameRenderer::getPositionShader);
+
+        // Push a new item to the render stack
+        mStack.push();
+
+        // Translate the point of rendering
+        mStack.translate(
+            start.x - regionX,
+            start.y,
+            start.z - regionZ
+        );
+        
+        // Update the size of the box.
+        mStack.scale(32, 32, 32);
+        
+        // Make it so it is our mobBox.
+        Shader shader = RenderSystem.getShader();
+        Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
+        blockBox.setShader(mStack.peek().getModel(), matrix4f, shader);
+        
+        // Pop the stack (i.e. render it)
+        mStack.pop();
 	}
 
     @Override
@@ -119,7 +158,9 @@ public class TapeMeasure extends Cheat {
             case "onRenderEntity": {
                 if (clickCount < 2 || clickCount % 2 != 0) break;
 
-                renderReadings();
+                MatrixStack mStack = (MatrixStack) args[5];
+
+                renderReadings(mStack);
                 break;
             }
             case "onSendPacket": {
