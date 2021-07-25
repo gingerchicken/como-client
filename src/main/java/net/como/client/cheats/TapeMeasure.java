@@ -3,8 +3,8 @@ package net.como.client.cheats;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.lwjgl.opengl.GL11;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.como.client.CheatClient;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.Setting;
 import net.como.client.utils.ChatUtils;
@@ -29,6 +29,7 @@ public class TapeMeasure extends Cheat {
         super("TapeMeasure");
 
         this.settings.addSetting(new Setting("PyDistance", true));
+        this.settings.addSetting(new Setting("DisableRenderCap", false));
 
         this.description = "Measure the distance between two points.";
     }
@@ -107,7 +108,22 @@ public class TapeMeasure extends Cheat {
 		GL11.glDisable(GL11.GL_LINE_SMOOTH);
     }
 
+    private boolean shouldRenderBlock(BlockPos pos) {
+        Boolean disableRenderCap = (Boolean)this.settings.getSetting("DisableRenderCap").value;
+        if (disableRenderCap) return true;
+
+        Vec3d blockVec = MathsUtil.blockPosToVec3d(pos);
+
+        double distanceToBlock = CheatClient.me().getPos().distanceTo(blockVec);
+        double maxDistance = (CheatClient.me().getRenderDistanceMultiplier()*8)*16;
+
+        return distanceToBlock <= maxDistance;
+    }
+
     private void renderBlock(BlockPos bPos, int regionX, int regionZ, MatrixStack mStack) {
+        // Make sure we actually do want to render that block.
+        if (!this.shouldRenderBlock(bPos)) return;
+
         // Load the renderer
         RenderSystem.setShader(GameRenderer::getPositionShader);
 
@@ -180,6 +196,10 @@ public class TapeMeasure extends Cheat {
         origin = origin.add(0, -delta.getY(), 0);
 	}
 
+    private boolean shouldRender() {
+        return (this.shouldRenderBlock(this.end) && this.shouldRenderBlock(this.start));
+    }
+
     @Override
     public void recieveEvent(String event, Object[] args) {
         switch (event) {
@@ -188,7 +208,9 @@ public class TapeMeasure extends Cheat {
 
                 MatrixStack mStack = (MatrixStack) args[0];
 
-                renderReadings(mStack);
+                // Make sure they are not too far apart.
+                if (this.shouldRender()) renderReadings(mStack);
+                
                 break;
             }
             case "onSendPacket": {
@@ -218,6 +240,8 @@ public class TapeMeasure extends Cheat {
                     // Do what the user wants
                     if (pythagoreanDistance) this.handlePyDistance(delta);
                     else this.handleVecDistance(delta);
+
+                    if (!this.shouldRender()) this.displayMessage("visuals disabled due to the start and end point being out of render distance!");
 
                     clickCount++;
 
