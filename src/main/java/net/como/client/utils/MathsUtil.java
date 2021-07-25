@@ -1,6 +1,7 @@
 package net.como.client.utils;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 public class MathsUtil {
@@ -26,5 +27,13 @@ public class MathsUtil {
 
     public static Vec3d getVelocityRelYaw(Double yaw) {
         return new Vec3d(-Math.sin(yaw), 0, Math.cos(yaw));
+    }
+
+    public static Integer getSign(Integer i) {
+        return i >= 0 ? 1 : -1;
+    }
+
+    public static Vec3d blockPosToVec3d(BlockPos bP) {
+        return new Vec3d(bP.getX() + 0.5, bP.getY() + 0.5, bP.getZ() + 0.5);
     }
 }
