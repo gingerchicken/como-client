@@ -3,19 +3,16 @@ package net.como.client.cheats;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.lwjgl.opengl.GL11;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.structures.Cheat;
 import net.como.client.structures.Setting;
 import net.como.client.utils.ChatUtils;
+import net.como.client.utils.MathsUtil;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.gl.VertexBuffer;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.Shader;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
@@ -110,22 +107,7 @@ public class TapeMeasure extends Cheat {
 		GL11.glDisable(GL11.GL_LINE_SMOOTH);
     }
 
-    // TODO maybe move this to some form of Util?
-    private Vec3d blockPosToVec3d(BlockPos bP) {
-        return new Vec3d(bP.getX() + 0.5, bP.getY() + 0.5, bP.getZ() + 0.5);
-    }
-
     private void renderBlock(BlockPos bPos, int regionX, int regionZ, MatrixStack mStack) {
-        
-    }
-
-    private void renderLength(int regionX, int regionZ, MatrixStack mStack) {
-        Vec3d start = this.blockPosToVec3d(this.start);
-        Vec3d end = this.blockPosToVec3d(this.end);
-        
-        // Get our extraSize setting
-		Float extraSize = (float)(double) this.settings.getSetting("BoxPadding").value;
-
         // Load the renderer
         RenderSystem.setShader(GameRenderer::getPositionShader);
 
@@ -134,13 +116,15 @@ public class TapeMeasure extends Cheat {
 
         // Translate the point of rendering
         mStack.translate(
-            start.x - regionX,
-            start.y,
-            start.z - regionZ
+            (bPos.getX() + 0.5) - regionX,
+            bPos.getY(),
+            (bPos.getZ() + 0.5) - regionZ
         );
         
         // Update the size of the box.
-        mStack.scale(32, 32, 32);
+        mStack.scale(1, 1, 1);
+
+        RenderSystem.setShaderColor(1, 1, 1, 1);
         
         // Make it so it is our mobBox.
         Shader shader = RenderSystem.getShader();
@@ -149,16 +133,60 @@ public class TapeMeasure extends Cheat {
         
         // Pop the stack (i.e. render it)
         mStack.pop();
+    }
+
+    private void renderLength(int regionX, int regionZ, MatrixStack mStack) {
+        // Get the difference between the blocks
+        BlockPos delta = this.start.add(this.end.multiply(-1));
+
+        BlockPos absDelta = new BlockPos(
+            Math.abs(delta.getX()),
+            Math.abs(delta.getY()),
+            Math.abs(delta.getZ())
+        );
+
+        int signX = MathsUtil.getSign(delta.getX());
+        int signY = MathsUtil.getSign(delta.getY());
+        int signZ = MathsUtil.getSign(delta.getZ());
+
+        // Render all of the different blocks
+        BlockPos origin = this.start;
+        
+        // Firstly render the origin
+        this.renderBlock(origin, regionX, regionZ, mStack);
+
+        // Render X
+        for (int i = 1; i <= absDelta.getX(); i++) {
+            BlockPos target = origin.add(i*-signX, 0, 0);
+
+            this.renderBlock(target, regionX, regionZ, mStack);
+        }
+        origin = origin.add(-delta.getX(), 0, 0);
+
+        // Render Z
+        for (int i = 1; i <= absDelta.getZ(); i++) {
+            BlockPos target = origin.add(0, 0, i*-signZ);
+
+            this.renderBlock(target, regionX, regionZ, mStack);
+        }
+        origin = origin.add(0, 0, -delta.getZ());
+
+        // Render Y
+        for (int i = 1; i <= absDelta.getY(); i++) {
+            BlockPos target = origin.add(0, i*-signY, 0);
+
+            this.renderBlock(target, regionX, regionZ, mStack);
+        }
+        origin = origin.add(0, -delta.getY(), 0);
 	}
 
     @Override
     public void recieveEvent(String event, Object[] args) {
         switch (event) {
-            // TODO add a hook that renders only when one frame is rendered as this is horrible :(
-            case "onRenderEntity": {
+            case "onRenderWorld": {
                 if (clickCount < 2 || clickCount % 2 != 0) break;
 
-                MatrixStack mStack = (MatrixStack) args[5];
+                MatrixStack mStack = (MatrixStack) args[0];
 
                 renderReadings(mStack);
                 break;
