@@ -16,7 +16,8 @@
     "BlockModelRendererMixin",
     "BlockMixin",
     "AbstractBlockStateMixin",
-    "ClientPlayNetworkHandlerMixin"
+    "ClientPlayNetworkHandlerMixin",
+    "InGameHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1
