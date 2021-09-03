@@ -47,6 +47,7 @@ public class CheatClient {
         Cheats.put("nobreak", new NoBreak());
         Cheats.put("autoshear", new AutoShear());
         Cheats.put("tapemeasure", new TapeMeasure());
+        Cheats.put("modlist", new ModList());
 
         registerCheatCommands();
     }
