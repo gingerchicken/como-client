@@ -14,6 +14,8 @@ public class ModList extends Cheat {
 
     public ModList() {
         super("ModList");
+        
+        this.description = "Displays all of your enabled mods";
     }
     
     public void recieveEvent(String eventName, Object[] args) {

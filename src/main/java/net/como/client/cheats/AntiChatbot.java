@@ -11,7 +11,7 @@ import net.minecraft.text.Text;
 public class AntiChatbot extends Cheat {
 
     public AntiChatbot() {
-        super("Anti-Chatbot");
+        super("AntiChatbot");
 
         this.description = "Hide potential chat spammers and advertisement messages.";
     }

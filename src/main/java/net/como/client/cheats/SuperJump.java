@@ -8,7 +8,7 @@ import net.como.client.structures.Setting;
 
 public class SuperJump extends Cheat {
     public SuperJump() {
-        super("Super Jump");
+        super("SuperJump");
 
         this.settings.addSetting(new Setting("UpwardSpeed", 2d));
 

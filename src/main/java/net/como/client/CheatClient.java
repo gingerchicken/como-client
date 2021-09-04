@@ -16,7 +16,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 
 public class CheatClient {
-    private static String CHAT_PREFIX = ChatUtils.WHITE + "[" + ChatUtils.GREEN + "ComoClient" + ChatUtils.WHITE + "] ";
+    private static String CHAT_PREFIX = ChatUtils.WHITE + "[" + ChatUtils.GREEN + "Como Client" + ChatUtils.WHITE + "] ";
     public static CommandHandler commandHandler = new CommandHandler(".");
 
     private static void registerCheatCommands() {

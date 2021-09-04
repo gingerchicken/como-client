@@ -20,7 +20,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 public class EntityESP extends Cheat {
     public EntityESP() {
-        super("Entity ESP");
+        super("EntityESP");
 
         this.settings.addSetting(new Setting("BoundingBox", true));
         this.settings.addSetting(new Setting("BoxPadding", 0d));
