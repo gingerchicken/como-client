@@ -8,7 +8,7 @@ import net.como.client.structures.Cheat;
 
 public class NoWeather extends Cheat {
     public NoWeather() {
-        super("Anti-British");
+        super("AntiBritish");
 
         this.description = "Hides the rain.";
     }

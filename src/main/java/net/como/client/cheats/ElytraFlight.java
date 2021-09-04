@@ -12,7 +12,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class ElytraFlight extends Cheat {
     public ElytraFlight() {
-        super("Elytra Flight");
+        super("ElytraFlight");
 
         this.settings.addSetting(new Setting("MaxSpeed", 10d));
         // In theory, this is not the acceleration but rather a ratio between the old velocity and the new velocity - but I guess it is quicker to call it acceleration :P

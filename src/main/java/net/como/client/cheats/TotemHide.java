@@ -14,7 +14,7 @@ public class TotemHide extends Cheat {
     // boolean smallTotem = false;
 
     public TotemHide() {
-        super("Totem Hide");
+        super("TotemHide");
 
         settings.addSetting(new Setting("SmallMode", false));
 

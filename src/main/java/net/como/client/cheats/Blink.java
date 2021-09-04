@@ -7,7 +7,7 @@ import net.como.client.structures.Cheat;
 public class Blink extends Cheat {
 
     public Blink() {
-        super("Blink Mode");
+        super("BlinkMode");
 
         this.description = "Delay your packets being sent.";
     }

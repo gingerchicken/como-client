@@ -7,7 +7,7 @@ import net.minecraft.block.entity.BlockEntity;
 
 public class NoEnchantmentBook extends Cheat {
     public NoEnchantmentBook() {
-        super("No Enchantment Block Book");
+        super("NoEnchantBook");
 
         this.description = "Hide the enchantment book on the enchantment table.";
     }

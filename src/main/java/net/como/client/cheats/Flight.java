@@ -7,7 +7,7 @@ import net.minecraft.client.util.math.Vector3d;
 public class Flight extends Cheat {
 
     public Flight() {
-        super("Fly Mode");
+        super("FlyMode");
 
         this.description = "Basic flight (a bit terrible tbh).";
     }

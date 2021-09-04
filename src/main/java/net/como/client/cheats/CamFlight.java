@@ -7,7 +7,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class CamFlight extends Cheat {
     public CamFlight() {
-        super("Camera Flight");
+        super("CameraFlight");
 
         settings.addSetting(new Setting("Speed", 5d));
 
