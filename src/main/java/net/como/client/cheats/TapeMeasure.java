@@ -28,8 +28,8 @@ public class TapeMeasure extends Cheat {
     public TapeMeasure() {
         super("TapeMeasure");
 
-        this.settings.addSetting(new Setting("PyDistance", true));
-        this.settings.addSetting(new Setting("DisableRenderCap", false));
+        this.addSetting(new Setting("PyDistance", true));
+        this.addSetting(new Setting("DisableRenderCap", false));
 
         this.description = "Measure the distance between two points.";
     }
@@ -109,7 +109,7 @@ public class TapeMeasure extends Cheat {
     }
 
     private boolean shouldRenderBlock(BlockPos pos) {
-        Boolean disableRenderCap = (Boolean)this.settings.getSetting("DisableRenderCap").value;
+        Boolean disableRenderCap = (Boolean)this.getSetting("DisableRenderCap").value;
         if (disableRenderCap) return true;
 
         Vec3d blockVec = MathsUtil.blockPosToVec3d(pos);
@@ -235,7 +235,7 @@ public class TapeMeasure extends Cheat {
                     BlockPos delta = end.subtract(start);
 
                     // Find what the user wants
-                    Boolean pythagoreanDistance = (Boolean)this.settings.getSetting("PyDistance").value;
+                    Boolean pythagoreanDistance = (Boolean)this.getSetting("PyDistance").value;
                     
                     // Do what the user wants
                     if (pythagoreanDistance) this.handlePyDistance(delta);

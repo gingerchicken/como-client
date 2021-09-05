@@ -11,7 +11,7 @@ public class CheatCommand extends CommandNode {
         this.cheat = cheat;
 
         // Register the settings.
-        super.addSubCommand(new SettingsCommand(this.cheat.settings));
+        super.addSubCommand(new SettingsCommand(this.cheat));
     }
 
     @Override

@@ -15,7 +15,7 @@ public class NoBreak extends Cheat {
         super("NoBreak");
 
         // TODO maybe add mending only setting?
-        this.settings.addSetting(new Setting("MinDurability", 1));
+        this.addSetting(new Setting("MinDurability", 1));
 
         this.description = "Prevent your pickaxes from accidentally breaking.";
     }
@@ -43,7 +43,7 @@ public class NoBreak extends Cheat {
                             Integer currentDurability = usedItem.getMaxDamage() - usedItem.getDamage();
 
                             // Get the minimum durability
-                            Integer minDurability = (Integer)this.settings.getSetting("MinDurability").value;
+                            Integer minDurability = (Integer)this.getSetting("MinDurability").value;
 
                             // If the item is still sufficiently durable still break the block.
                             if (currentDurability > minDurability) break;

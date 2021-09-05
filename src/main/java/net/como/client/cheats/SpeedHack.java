@@ -10,8 +10,8 @@ public class SpeedHack extends Cheat {
     public SpeedHack() {
         super("Speed");
 
-        this.settings.addSetting(new Setting("Acceleration", 2.2d));
-        this.settings.addSetting(new Setting("MaxSpeed", 2d));
+        this.addSetting(new Setting("Acceleration", 2.2d));
+        this.addSetting(new Setting("MaxSpeed", 2d));
 
         this.description = "Go quicker than normal.";
     }
@@ -29,8 +29,8 @@ public class SpeedHack extends Cheat {
         Vec3d fasterVelocity = new Vec3d(0, 0, 0);
 
         // Get the settings
-        Double maxSpeed = (Double) this.settings.getSetting("MaxSpeed").value;
-        Double acceleration = (Double) this.settings.getSetting("Acceleration").value;
+        Double maxSpeed = (Double) this.getSetting("MaxSpeed").value;
+        Double acceleration = (Double) this.getSetting("Acceleration").value;
 
         // Cannot get anything nice to work for the life of me so...
         if (CheatClient.me().input.pressingLeft || CheatClient.me().input.pressingRight) {

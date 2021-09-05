@@ -2,11 +2,9 @@ package net.como.client.structures;
 
 import net.como.client.CheatClient;
 
-public class Cheat {
+public class Cheat extends Settings {
     private String name;
     private boolean enabled;
-
-    public Settings settings = new Settings();
 
     public String description;
     public boolean modListDisplay = true;

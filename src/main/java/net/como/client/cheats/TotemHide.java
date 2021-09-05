@@ -16,7 +16,7 @@ public class TotemHide extends Cheat {
     public TotemHide() {
         super("TotemHide");
 
-        settings.addSetting(new Setting("SmallMode", false));
+        this.addSetting(new Setting("SmallMode", false));
 
         this.description = "Change the display of the totem.";
     }
@@ -43,7 +43,7 @@ public class TotemHide extends Cheat {
                 if (renderMode == ModelTransformation.Mode.FIRST_PERSON_LEFT_HAND) {
                     // Make sure that it is the totem
                     if (stack.getItem().toString() == "totem_of_undying") {
-                        if ((boolean)this.settings.getSetting("SmallMode").value) {
+                        if ((boolean)this.getSetting("SmallMode").value) {
                             // Render the small totem
                             matrices.scale(0.5f, 0.5f, 0.5f);
                             matrices.translate(-0.5f, 0.0f, 0.0f);

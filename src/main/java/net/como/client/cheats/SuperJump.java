@@ -10,7 +10,7 @@ public class SuperJump extends Cheat {
     public SuperJump() {
         super("SuperJump");
 
-        this.settings.addSetting(new Setting("UpwardSpeed", 2d));
+        this.addSetting(new Setting("UpwardSpeed", 2d));
 
         this.description = "Jump higher than you should.";
     }
@@ -25,7 +25,7 @@ public class SuperJump extends Cheat {
                 ci.cancel();
 
                 // Get the upward speed.
-                Double upwardSpeed = (Double)this.settings.getSetting("UpwardSpeed").value;
+                Double upwardSpeed = (Double)this.getSetting("UpwardSpeed").value;
 
                 // Add the new speed.
                 CheatClient.me().addVelocity(0, upwardSpeed, 0);
