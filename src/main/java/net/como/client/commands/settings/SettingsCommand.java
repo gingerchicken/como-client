@@ -1,10 +1,10 @@
-package net.como.client.commands;
+package net.como.client.commands.settings;
 
 import java.util.Arrays;
 import java.util.HashMap;
 
 import net.como.client.CheatClient;
-import net.como.client.commands.HashMapSettings.HashMapCommandNode;
+import net.como.client.commands.settings.HashMapSettings.HashMapCommandNode;
 import net.como.client.commands.structures.Command;
 import net.como.client.structures.Setting;
 import net.como.client.structures.Settings;
