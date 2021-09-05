@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.como.client.CheatClient;
+import net.como.client.commands.CommandChatIgnore;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.Setting;
 
@@ -17,6 +19,9 @@ public class ChatIgnore extends Cheat {
         this.description = "A client-side ignore command";
 
         this.addSetting(new Setting("Phrases", new HashMap<String, Boolean>()));
+
+        // Registering commandsCommandChatIgnore
+        CheatClient.commandHandler.registerCommand(new CommandChatIgnore());
     }
 
     // TODO potential bug with blocking our own messages.
@@ -27,6 +32,10 @@ public class ChatIgnore extends Cheat {
             if (msg.equals(phrase) || msg.contains(phrase)) return true;
         }
         return false;
+    }
+
+    public void activate() {
+        this.displayMessage("You can now add a phrase to emit from chat using the '.ignore' command!");
     }
 
     @Override
