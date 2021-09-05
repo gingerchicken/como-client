@@ -77,8 +77,6 @@ public class CheatClient {
                         ci.cancel();
                     }
                 }
-
-                System.out.println(commandHandlerOutput);
             }
         }
 
@@ -94,7 +92,6 @@ public class CheatClient {
     }
 
     public static void displayChatMessage(String message) {
-        System.out.println(message);
         ChatUtils.displayMessage(CHAT_PREFIX + message);
     }
 
