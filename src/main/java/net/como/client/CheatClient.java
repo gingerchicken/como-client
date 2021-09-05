@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.cheats.*;
-import net.como.client.commands.CheatCommand;
-import net.como.client.commands.CommandHandler;
+import net.como.client.commands.structures.CheatCommand;
+import net.como.client.commands.structures.CommandHandler;
 import net.como.client.utils.*;
 
 import net.como.client.structures.Cheat;
