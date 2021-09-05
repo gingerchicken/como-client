@@ -44,7 +44,6 @@ public class SettingsCommand extends Command {
                 boolean realValue = value.equals("true");
                 
                 setting.value = realValue;
-                System.out.println(setting.value);
 
                 return true;
             }
