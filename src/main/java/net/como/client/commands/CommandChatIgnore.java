@@ -26,12 +26,14 @@ public class CommandChatIgnore extends Command {
 
         String input = String.join(" ", args).trim();
 
+        HashMap<String, Boolean> phrases = (HashMap<String, Boolean>)chatIgnore.getSetting("Phrases").value;
         if (input.equals("reset")) {
             chatIgnore.displayMessage(
                 "Successfully reset your ignore list."
             );
+
+            phrases.clear();
         } else {
-            HashMap<String, Boolean> phrases = (HashMap<String, Boolean>)chatIgnore.getSetting("Phrases").value;
             phrases.put(input, true);
 
             chatIgnore.displayMessage(
