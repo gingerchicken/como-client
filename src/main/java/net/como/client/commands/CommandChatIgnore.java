@@ -10,9 +10,9 @@ import java.util.HashMap;
 public class CommandChatIgnore extends Command {
 
     public CommandChatIgnore() {
-        super("ignore", "Usage: ignore <phrase to ignore|reset>", "Ignore a specific phrase in chat");
+        super("ignore", "Usage: ignore <phrase to ignore|reset|help>", "Ignore a specific phrase in chat");
     }
-    
+
     @Override
     public Boolean trigger(String[] args) {
         Cheat chatIgnore = CheatClient.Cheats.get("chatignore");
@@ -21,10 +21,10 @@ public class CommandChatIgnore extends Command {
             return true;
         }
 
-        String input = String.join(" ", args).trim();
+        // Handle help
+        if (this.handleHelp(args)) return true;
 
-        // Make sure that the user doesn't need help
-        if (input.length() == 0) return this.handleHelp(args);
+        String input = String.join(" ", args).trim();
 
         if (input.equals("reset")) {
             chatIgnore.displayMessage(
