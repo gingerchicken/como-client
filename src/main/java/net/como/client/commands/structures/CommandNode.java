@@ -3,6 +3,9 @@ package net.como.client.commands.structures;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import net.como.client.CheatClient;
+import net.minecraft.util.ChatUtil;
+
 public class CommandNode extends Command {
     HashMap<String, Command> subCommands = new HashMap<String, Command>();
 
@@ -20,20 +23,21 @@ public class CommandNode extends Command {
 
     // TODO make this look nicer.
     @Override
-    public String getHelpText() {
-        String text = "List of sub commands: ";
+    public Boolean handleHelp(String[] args) {
+        if (!this.shouldShowHelp(args)) return false;
+
+        CheatClient.displayChatMessage("List of sub commands: ");
         for (Command cmd : subCommands.values()) {
-            text += "\n" + cmd.getCommand() + " - " + cmd.getDescription();
+            CheatClient.displayChatMessage(
+                String.format("-> %s - %s", cmd.getCommand(), cmd.getDescription())
+            );
         }
 
-        return text;
+        return true;
     }
 
     @Override
     public Boolean trigger(String[] args) {
-        // Make sure there is a given sub command else just display the help text.
-        if (args.length == 0) return false;
-
         // Handle help
         if (handleHelp(args)) return true;
 

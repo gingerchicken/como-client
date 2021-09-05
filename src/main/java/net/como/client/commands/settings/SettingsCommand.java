@@ -14,34 +14,15 @@ public class SettingsCommand extends Command {
     private Settings settings;
 
     public SettingsCommand(Settings settings) {
-        super("settings", "Erm", "Change settings 'n' stuff.");
+        super("settings", "settings <list|help|...setting> <...>", "Change settings 'n' stuff.");
 
         this.settings = settings;
     }
 
-    @Override
-    public String getHelpText() {
-        String text = "Settings that can be changed: ";
-        for (String name : settings.getSettings()) {
-            text += "\n";
-            text += name + " - " + settings.getSetting(name).value.toString();
-        }
-
-        return text;
-    }
-
-    @Override
-    public Boolean trigger(String[] args) {
-        if (this.handleHelp(args)) return true;
-
-        if (args.length == 0) {
-            CheatClient.displayChatMessage(String.format("%s%s", ChatUtils.WHITE, this.getHelpText()));
-            return true;
-        }
-        
+    private boolean changeSetting(String[] args) {
         // Get the setting name.
         String settingName = args[0];
-        
+
         // Make sure that it exists.
         if (!settings.settingExists(settingName)) return false;
 
@@ -115,5 +96,36 @@ public class SettingsCommand extends Command {
 
         // Unsupported setting type
         return false;
+    } 
+
+    private boolean displayList(String[] args) {
+        CheatClient.displayChatMessage("Current Settings:");
+        for (String name : settings.getSettings()) {
+            CheatClient.displayChatMessage(
+                String.format("-> %s - %s", name, settings.getSetting(name).value.toString())
+            );
+        }
+
+        return true;
+    }
+
+    @Override
+    public Boolean trigger(String[] args) {
+        if (this.handleHelp(args)) return true;
+
+        if (args.length == 0) {
+            CheatClient.displayChatMessage(String.format("%s%s", ChatUtils.WHITE, this.getHelpText()));
+            return true;
+        }
+
+        switch (args[0].toLowerCase()) {
+            case "list": {
+                return this.displayList(args);
+            }
+            // It might be a setting?
+            default: {
+                return this.changeSetting(args);
+            }
+        }
     }
 }
