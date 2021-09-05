@@ -48,6 +48,7 @@ public class CheatClient {
         Cheats.put("autoshear", new AutoShear());
         Cheats.put("tapemeasure", new TapeMeasure());
         Cheats.put("modlist", new ModList());
+        Cheats.put("nohurtcam", new NoHurtCam());
 
         registerCheatCommands();
     }
