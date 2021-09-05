@@ -17,7 +17,8 @@
     "BlockMixin",
     "AbstractBlockStateMixin",
     "ClientPlayNetworkHandlerMixin",
-    "InGameHudMixin"
+    "InGameHudMixin",
+    "GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
