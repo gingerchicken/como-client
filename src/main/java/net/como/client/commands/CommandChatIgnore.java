@@ -34,11 +34,11 @@ public class CommandChatIgnore extends Command {
 
             phrases.clear();
         } else {
-            phrases.put(input, true);
-
             chatIgnore.displayMessage(
                 String.format("Successfully added phrase '%s.'", input)
             );
+
+            phrases.put(input, true);
         }
 
         return true;
