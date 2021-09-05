@@ -1,6 +1,7 @@
 package net.como.client.structures;
 
 import net.como.client.CheatClient;
+import net.como.client.utils.ChatUtils;
 
 public class Cheat extends Settings {
     private String name;
@@ -9,6 +10,10 @@ public class Cheat extends Settings {
     public String description;
     public boolean modListDisplay = true;
     
+    public void displayMessage(String msg) {
+        ChatUtils.displayMessage(String.format("%s[%s%s%s] %s", ChatUtils.WHITE, ChatUtils.GREEN, this.getName(), ChatUtils.WHITE, msg));
+    }
+
     // Getters and setters
     public String getName() {
         return name;
