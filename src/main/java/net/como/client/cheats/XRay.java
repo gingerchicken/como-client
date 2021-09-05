@@ -19,8 +19,13 @@ public class XRay extends Cheat {
     public XRay() {
         super("XRay");
 
-        settings.addSetting(new Setting("DesiredBlocks", new HashMap<String, Boolean>()));
         settings.addSetting(new Setting("AutoFullbright", true));
+
+        settings.addSetting(new Setting("DesiredBlocks", new HashMap<String, Boolean>()));
+
+        // Non-specific search (more lag expected)
+        settings.addSetting(new Setting("NonSpecificSearch", false));
+        settings.addSetting(new Setting("BlockSearch", new HashMap<String, Boolean>()));
 
         this.description = "See blocks through the floor.";
     }
@@ -49,8 +54,24 @@ public class XRay extends Cheat {
         this.fullbrightWasEnabled = null;
     }
 
+    @SuppressWarnings("unchecked")
     private Boolean isDesiredBlock(String blockId) {
-        return (((HashMap<String, Boolean>)this.settings.getSetting("DesiredBlocks").value).containsKey(blockId));
+        boolean isDesired = (((HashMap<String, Boolean>)this.settings.getSetting("DesiredBlocks").value).containsKey(blockId));
+        
+        if (!isDesired && (boolean)this.settings.getSetting("NonSpecificSearch").value) {
+            HashMap<String, Boolean> blocksToSearch = (HashMap<String, Boolean>)this.settings.getSetting("BlockSearch").value;
+            
+            for (String phrase : blocksToSearch.keySet()) {
+                if (!blocksToSearch.get(phrase)) continue;
+
+                if (blockId.contains(phrase)) {
+                    isDesired = true;
+                    break;
+                }
+            }
+        }
+
+        return isDesired;
     }
 
     @SuppressWarnings("unchecked")
