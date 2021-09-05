@@ -1,4 +1,4 @@
-package net.como.client.commands.HashMapSettings;
+package net.como.client.commands.settings.HashMapSettings;
 
 import java.util.HashMap;
 
