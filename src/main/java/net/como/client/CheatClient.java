@@ -31,7 +31,7 @@ public class CheatClient {
     static {
         Cheats.put("flight", new Flight());
         Cheats.put("blink", new Blink());
-        Cheats.put("antichatbot", new AntiChatbot());
+        Cheats.put("chatignore", new ChatIgnore());
         Cheats.put("totemhide", new TotemHide());
         Cheats.put("entityesp", new EntityESP());
         Cheats.put("speed", new SpeedHack());
