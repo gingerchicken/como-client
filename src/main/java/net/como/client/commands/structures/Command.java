@@ -26,8 +26,12 @@ public class Command {
         this.description = description;
     }
 
+    public boolean shouldShowHelp(String[] args) {
+        return args.length == 0 || (args.length == 1 && args[0].toLowerCase().equals("help"));
+    }
+
     public Boolean handleHelp(String[] args) {
-        if (!(args.length == 1 && args[0].toLowerCase().equals("help"))) return false;
+        if (!this.shouldShowHelp(args)) return false;
 
         CheatClient.displayChatMessage(String.format("%s%s", ChatUtils.WHITE, this.getHelpText()));
         return true;
