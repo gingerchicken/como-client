@@ -9,6 +9,7 @@ public class Cheat {
     public Settings settings = new Settings();
 
     public String description;
+    public boolean modListDisplay = true;
     
     // Getters and setters
     public String getName() {
@@ -35,6 +36,10 @@ public class Cheat {
         // Make sure that the potential overrides are handled.
         if (this.enabled) this.onEnabled();
         else this.onDisabled();
+    }
+
+    public boolean shouldDisplayInModList() {
+        return this.modListDisplay && this.enabled;
     }
 
     // Chat display message things
