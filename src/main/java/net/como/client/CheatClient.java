@@ -49,6 +49,7 @@ public class CheatClient {
         Cheats.put("tapemeasure", new TapeMeasure());
         Cheats.put("modlist", new ModList());
         Cheats.put("nohurtcam", new NoHurtCam());
+        Cheats.put("fullbright", new FullBright());
 
         registerCheatCommands();
     }

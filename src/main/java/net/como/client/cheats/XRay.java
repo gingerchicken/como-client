@@ -14,13 +14,19 @@ import net.minecraft.util.math.BlockPos;
 import net.como.client.utils.BlockUtils;
 
 public class XRay extends Cheat {
-    private Double normalGamma;
+    private Boolean fullbrightWasEnabled;
 
     public XRay() {
         super("XRay");
 
         settings.addSetting(new Setting("DesiredBlocks", new HashMap<String, Boolean>()));
-        this.description = "See ores through the floor.";
+        settings.addSetting(new Setting("AutoFullbright", true));
+
+        this.description = "See blocks through the floor.";
+    }
+
+    private boolean shouldOverrideFullbright() {
+        return ((boolean)this.settings.getSetting("AutoFullbright").value && !this.fullbrightWasEnabled);
     }
 
     @Override
@@ -28,8 +34,9 @@ public class XRay extends Cheat {
         MinecraftClient client = CheatClient.getClient();
         client.worldRenderer.reload();
 
-        this.normalGamma = client.options.gamma;
-        client.options.gamma = 16;
+        this.fullbrightWasEnabled = CheatClient.Cheats.get("fullbright").isEnabled();
+
+        if (this.shouldOverrideFullbright()) CheatClient.Cheats.get("fullbright").enable(); 
     }
 
     @Override
@@ -37,9 +44,9 @@ public class XRay extends Cheat {
         MinecraftClient client = CheatClient.getClient();
         client.worldRenderer.reload();
 
-        // Restore the user's setting
-        this.normalGamma = client.options.gamma;
-        client.options.gamma = this.normalGamma;
+        if (this.shouldOverrideFullbright()) CheatClient.Cheats.get("fullbright").disable();
+        
+        this.fullbrightWasEnabled = null;
     }
 
     private Boolean isDesiredBlock(String blockId) {
