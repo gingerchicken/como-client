@@ -19,19 +19,19 @@ public class XRay extends Cheat {
     public XRay() {
         super("XRay");
 
-        settings.addSetting(new Setting("AutoFullbright", true));
+        this.addSetting(new Setting("AutoFullbright", true));
 
-        settings.addSetting(new Setting("DesiredBlocks", new HashMap<String, Boolean>()));
+        this.addSetting(new Setting("DesiredBlocks", new HashMap<String, Boolean>()));
 
         // Non-specific search (more lag expected)
-        settings.addSetting(new Setting("NonSpecificSearch", false));
-        settings.addSetting(new Setting("BlockSearch", new HashMap<String, Boolean>()));
+        this.addSetting(new Setting("NonSpecificSearch", false));
+        this.addSetting(new Setting("BlockSearch", new HashMap<String, Boolean>()));
 
         this.description = "See blocks through the floor.";
     }
 
     private boolean shouldOverrideFullbright() {
-        return ((boolean)this.settings.getSetting("AutoFullbright").value && !this.fullbrightWasEnabled);
+        return ((boolean)this.getSetting("AutoFullbright").value && !this.fullbrightWasEnabled);
     }
 
     @Override
@@ -56,10 +56,10 @@ public class XRay extends Cheat {
 
     @SuppressWarnings("unchecked")
     private Boolean isDesiredBlock(String blockId) {
-        boolean isDesired = (((HashMap<String, Boolean>)this.settings.getSetting("DesiredBlocks").value).containsKey(blockId));
+        boolean isDesired = (((HashMap<String, Boolean>)this.getSetting("DesiredBlocks").value).containsKey(blockId));
         
-        if (!isDesired && (boolean)this.settings.getSetting("NonSpecificSearch").value) {
-            HashMap<String, Boolean> blocksToSearch = (HashMap<String, Boolean>)this.settings.getSetting("BlockSearch").value;
+        if (!isDesired && (boolean)this.getSetting("NonSpecificSearch").value) {
+            HashMap<String, Boolean> blocksToSearch = (HashMap<String, Boolean>)this.getSetting("BlockSearch").value;
             
             for (String phrase : blocksToSearch.keySet()) {
                 if (!blocksToSearch.get(phrase)) continue;

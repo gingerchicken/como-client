@@ -14,11 +14,11 @@ public class ElytraFlight extends Cheat {
     public ElytraFlight() {
         super("ElytraFlight");
 
-        this.settings.addSetting(new Setting("MaxSpeed", 10d));
+        this.addSetting(new Setting("MaxSpeed", 10d));
         // In theory, this is not the acceleration but rather a ratio between the old velocity and the new velocity - but I guess it is quicker to call it acceleration :P
-        this.settings.addSetting(new Setting("Acceleration", 1.1d));
+        this.addSetting(new Setting("Acceleration", 1.1d));
         
-        this.settings.addSetting(new Setting("LegitMode", false));
+        this.addSetting(new Setting("LegitMode", false));
 
         this.description = "Fly with the elytra but without needing fireworks etc.";
     }
@@ -27,8 +27,8 @@ public class ElytraFlight extends Cheat {
         if (!(CheatClient.me().input.pressingForward || CheatClient.me().input.pressingBack || CheatClient.me().input.pressingLeft || CheatClient.me().input.pressingRight)) return;
 
         // Get the required variables
-        Double acceleration = (Double)this.settings.getSetting("Acceleration").value;
-        Double maxSpeed     = (Double)this.settings.getSetting("MaxSpeed").value;
+        Double acceleration = (Double)this.getSetting("Acceleration").value;
+        Double maxSpeed     = (Double)this.getSetting("MaxSpeed").value;
 
         Vec3d velocity      = CheatClient.me().getVelocity();
 
@@ -46,7 +46,7 @@ public class ElytraFlight extends Cheat {
         Vec3d velocity = new Vec3d(0, 0, 0);
 
         // Get the required setting(s)
-        Double maxSpeed = (Double)this.settings.getSetting("MaxSpeed").value;
+        Double maxSpeed = (Double)this.getSetting("MaxSpeed").value;
 
         // We only need these two velocities since the other you can calculate just by multiplying these out by -1 :P
 		Vec3d forward = MathsUtil.getForwardVelocity(CheatClient.me());
@@ -83,7 +83,7 @@ public class ElytraFlight extends Cheat {
                 if (!CheatClient.me().isFallFlying()) break;
 
                 // Apply our new velocity
-                if ((Boolean)this.settings.getSetting("LegitMode").value)
+                if ((Boolean)this.getSetting("LegitMode").value)
                     this.moveLegitMode();
                 else
                     this.moveNormalMode();

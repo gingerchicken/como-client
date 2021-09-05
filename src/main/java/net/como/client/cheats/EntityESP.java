@@ -22,9 +22,9 @@ public class EntityESP extends Cheat {
     public EntityESP() {
         super("EntityESP");
 
-        this.settings.addSetting(new Setting("BoundingBox", true));
-        this.settings.addSetting(new Setting("BoxPadding", 0d));
-        this.settings.addSetting(new Setting("BlendBoxes", false));
+        this.addSetting(new Setting("BoundingBox", true));
+        this.addSetting(new Setting("BoxPadding", 0d));
+        this.addSetting(new Setting("BlendBoxes", false));
 
         this.description = "Know where entities are more easily.";
     }
@@ -54,8 +54,8 @@ public class EntityESP extends Cheat {
                 MatrixStack mStack = (MatrixStack)args[5];
 
                 // Settings
-                Boolean drawBoundingBox = (Boolean)this.settings.getSetting("BoundingBox").value;
-                Boolean blendBoxes = (Boolean)this.settings.getSetting("BlendBoxes").value;
+                Boolean drawBoundingBox = (Boolean)this.getSetting("BoundingBox").value;
+                Boolean blendBoxes = (Boolean)this.getSetting("BlendBoxes").value;
 
                 // GL settings
                 GL11.glEnable(GL11.GL_LINE_SMOOTH);
@@ -95,7 +95,7 @@ public class EntityESP extends Cheat {
 
     private void renderBox(Entity e, double partialTicks, int regionX, int regionZ, MatrixStack mStack) {
         // Get our extraSize setting
-		Float extraSize = (float)(double) this.settings.getSetting("BoxPadding").value;
+		Float extraSize = (float)(double) this.getSetting("BoxPadding").value;
 
         // Load the renderer
         RenderSystem.setShader(GameRenderer::getPositionShader);

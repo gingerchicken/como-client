@@ -15,14 +15,14 @@ public class AutoShear extends Cheat {
     public AutoShear() {
         super("AutoShear");
 
-        settings.addSetting(new Setting("MaxDistance", 3d));
-        settings.addSetting(new Setting("DesiredColours", new HashMap<String, Boolean>()));
+        this.addSetting(new Setting("MaxDistance", 3d));
+        this.addSetting(new Setting("DesiredColours", new HashMap<String, Boolean>()));
 
         this.description = "Shear sheep with a specific colour of wool automatically.";
     }
 
     public void shear(SheepEntity sheep) {
-        HashMap<String, String> desiredColours = (HashMap<String, String>)this.settings.getSetting("DesiredColours").value;
+        HashMap<String, String> desiredColours = (HashMap<String, String>)this.getSetting("DesiredColours").value;
 
         // Get the sheep colour
         String sheepColour = sheep.getColor().getName().toLowerCase();
@@ -52,7 +52,7 @@ public class AutoShear extends Cheat {
                 // Make sure that they are shearable.
                 if (!sheep.isShearable()) break;
 
-                Double maxDistance = (Double)this.settings.getSetting("MaxDistance").value;
+                Double maxDistance = (Double)this.getSetting("MaxDistance").value;
 
                 // Make sure that the sheep is in range.
                 if (sheep.distanceTo(CheatClient.me()) > maxDistance) break;

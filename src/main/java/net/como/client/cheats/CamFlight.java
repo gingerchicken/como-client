@@ -9,7 +9,7 @@ public class CamFlight extends Cheat {
     public CamFlight() {
         super("CameraFlight");
 
-        settings.addSetting(new Setting("Speed", 5d));
+        this.addSetting(new Setting("Speed", 5d));
 
         this.description = "Fly quickly where ever your camera is looking.";
     }
@@ -21,7 +21,7 @@ public class CamFlight extends Cheat {
                 if (!CheatClient.me().input.pressingForward) break;
 
                 // Get the speed from our settings system.
-                Double speed = (Double) this.settings.getSetting("Speed").value;
+                Double speed = (Double) this.getSetting("Speed").value;
 
                 // Calculate the velocity.
                 Vec3d fasterVelocity = CheatClient.me().getRotationVector().multiply(new Vec3d(speed, speed, speed));
