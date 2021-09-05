@@ -3,6 +3,7 @@ package net.como.client.commands;
 import java.util.HashMap;
 
 import net.como.client.CheatClient;
+import net.como.client.commands.structures.Command;
 import net.como.client.utils.ChatUtils;
 
 

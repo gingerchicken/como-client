@@ -2,7 +2,7 @@ package net.como.client.commands.HashMapSettings;
 
 import java.util.HashMap;
 
-import net.como.client.commands.CommandNode;
+import net.como.client.commands.structures.CommandNode;
 
 public class HashMapCommandNode extends CommandNode {
     HashMap<String, Boolean> refMap;

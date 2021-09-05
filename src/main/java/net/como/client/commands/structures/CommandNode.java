@@ -1,4 +1,4 @@
-package net.como.client.commands;
+package net.como.client.commands.structures;
 
 import java.util.Arrays;
 import java.util.HashMap;

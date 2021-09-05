@@ -1,4 +1,4 @@
-package net.como.client.commands;
+package net.como.client.commands.structures;
 
 import net.como.client.CheatClient;
 import net.como.client.utils.ChatUtils;
