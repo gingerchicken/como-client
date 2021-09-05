@@ -16,6 +16,7 @@ public class ModList extends Cheat {
         super("ModList");
         
         this.description = "Displays all of your enabled mods";
+        this.modListDisplay = false;
     }
     
     public void recieveEvent(String eventName, Object[] args) {
@@ -32,7 +33,7 @@ public class ModList extends Cheat {
                 for (String cheatName : CheatClient.Cheats.keySet()) {
                     Cheat cheat = CheatClient.Cheats.get(cheatName);
 
-                    if (!cheat.isEnabled()) continue;
+                    if (!cheat.shouldDisplayInModList()) continue;
                     
                     enabledMods.add(cheat);
                 }
