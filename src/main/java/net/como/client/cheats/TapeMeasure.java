@@ -7,7 +7,6 @@ import org.lwjgl.opengl.GL11;
 import net.como.client.CheatClient;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.Setting;
-import net.como.client.utils.ChatUtils;
 import net.como.client.utils.MathsUtil;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.gl.VertexBuffer;
@@ -32,11 +31,6 @@ public class TapeMeasure extends Cheat {
         this.addSetting(new Setting("DisableRenderCap", false));
 
         this.description = "Measure the distance between two points.";
-    }
-
-    // Gonna be real with you, I haven't made up my mind on how I am going to display it yet so lemme just do this!
-    private void displayMessage(String results) {
-        ChatUtils.displayMessage(String.format("%s[%sTapeMeasure%s] %s", ChatUtils.WHITE, ChatUtils.GREEN, ChatUtils.WHITE, results));
     }
 
     private VertexBuffer blockBox;
