@@ -26,6 +26,9 @@ public class CheatClient {
             commandHandler.registerCommand(new CheatCommand(entry.getKey(), entry.getValue()));
         }
     }
+    public static double getCurrentTime() {
+        return Double.valueOf(System.currentTimeMillis()) / 1000d; // Seconds
+    }
 
     public static HashMap<String, Cheat> Cheats = new HashMap<String, Cheat>();
     static {
