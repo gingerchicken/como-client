@@ -54,6 +54,7 @@ public class CheatClient {
         Cheats.put("nohurtcam", new NoHurtCam());
         Cheats.put("fullbright", new FullBright());
         Cheats.put("autoreconnect", new AutoReconnect());
+        Cheats.put("autorespawn", new AutoRespawn());
 
         registerCheatCommands();
     }
