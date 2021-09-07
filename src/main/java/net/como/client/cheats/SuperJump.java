@@ -16,7 +16,7 @@ public class SuperJump extends Cheat {
     }
 
     @Override
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         if (!this.isEnabled()) return;
 
         switch(eventName) {

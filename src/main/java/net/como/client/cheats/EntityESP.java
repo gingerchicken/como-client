@@ -44,7 +44,7 @@ public class EntityESP extends Cheat {
 	}
 
     @Override
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         switch (eventName) {
             // TODO maybe this won't render entities if they are not rendered?
             case "onRenderEntity": {

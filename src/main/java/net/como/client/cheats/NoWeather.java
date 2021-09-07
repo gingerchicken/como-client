@@ -13,7 +13,7 @@ public class NoWeather extends Cheat {
         this.description = "Hides the rain.";
     }
 
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         switch (eventName) {
             case "onRenderWeather": {
                 CallbackInfo ci = (CallbackInfo)args[5];

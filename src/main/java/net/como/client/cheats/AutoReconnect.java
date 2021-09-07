@@ -39,7 +39,7 @@ public class AutoReconnect extends Cheat {
         return timeRemaining;
     }
 
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         switch (eventName) {
             case "onDisconnect": {
                 // Start timer if manual mode is not enabled.

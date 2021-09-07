@@ -19,7 +19,7 @@ public class ModList extends Cheat {
         this.modListDisplay = false;
     }
     
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         switch (eventName) {
             case "InGameHubRender": {
                 MatrixStack mStack = (MatrixStack)args[0];

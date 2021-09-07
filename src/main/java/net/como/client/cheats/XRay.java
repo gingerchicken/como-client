@@ -76,7 +76,7 @@ public class XRay extends Cheat {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         switch (eventName) {
             // For stuff such as rendering chests etc.
             case "onBlockEntityRender": {
