@@ -20,7 +20,8 @@
     "InGameHudMixin",
     "GameRendererMixin",
     "ClientConnectionMixin",
-    "MultiplayerScreenMixin"
+    "MultiplayerScreenMixin",
+    "botch/AutoReconnectMixin"
   ],
   "injectors": {
     "defaultRequire": 1
