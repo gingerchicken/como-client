@@ -21,6 +21,8 @@
     "GameRendererMixin",
     "ClientConnectionMixin",
     "MultiplayerScreenMixin",
+    "DeathScreenMixin",
+
     "botch/AutoReconnectMixin"
   ],
   "injectors": {
