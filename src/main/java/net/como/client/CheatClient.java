@@ -88,7 +88,7 @@ public class CheatClient {
         // TODO Maybe make listeners instead?
         Cheats.forEach((String name, Cheat cheat) -> {
             if (cheat.isEnabled())
-                cheat.recieveEvent(eventName, args);
+                cheat.receiveEvent(eventName, args);
         });
     }
 

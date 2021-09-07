@@ -55,7 +55,7 @@ public class SpeedHack extends Cheat {
     }
 
     @Override
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         switch(eventName) {
             case "onMovementPacket": {
                 // Only do it while we are on the ground else we are basically just flying.

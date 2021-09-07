@@ -11,7 +11,7 @@ public class NoHurtCam extends Cheat {
         this.description = "Disables the screen rotation when getting damaged.";
     }
 
-    public void recieveEvent(String event, Object[] args) {
+    public void receiveEvent(String event, Object[] args) {
         switch (event) {
             case "onBobViewWhenHurt": {
                 CallbackInfo ci = (CallbackInfo)args[2];

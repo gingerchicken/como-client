@@ -36,7 +36,7 @@ public class AutoShear extends Cheat {
         // TODO I swear that there are more packets that are normally sent to the server when this occurs?  Please double check because I don't want to make ACs cry for such a small thing.
     }
 
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         switch (eventName) {
             case "onRenderEntity": {
                 // Make sure that we are holding shears

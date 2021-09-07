@@ -14,7 +14,7 @@ public class Blink extends Cheat {
 
     // TODO this is not how blink works lol - store the packets and send them.
     @Override
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         switch (eventName) {
             case "onMovementPacket": {
                 CallbackInfo ci = (CallbackInfo)args[0];

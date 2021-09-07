@@ -14,7 +14,7 @@ public class CamFlight extends Cheat {
         this.description = "Fly quickly where ever your camera is looking.";
     }
 
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         switch (eventName) {
             case "onMovementPacket": {
                 // This makes things a lot more controlable.

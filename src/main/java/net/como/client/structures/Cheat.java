@@ -58,7 +58,7 @@ public class Cheat extends Settings {
     // Override me!
     public void activate() { }
     public void deactivate() { }
-    public void recieveEvent(String event, Object[] args) { }
+    public void receiveEvent(String event, Object[] args) { }
 
     protected Cheat(String name) {
         // Set the name

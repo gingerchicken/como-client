@@ -12,7 +12,7 @@ public class AntiItemDrop extends Cheat {
         this.description = "Hide all dropped items so then your friends cannot kill your client repeatedly.";
     }
 
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         switch (eventName) {
             case "onRenderEntity": {
                 Entity entity   = (Entity)args[0];

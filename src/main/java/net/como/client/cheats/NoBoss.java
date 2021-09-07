@@ -13,7 +13,7 @@ public class NoBoss extends Cheat {
     }
 
     @SuppressWarnings("unchecked")
-    public void recieveEvent(String eventName, Object[] args) {
+    public void receiveEvent(String eventName, Object[] args) {
         switch (eventName) {
             case "onBossBarHudRender": {
                 // Stop the boss bars being rendered

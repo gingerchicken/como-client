@@ -195,7 +195,7 @@ public class TapeMeasure extends Cheat {
     }
 
     @Override
-    public void recieveEvent(String event, Object[] args) {
+    public void receiveEvent(String event, Object[] args) {
         switch (event) {
             case "onRenderWorld": {
                 if (clickCount < 2 || clickCount % 2 != 0) break;
