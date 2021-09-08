@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.CheatClient;
+import net.como.client.events.SendPacketEvent;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.Packet;
 
@@ -13,6 +14,6 @@ import net.minecraft.network.Packet;
 public class ClientPlayNetworkHandlerMixin {
     @Inject(at = @At("HEAD"), method="sendPacket(Lnet/minecraft/network/Packet;)V", cancellable = true)
     public void onSendPacket(Packet<?> packet, CallbackInfo ci) {
-        CheatClient.triggerAllEvent("onSendPacket", new Object[] {packet, ci});
+        CheatClient.emitter.triggerEvent(new SendPacketEvent(packet, ci));
     }
 }

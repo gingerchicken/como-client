@@ -1,9 +1,8 @@
 package net.como.client.cheats;
 
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
+import net.como.client.structures.events.Event;
+import net.como.client.events.RenderEntityEvent;
 import net.como.client.structures.Cheat;
-import net.minecraft.entity.Entity;
 
 public class AntiItemDrop extends Cheat {
     public AntiItemDrop() {
@@ -12,13 +11,23 @@ public class AntiItemDrop extends Cheat {
         this.description = "Hide all dropped items so then your friends cannot kill your client repeatedly.";
     }
 
-    public void recieveEvent(String eventName, Object[] args) {
-        switch (eventName) {
-            case "onRenderEntity": {
-                Entity entity   = (Entity)args[0];
-                CallbackInfo ci = (CallbackInfo)args[7];
+    @Override
+    public void activate() {
+        this.addListen(RenderEntityEvent.class);
+    }
 
-                if (entity instanceof net.minecraft.entity.ItemEntity) ci.cancel();
+    @Override
+    public void deactivate() {
+        this.removeListen(RenderEntityEvent.class);
+    }
+
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "RenderEntityEvent": {
+                RenderEntityEvent renderEntityEvent = (RenderEntityEvent)event;
+
+                if (renderEntityEvent.entity instanceof net.minecraft.entity.ItemEntity) renderEntityEvent.ci.cancel();
+                break;
             }
         }
     }

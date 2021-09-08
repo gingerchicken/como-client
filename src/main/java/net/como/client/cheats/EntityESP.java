@@ -3,7 +3,9 @@ package net.como.client.cheats;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.CheatClient;
+import net.como.client.events.RenderEntityEvent;
 import net.como.client.structures.Cheat;
+import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 
 import net.como.client.utils.RenderUtils;
@@ -36,22 +38,22 @@ public class EntityESP extends Cheat {
         mobBox = new VertexBuffer();
 		Box bb = new Box(-0.5, 0, -0.5, 0.5, 1, 0.5);
 		RenderUtils.drawOutlinedBox(bb, mobBox);
+
+        this.addListen(RenderEntityEvent.class);
     }
 
     @Override
 	public void deactivate() {
+        this.removeListen(RenderEntityEvent.class);
+        
 		if (mobBox != null) mobBox.close();
 	}
 
     @Override
-    public void recieveEvent(String eventName, Object[] args) {
-        switch (eventName) {
-            // TODO maybe this won't render entities if they are not rendered?
-            case "onRenderEntity": {
-                // Get Arguments
-                Entity entity   = (Entity)args[0];
-                float tickDelta = (float) args[4];
-                MatrixStack mStack = (MatrixStack)args[5];
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "RenderEntityEvent": {
+                RenderEntityEvent e = (RenderEntityEvent)event;
 
                 // Settings
                 Boolean drawBoundingBox = (Boolean)this.getSetting("BoundingBox").value;
@@ -67,18 +69,18 @@ public class EntityESP extends Cheat {
                 }
                 
                 // Render Section
-                mStack.push();
-                RenderUtils.applyRegionalRenderOffset(mStack);
+                e.mStack.push();
+                RenderUtils.applyRegionalRenderOffset(e.mStack);
                 
                 BlockPos camPos = RenderUtils.getCameraBlockPos();
                 int regionX = (camPos.getX() >> 9) * 512;
                 int regionZ = (camPos.getZ() >> 9) * 512;
 
                 // Check the settings
-                if (drawBoundingBox) this.renderBox(entity, tickDelta, regionX, regionZ, mStack);
+                if (drawBoundingBox) this.renderBox(e.entity, e.tickDelta, regionX, regionZ, e.mStack);
 
                 // Pop the stack
-                mStack.pop();
+                e.mStack.pop();
                 
                 // GL resets
                 RenderSystem.setShaderColor(1, 1, 1, 1);

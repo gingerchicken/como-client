@@ -2,7 +2,9 @@ package net.como.client.cheats;
 
 import java.util.HashMap;
 
+import net.como.client.structures.events.Event;
 import net.como.client.CheatClient;
+import net.como.client.events.RenderEntityEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.entity.Entity;
@@ -30,24 +32,35 @@ public class AutoShear extends Cheat {
         // Make sure that we want that wool
         if (!desiredColours.containsKey(sheepColour)) return;
 
-        PlayerInteractEntityC2SPacket shearPacket = PlayerInteractEntityC2SPacket.interact(sheep, CheatClient.me().isSneaking(), Hand.MAIN_HAND); // = new PlayerInteractEntityC2SPacket(sheep, Hand.MAIN_HAND, CheatClient.me().isSneaking());
+        PlayerInteractEntityC2SPacket shearPacket = PlayerInteractEntityC2SPacket.interact(sheep, CheatClient.me().isSneaking(), Hand.MAIN_HAND);
         CheatClient.me().networkHandler.sendPacket(shearPacket);
 
         // TODO I swear that there are more packets that are normally sent to the server when this occurs?  Please double check because I don't want to make ACs cry for such a small thing.
     }
 
-    public void recieveEvent(String eventName, Object[] args) {
-        switch (eventName) {
-            case "onRenderEntity": {
-                // Make sure that we are holding shears
-                if (!(CheatClient.me().getMainHandStack().getItem() instanceof net.minecraft.item.ShearsItem)) break;
+    @Override
+    public void activate() {
+        this.addListen(RenderEntityEvent.class);
+    }
 
-                Entity entity = (Entity)args[0];
-                
+    @Override
+    public void deactivate() {
+        this.removeListen(RenderEntityEvent.class);
+    }
+
+    public void fireEvent(Event event) {
+        if (!(CheatClient.me().getMainHandStack().getItem() instanceof net.minecraft.item.ShearsItem)) return;
+
+        switch (event.getClass().getSimpleName()) {
+            case "RenderEntityEvent": {
+                // Get the event.
+                RenderEntityEvent e = (RenderEntityEvent)event;
+
                 // Make sure it is a sheep.
-                if (!(entity instanceof SheepEntity)) break;
+                if (!(e.entity instanceof SheepEntity)) break;
 
-                SheepEntity sheep = (SheepEntity)entity;
+                // Get the sheep entity
+                SheepEntity sheep = (SheepEntity)e.entity;
                 
                 // Make sure that they are shearable.
                 if (!sheep.isShearable()) break;

@@ -12,12 +12,15 @@ import net.como.client.commands.structures.CommandHandler;
 import net.como.client.utils.*;
 
 import net.como.client.structures.Cheat;
+import net.como.client.structures.events.EventEmitter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 
 public class CheatClient {
     private static String CHAT_PREFIX = ChatUtils.WHITE + "[" + ChatUtils.GREEN + "Como Client" + ChatUtils.WHITE + "] ";
+
     public static CommandHandler commandHandler = new CommandHandler(".");
+    public static EventEmitter emitter;
 
     private static void registerCheatCommands() {
         // Add all of the cheats as commands.
@@ -29,6 +32,8 @@ public class CheatClient {
 
     public static HashMap<String, Cheat> Cheats = new HashMap<String, Cheat>();
     static {
+        emitter = new EventEmitter();
+
         Cheats.put("flight", new Flight());
         Cheats.put("blink", new Blink());
         Cheats.put("chatignore", new ChatIgnore());
@@ -50,41 +55,27 @@ public class CheatClient {
         Cheats.put("modlist", new ModList());
         Cheats.put("nohurtcam", new NoHurtCam());
         Cheats.put("fullbright", new FullBright());
-
+        
         registerCheatCommands();
     }
 
-    public static void triggerAllEvent(String eventName, Object[] args) {
-        // Internal Events
-        switch (eventName) {
-            case "onPlayerChat": {
-                String message  = (String)args[0];
-                CallbackInfo ci = (CallbackInfo)args[1];
+    public static void processChatPost(String message, CallbackInfo ci) {
+        // Command Handling
+        Integer commandHandlerOutput = commandHandler.handle(message, ci);
 
-                // Command Handling
-                Integer commandHandlerOutput = commandHandler.handle(message, ci);
+        switch (commandHandlerOutput) {
+            case -1:
+                break;
+            
+            case 0: {
+                // TODO have it display the command's help text.
+                CheatClient.displayChatMessage(String.format("%sUnknown Command: Use 'help' for a list of commands.", ChatUtils.RED));
+            }
 
-                switch (commandHandlerOutput) {
-                    case -1:
-                        break;
-                    
-                    case 0: {
-                        // TODO have it display the command's help text.
-                        CheatClient.displayChatMessage(String.format("%sUnknown Command: Use 'help' for a list of commands.", ChatUtils.RED));
-                    }
-
-                    default: {
-                        ci.cancel();
-                    }
-                }
+            default: {
+                ci.cancel();
             }
         }
-
-        // TODO Maybe make listeners instead?
-        Cheats.forEach((String name, Cheat cheat) -> {
-            if (cheat.isEnabled())
-                cheat.recieveEvent(eventName, args);
-        });
     }
 
     public static MinecraftClient getClient() {

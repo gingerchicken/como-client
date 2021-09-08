@@ -1,7 +1,5 @@
 package net.como.client.cheats;
 
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import net.como.client.structures.events.*;
 import net.como.client.CheatClient;
 import net.como.client.events.JumpEvent;
