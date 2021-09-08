@@ -1,4 +1,4 @@
-package net.como.client.structures;
+package net.como.client.structures.settings;
 
 public class Setting {
     public final Object defaultValue;
