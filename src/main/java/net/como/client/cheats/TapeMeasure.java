@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.como.client.CheatClient;
 import net.como.client.structures.Cheat;
-import net.como.client.structures.Setting;
+import net.como.client.structures.settings.Setting;
 import net.como.client.utils.MathsUtil;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.gl.VertexBuffer;

@@ -1,4 +1,4 @@
-package net.como.client.structures;
+package net.como.client.structures.settings;
 
 import java.util.HashMap;
 import java.util.Set;

@@ -4,7 +4,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.CheatClient;
 import net.como.client.structures.Cheat;
-import net.como.client.structures.Setting;
+import net.como.client.structures.settings.Setting;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;

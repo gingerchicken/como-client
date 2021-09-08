@@ -2,6 +2,7 @@ package net.como.client.structures;
 
 import net.como.client.CheatClient;
 import net.como.client.utils.ChatUtils;
+import net.como.client.structures.settings.*;
 
 public class Cheat extends Settings {
     private String name;
