@@ -11,7 +11,7 @@ public class NoBoss extends Cheat {
 
         this.description = "Hide annoying boss bars and their effects.";
     }
-
+  
     @Override
     public void activate() {
         this.addListen(BossBarHudRenderEvent.class);

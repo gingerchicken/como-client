@@ -198,8 +198,8 @@ public class TapeMeasure extends Cheat {
         this.removeListen(RenderWorldEvent.class);
         this.removeListen(SendPacketEvent.class);
 
-		if (blockBox != null) blockBox.close();
-	}
+		    if (blockBox != null) blockBox.close();
+	 }
 
     @Override
     public void fireEvent(Event event) {
