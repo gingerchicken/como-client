@@ -9,12 +9,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 
 public class ShouldDrawBlockSideEvent extends Event {
-    BlockState state;
-    BlockView blockView;
-    BlockPos pos;
-    Direction side;
-    BlockPos blockPos;
-    CallbackInfoReturnable<Boolean> cir;
+    public BlockState state;
+    public BlockView blockView;
+    public BlockPos pos;
+    public Direction side;
+    public BlockPos blockPos;
+    public CallbackInfoReturnable<Boolean> cir;
 
     public ShouldDrawBlockSideEvent(BlockState state, BlockView blockView, BlockPos pos, Direction side, BlockPos blockPos,  CallbackInfoReturnable<Boolean> cir) {
         this.state = state;
