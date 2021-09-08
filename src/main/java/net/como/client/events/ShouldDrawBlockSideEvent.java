@@ -19,7 +19,7 @@ public class ShouldDrawBlockSideEvent extends Event {
     public ShouldDrawBlockSideEvent(BlockState state, BlockView blockView, BlockPos pos, Direction side, BlockPos blockPos,  CallbackInfoReturnable<Boolean> cir) {
         this.state = state;
         this.blockView = blockView;
-        this.blockPos = pos;
+        this.pos = pos;
         this.side = side;
         this.blockPos = blockPos;
         this.cir = cir;
