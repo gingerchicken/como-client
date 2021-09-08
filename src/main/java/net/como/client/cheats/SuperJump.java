@@ -2,27 +2,36 @@ package net.como.client.cheats;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.como.client.structures.events.*;
 import net.como.client.CheatClient;
+import net.como.client.events.JumpEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.settings.Setting;
 
 public class SuperJump extends Cheat {
     public SuperJump() {
         super("SuperJump");
+        this.description = "Jump higher than you should.";
 
         this.addSetting(new Setting("UpwardSpeed", 2d));
-
-        this.description = "Jump higher than you should.";
     }
 
     @Override
-    public void recieveEvent(String eventName, Object[] args) {
-        if (!this.isEnabled()) return;
+    public void activate() {
+        this.addListen(JumpEvent.class);
+    }
 
-        switch(eventName) {
-            case "onJump": {
-                CallbackInfo ci = (CallbackInfo)args[0];
-                ci.cancel();
+    @Override
+    public void deactivate() {
+        this.removeListen(JumpEvent.class);
+    }
+
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "JumpEvent": {
+                JumpEvent jumpEvent = (JumpEvent)event;
+
+                jumpEvent.ci.cancel();
 
                 // Get the upward speed.
                 Double upwardSpeed = (Double)this.getSetting("UpwardSpeed").value;
