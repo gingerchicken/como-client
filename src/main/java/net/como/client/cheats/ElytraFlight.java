@@ -1,7 +1,9 @@
 package net.como.client.cheats;
 
 import net.como.client.CheatClient;
+import net.como.client.events.MovementPacketEvent;
 import net.como.client.structures.Cheat;
+import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.MathsUtil;
 import net.minecraft.entity.EquipmentSlot;
@@ -17,7 +19,6 @@ public class ElytraFlight extends Cheat {
         this.addSetting(new Setting("MaxSpeed", 10d));
         // In theory, this is not the acceleration but rather a ratio between the old velocity and the new velocity - but I guess it is quicker to call it acceleration :P
         this.addSetting(new Setting("Acceleration", 1.1d));
-        
         this.addSetting(new Setting("LegitMode", false));
 
         this.description = "Fly with the elytra but without needing fireworks etc.";
@@ -40,9 +41,8 @@ public class ElytraFlight extends Cheat {
 
         CheatClient.me().setVelocity(velocity);
     }
-
     private void moveNormalMode() {
-        // Initalise as still.
+        // Initialize as still.
         Vec3d velocity = new Vec3d(0, 0, 0);
 
         // Get the required setting(s)
@@ -67,15 +67,24 @@ public class ElytraFlight extends Cheat {
         // Set the velocity
         CheatClient.me().setVelocity(velocity);
     }
-
-    public boolean hasElytraEquipt() {
+    private boolean hasElytraEquipt() {
         ItemStack chestSlot = CheatClient.me().getEquippedStack(EquipmentSlot.CHEST);
 		return (chestSlot.getItem() == Items.ELYTRA);
     }
 
-    public void recieveEvent(String eventName, Object[] args) {
-        switch (eventName) {
-            case "onMovementPacket": {
+    @Override
+    public void activate() {
+        this.addListen(MovementPacketEvent.class);
+    }
+
+    @Override
+    public void deactivate() {
+        this.removeListen(MovementPacketEvent.class);
+    }
+
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "MovementPacketEvent": {
                 // Make sure that we have an elytra equip
                 if (!this.hasElytraEquipt()) break;
 

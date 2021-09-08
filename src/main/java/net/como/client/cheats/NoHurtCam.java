@@ -1,8 +1,8 @@
 package net.como.client.cheats;
 
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
+import net.como.client.events.BobViewWhenHurtEvent;
 import net.como.client.structures.Cheat;
+import net.como.client.structures.events.Event;
 
 public class NoHurtCam extends Cheat {
     public NoHurtCam() {
@@ -11,13 +11,21 @@ public class NoHurtCam extends Cheat {
         this.description = "Disables the screen rotation when getting damaged.";
     }
 
-    public void recieveEvent(String event, Object[] args) {
-        switch (event) {
-            case "onBobViewWhenHurt": {
-                CallbackInfo ci = (CallbackInfo)args[2];
+    @Override
+    public void activate() {
+        this.addListen(BobViewWhenHurtEvent.class);
+    }
 
-                ci.cancel();
+    @Override
+    public void deactivate() {
+        this.removeListen(BobViewWhenHurtEvent.class);
+    }
 
+    @Override
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "BobViewWhenHurtEvent": {
+                ((BobViewWhenHurtEvent)event).ci.cancel();
                 break;
             }
         }

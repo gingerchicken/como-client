@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.CheatClient;
+import net.como.client.events.BobViewWhenHurtEvent;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -13,10 +14,6 @@ import net.minecraft.client.util.math.MatrixStack;
 public class GameRendererMixin {
     @Inject(at = @At("HEAD"), method="bobViewWhenHurt(Lnet/minecraft/client/util/math/MatrixStack;F)V", cancellable = true)
     void onBobViewWhenHurt(MatrixStack mStack, float f, CallbackInfo ci) {
-        CheatClient.triggerAllEvent("onBobViewWhenHurt", new Object[]{
-            mStack,
-            f,
-            ci
-        });
+        CheatClient.emitter.triggerEvent(new BobViewWhenHurtEvent(mStack, f, ci));
     }
 }
