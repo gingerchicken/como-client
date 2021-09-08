@@ -4,7 +4,12 @@ import net.como.client.CheatClient;
 import net.como.client.utils.ChatUtils;
 import net.como.client.structures.settings.*;
 
-public class Cheat extends Settings {
+
+import net.como.client.structures.events.EventListener;
+import net.como.client.structures.events.Event;
+import net.como.client.structures.events.EventEmitter;
+
+public class Cheat extends Settings implements EventListener {
     private String name;
     private boolean enabled;
 
@@ -59,10 +64,32 @@ public class Cheat extends Settings {
     // Override me!
     public void activate() { }
     public void deactivate() { }
+
+    // Deprecated
     public void recieveEvent(String event, Object[] args) { }
 
     protected Cheat(String name) {
         // Set the name
         this.name = name;
     }
+
+    // Events
+    private EventEmitter emitter = CheatClient.emitter;
+
+    @Override
+    public void addListen(Class<? extends Event> event) {
+        this.emitter.addListener(this, event);
+    }
+
+    @Override
+    public void removeListen(Class<? extends Event> event) {
+        this.emitter.removeListener(this, event);
+    }
+
+    @Override
+    public void fireEvent(Event event) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
