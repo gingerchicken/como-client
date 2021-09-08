@@ -15,7 +15,7 @@ public class CamFlight extends Cheat {
 
         this.description = "Fly quickly where ever your camera is looking.";
     }
-
+  
     @Override
     public void activate() {
         this.addListen(MovementPacketEvent.class);

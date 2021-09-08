@@ -65,9 +65,6 @@ public class Cheat extends Settings implements EventListener {
     public void activate() { }
     public void deactivate() { }
 
-    // Deprecated
-    public void recieveEvent(String event, Object[] args) { }
-
     protected Cheat(String name) {
         // Set the name
         this.name = name;

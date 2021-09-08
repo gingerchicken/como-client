@@ -29,6 +29,9 @@ public class CheatClient {
             commandHandler.registerCommand(new CheatCommand(entry.getKey(), entry.getValue()));
         }
     }
+    public static double getCurrentTime() {
+        return Double.valueOf(System.currentTimeMillis()) / 1000d; // Seconds
+    }
 
     public static HashMap<String, Cheat> Cheats = new HashMap<String, Cheat>();
     static {
@@ -55,7 +58,9 @@ public class CheatClient {
         Cheats.put("modlist", new ModList());
         Cheats.put("nohurtcam", new NoHurtCam());
         Cheats.put("fullbright", new FullBright());
-        
+        Cheats.put("autoreconnect", new AutoReconnect());
+        Cheats.put("autorespawn", new AutoRespawn());
+
         registerCheatCommands();
     }
 

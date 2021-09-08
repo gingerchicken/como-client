@@ -38,7 +38,6 @@ public class ChatIgnore extends Cheat {
         this.displayMessage("You can now add a phrase to emit from chat using the '.ignore' command!");
     }
 
-
     @Override
     public void deactivate() {
         this.removeListen(AddMessageEvent.class);

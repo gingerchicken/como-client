@@ -18,7 +18,12 @@
     "AbstractBlockStateMixin",
     "ClientPlayNetworkHandlerMixin",
     "InGameHudMixin",
-    "GameRendererMixin"
+    "GameRendererMixin",
+    "ClientConnectionMixin",
+    "MultiplayerScreenMixin",
+    "DeathScreenMixin",
+
+    "botch/AutoReconnectMixin"
   ],
   "injectors": {
     "defaultRequire": 1
