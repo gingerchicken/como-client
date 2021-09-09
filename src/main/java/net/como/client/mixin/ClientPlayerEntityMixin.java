@@ -8,6 +8,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.CheatClient;
+import net.como.client.events.ClientTickEvent;
+import net.como.client.events.MovementPacketEvent;
+import net.como.client.events.PlayerChatEvent;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -20,17 +23,20 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
     }
 
     @Inject(at = @At("HEAD"), method="sendChatMessage(Ljava/lang/String;)V", cancellable = true)
-    private void onSendChatMessage(String message, CallbackInfo callbackInfo) {
-        CheatClient.triggerAllEvent("onPlayerChat", new Object[]{message, callbackInfo});
+    private void onSendChatMessage(String message, CallbackInfo ci) {
+        // Handle commands etc.
+        CheatClient.processChatPost(message, ci);
+
+        CheatClient.emitter.triggerEvent(new PlayerChatEvent(message, ci));
     }
 
     @Inject(at = @At("HEAD"), method="sendMovementPackets()V", cancellable = true)
-    private void onSendMovementPackets(CallbackInfo callbackInfo) {
-        CheatClient.triggerAllEvent("onMovementPacket", new Object[]{callbackInfo});
+    private void onSendMovementPackets(CallbackInfo ci) {
+        CheatClient.emitter.triggerEvent(new MovementPacketEvent(ci));
     }
 
-    @Inject(at = @At("RETURN"), method="tick()V")
-    private void onTick(CallbackInfo callbackInfo) {
-        CheatClient.triggerAllEvent("onClientTick", new Object[]{callbackInfo});
+    @Inject(at = @At("RETURN"), method="tick()V", cancellable = false)
+    private void onTick(CallbackInfo ci) {
+        CheatClient.emitter.triggerEvent(new ClientTickEvent(ci));
     }
 }

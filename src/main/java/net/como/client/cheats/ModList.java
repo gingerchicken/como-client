@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.font.TextRenderer;
 import net.como.client.CheatClient;
+import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.structures.Cheat;
+import net.como.client.structures.events.Event;
 
 public class ModList extends Cheat {
 
@@ -18,16 +18,24 @@ public class ModList extends Cheat {
         this.description = "Displays all of your enabled mods";
         this.modListDisplay = false;
     }
-    
-    public void receiveEvent(String eventName, Object[] args) {
-        switch (eventName) {
-            case "InGameHubRender": {
-                MatrixStack mStack = (MatrixStack)args[0];
-                float tickDelta = (float)args[1];
-                CallbackInfo ci = (CallbackInfo)args[2];
+
+    @Override
+    public void activate() {
+        this.addListen(InGameHudRenderEvent.class);
+    }
+
+    @Override
+    public void deactivate() {
+        this.removeListen(InGameHudRenderEvent.class);
+    }
+
+    @Override
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "InGameHudRenderEvent": {
+                InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
                 TextRenderer textRenderer = CheatClient.getClient().textRenderer;
-
                 List<Cheat> enabledMods = new ArrayList<Cheat>();
                 
                 for (String cheatName : CheatClient.Cheats.keySet()) {
@@ -45,10 +53,10 @@ public class ModList extends Cheat {
 
                 int display = 0;
                 for (Cheat cheat : enabledMods) {
-                    textRenderer.drawWithShadow(mStack, cheat.getName(), 1, 1+10*display, 0xFFFFFFFF);
+                    textRenderer.drawWithShadow(e.mStack, cheat.getName(), 1, 1+10*display, 0xFFFFFFFF);
                     display++;
                 }
             }
-        }
+        } 
     }
 }

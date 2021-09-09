@@ -5,14 +5,18 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.CheatClient;
+import net.como.client.events.RenderWorldEvent;
+import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Cheat;
-import net.como.client.structures.Setting;
+import net.como.client.structures.events.Event;
+import net.como.client.structures.settings.Setting;
 import net.como.client.utils.MathsUtil;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.Shader;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -46,7 +50,6 @@ public class TapeMeasure extends Cheat {
 
         displayMessage(String.format("Your displacement is %f blocks.", actualDistance));
     }
-
     private void handleVecDistance(BlockPos deltaVector) {
         Integer dX = (int)Math.abs(deltaVector.getX());
         Integer dY = (int)Math.abs(deltaVector.getY());
@@ -58,22 +61,6 @@ public class TapeMeasure extends Cheat {
 
         displayMessage(String.format("The absolute of your displacement is X: %d, Y: %d, Z: %d", dX, dY, dZ));
     }
-
-    @Override
-    public void activate() {
-        this.displayMessage("Hit the two blocks you want to measure the distance between.");
-        clickCount = 0;
-
-        blockBox = new VertexBuffer();
-		Box bb = new Box(-0.5, 0, -0.5, 0.5, 1, 0.5);
-		RenderUtils.drawOutlinedBox(bb, blockBox);
-    }
-
-    @Override
-	public void deactivate() {
-		if (blockBox != null) blockBox.close();
-	}
-
     private void renderReadings(MatrixStack mStack) {
         // GL settings
         GL11.glEnable(GL11.GL_BLEND);
@@ -101,19 +88,6 @@ public class TapeMeasure extends Cheat {
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LINE_SMOOTH);
     }
-
-    private boolean shouldRenderBlock(BlockPos pos) {
-        Boolean disableRenderCap = (Boolean)this.getSetting("DisableRenderCap").value;
-        if (disableRenderCap) return true;
-
-        Vec3d blockVec = MathsUtil.blockPosToVec3d(pos);
-
-        double distanceToBlock = CheatClient.me().getPos().distanceTo(blockVec);
-        double maxDistance = (CheatClient.me().getRenderDistanceMultiplier()*8)*16;
-
-        return distanceToBlock <= maxDistance;
-    }
-
     private void renderBlock(BlockPos bPos, int regionX, int regionZ, MatrixStack mStack) {
         // Make sure we actually do want to render that block.
         if (!this.shouldRenderBlock(bPos)) return;
@@ -144,7 +118,6 @@ public class TapeMeasure extends Cheat {
         // Pop the stack (i.e. render it)
         mStack.pop();
     }
-
     private void renderLength(int regionX, int regionZ, MatrixStack mStack) {
         // Get the difference between the blocks
         BlockPos delta = this.start.add(this.end.multiply(-1));
@@ -189,40 +162,75 @@ public class TapeMeasure extends Cheat {
         }
         origin = origin.add(0, -delta.getY(), 0);
 	}
-
+    
     private boolean shouldRender() {
         return (this.shouldRenderBlock(this.end) && this.shouldRenderBlock(this.start));
     }
+    private boolean shouldRenderBlock(BlockPos pos) {
+        Boolean disableRenderCap = (Boolean)this.getSetting("DisableRenderCap").value;
+        if (disableRenderCap) return true;
+
+        Vec3d blockVec = MathsUtil.blockPosToVec3d(pos);
+
+        double distanceToBlock = CheatClient.me().getPos().distanceTo(blockVec);
+        CheatClient.me();
+        double maxDistance = (Entity.getRenderDistanceMultiplier()*8)*16;
+
+        return distanceToBlock <= maxDistance;
+    }
+    
 
     @Override
-    public void receiveEvent(String event, Object[] args) {
-        switch (event) {
-            case "onRenderWorld": {
-                if (clickCount < 2 || clickCount % 2 != 0) break;
+    public void activate() {
+        this.displayMessage("Hit the two blocks you want to measure the distance between.");
+        clickCount = 0;
 
-                MatrixStack mStack = (MatrixStack) args[0];
+        blockBox = new VertexBuffer();
+		Box bb = new Box(-0.5, 0, -0.5, 0.5, 1, 0.5);
+		RenderUtils.drawOutlinedBox(bb, blockBox);
+    
+        this.addListen(RenderWorldEvent.class);
+        this.addListen(SendPacketEvent.class);
+    }
 
+    @Override
+	public void deactivate() {
+        this.removeListen(RenderWorldEvent.class);
+        this.removeListen(SendPacketEvent.class);
+
+		    if (blockBox != null) blockBox.close();
+	 }
+
+    @Override
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "RenderWorldEvent": {
                 // Make sure they are not too far apart.
-                if (this.shouldRender()) renderReadings(mStack);
+                if (clickCount < 2 || clickCount % 2 != 0 || !this.shouldRender()) break;
+
+                renderReadings( ((RenderWorldEvent)(event)).mStack );
                 
                 break;
             }
-            case "onSendPacket": {
-                if (args[0] instanceof net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket) {
-                    PlayerActionC2SPacket packet = (PlayerActionC2SPacket)args[0];
+            case "SendPacketEvent": {
+                SendPacketEvent e = (SendPacketEvent)event;
 
-                    if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
+                // Make sure it is an action packet
+                if (!(e.packet instanceof PlayerActionC2SPacket)) break;
 
-                    // Check if this is the first hit or not.
-                    if (clickCount % 2 == 0) {
-                        // Start Pos
-                        start = packet.getPos();
+                // Cast the packet
+                PlayerActionC2SPacket packet = (PlayerActionC2SPacket)(e.packet);
 
-                        clickCount++;
-                        return;
-                    }
-                    
-                    // End Pos
+                // Make sure that it is a start destroy block packet
+                if (packet.getAction() != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
+
+                // Check if this is the first hit.
+                if (clickCount % 2 == 0) {
+                    // Record first hit
+                    start = packet.getPos();
+                } else {
+                    // If this is not the first hit...
+                    // Record end position
                     end = packet.getPos();
 
                     // Calculate Distance
@@ -236,11 +244,10 @@ public class TapeMeasure extends Cheat {
                     else this.handleVecDistance(delta);
 
                     if (!this.shouldRender()) this.displayMessage("visuals disabled due to the start and end point being out of render distance!");
-
-                    clickCount++;
-
-                    return;
                 }
+            
+                clickCount++;
+                return;
             }
         }
     }

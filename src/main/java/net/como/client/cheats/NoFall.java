@@ -1,7 +1,9 @@
 package net.como.client.cheats;
 
 import net.como.client.CheatClient;
+import net.como.client.events.MovementPacketEvent;
 import net.como.client.structures.Cheat;
+import net.como.client.structures.events.Event;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
@@ -13,9 +15,19 @@ public class NoFall extends Cheat {
     }
 
     @Override
-    public void receiveEvent(String eventName, Object[] args) {
-        switch (eventName) {
-            case "onMovementPacket": {
+    public void activate() {
+        this.addListen(MovementPacketEvent.class);
+    }
+
+    @Override
+    public void deactivate() {
+        this.removeListen(MovementPacketEvent.class);
+    }
+
+    @Override
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "MovementPacketEvent": {
                 // Get the localplayer.
                 ClientPlayerEntity player = CheatClient.me();
 

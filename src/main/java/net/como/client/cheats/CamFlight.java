@@ -1,8 +1,10 @@
 package net.como.client.cheats;
 
 import net.como.client.CheatClient;
+import net.como.client.events.MovementPacketEvent;
 import net.como.client.structures.Cheat;
-import net.como.client.structures.Setting;
+import net.como.client.structures.events.Event;
+import net.como.client.structures.settings.Setting;
 import net.minecraft.util.math.Vec3d;
 
 public class CamFlight extends Cheat {
@@ -13,11 +15,21 @@ public class CamFlight extends Cheat {
 
         this.description = "Fly quickly where ever your camera is looking.";
     }
+  
+    @Override
+    public void activate() {
+        this.addListen(MovementPacketEvent.class);
+    }
 
-    public void receiveEvent(String eventName, Object[] args) {
-        switch (eventName) {
-            case "onMovementPacket": {
-                // This makes things a lot more controlable.
+    @Override
+    public void deactivate() {
+        this.removeListen(MovementPacketEvent.class);
+    }
+
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "MovementPacketEvent": {
+                // This makes things a lot more controllable.
                 if (!CheatClient.me().input.pressingForward) break;
 
                 // Get the speed from our settings system.

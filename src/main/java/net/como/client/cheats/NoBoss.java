@@ -1,9 +1,9 @@
 package net.como.client.cheats;
 
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
+import net.como.client.events.BossBarHudRenderEvent;
+import net.como.client.events.BossBarHudSkyEffectsEvent;
 import net.como.client.structures.Cheat;
+import net.como.client.structures.events.Event;
 
 public class NoBoss extends Cheat {
     public NoBoss() {
@@ -11,22 +11,28 @@ public class NoBoss extends Cheat {
 
         this.description = "Hide annoying boss bars and their effects.";
     }
+  
+    @Override
+    public void activate() {
+        this.addListen(BossBarHudRenderEvent.class);
+        this.addListen(BossBarHudSkyEffectsEvent.class);
+    }
 
-    @SuppressWarnings("unchecked")
-    public void receiveEvent(String eventName, Object[] args) {
-        switch (eventName) {
-            case "onBossBarHudRender": {
-                // Stop the boss bars being rendered
-                CallbackInfo ci = (CallbackInfo)args[0];
+    @Override
+    public void deactivate() {
+        this.removeListen(BossBarHudRenderEvent.class);
+        this.removeListen(BossBarHudSkyEffectsEvent.class);
+    }
 
-                ci.cancel();
+    @Override
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "BossBarHudRenderEvent": {
+                ((BossBarHudRenderEvent)event).ci.cancel();
                 break;
             }
-            case "onBossBarHudSkyEffects": {
-                // Stop the sky and what not being changed.
-                CallbackInfoReturnable<Boolean> cir = (CallbackInfoReturnable<Boolean>)args[0];
-                cir.setReturnValue(false);
-                
+            case "BossBarHudSkyEffectsEvent": {
+                ((BossBarHudSkyEffectsEvent)event).cir.setReturnValue(false);;
                 break;
             }
         }
