@@ -5,11 +5,8 @@ import net.como.client.events.MovementPacketEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
+import net.como.client.utils.ClientUtils;
 import net.como.client.utils.MathsUtil;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-
 import net.minecraft.util.math.Vec3d;
 
 public class ElytraFlight extends Cheat {
@@ -67,10 +64,6 @@ public class ElytraFlight extends Cheat {
         // Set the velocity
         CheatClient.me().setVelocity(velocity);
     }
-    private boolean hasElytraEquipt() {
-        ItemStack chestSlot = CheatClient.me().getEquippedStack(EquipmentSlot.CHEST);
-		return (chestSlot.getItem() == Items.ELYTRA);
-    }
 
     @Override
     public void activate() {
@@ -86,7 +79,7 @@ public class ElytraFlight extends Cheat {
         switch (event.getClass().getSimpleName()) {
             case "MovementPacketEvent": {
                 // Make sure that we have an elytra equip
-                if (!this.hasElytraEquipt()) break;
+                if (!ClientUtils.hasElytraEquipt()) break;
 
                 // Make sure that we are using the elytra
                 if (!CheatClient.me().isFallFlying()) break;
