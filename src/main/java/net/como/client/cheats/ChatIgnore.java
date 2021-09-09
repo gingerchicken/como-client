@@ -2,14 +2,12 @@ package net.como.client.cheats;
 
 import java.util.HashMap;
 
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import net.como.client.CheatClient;
 import net.como.client.commands.CommandChatIgnore;
+import net.como.client.events.AddMessageEvent;
 import net.como.client.structures.Cheat;
-import net.como.client.structures.Setting;
-
-import net.minecraft.text.Text;
+import net.como.client.structures.events.Event;
+import net.como.client.structures.settings.Setting;
 
 public class ChatIgnore extends Cheat {
 
@@ -34,25 +32,27 @@ public class ChatIgnore extends Cheat {
         return false;
     }
 
+    @Override
     public void activate() {
+        this.addListen(AddMessageEvent.class);
         this.displayMessage("You can now add a phrase to emit from chat using the '.ignore' command!");
     }
 
     @Override
-    public void receiveEvent(String eventName, Object[] args) {
-        switch (eventName) {
-            case "onAddMessage": {
-                if (!this.isEnabled()) break;
+    public void deactivate() {
+        this.removeListen(AddMessageEvent.class);
+    }
 
-                Text message = (Text)args[0];
-                CallbackInfo ci = (CallbackInfo)args[2];
-
-                String rawMessage = message.getString();
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "AddMessageEvent": {
+                AddMessageEvent e = (AddMessageEvent)event;
+                String rawMessage = e.chatText.getString();
 
                 if (this.shouldBlock(rawMessage)) {
                     System.out.println("(BLOCKED MESSAGE) " + rawMessage);
 
-                    ci.cancel();
+                    e.ci.cancel();
                 }
             }
         }

@@ -1,7 +1,5 @@
 package net.como.client.cheats;
 
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import net.como.client.structures.Cheat;
 
 public class Blink extends Cheat {
@@ -11,17 +9,6 @@ public class Blink extends Cheat {
 
         this.description = "Delay your packets being sent.";
     }
-
-    // TODO this is not how blink works lol - store the packets and send them.
-    @Override
-    public void receiveEvent(String eventName, Object[] args) {
-        switch (eventName) {
-            case "onMovementPacket": {
-                CallbackInfo ci = (CallbackInfo)args[0];
-
-                // Just don't send movement packets.
-                ci.cancel();
-            }
-        }
-    }
+  
+    // Actually make this work at some point
 }

@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.CheatClient;
+import net.como.client.events.RenderItemEvent;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
@@ -21,7 +22,7 @@ public class HeldItemRendererMixin {
 
     @Inject(at = @At("HEAD"), method="renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformation$Mode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", cancellable=true)
     private void onRenderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        CheatClient.triggerAllEvent("onRenderItem", new Object[]{
+        CheatClient.emitter.triggerEvent(new RenderItemEvent(
             entity,
             stack,
             renderMode,
@@ -30,6 +31,6 @@ public class HeldItemRendererMixin {
             vertexConsumers,
             light,
             ci
-        });
+        ));
     }
 }

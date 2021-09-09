@@ -1,8 +1,11 @@
 package net.como.client.cheats;
 
 import net.como.client.CheatClient;
+import net.como.client.events.ClientTickEvent;
+import net.como.client.events.MovementPacketEvent;
 import net.como.client.structures.Cheat;
-import net.como.client.structures.Setting;
+import net.como.client.structures.events.Event;
+import net.como.client.structures.settings.Setting;
 
 import net.minecraft.util.math.Vec3d;
 
@@ -55,16 +58,27 @@ public class SpeedHack extends Cheat {
     }
 
     @Override
-    public void receiveEvent(String eventName, Object[] args) {
-        switch(eventName) {
-            case "onMovementPacket": {
-                // Only do it while we are on the ground else we are basically just flying.
+    public void activate() {
+        this.addListen(MovementPacketEvent.class);
+        this.addListen(ClientTickEvent.class);
+    }
+
+    @Override
+    public void deactivate() {
+        this.removeListen(MovementPacketEvent.class);
+        this.removeListen(ClientTickEvent.class);
+    }
+
+    @Override
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "MovementPacketEvent": {
                 if (CheatClient.me().isOnGround() || CheatClient.me().isTouchingWater())
                     CheatClient.me().setVelocity(this.getNewVelocity());
                 
                 break;
             }
-            case "onClientTick": {
+            case "ClientTickEvent": {
                 // If we are not moving, don't move ;)
                 if (!(CheatClient.me().input.pressingForward || CheatClient.me().input.pressingBack || CheatClient.me().input.pressingLeft || CheatClient.me().input.pressingRight)) {
                     // Still... but not flying...
@@ -72,6 +86,7 @@ public class SpeedHack extends Cheat {
                     
                     CheatClient.me().setVelocity(curr.multiply(new Vec3d(0, 1, 0)));
                 }
+
                 break;
             }
         }

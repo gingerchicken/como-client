@@ -6,6 +6,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.CheatClient;
+import net.como.client.events.ShouldDrawBlockSideEvent;
+import net.como.client.structures.Cheat;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemConvertible;
@@ -22,15 +24,6 @@ public abstract class BlockMixin implements ItemConvertible {
 		cancellable = true
     )
 	private static void onShouldDrawSide(BlockState state, BlockView blockView, BlockPos pos, Direction side, BlockPos blockPos,  CallbackInfoReturnable<Boolean> cir) {
-        CheatClient.triggerAllEvent("onShouldDrawBlockSide", new Object[] {
-            state, blockView, pos, side, blockPos, cir
-        });
-	}
-	
-	@Inject(at = {@At("HEAD")}, method = {"getVelocityMultiplier()F"}, cancellable = true)
-    private void onGetVelocityMultiplier(CallbackInfoReturnable<Float> cir) {
-        CheatClient.triggerAllEvent("onGetVelocityMultiplier", new Object[] {
-            cir
-        });
+        CheatClient.emitter.triggerEvent(new ShouldDrawBlockSideEvent(state, blockView, pos, side, blockPos, cir));
 	}
 }

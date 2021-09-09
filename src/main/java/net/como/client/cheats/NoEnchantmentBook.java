@@ -1,9 +1,8 @@
 package net.como.client.cheats;
 
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
+import net.como.client.events.BlockEntityRenderEvent;
 import net.como.client.structures.Cheat;
-import net.minecraft.block.entity.BlockEntity;
+import net.como.client.structures.events.Event;
 
 public class NoEnchantmentBook extends Cheat {
     public NoEnchantmentBook() {
@@ -13,15 +12,24 @@ public class NoEnchantmentBook extends Cheat {
     }
 
     @Override
-    public void receiveEvent(String eventName, Object[] args) {
-        switch (eventName) {
-            case "onBlockEntityRender": {
-                BlockEntity blockEntity = (BlockEntity)args[0];
-                CallbackInfo ci = (CallbackInfo)args[4];
+    public void activate() {
+        this.addListen(BlockEntityRenderEvent.class);
+    }
+
+    @Override
+    public void deactivate() {
+        this.removeListen(BlockEntityRenderEvent.class);
+    }
+
+    @Override
+    public void fireEvent(Event event) {
+        switch (event.getClass().getSimpleName()) {
+            case "BlockEntityRenderEvent": {
+                BlockEntityRenderEvent e = (BlockEntityRenderEvent)event;
 
                 // Don't render the block entity i.e. the book.
-                if (blockEntity instanceof net.minecraft.block.entity.EnchantingTableBlockEntity) {
-                    ci.cancel();
+                if (e.blockEntity instanceof net.minecraft.block.entity.EnchantingTableBlockEntity) {
+                    e.ci.cancel();
                 }
 
                 break;
