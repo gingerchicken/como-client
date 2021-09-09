@@ -6,7 +6,7 @@ import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ClientUtils;
-import net.como.client.utils.MathsUtil;
+import net.como.client.utils.MathsUtils;
 import net.minecraft.util.math.Vec3d;
 
 public class ElytraFlight extends Cheat {
@@ -46,8 +46,8 @@ public class ElytraFlight extends Cheat {
         Double maxSpeed = (Double)this.getSetting("MaxSpeed").value;
 
         // We only need these two velocities since the other you can calculate just by multiplying these out by -1 :P
-		Vec3d forward = MathsUtil.getForwardVelocity(CheatClient.me());
-        Vec3d right   = MathsUtil.getRightVelocity(CheatClient.me());
+		Vec3d forward = MathsUtils.getForwardVelocity(CheatClient.me());
+        Vec3d right   = MathsUtils.getRightVelocity(CheatClient.me());
 
         // Forward + Back
         if (CheatClient.me().input.pressingForward) velocity = velocity.add(forward.multiply(new Vec3d(maxSpeed, 0, maxSpeed)));

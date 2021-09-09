@@ -10,7 +10,7 @@ import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
-import net.como.client.utils.MathsUtil;
+import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.GameRenderer;
@@ -128,9 +128,9 @@ public class TapeMeasure extends Cheat {
             Math.abs(delta.getZ())
         );
 
-        int signX = MathsUtil.getSign(delta.getX());
-        int signY = MathsUtil.getSign(delta.getY());
-        int signZ = MathsUtil.getSign(delta.getZ());
+        int signX = MathsUtils.getSign(delta.getX());
+        int signY = MathsUtils.getSign(delta.getY());
+        int signZ = MathsUtils.getSign(delta.getZ());
 
         // Render all of the different blocks
         BlockPos origin = this.start;
@@ -170,7 +170,7 @@ public class TapeMeasure extends Cheat {
         Boolean disableRenderCap = (Boolean)this.getSetting("DisableRenderCap").value;
         if (disableRenderCap) return true;
 
-        Vec3d blockVec = MathsUtil.blockPosToVec3d(pos);
+        Vec3d blockVec = MathsUtils.blockPosToVec3d(pos);
 
         double distanceToBlock = CheatClient.me().getPos().distanceTo(blockVec);
         CheatClient.me();
