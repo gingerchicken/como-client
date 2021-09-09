@@ -60,6 +60,7 @@ public class CheatClient {
         Cheats.put("fullbright", new FullBright());
         Cheats.put("autoreconnect", new AutoReconnect());
         Cheats.put("autorespawn", new AutoRespawn());
+        Cheats.put("nofirecam", new NoFireCam());
 
         registerCheatCommands();
     }
