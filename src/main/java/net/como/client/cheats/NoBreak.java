@@ -57,7 +57,7 @@ public class NoBreak extends Cheat {
                         if (currentDurability > minDurability) break;
 
                         // Make sure to tell the user what we are doing.
-                        CheatClient.displayChatMessage(String.format("Breaking prevented by NoBreak (less than %d durability met on active tool.)", minDurability));
+                        this.displayMessage(String.format("Breaking prevented by NoBreak (less than %d durability met on active tool.)", minDurability));
 
                         // We just need to tell the server that we actually stopped mining the block
                         PlayerActionC2SPacket stopPacket = new PlayerActionC2SPacket(Action.ABORT_DESTROY_BLOCK, actionPacket.getPos(), actionPacket.getDirection());
