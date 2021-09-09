@@ -4,7 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-public class MathsUtil {
+public class MathsUtils {
     public static Vec3d getForwardVelocity(Entity entity) {
         return getVelocityRelYaw(yawInRadians(entity));
     }
