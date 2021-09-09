@@ -23,6 +23,7 @@
     "MultiplayerScreenMixin",
     "DeathScreenMixin",
     "InGameOverlayRenderMixin",
+    "WorldMixin",
 
     "botch/AutoReconnectMixin"
   ],
