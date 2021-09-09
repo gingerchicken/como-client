@@ -12,7 +12,6 @@ import net.como.client.cheats.AutoReconnect;
 
 import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -53,7 +52,8 @@ public class AutoReconnectMixin extends Screen {
         if (this.isManualMode()) return;
 
         reconnectButton.setMessage(
-            new LiteralText(String.format("AutoReconnect (%f)", this.getAutoReconnect().workCountdown(this.parent)))
+            // We add one to the value instead of math.ceil'ing it.
+            new LiteralText(String.format("AutoReconnect (%d)", (int)(this.getAutoReconnect().workCountdown(this.parent)) + 1))
         );
     }
 
