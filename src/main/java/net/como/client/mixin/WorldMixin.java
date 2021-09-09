@@ -11,8 +11,8 @@ import net.minecraft.world.World;
 
 @Mixin(World.class)
 public class WorldMixin {
-    @Inject(at = @At("RETURN"), method = "getRainGradient()F", cancellable = true)
-    private void onIsRaining(CallbackInfoReturnable<Float> cir) {
-        CheatClient.emitter.triggerEvent(new GetRainGradientEvent(cir));
+    @Inject(at = @At("RETURN"), method = "getRainGradient(F)F", cancellable = true)
+    private void onIsRaining(float delta, CallbackInfoReturnable<Float> cir) {
+        CheatClient.emitter.triggerEvent(new GetRainGradientEvent(delta, cir));
     }
 }

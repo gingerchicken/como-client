@@ -6,8 +6,10 @@ import net.como.client.structures.events.Event;
 
 public class GetRainGradientEvent extends Event {
     public CallbackInfoReturnable<Float> cir;
+    public float delta;
 
-    public GetRainGradientEvent(CallbackInfoReturnable<Float> cir) {
+    public GetRainGradientEvent(float delta, CallbackInfoReturnable<Float> cir) {
+        this.delta = delta;
         this.cir = cir;
     }
 }
