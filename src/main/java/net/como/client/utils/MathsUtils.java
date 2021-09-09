@@ -36,4 +36,8 @@ public class MathsUtils {
     public static Vec3d blockPosToVec3d(BlockPos bP) {
         return new Vec3d(bP.getX() + 0.5, bP.getY() + 0.5, bP.getZ() + 0.5);
     }
+
+    public static Vec3d Vec3dDiff(Vec3d v1, Vec3d v2) {
+        return v1.add( v2.multiply(-1) );
+    }
 }
