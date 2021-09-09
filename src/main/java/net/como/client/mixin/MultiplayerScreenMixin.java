@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.CheatClient;
+import net.como.client.events.ConnectEvent;
 import net.como.client.utils.ServerUtils;
 import net.minecraft.client.network.ServerInfo;
 
@@ -19,8 +20,8 @@ public class MultiplayerScreenMixin {
         // For the util
         ServerUtils.setLastServer(entry);
 
-		CheatClient.triggerAllEvent("onConnect", new Object[] {
-            entry, ci
-        });
+        // For the event
+		CheatClient.emitter.triggerEvent(new ConnectEvent(entry, ci));
+        
 	}
 }
