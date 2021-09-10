@@ -2,7 +2,7 @@ package net.como.client.cheats;
 
 import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
-import net.como.client.events.MovementPacketEvent;
+import net.como.client.events.PreMovementPacketEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
@@ -59,20 +59,20 @@ public class SpeedHack extends Cheat {
 
     @Override
     public void activate() {
-        this.addListen(MovementPacketEvent.class);
+        this.addListen(PreMovementPacketEvent.class);
         this.addListen(ClientTickEvent.class);
     }
 
     @Override
     public void deactivate() {
-        this.removeListen(MovementPacketEvent.class);
+        this.removeListen(PreMovementPacketEvent.class);
         this.removeListen(ClientTickEvent.class);
     }
 
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
-            case "MovementPacketEvent": {
+            case "PreMovementPacketEvent": {
                 if (CheatClient.me().isOnGround() || CheatClient.me().isTouchingWater())
                     CheatClient.me().setVelocity(this.getNewVelocity());
                 

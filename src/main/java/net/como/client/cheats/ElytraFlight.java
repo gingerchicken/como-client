@@ -1,7 +1,7 @@
 package net.como.client.cheats;
 
 import net.como.client.CheatClient;
-import net.como.client.events.MovementPacketEvent;
+import net.como.client.events.PreMovementPacketEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
@@ -67,17 +67,17 @@ public class ElytraFlight extends Cheat {
 
     @Override
     public void activate() {
-        this.addListen(MovementPacketEvent.class);
+        this.addListen(PreMovementPacketEvent.class);
     }
 
     @Override
     public void deactivate() {
-        this.removeListen(MovementPacketEvent.class);
+        this.removeListen(PreMovementPacketEvent.class);
     }
 
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
-            case "MovementPacketEvent": {
+            case "PreMovementPacketEvent": {
                 // Make sure that we have an elytra equip
                 if (!ClientUtils.hasElytraEquipt()) break;
 
