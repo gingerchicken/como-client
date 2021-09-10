@@ -61,6 +61,7 @@ public class CheatClient {
         Cheats.put("autoreconnect", new AutoReconnect());
         Cheats.put("autorespawn", new AutoRespawn());
         Cheats.put("nofirecam", new NoFireCam());
+        Cheats.put("killaura", new KillAura());
 
         registerCheatCommands();
     }
