@@ -9,8 +9,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
-import net.como.client.events.MovementPacketEvent;
+import net.como.client.events.PreMovementPacketEvent;
 import net.como.client.events.PlayerChatEvent;
+import net.como.client.events.PostMovementPacketEvent;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -31,8 +32,13 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
     }
 
     @Inject(at = @At("HEAD"), method="sendMovementPackets()V", cancellable = true)
-    private void onSendMovementPackets(CallbackInfo ci) {
-        CheatClient.emitter.triggerEvent(new MovementPacketEvent(ci));
+    private void beforeSendMovementPackets(CallbackInfo ci) {
+        CheatClient.emitter.triggerEvent(new PreMovementPacketEvent(ci));
+    }
+
+    @Inject(at = @At("TAIL"), method="sendMovementPackets()V", cancellable = false)
+    private void afterSendMovementPackets(CallbackInfo ci) {
+        CheatClient.emitter.triggerEvent(new PostMovementPacketEvent(ci));
     }
 
     @Inject(at = @At("RETURN"), method="tick()V", cancellable = false)
