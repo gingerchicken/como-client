@@ -25,6 +25,9 @@ public class TimerMixin {
         method = {"beginRenderTick(J)I"}
     )
 	public void onBeginRenderTick(long timeMillis, CallbackInfoReturnable<Integer> cir) {
+        // Make sure that we are playing
+        if (CheatClient.me() == null) return;
+
         Timer timer = (Timer)CheatClient.Cheats.get("timer");
         if (!timer.isEnabled()) return;
 
