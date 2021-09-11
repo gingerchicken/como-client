@@ -25,6 +25,7 @@
     "InGameOverlayRenderMixin",
     "WorldMixin",
 
+    "botch/TimerMixin",
     "botch/AutoReconnectMixin"
   ],
   "injectors": {
