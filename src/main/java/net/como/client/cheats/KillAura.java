@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import net.como.client.CheatClient;
-import net.como.client.ServerClientRotation;
+import net.como.client.components.ServerClientRotation;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Cheat;
