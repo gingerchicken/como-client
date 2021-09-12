@@ -66,6 +66,7 @@ public class CheatClient {
         Cheats.put("nofirecam", new NoFireCam());
         Cheats.put("killaura", new KillAura());
         Cheats.put("timer", new Timer());
+        Cheats.put("criticals", new Criticals());
 
         registerCheatCommands();
     }
