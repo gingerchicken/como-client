@@ -12,6 +12,8 @@ import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ClientUtils;
+import net.como.client.utils.RotationUtils;
+import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
@@ -28,6 +30,8 @@ public class KillAura extends Cheat {
         this.addSetting(new Setting("SilentAim", true));
 
         this.addSetting(new Setting("AttackFriends", false));
+        this.addSetting(new Setting("TargetClosestAngle", true));
+        this.addSetting(new Setting("MaxFOV", 25d));
     }
     
     private ServerClientRotation scRot = new ServerClientRotation();
@@ -49,6 +53,10 @@ public class KillAura extends Cheat {
         scRot.removeListeners(this);
     }
 
+    private double getLookDistance(Entity entity) {
+        return RotationUtils.getRequiredRotation( entity.getEyePos() ).difference( ClientUtils.getRotation() ).magnitude();
+    }
+
     private Stream<Entity> applyFilters(Stream<Entity> stream) {
 
         return stream
@@ -58,6 +66,12 @@ public class KillAura extends Cheat {
 
             // Make sure we are not gonna crystal ourselves.
             .filter(e -> !(e instanceof EndCrystalEntity))
+
+            // Make sure that they are not over our max distance
+            .filter(e -> !(e.distanceTo(CheatClient.me()) > (double)this.getSetting("MaxDistance").value))
+
+            // Make sure they are not out of the FOV range
+            .filter(e -> !(this.getLookDistance(e) > (double)this.getSetting("MaxFOV").value))
 
             // Make sure that they are alive
             .filter(e -> e.isAlive())
@@ -71,6 +85,15 @@ public class KillAura extends Cheat {
 
     private Comparator<Entity> getComparator() {
         // Distance to localplayer
+
+        if ((boolean)this.getSetting("TargetClosestAngle").value) {
+            return new Comparator<Entity>() {
+                public int compare(Entity e1, Entity e2) {
+                    return Double.compare(getLookDistance(e1), getLookDistance(e2));
+                }
+            };
+        }
+
         return new Comparator<Entity>() {
             public int compare(Entity e1, Entity e2) {
                 return Double.compare(e1.distanceTo(CheatClient.me()), e2.distanceTo(CheatClient.me()));
