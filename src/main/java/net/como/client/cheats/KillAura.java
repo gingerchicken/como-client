@@ -15,6 +15,7 @@ import net.como.client.utils.ClientUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
 public class KillAura extends Cheat {
@@ -25,6 +26,8 @@ public class KillAura extends Cheat {
         this.addSetting(new Setting("MaxDistance", 7d));
         this.addSetting(new Setting("Delay", 0d));
         this.addSetting(new Setting("SilentAim", true));
+
+        this.addSetting(new Setting("AttackFriends", false));
     }
     
     private ServerClientRotation scRot = new ServerClientRotation();
@@ -47,6 +50,7 @@ public class KillAura extends Cheat {
     }
 
     private Stream<Entity> applyFilters(Stream<Entity> stream) {
+
         return stream
             // Basics
             .filter(e -> e instanceof LivingEntity)
@@ -57,6 +61,9 @@ public class KillAura extends Cheat {
 
             // Make sure that they are alive
             .filter(e -> e.isAlive())
+
+            // Make sure that we are not attacking friends where needed
+            .filter(e -> !(e instanceof PlayerEntity) || !(CheatClient.friendsManager.onFriendList((PlayerEntity)e)) || (boolean)this.getSetting("AttackFriends").value )
             
             // Make sure it ain't us
             .filter(e -> e != CheatClient.me());
