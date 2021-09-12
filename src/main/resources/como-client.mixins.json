@@ -24,6 +24,7 @@
     "DeathScreenMixin",
     "InGameOverlayRenderMixin",
     "WorldMixin",
+    "ClientPlayerInteractionManagerMixin",
 
     "botch/TimerMixin",
     "botch/AutoReconnectMixin"
