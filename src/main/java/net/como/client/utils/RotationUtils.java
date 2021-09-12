@@ -37,5 +37,13 @@ public class RotationUtils {
             this.yaw = MathHelper.wrapDegrees(yaw);
             this.pitch = MathHelper.wrapDegrees(pitch);
         }
+
+        public double magnitude() {
+            return Math.sqrt(this.yaw*this.yaw + this.pitch*this.pitch);
+        }
+
+        public Rotation difference(Rotation other) {
+            return new Rotation(this.yaw - other.yaw, this.pitch - other.pitch);
+        }
     }
 }
