@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 
@@ -27,8 +28,8 @@ public class ClientUtils {
     }
 
     public static void hitEntity(Entity target) {
-        CheatClient.me().swingHand(Hand.MAIN_HAND);
         CheatClient.getClient().interactionManager.attackEntity(CheatClient.me(), target);
+        CheatClient.me().swingHand(Hand.MAIN_HAND);
     }
 
     public static Rotation getRotation() {
