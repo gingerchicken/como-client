@@ -7,8 +7,10 @@ import java.util.Map.Entry;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.cheats.*;
+import net.como.client.commands.FriendsCommand;
 import net.como.client.commands.structures.CheatCommand;
 import net.como.client.commands.structures.CommandHandler;
+import net.como.client.components.FriendsManager;
 import net.como.client.utils.*;
 
 import net.como.client.structures.Cheat;
@@ -20,12 +22,15 @@ public class CheatClient {
     private static String CHAT_PREFIX = ChatUtils.WHITE + "[" + ChatUtils.GREEN + "Como Client" + ChatUtils.WHITE + "] ";
 
     public static CommandHandler commandHandler = new CommandHandler(".");
-    public static EventEmitter emitter;
+    public static EventEmitter emitter = new EventEmitter();
+    public static FriendsManager friendsManager = new FriendsManager();
 
     private static void registerCheatCommands() {
+        // Add the friends command
+        commandHandler.registerCommand(new FriendsCommand(friendsManager));
+
         // Add all of the cheats as commands.
         for (Entry<String, Cheat> entry : Cheats.entrySet()) {
-
             commandHandler.registerCommand(new CheatCommand(entry.getKey(), entry.getValue()));
         }
     }
@@ -35,8 +40,6 @@ public class CheatClient {
 
     public static HashMap<String, Cheat> Cheats = new HashMap<String, Cheat>();
     static {
-        emitter = new EventEmitter();
-
         Cheats.put("flight", new Flight());
         Cheats.put("blink", new Blink());
         Cheats.put("chatignore", new ChatIgnore());
