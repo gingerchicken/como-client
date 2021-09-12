@@ -38,4 +38,14 @@ public class ClientUtils {
             (double)CheatClient.me().getPitch()
         );
     }
+
+    public static void sendPos(double x, double y, double z, boolean onGround) {
+        CheatClient.me().networkHandler.sendPacket(
+            new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, onGround)
+        );
+    }
+
+    public static void sendPos(Vec3d pos, boolean onGround) {
+        sendPos(pos.x, pos.y, pos.z, onGround);
+    }
 }
