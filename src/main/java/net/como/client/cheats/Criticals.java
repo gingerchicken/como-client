@@ -4,7 +4,6 @@ import net.como.client.CheatClient;
 import net.como.client.events.OnAttackEntityEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ClientUtils;
 import net.minecraft.util.math.Vec3d;
 
