@@ -40,7 +40,7 @@ public class Command {
     public Boolean handleHelp(String[] args) {
         if (!this.shouldShowHelp(args)) return false;
 
-        CheatClient.displayChatMessage(String.format("%s%s", ChatUtils.WHITE, this.getHelpText()));
+        this.displayChatMessage(String.format("%s%s", ChatUtils.WHITE, this.getHelpText()));
         return true;
     }
 
