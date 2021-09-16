@@ -13,7 +13,6 @@ import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.RotationUtils;
-import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
