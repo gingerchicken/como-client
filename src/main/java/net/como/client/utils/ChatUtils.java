@@ -31,4 +31,8 @@ public class ChatUtils {
 
         chatHud.addMessage(Text.of(message));
     }
+
+    public static String chatPrefix(String name) {
+        return String.format("%s[%s%s%s] ", ChatUtils.WHITE, ChatUtils.GREEN, name, ChatUtils.WHITE);
+    }
 }
