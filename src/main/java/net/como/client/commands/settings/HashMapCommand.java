@@ -49,8 +49,8 @@ public class HashMapCommand extends CommandNode {
     }
     
 
-    public HashMapCommand(String command, HashMap<String, Boolean> refMap) {
-        super(command, "Adjust a map");
+    public HashMapCommand(HashMap<String, Boolean> refMap) {
+        super("command", "Adjust a map");
 
         // Add sub commands.
         this.addSubCommand(new Add(refMap));

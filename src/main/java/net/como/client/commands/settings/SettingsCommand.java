@@ -84,7 +84,7 @@ public class SettingsCommand extends Command {
 
                 // Generate a new command and trigger it.
                 // TODO this is now how this is meant to be used but I cannot be bothered to do it another way, please be bothered at some point.
-                HashMapCommand hashCommands = new HashMapCommand("command", map);
+                HashMapCommand hashCommands = new HashMapCommand(map);
 
                 // Return the result
                 return hashCommands.trigger(Arrays.copyOfRange(args, 1, args.length));
