@@ -9,6 +9,10 @@ public class Command {
 
     public String commandDisplay = "Como Client";
 
+    public String combineArgs(String[] args) {
+        return String.join(" ", args);
+    }
+
     public void displayChatMessage(String message) {
         ChatUtils.displayMessage(
             String.format("%s%s", ChatUtils.chatPrefix(commandDisplay), message)
