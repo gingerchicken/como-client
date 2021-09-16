@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.cheats.*;
 import net.como.client.commands.FriendsCommand;
+import net.como.client.commands.PanicCommand;
 import net.como.client.commands.structures.CheatCommand;
 import net.como.client.commands.structures.CommandHandler;
 import net.como.client.components.FriendsManager;
@@ -19,7 +20,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 
 public class CheatClient {
-    private static String CHAT_PREFIX = ChatUtils.WHITE + "[" + ChatUtils.GREEN + "Como Client" + ChatUtils.WHITE + "] ";
+    private static String CHAT_PREFIX = ChatUtils.chatPrefix("Como Client");
 
     public static CommandHandler commandHandler = new CommandHandler(".");
     public static EventEmitter emitter = new EventEmitter();
@@ -28,6 +29,9 @@ public class CheatClient {
     private static void registerCheatCommands() {
         // Add the friends command
         commandHandler.registerCommand(new FriendsCommand(friendsManager));
+
+        // Add Panic command
+        commandHandler.registerCommand(new PanicCommand());
 
         // Add all of the cheats as commands.
         for (Entry<String, Cheat> entry : Cheats.entrySet()) {
