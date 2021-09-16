@@ -17,7 +17,9 @@ public class Cheat extends Settings implements EventListener {
     public boolean modListDisplay = true;
     
     public void displayMessage(String msg) {
-        ChatUtils.displayMessage(String.format("%s[%s%s%s] %s", ChatUtils.WHITE, ChatUtils.GREEN, this.getName(), ChatUtils.WHITE, msg));
+        ChatUtils.displayMessage(
+            String.format("%s %s", ChatUtils.chatPrefix(this.getName()), msg)
+        );
     }
 
     // Getters and setters
