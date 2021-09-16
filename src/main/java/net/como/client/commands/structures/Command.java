@@ -1,12 +1,19 @@
 package net.como.client.commands.structures;
 
-import net.como.client.CheatClient;
 import net.como.client.utils.ChatUtils;
 
 public class Command {
     private String command;
     private String helpText;
     private String description = "A really cool command!";
+
+    public String commandDisplay = "Como Client";
+
+    public void displayChatMessage(String message) {
+        ChatUtils.displayMessage(
+            String.format("%s%s", ChatUtils.chatPrefix(commandDisplay), message)
+        );
+    }
 
     public String getCommand() {
         return this.command;
