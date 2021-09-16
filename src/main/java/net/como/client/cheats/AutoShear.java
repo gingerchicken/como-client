@@ -7,7 +7,6 @@ import net.como.client.CheatClient;
 import net.como.client.events.RenderEntityEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.settings.Setting;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.util.Hand;

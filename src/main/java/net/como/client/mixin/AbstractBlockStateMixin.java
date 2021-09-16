@@ -7,10 +7,8 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.CheatClient;
 import net.como.client.events.GetAmbientOcclusionLightLevelEvent;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.block.AbstractBlock.AbstractBlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
 @Mixin(AbstractBlockState.class)

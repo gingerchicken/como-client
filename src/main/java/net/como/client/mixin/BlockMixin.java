@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.CheatClient;
 import net.como.client.events.ShouldDrawBlockSideEvent;
-import net.como.client.structures.Cheat;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemConvertible;
