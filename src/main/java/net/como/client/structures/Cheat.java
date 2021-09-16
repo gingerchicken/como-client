@@ -18,7 +18,7 @@ public class Cheat extends Settings implements EventListener {
     
     public void displayMessage(String msg) {
         ChatUtils.displayMessage(
-            String.format("%s %s", ChatUtils.chatPrefix(this.getName()), msg)
+            String.format("%s%s", ChatUtils.chatPrefix(this.getName()), msg)
         );
     }
 
