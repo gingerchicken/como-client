@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import net.como.client.CheatClient;
-import net.como.client.commands.settings.HashMapSettings.HashMapCommandNode;
 import net.como.client.commands.structures.Command;
 import net.como.client.structures.settings.*;
 import net.como.client.utils.ChatUtils;
@@ -85,7 +84,7 @@ public class SettingsCommand extends Command {
 
                 // Generate a new command and trigger it.
                 // TODO this is now how this is meant to be used but I cannot be bothered to do it another way, please be bothered at some point.
-                HashMapCommandNode hashCommands = new HashMapCommandNode("command", map);
+                HashMapCommand hashCommands = new HashMapCommand("command", map);
 
                 // Return the result
                 return hashCommands.trigger(Arrays.copyOfRange(args, 1, args.length));
