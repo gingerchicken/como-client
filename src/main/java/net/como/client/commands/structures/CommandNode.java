@@ -3,9 +3,6 @@ package net.como.client.commands.structures;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import net.como.client.CheatClient;
-import net.minecraft.util.ChatUtil;
-
 public class CommandNode extends Command {
     HashMap<String, Command> subCommands = new HashMap<String, Command>();
 
@@ -26,9 +23,9 @@ public class CommandNode extends Command {
     public Boolean handleHelp(String[] args) {
         if (!this.shouldShowHelp(args)) return false;
 
-        CheatClient.displayChatMessage("List of sub commands: ");
+        this.displayChatMessage("List of sub commands: ");
         for (Command cmd : subCommands.values()) {
-            CheatClient.displayChatMessage(
+            this.displayChatMessage(
                 String.format("-> %s - %s", cmd.getCommand(), cmd.getDescription())
             );
         }

@@ -2,7 +2,6 @@ package net.como.client.commands;
 
 import java.util.List;
 
-import net.como.client.CheatClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
 import net.como.client.components.FriendsManager;
@@ -15,13 +14,15 @@ public class FriendsCommand extends CommandNode {
 
         public FriendsSubCommand(String command, String helpText, String description) {
             super(command, helpText, description);
+            
+            this.commandDisplay = "FriendsList";
         }
         
         public Friend findFriendWithMessages(String input) {
             Friend target = Friend.fromMiscString(input);
 
             if (target == null) {
-                CheatClient.displayChatMessage(String.format("%sUnable to find player '%s', maybe try again when the player is online or use their UUID.", ChatUtils.RED, input));
+                this.displayChatMessage(String.format("%sUnable to find player '%s', maybe try again when the player is online or use their UUID.", ChatUtils.RED, input));
             }
 
             return target;
@@ -54,9 +55,9 @@ public class FriendsCommand extends CommandNode {
             boolean success = this.manager.addFriend(target);
             
             if (success) {
-                CheatClient.displayChatMessage(String.format("Successfully added '%s' to your friends list.", target.getUsernameOrUuid()));
+                this.displayChatMessage(String.format("Successfully added '%s' to your friends list.", target.getUsernameOrUuid()));
             } else {
-                CheatClient.displayChatMessage(String.format("%sUnable to add '%s' to your friends list, check that they are not already on it.", ChatUtils.RED, target.getUsernameOrUuid()));
+                this.displayChatMessage(String.format("%sUnable to add '%s' to your friends list, check that they are not already on it.", ChatUtils.RED, target.getUsernameOrUuid()));
             }
         }
     }
@@ -73,9 +74,9 @@ public class FriendsCommand extends CommandNode {
             boolean success = this.manager.removeFriend(target);
 
             if (success) {
-                CheatClient.displayChatMessage(String.format("Successfully removed %s from your friends list.", target.getUsernameOrUuid()));
+                this.displayChatMessage(String.format("Successfully removed %s from your friends list.", target.getUsernameOrUuid()));
             } else {
-                CheatClient.displayChatMessage(String.format("%sUnable to remove player '%s', make sure that they are on your friends list.", ChatUtils.RED, target.getUsernameOrUuid()));
+                this.displayChatMessage(String.format("%sUnable to remove player '%s', make sure that they are on your friends list.", ChatUtils.RED, target.getUsernameOrUuid()));
             }
         }
     }
@@ -91,11 +92,11 @@ public class FriendsCommand extends CommandNode {
             List<Friend> friends = manager.getFriends();
 
             if (friends.size() == 0) {
-                CheatClient.displayChatMessage("You currently have no friends.");
+                this.displayChatMessage("You currently have no friends.");
                 return true;
             }
 
-            CheatClient.displayChatMessage("Friends List:");
+            this.displayChatMessage("Friends List:");
             for (FriendsManager.Friend friend : friends) {
                 String username = friend.getUsername();
                 username = username == null ? friend.getUuid().toString() : username;
@@ -108,7 +109,7 @@ public class FriendsCommand extends CommandNode {
                     message = String.format("[%sONLINE%s] %s%s", ChatUtils.GREEN, ChatUtils.WHITE, ChatUtils.GREEN, username);
                 }
 
-                CheatClient.displayChatMessage(String.format("-> %s", message));
+                this.displayChatMessage(String.format("-> %s", message));
             }
 
             return true;
