@@ -16,6 +16,21 @@ public class RotationUtils {
         );
     }
 
+	public static Vec3d getClientLookVec() {
+		ClientPlayerEntity player = CheatClient.me();
+
+        float yaw   = (float)Math.toRadians(player.getYaw());
+        float pitch = (float)Math.toRadians(player.getPitch());
+		
+		float f1 = -MathHelper.cos(yaw);
+		float f2 = MathHelper.sin(yaw);
+
+		float f3 = -MathHelper.cos(pitch);
+		float f4 = MathHelper.sin(-pitch);
+		
+		return new Vec3d(f2 * f3, f4, f1 * f3);
+	}
+
     public static Rotation getRequiredRotation(Vec3d vec) {
 		Vec3d eyesPos = getEyePos();
 		
