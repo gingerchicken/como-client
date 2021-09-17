@@ -115,6 +115,48 @@ public class RenderUtils {
         }
 	}
 
+	public static void drawLine3D(MatrixStack matrixStack, Vec3d start, Vec3d end) {
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+
+		matrixStack.push();
+		RenderUtils.applyRenderOffset(matrixStack);
+
+		RenderSystem.setShaderColor(1, 1, 1, 0.5F);
+		
+		Matrix4f matrix = matrixStack.peek().getModel();
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		RenderSystem.setShader(GameRenderer::getPositionShader);
+
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION);
+		bufferBuilder
+			.vertex(matrix, (float)start.x, (float)start.y, (float)start.z)
+			.next();
+
+		bufferBuilder
+			.vertex(matrix, (float)end.x, (float)end.y, (float)end.z)
+			.next();
+		
+		bufferBuilder.end();
+		BufferRenderer.draw(bufferBuilder);
+
+		matrixStack.pop();
+
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glDisable(GL11.GL_LINE_SMOOTH);
+	}
+
+	public static void drawTracer(MatrixStack matrixStack, Vec3d end) {
+		RenderUtils.drawLine3D(
+			matrixStack,
+			RotationUtils.getClientLookVec().add(getCameraPos()),
+			end
+		);
+	}
+
 	public static void scissorBox(int startX, int startY, int endX, int endY)
 	{
 		int width = endX - startX;
