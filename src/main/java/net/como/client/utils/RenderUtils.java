@@ -16,6 +16,7 @@ import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.Shader;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
@@ -52,6 +53,68 @@ public class RenderUtils {
 
 		return new BlockPos(regionX, 0, regionZ);
 	}
+
+	public static VertexBuffer simpleMobBox;
+	static {
+		simpleMobBox = new VertexBuffer();
+		Box bb = new Box(-0.5, 0, -0.5, 0.5, 1, 0.5);
+		RenderUtils.drawOutlinedBox(bb, simpleMobBox);
+	}
+
+	private static void renderBox(Entity e, double partialTicks, MatrixStack mStack) {
+		renderBox(e, partialTicks, mStack, true, 0f);
+	}
+
+	public static void renderBox(Entity e, double partialTicks, MatrixStack mStack, boolean blend, float extraSize) {
+		// GL Settings
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        if (blend) {
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        }
+
+		// Get region
+		BlockPos region = getRegion();
+
+        // Render Section
+        mStack.push();
+        RenderUtils.applyRegionalRenderOffset(mStack);
+
+        // Load the renderer
+        RenderSystem.setShader(GameRenderer::getPositionShader);
+
+        // Translate the point of rendering
+        mStack.translate(
+            e.prevX + (e.getX() - e.prevX) * partialTicks - region.getX(),
+            e.prevY + (e.getY() - e.prevY) * partialTicks,
+            e.prevZ + (e.getZ() - e.prevZ) * partialTicks - region.getZ()
+        );
+        
+        // Update the size of the box.
+        mStack.scale(e.getWidth() + extraSize, e.getHeight() + extraSize, e.getWidth() + extraSize);
+
+        // Make the boxes change colour depending on their distance.
+        float f = CheatClient.me().distanceTo(e) / 20F;
+        RenderSystem.setShaderColor(2 - f, f, 0, 0.5F);
+        
+        // Make it so it is our mobBox.
+        Shader shader = RenderSystem.getShader();
+        Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
+        simpleMobBox.setShader(mStack.peek().getModel(), matrix4f, shader);
+        
+        // Pop the stack (i.e. render it)
+        mStack.pop();
+
+        // GL resets
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        if (blend) {
+            GL11.glDisable(GL11.GL_BLEND);
+        }
+	}
+
 	public static void scissorBox(int startX, int startY, int endX, int endY)
 	{
 		int width = endX - startX;
