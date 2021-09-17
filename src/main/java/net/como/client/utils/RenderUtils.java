@@ -45,6 +45,13 @@ public class RenderUtils {
 
 	private static final Box DEFAULT_BOX = new Box(0, 0, 0, 1, 1, 1);
 	
+	public static BlockPos getRegion() {
+		BlockPos camPos = RenderUtils.getCameraBlockPos();
+        int regionX = (camPos.getX() >> 9) * 512;
+        int regionZ = (camPos.getZ() >> 9) * 512;
+
+		return new BlockPos(regionX, 0, regionZ);
+	}
 	public static void scissorBox(int startX, int startY, int endX, int endY)
 	{
 		int width = endX - startX;
