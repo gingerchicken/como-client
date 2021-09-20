@@ -58,6 +58,7 @@ public class EntityESP extends Cheat {
                         continue;
                     }
 
+                    // Render tracers
                     if ((Boolean)this.getSetting("Tracers").value) {
                         RenderUtils.drawTracer(e.mStack, entity.getPos(), e.tickDelta);
                     }
