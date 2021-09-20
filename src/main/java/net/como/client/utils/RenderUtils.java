@@ -218,13 +218,11 @@ public class RenderUtils {
 		// 0);
 	}
 	
-	public static Vec3d getCameraPos()
-	{
+	public static Vec3d getCameraPos() {
 		return CheatClient.getClient().getBlockEntityRenderDispatcher().camera.getPos();
 	}
 	
-	public static BlockPos getCameraBlockPos()
-	{
+	public static BlockPos getCameraBlockPos() {
 		return CheatClient.getClient().getBlockEntityRenderDispatcher().camera
 			.getBlockPos();
 	}
