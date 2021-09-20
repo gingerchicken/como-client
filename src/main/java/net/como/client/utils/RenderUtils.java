@@ -149,10 +149,10 @@ public class RenderUtils {
 		GL11.glDisable(GL11.GL_LINE_SMOOTH);
 	}
 
-	public static void drawTracer(MatrixStack matrixStack, Vec3d end) {
+	public static void drawTracer(MatrixStack matrixStack, Vec3d end, float delta) {
 		RenderUtils.drawLine3D(
 			matrixStack,
-			RotationUtils.getClientLookVec().add(getCameraPos()),
+			RotationUtils.getClientLookVec().add(getCameraPos(delta)),
 			end
 		);
 	}

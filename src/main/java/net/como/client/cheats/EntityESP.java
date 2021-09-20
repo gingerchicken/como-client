@@ -59,7 +59,7 @@ public class EntityESP extends Cheat {
                     }
 
                     if ((Boolean)this.getSetting("Tracers").value) {
-                        RenderUtils.drawTracer(e.mStack, entity.getPos());
+                        RenderUtils.drawTracer(e.mStack, entity.getPos(), e.tickDelta);
                     }
 
                     // Render mob box
