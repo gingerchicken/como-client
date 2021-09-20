@@ -218,6 +218,16 @@ public class RenderUtils {
 		// 0);
 	}
 	
+	public static Vec3d getCameraPos(float delta) {
+		Entity ent = CheatClient.getClient().cameraEntity;
+
+		Vec3d deltaPos = ent.getEyePos().add(
+			ent.getPos().multiply(-1)
+		);
+
+		return ent.getLerpedPos(delta).add(deltaPos);
+	}
+
 	public static Vec3d getCameraPos() {
 		return CheatClient.getClient().getBlockEntityRenderDispatcher().camera.getPos();
 	}
