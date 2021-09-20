@@ -7,7 +7,7 @@ import net.como.client.events.RenderWorldViewBobbingEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
-
+import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -60,7 +60,7 @@ public class EntityESP extends Cheat {
 
                     // Render tracers
                     if ((Boolean)this.getSetting("Tracers").value) {
-                        RenderUtils.drawTracer(e.mStack, entity.getPos(), e.tickDelta);
+                        RenderUtils.drawTracer(e.mStack, entity.getBoundingBox().getCenter(), e.tickDelta);
                     }
 
                     // Render mob box
