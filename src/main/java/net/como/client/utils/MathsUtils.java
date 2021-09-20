@@ -16,6 +16,17 @@ public class MathsUtils {
         return getVelocityRelYaw(yaw);
     }
 
+    public static Vec3d getLerpedCentre(Entity ent, float delta) {
+        Vec3d lerped = ent.getLerpedPos(delta);
+        Vec3d centre = ent.getBoundingBox().getCenter();
+
+        Vec3d diff = ent.getPos().add(
+            centre.multiply(-1)   
+        );
+
+        return lerped.add(diff.multiply(-1));
+    }
+
     public static Double yawInRadians(Entity entity) {
         // All of the trig functions use radians so we must convert to this.
         return Math.toRadians(entity.getYaw());
