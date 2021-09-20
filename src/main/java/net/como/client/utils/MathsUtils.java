@@ -20,11 +20,9 @@ public class MathsUtils {
         Vec3d lerped = ent.getLerpedPos(delta);
         Vec3d centre = ent.getBoundingBox().getCenter();
 
-        Vec3d diff = ent.getPos().add(
-            centre.multiply(-1)   
-        );
+        Vec3d diff = Vec3dDiff(centre, ent.getPos());
 
-        return lerped.add(diff.multiply(-1));
+        return lerped.add(diff);
     }
 
     public static Double yawInRadians(Entity entity) {
