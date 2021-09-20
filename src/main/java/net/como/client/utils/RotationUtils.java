@@ -15,21 +15,24 @@ public class RotationUtils {
             me.getZ()
         );
     }
-
+    
 	public static Vec3d getClientLookVec() {
 		ClientPlayerEntity player = CheatClient.me();
+		return getVec(player.getYaw(), player.getPitch());
+	}
 
-        float yaw   = (float)Math.toRadians(player.getYaw());
-        float pitch = (float)Math.toRadians(player.getPitch());
+    public static Vec3d getVec(float yaw, float pitch) {
+        yaw   = (float)Math.toRadians(yaw);
+        pitch = (float)Math.toRadians(pitch);
 		
 		float f1 = -MathHelper.cos(yaw);
 		float f2 = MathHelper.sin(yaw);
 
 		float f3 = -MathHelper.cos(pitch);
 		float f4 = MathHelper.sin(-pitch);
-		
-		return new Vec3d(f2 * f3, f4, f1 * f3);
-	}
+
+        return new Vec3d(f2 * f3, f4, f1 * f3);
+    }
 
     public static Rotation getRequiredRotation(Vec3d vec) {
 		Vec3d eyesPos = getEyePos();
