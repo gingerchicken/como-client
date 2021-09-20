@@ -60,7 +60,7 @@ public class EntityESP extends Cheat {
 
                     // Render tracers
                     if ((Boolean)this.getSetting("Tracers").value) {
-                        RenderUtils.drawTracer(e.mStack, entity.getBoundingBox().getCenter(), e.tickDelta);
+                        RenderUtils.drawTracer(e.mStack, MathsUtils.getLerpedCentre(entity, e.tickDelta), e.tickDelta);
                     }
 
                     // Render mob box
