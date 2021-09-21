@@ -43,7 +43,9 @@ public class EntityESP extends Cheat {
         switch (event.getClass().getSimpleName()) {
             case "RenderWorldViewBobbingEvent": {
                 RenderWorldViewBobbingEvent e = (RenderWorldViewBobbingEvent)event;
-                e.cancel = true;
+                if ((Boolean)this.getSetting("Tracers").value) {
+                    e.cancel = true;
+                }
 
                 break;
             }
