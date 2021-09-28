@@ -71,6 +71,7 @@ public class CheatClient {
         Cheats.put("killaura", new KillAura());
         Cheats.put("timer", new Timer());
         Cheats.put("criticals", new Criticals());
+        Cheats.put("homegodmode", new HomeGodMode());
 
         registerCheatCommands();
     }
