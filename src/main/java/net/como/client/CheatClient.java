@@ -9,12 +9,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.como.client.cheats.*;
 import net.como.client.commands.FriendsCommand;
 import net.como.client.commands.PanicCommand;
+import net.como.client.commands.WaypointsCommand;
 import net.como.client.commands.structures.CheatCommand;
 import net.como.client.commands.structures.CommandHandler;
 import net.como.client.components.FriendsManager;
 import net.como.client.utils.*;
 
 import net.como.client.structures.Cheat;
+import net.como.client.structures.WaypointSystem;
 import net.como.client.structures.events.EventEmitter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -32,6 +34,10 @@ public class CheatClient {
 
         // Add Panic command
         commandHandler.registerCommand(new PanicCommand());
+
+        commandHandler.registerCommand(new WaypointsCommand(
+            ((Waypoints)Cheats.get("waypoints")).waypoints
+        ));
 
         // Add all of the cheats as commands.
         for (Entry<String, Cheat> entry : Cheats.entrySet()) {
