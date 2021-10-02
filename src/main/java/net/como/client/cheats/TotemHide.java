@@ -4,18 +4,13 @@ import net.como.client.CheatClient;
 import net.como.client.events.RenderItemEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
 import net.minecraft.client.render.model.json.ModelTransformation;
 
 public class TotemHide extends Cheat {
-    // boolean smallTotem = false;
-
     public TotemHide() {
         super("TotemHide");
 
-        this.addSetting(new Setting("SmallMode", false));
-
-        this.description = "Change the display of the totem.";
+        this.description = "Hide the totem item.";
     }
     
     @Override
@@ -44,15 +39,9 @@ public class TotemHide extends Cheat {
                 // Only do it for totems
                 if (e.stack.getItem().toString() != "totem_of_undying") break;
 
-                // If they just want to hide it, do so.
-                if (!(boolean)this.getSetting("SmallMode").value) {
-                    e.ci.cancel();
-                } else {
-                    // Else...Render the small totem
-                    e.mStack.scale(0.5f, 0.5f, 0.5f);
-                    e.mStack.translate(-0.5f, 0.0f, 0.0f);
-                }
-
+                // Don't render the totem
+                e.ci.cancel();
+               
                 break;
             }
         
