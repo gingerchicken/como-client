@@ -78,6 +78,7 @@ public class CheatClient {
         Cheats.put("criticals", new Criticals());
         Cheats.put("waypoints", new Waypoints());
         Cheats.put("homegodmode", new HomeGodMode());
+        Cheats.put("itemrendertweaks", new ItemRenderTweaks());
 
         registerCheatCommands();
     }
