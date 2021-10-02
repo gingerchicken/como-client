@@ -16,7 +16,6 @@ import net.como.client.components.FriendsManager;
 import net.como.client.utils.*;
 
 import net.como.client.structures.Cheat;
-import net.como.client.structures.WaypointSystem;
 import net.como.client.structures.events.EventEmitter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
