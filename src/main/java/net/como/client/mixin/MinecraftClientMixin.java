@@ -14,5 +14,8 @@ public class MinecraftClientMixin {
     @Inject(at = @At("HEAD"), method = "close()V", cancellable = false)
     private void onClose(CallbackInfo ci) {
         CheatClient.emitter.triggerEvent(new OnClientCloseEvent(ci));
+
+        // Close our client after all is said and done.
+        CheatClient.close();
     }
 }
