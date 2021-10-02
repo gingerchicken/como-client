@@ -79,6 +79,10 @@ public class CheatClient {
         Cheats.put("homegodmode", new HomeGodMode());
         Cheats.put("itemrendertweaks", new ItemRenderTweaks());
 
+        // Load the config
+        Persistance.loadConfig();
+
+        // Ready up all the commands
         registerCheatCommands();
     }
 
@@ -120,6 +124,13 @@ public class CheatClient {
     // Misc
     public static double getCurrentTime() {
         return Double.valueOf(System.currentTimeMillis()) / 1000d; // Seconds
+    }
+
+    public static void close() {
+        System.out.println("Saving Client Config...");
+        Persistance.saveConfig();
+
+        System.out.println("It has been fun, remember to stay hydrated and that you matter <3");
     }
 
     CheatClient() { }
