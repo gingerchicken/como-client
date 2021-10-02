@@ -21,12 +21,13 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 
 public class CheatClient {
+    // Variables
     private static String CHAT_PREFIX = ChatUtils.chatPrefix("Como Client");
-
     public static CommandHandler commandHandler = new CommandHandler(".");
     public static EventEmitter emitter = new EventEmitter();
     public static FriendsManager friendsManager = new FriendsManager();
 
+    // Commands
     private static void registerCheatCommands() {
         // Add the friends command
         commandHandler.registerCommand(new FriendsCommand(friendsManager));
@@ -43,10 +44,8 @@ public class CheatClient {
             commandHandler.registerCommand(new CheatCommand(entry.getKey(), entry.getValue()));
         }
     }
-    public static double getCurrentTime() {
-        return Double.valueOf(System.currentTimeMillis()) / 1000d; // Seconds
-    }
 
+    // Cheats
     public static HashMap<String, Cheat> Cheats = new HashMap<String, Cheat>();
     static {
         Cheats.put("flight", new Flight());
@@ -83,6 +82,7 @@ public class CheatClient {
         registerCheatCommands();
     }
 
+    // Chat
     public static void processChatPost(String message, CallbackInfo ci) {
         // Command Handling
         Integer commandHandlerOutput = commandHandler.handle(message, ci);
@@ -101,15 +101,14 @@ public class CheatClient {
             }
         }
     }
-
-    public static MinecraftClient getClient() {
-        return MinecraftClient.getInstance();
-    }
-
     public static void displayChatMessage(String message) {
         ChatUtils.displayMessage(CHAT_PREFIX + message);
     }
 
+    // Client
+    public static MinecraftClient getClient() {
+        return MinecraftClient.getInstance();
+    }
     public static ClientPlayerEntity me() {
         // Get the client
         MinecraftClient client = getClient();
@@ -118,7 +117,10 @@ public class CheatClient {
         return client.player;
     }
 
-    CheatClient() {
-
+    // Misc
+    public static double getCurrentTime() {
+        return Double.valueOf(System.currentTimeMillis()) / 1000d; // Seconds
     }
+
+    CheatClient() { }
 }
