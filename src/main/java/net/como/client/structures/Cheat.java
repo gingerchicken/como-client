@@ -1,5 +1,9 @@
 package net.como.client.structures;
 
+import java.util.HashMap;
+
+import com.google.gson.Gson;
+
 import net.como.client.CheatClient;
 import net.como.client.utils.ChatUtils;
 import net.como.client.structures.settings.*;
@@ -95,4 +99,34 @@ public class Cheat extends Settings implements EventListener {
         
     }
 
+    public HashMap<String, String> flatten() {
+        HashMap<String, String> data = new HashMap<String, String>();
+        Gson gson = new Gson();
+
+        for (String name : this.getSettings()) {
+            Setting setting = this.getSetting(name);
+
+            // This will mean that their type will be lost in the JSON file however, I cannot think of a nice way around it.
+            data.put(name, gson.toJson(setting.value));
+        }
+
+        data.put("enabled", this.isEnabled().toString());
+
+        return data;
+    }
+
+    public void lift(HashMap<String, String> data) {
+        Gson gson = new Gson();
+
+        boolean enable = data.get("enabled").equals("true");
+        data.remove("enabled");
+
+        for (String name : data.keySet()) {
+            Setting setting = this.getSetting(name);
+
+            setting.value = gson.fromJson(data.get(name), setting.value.getClass());
+        }
+
+        if (enable) this.enable();
+    }
 }
