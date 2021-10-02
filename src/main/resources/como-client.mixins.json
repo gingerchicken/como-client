@@ -25,6 +25,7 @@
     "InGameOverlayRenderMixin",
     "WorldMixin",
     "ClientPlayerInteractionManagerMixin",
+    "MinecraftClientMixin",
 
     "botch/TimerMixin",
     "botch/AutoReconnectMixin"
