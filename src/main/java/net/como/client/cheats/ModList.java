@@ -56,7 +56,7 @@ public class ModList extends Cheat {
                     int x = textRenderer.drawWithShadow(e.mStack, cheat.getName(), 1, 1+10*display, 0xFFFFFFFF);
 
                     if (cheat.hasListOption()) {
-                        textRenderer.drawWithShadow(e.mStack, String.format("[%s]", cheat.listOption()), x+2, 1+10*display, 0xFFE6E6E6);
+                        textRenderer.drawWithShadow(e.mStack, String.format("[%s]", cheat.listOption()), x+2, 1+10*display, 0xFFadadad);
                     }                    
                     
                     display++;
