@@ -10,5 +10,5 @@ public class Blink extends Cheat {
         this.description = "Delay your packets being sent.";
     }
   
-    // Actually make this work at some point
+    // TODO Actually make this work at some point
 }
