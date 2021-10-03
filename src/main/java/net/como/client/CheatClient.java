@@ -47,44 +47,6 @@ public class CheatClient {
 
     // Cheats
     public static HashMap<String, Cheat> Cheats = new HashMap<String, Cheat>();
-    static {
-        Cheats.put("flight", new Flight());
-        Cheats.put("blink", new Blink());
-        Cheats.put("chatignore", new ChatIgnore());
-        Cheats.put("totemhide", new TotemHide());
-        Cheats.put("entityesp", new EntityESP());
-        Cheats.put("speed", new SpeedHack());
-        Cheats.put("superjump", new SuperJump());
-        Cheats.put("antiitemdrop", new AntiItemDrop());
-        Cheats.put("noweather", new NoWeather());
-        Cheats.put("nofall", new NoFall());
-        Cheats.put("camflight", new CamFlight());
-        Cheats.put("noboss", new NoBoss());
-        Cheats.put("elytraflight", new ElytraFlight());
-        Cheats.put("xray", new XRay());
-        Cheats.put("noenchantbook", new NoEnchantmentBook());
-        Cheats.put("nobreak", new NoBreak());
-        Cheats.put("autoshear", new AutoShear());
-        Cheats.put("tapemeasure", new TapeMeasure());
-        Cheats.put("modlist", new ModList());
-        Cheats.put("nohurtcam", new NoHurtCam());
-        Cheats.put("fullbright", new FullBright());
-        Cheats.put("autoreconnect", new AutoReconnect());
-        Cheats.put("autorespawn", new AutoRespawn());
-        Cheats.put("nofirecam", new NoFireCam());
-        Cheats.put("killaura", new KillAura());
-        Cheats.put("timer", new Timer());
-        Cheats.put("criticals", new Criticals());
-        Cheats.put("waypoints", new Waypoints());
-        Cheats.put("homegodmode", new HomeGodMode());
-        Cheats.put("itemrendertweaks", new ItemRenderTweaks());
-
-        // Load the config
-        Persistance.loadConfig();
-
-        // Ready up all the commands
-        registerCheatCommands();
-    }
 
     // Chat
     public static void processChatPost(String message, CallbackInfo ci) {
@@ -131,6 +93,46 @@ public class CheatClient {
         Persistance.saveConfig();
 
         System.out.println("It has been fun, remember to stay hydrated and that you matter <3");
+    }
+
+    public static void initialise() {
+        // Load up all the cheats
+        Cheats.put("flight", new Flight());
+        Cheats.put("blink", new Blink());
+        Cheats.put("chatignore", new ChatIgnore());
+        Cheats.put("totemhide", new TotemHide());
+        Cheats.put("entityesp", new EntityESP());
+        Cheats.put("speed", new SpeedHack());
+        Cheats.put("superjump", new SuperJump());
+        Cheats.put("antiitemdrop", new AntiItemDrop());
+        Cheats.put("noweather", new NoWeather());
+        Cheats.put("nofall", new NoFall());
+        Cheats.put("camflight", new CamFlight());
+        Cheats.put("noboss", new NoBoss());
+        Cheats.put("elytraflight", new ElytraFlight());
+        Cheats.put("xray", new XRay());
+        Cheats.put("noenchantbook", new NoEnchantmentBook());
+        Cheats.put("nobreak", new NoBreak());
+        Cheats.put("autoshear", new AutoShear());
+        Cheats.put("tapemeasure", new TapeMeasure());
+        Cheats.put("modlist", new ModList());
+        Cheats.put("nohurtcam", new NoHurtCam());
+        Cheats.put("fullbright", new FullBright());
+        Cheats.put("autoreconnect", new AutoReconnect());
+        Cheats.put("autorespawn", new AutoRespawn());
+        Cheats.put("nofirecam", new NoFireCam());
+        Cheats.put("killaura", new KillAura());
+        Cheats.put("timer", new Timer());
+        Cheats.put("criticals", new Criticals());
+        Cheats.put("waypoints", new Waypoints());
+        Cheats.put("homegodmode", new HomeGodMode());
+        Cheats.put("itemrendertweaks", new ItemRenderTweaks());
+
+        // Load the config
+        Persistance.loadConfig();
+
+        // Ready up all the commands
+        registerCheatCommands();
     }
 
     CheatClient() { }
