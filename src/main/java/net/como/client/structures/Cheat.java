@@ -133,6 +133,12 @@ public class Cheat extends Settings implements EventListener {
         for (String name : data.keySet()) {
             Setting setting = this.getSetting(name);
 
+            // Make sure that the setting is valid
+            if (setting == null) {
+                System.out.println(String.format("Unknown setting '%s' in mod '%s.'", name, this.getName()));
+                continue;
+            }
+
             setting.value = gson.fromJson(data.get(name), setting.value.getClass());
         }
 
