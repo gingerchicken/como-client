@@ -48,4 +48,8 @@ public class ClientUtils {
     public static void sendPos(Vec3d pos, boolean onGround) {
         sendPos(pos.x, pos.y, pos.z, onGround);
     }
+
+    public static Boolean inGame() {
+        return CheatClient.me() != null;
+    }
 }
