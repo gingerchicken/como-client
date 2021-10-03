@@ -11,7 +11,6 @@ import net.como.client.components.ServerClientRotation;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
-import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

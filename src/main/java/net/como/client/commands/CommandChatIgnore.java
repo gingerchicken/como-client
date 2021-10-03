@@ -13,11 +13,12 @@ public class CommandChatIgnore extends Command {
         super("ignore", "Usage: ignore <phrase to ignore|reset|help>", "Ignore a specific phrase in chat");
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Boolean trigger(String[] args) {
         Cheat chatIgnore = CheatClient.Cheats.get("chatignore");
         if (!chatIgnore.isEnabled()) {
-            chatIgnore.displayMessage(ChatUtils.RED + "ChatIgnore is currently not enabled, enable it and try again.");
+            chatIgnore.displayMessage(String.format("%sChatIgnore is currently not enabled, enable it and try again.", ChatUtils.RED));
             return true;
         }
 

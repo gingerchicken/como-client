@@ -23,6 +23,7 @@ public class ChatIgnore extends Cheat {
     }
 
     // TODO potential bug with blocking our own messages.
+    @SuppressWarnings("unchecked")
     private boolean shouldBlock(String msg) {
         HashMap<String, Boolean> phrases = (HashMap<String, Boolean>)this.getSetting("Phrases").value;
 
@@ -50,7 +51,7 @@ public class ChatIgnore extends Cheat {
                 String rawMessage = e.chatText.getString();
 
                 if (this.shouldBlock(rawMessage)) {
-                    System.out.println("(BLOCKED MESSAGE) " + rawMessage);
+                    System.out.println(String.format("(BLOCKED MESSAGE) %s", rawMessage));
 
                     e.ci.cancel();
                 }

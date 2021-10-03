@@ -9,7 +9,6 @@ import net.como.client.CheatClient;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
-import net.como.client.utils.ChatUtils;
 
 public class ModList extends Cheat {
 

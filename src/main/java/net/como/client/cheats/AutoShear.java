@@ -22,6 +22,7 @@ public class AutoShear extends Cheat {
         this.description = "Shear sheep with a specific colour of wool automatically.";
     }
 
+    @SuppressWarnings("unchecked")
     public void shear(SheepEntity sheep) {
         HashMap<String, String> desiredColours = (HashMap<String, String>)this.getSetting("DesiredColours").value;
 

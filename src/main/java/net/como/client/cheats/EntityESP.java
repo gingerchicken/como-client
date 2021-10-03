@@ -2,7 +2,6 @@ package net.como.client.cheats;
 
 import net.como.client.CheatClient;
 import net.como.client.events.OnRenderEvent;
-import net.como.client.events.RenderEntityEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
