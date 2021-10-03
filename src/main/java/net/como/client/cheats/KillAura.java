@@ -37,6 +37,11 @@ public class KillAura extends Cheat {
     private Double nextValidTime = 0d;
 
     @Override
+    public String listOption() {
+        return (boolean)this.getSetting("SilentAim").value ? "Silent" : null;
+    }
+
+    @Override
     public void activate() {
         this.addListen(ClientTickEvent.class);
         this.addListen(SendPacketEvent.class);
