@@ -9,6 +9,7 @@ import net.como.client.CheatClient;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
+import net.como.client.utils.ChatUtils;
 
 public class ModList extends Cheat {
 
@@ -53,7 +54,12 @@ public class ModList extends Cheat {
 
                 int display = 0;
                 for (Cheat cheat : enabledMods) {
-                    textRenderer.drawWithShadow(e.mStack, cheat.getName(), 1, 1+10*display, 0xFFFFFFFF);
+                    int x = textRenderer.drawWithShadow(e.mStack, cheat.getName(), 1, 1+10*display, 0xFFFFFFFF);
+
+                    if (cheat.hasListOption()) {
+                        textRenderer.drawWithShadow(e.mStack, String.format("[%s]", cheat.listOption()), x+2, 1+10*display, 0xFFE6E6E6);
+                    }                    
+                    
                     display++;
                 }
             }
