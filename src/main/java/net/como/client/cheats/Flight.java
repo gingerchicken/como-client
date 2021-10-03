@@ -9,7 +9,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 public class Flight extends Cheat {
 
     public Flight() {
-        super("FlyMode");
+        super("Flight");
 
         this.description = "Basic flight (a bit terrible tbh).";
     }
