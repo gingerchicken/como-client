@@ -129,6 +129,7 @@ public class CheatClient {
         Cheats.put("waypoints", new Waypoints());
         Cheats.put("homegodmode", new HomeGodMode());
         Cheats.put("itemrendertweaks", new ItemRenderTweaks());
+        Cheats.put("tracers", new Tracers());
 
         // Load the config
         Persistance.loadConfig();
