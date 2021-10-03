@@ -26,6 +26,15 @@ public class Cheat extends Settings implements EventListener {
         );
     }
 
+    // This is to do with displaying the item in the list.
+    public String listOption() {
+        return null;
+    }
+
+    public Boolean hasListOption() {
+        return this.listOption() != null;
+    }
+
     // Getters and setters
     public String getName() {
         return name;
