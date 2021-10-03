@@ -1,17 +1,23 @@
 package net.como.client.cheats;
 
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import net.como.client.CheatClient;
 import net.como.client.components.ServerClientRotation;
 import net.como.client.events.ClientTickEvent;
+import net.como.client.events.OnRenderEvent;
+import net.como.client.events.RenderWorldViewBobbingEvent;
 import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ClientUtils;
+import net.como.client.utils.MathsUtils;
+import net.como.client.utils.RenderUtils;
 import net.como.client.utils.RotationUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -31,6 +37,9 @@ public class KillAura extends Cheat {
         this.addSetting(new Setting("AttackFriends", false));
         this.addSetting(new Setting("TargetClosestAngle", true));
         this.addSetting(new Setting("MaxFOV", 25d));
+
+        this.addSetting(new Setting("TargetTracers", true));
+        this.addSetting(new Setting("TracerLifeSpan", 0.25d));
     }
     
     private ServerClientRotation scRot = new ServerClientRotation();
@@ -44,7 +53,8 @@ public class KillAura extends Cheat {
     @Override
     public void activate() {
         this.addListen(ClientTickEvent.class);
-        this.addListen(SendPacketEvent.class);
+        this.addListen(RenderWorldViewBobbingEvent.class);
+        this.addListen(OnRenderEvent.class);
 
         scRot.addListeners(this);
     }
@@ -52,7 +62,8 @@ public class KillAura extends Cheat {
     @Override
     public void deactivate() {
         this.removeListen(ClientTickEvent.class);
-        this.removeListen(SendPacketEvent.class);
+        this.removeListen(RenderWorldViewBobbingEvent.class);
+        this.removeListen(OnRenderEvent.class);
 
         scRot.removeListeners(this);
     }
@@ -105,6 +116,8 @@ public class KillAura extends Cheat {
         };
     }
 
+    private HashMap<Entity, Double> prevTargets = new HashMap<Entity, Double>();
+
     private boolean shouldDoAttack() {
         // idk what the baseTime does
         return
@@ -147,6 +160,46 @@ public class KillAura extends Cheat {
                 // Get the next time
                 this.nextValidTime = CheatClient.getCurrentTime() + (Double)this.getSetting("Delay").value;
                 
+                // For tracers
+                if ((boolean)this.getSetting("TargetTracers").value)
+                    this.prevTargets.put(target, CheatClient.getCurrentTime());
+
+                break;
+            }
+            case "OnRenderEvent": {
+                if (!(boolean)this.getSetting("TargetTracers").value) break;
+
+                OnRenderEvent e = (OnRenderEvent)event;
+
+                for (Iterator<HashMap.Entry<Entity, Double>> it = this.prevTargets.entrySet().iterator(); it.hasNext();) {
+                    HashMap.Entry<Entity, Double> pair = it.next();
+
+                    double hitTime = pair.getValue();
+
+                    // Make sure that they are not out of date.
+                    Double span = (Double)this.getSetting("TracerLifeSpan").value;
+                    if (span > 0 && CheatClient.getCurrentTime() - hitTime > span) {
+                        it.remove();
+                        continue;
+                    }
+
+                    Entity ent = pair.getKey();
+                    if (ent == null || !ent.isAlive()) {
+                        it.remove();
+                    }
+
+                    RenderUtils.drawTracer(e.mStack, MathsUtils.getLerpedCentre(pair.getKey(), e.tickDelta), e.tickDelta);
+                }
+
+                break;
+            }
+
+            case "RenderWorldViewBobbingEvent": {
+                RenderWorldViewBobbingEvent e = (RenderWorldViewBobbingEvent)event;
+                if ((Boolean)this.getSetting("TargetTracers").value && this.prevTargets.size() > 0) {
+                    e.cancel = true;
+                }
+
                 break;
             }
         }
