@@ -25,8 +25,10 @@ public class ChatUtils {
     public final static String WHITE        = "\u00a7f";
     
     public static void displayMessage(String message) {
+        // Make sure that they are in game.
+        if (!ClientUtils.inGame()) return;
+
         MinecraftClient client = CheatClient.getClient();
-        
         ChatHud chatHud = client.inGameHud.getChatHud();
 
         chatHud.addMessage(Text.of(message));
