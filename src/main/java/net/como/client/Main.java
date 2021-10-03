@@ -6,6 +6,6 @@ public class Main implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        CheatClient.initialise();
+        System.out.println("Remember, it's only blockgame :V");
     }
 }
