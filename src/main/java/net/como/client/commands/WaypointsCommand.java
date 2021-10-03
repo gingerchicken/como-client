@@ -152,10 +152,11 @@ public class WaypointsCommand extends CommandNode {
             Waypoint waypoint = system.getWaypoint(name);
             waypoint.toggle();
 
+            // TODO make this kind of display a function
             String enabledMessage = waypoint.enabled ? String.format("%senabled", ChatUtils.GREEN) : String.format("%sdisabled", ChatUtils.RED);
             enabledMessage = String.format("%s%s", enabledMessage, ChatUtils.WHITE);
 
-            this.displayChatMessage(String.format("%s has been %s.", name, enabledMessage));
+            this.displayChatMessage(String.format("%s has been %s%s.", name, enabledMessage, ChatUtils.WHITE));
 
             return true;
         }
