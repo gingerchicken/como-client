@@ -96,6 +96,8 @@ public class CheatClient {
     }
 
     public static void initialise() {
+        System.out.println("Loading Como Client...");
+
         // Load up all the cheats
         Cheats.put("flight", new Flight());
         Cheats.put("blink", new Blink());
@@ -133,6 +135,9 @@ public class CheatClient {
 
         // Ready up all the commands
         registerCheatCommands();
+
+        // Done!
+        System.out.println("Como Client loaded!");
     }
 
     CheatClient() { }

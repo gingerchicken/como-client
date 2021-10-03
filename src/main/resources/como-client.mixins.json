@@ -28,7 +28,8 @@
     "MinecraftClientMixin",
 
     "botch/TimerMixin",
-    "botch/AutoReconnectMixin"
+    "botch/AutoReconnectMixin",
+    "botch/ClientInit"
   ],
   "injectors": {
     "defaultRequire": 1
