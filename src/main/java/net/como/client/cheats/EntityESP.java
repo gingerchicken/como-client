@@ -6,7 +6,6 @@ import net.como.client.events.RenderWorldViewBobbingEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
-import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,9 +17,7 @@ public class EntityESP extends Cheat {
 
         this.addSetting(new Setting("BoxPadding", 0f));
         this.addSetting(new Setting("BlendBoxes", false));
-
-        this.addSetting(new Setting("BoundingBox", true));
-        this.addSetting(new Setting("Tracers", true));
+        this.addSetting(new Setting("BoundingBox", true)); // TODO make this a mode
 
         this.description = "Know where entities are more easily.";
     }
@@ -28,27 +25,16 @@ public class EntityESP extends Cheat {
     @Override
     public void activate() {
         this.addListen(OnRenderEvent.class);
-        this.addListen(RenderWorldViewBobbingEvent.class);
     }
 
     @Override
 	public void deactivate() {
         this.removeListen(OnRenderEvent.class);
-        this.removeListen(RenderWorldViewBobbingEvent.class);
 	}
 
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
-            case "RenderWorldViewBobbingEvent": {
-                RenderWorldViewBobbingEvent e = (RenderWorldViewBobbingEvent)event;
-                if ((Boolean)this.getSetting("Tracers").value) {
-                    e.cancel = true;
-                }
-
-                break;
-            }
-
             case "OnRenderEvent": {
                 OnRenderEvent e = (OnRenderEvent)event;
                 Iterable<Entity> ents = CheatClient.getClient().world.getEntities();
@@ -57,11 +43,6 @@ public class EntityESP extends Cheat {
                     // No render myself.
                     if (entity instanceof PlayerEntity && (PlayerEntity)entity == CheatClient.me()) {
                         continue;
-                    }
-
-                    // Render tracers
-                    if ((Boolean)this.getSetting("Tracers").value) {
-                        RenderUtils.drawTracer(e.mStack, MathsUtils.getLerpedCentre(entity, e.tickDelta), e.tickDelta);
                     }
 
                     // Render mob box
