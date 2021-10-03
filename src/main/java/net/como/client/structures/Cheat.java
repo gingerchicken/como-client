@@ -69,13 +69,13 @@ public class Cheat extends Settings implements EventListener {
     // Chat display message things
     public void onEnabled() { 
         CheatClient.displayChatMessage(
-            String.format("%s has been enabled.", this.getName())
+            String.format("%s has been %senabled%s.", this.getName(), ChatUtils.GREEN, ChatUtils.WHITE)
         );
         activate();
     }
     public void onDisabled() {
         CheatClient.displayChatMessage(
-            String.format("%s has been disabled.", this.getName())
+            String.format("%s has been %sdisabled%s.", this.getName(), ChatUtils.RED, ChatUtils.WHITE)
         );
         deactivate();
     }
