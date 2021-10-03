@@ -37,6 +37,11 @@ public class TapeMeasure extends Cheat {
         this.description = "Measure the distance between two points.";
     }
 
+    @Override
+    public String listOption() {
+        return (boolean)this.getSetting("PyDistance").value ? "Pythagorean" : "Delta";
+    }
+
     private VertexBuffer blockBox;
 
     private void handlePyDistance(BlockPos deltaVector) {
