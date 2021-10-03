@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.como.client.CheatClient;
 import net.como.client.cheats.Timer;
+import net.como.client.utils.ClientUtils;
 import net.minecraft.client.render.RenderTickCounter;
 
 @Mixin(RenderTickCounter.class)
@@ -26,7 +27,7 @@ public class TimerMixin {
     )
 	public void onBeginRenderTick(long timeMillis, CallbackInfoReturnable<Integer> cir) {
         // Make sure that we are playing
-        if (CheatClient.me() == null) return;
+        if (!ClientUtils.inGame()) return;
 
         Timer timer = (Timer)CheatClient.Cheats.get("timer");
         if (!timer.isEnabled()) return;
