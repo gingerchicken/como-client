@@ -5,14 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.como.client.structures.Cheat;
-import net.como.client.structures.settings.Settings;
 
 public class Persistance {
     public static final String CONFIG_PATH = "como-config.json";

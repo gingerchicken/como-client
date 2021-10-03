@@ -14,8 +14,6 @@ import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.SynchronousResourceReloader;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {

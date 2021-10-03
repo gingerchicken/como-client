@@ -2,7 +2,6 @@ package net.como.client.cheats;
 
 import net.como.client.CheatClient;
 import net.como.client.events.DeathEvent;
-import net.como.client.events.JumpEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 

@@ -17,6 +17,7 @@ public class SettingsCommand extends Command {
         this.settings = settings;
     }
 
+    @SuppressWarnings("unchecked")
     private boolean changeSetting(String[] args) {
         // Get the setting name.
         String settingName = args[0];
