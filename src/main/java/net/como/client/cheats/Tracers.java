@@ -9,6 +9,7 @@ import net.como.client.structures.settings.Setting;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -19,6 +20,7 @@ public class Tracers extends Cheat {
 
         this.addSetting(new Setting("Player", true));
         this.addSetting(new Setting("Mob", true));
+        this.addSetting(new Setting("Item", true));
         this.addSetting(new Setting("OtherEntities", true));
         
         // TODO add this
@@ -40,15 +42,18 @@ public class Tracers extends Cheat {
     public boolean shouldDrawTracer(Entity ent) {
         boolean drawPlayer        = (boolean)this.getSetting("Player").value;
         boolean drawMob           = (boolean)this.getSetting("Mob").value;
+        boolean drawItem          = (boolean)this.getSetting("Item").value;
         boolean drawOtherEntities = (boolean)this.getSetting("OtherEntities").value;
 
         boolean isMob = ent instanceof MobEntity;
         boolean isPlayer = ent instanceof PlayerEntity;
+        boolean isItem = ent instanceof ItemEntity;
 
         return (
                 (drawPlayer && isPlayer)
             ||  (drawMob && isMob)
-            ||  (drawOtherEntities && !isMob && !isPlayer)
+            ||  (drawItem && isItem)
+            ||  (drawOtherEntities && !isMob && !isPlayer && !isItem)
         );
     }
 
