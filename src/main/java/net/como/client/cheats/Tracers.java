@@ -17,7 +17,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.vehicle.ChestMinecartEntity;
 import net.minecraft.world.chunk.BlockEntityTickInvoker;
 
 public class Tracers extends Cheat {
@@ -34,8 +33,8 @@ public class Tracers extends Cheat {
         // TODO add entity search mode
 
         // Block/Ticker search
-        this.addSetting(new Setting("Search", false));
-        this.addSetting(new Setting("SearchPhrases", new HashMap<String, Boolean>()));
+        this.addSetting(new Setting("Block", false));
+        this.addSetting(new Setting("Blocks", new HashMap<String, Boolean>()));
     }
     
     @Override
@@ -70,7 +69,7 @@ public class Tracers extends Cheat {
 
     @SuppressWarnings("unchecked")
     public boolean shouldDrawTracer(BlockEntityTickInvoker block) {
-        HashMap<String, Boolean> phrases = (HashMap<String, Boolean>)this.getSetting("SearchPhrases").value;
+        HashMap<String, Boolean> phrases = (HashMap<String, Boolean>)this.getSetting("Blocks").value;
 
         return phrases.containsKey(block.getName());
     }
@@ -100,6 +99,7 @@ public class Tracers extends Cheat {
                     }
 
                     // Render tracers
+                    // TODO add colour from generalConfig
                     RenderUtils.drawTracer(e.mStack, MathsUtils.getLerpedCentre(entity, e.tickDelta), e.tickDelta);
                 }
 
