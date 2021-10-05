@@ -27,6 +27,7 @@
     "ClientPlayerInteractionManagerMixin",
     "MinecraftClientMixin",
 
+    "botch/WorldMixin",
     "botch/TimerMixin",
     "botch/AutoReconnectMixin",
     "botch/ClientInit"
