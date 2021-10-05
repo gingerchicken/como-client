@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -79,5 +80,13 @@ public class BlockUtils {
 					blocks.add(new BlockPos(x, y, z));
 				
 		return blocks;
+	}
+
+	public static Vec3d blockPos(BlockPos pos) {
+		return new Vec3d(
+			pos.getX(),
+			pos.getY(),
+			pos.getZ()
+		);
 	}
 }
