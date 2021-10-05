@@ -67,63 +67,6 @@ public class TapeMeasure extends Cheat {
         displayMessage(String.format("The absolute of your displacement is X: %d, Y: %d, Z: %d", dX, dY, dZ));
     }
     private void renderReadings(MatrixStack mStack) {
-        // GL settings
-        GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glEnable(GL11.GL_LINE_SMOOTH);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-        
-        // Render Section
-        mStack.push();
-        RenderUtils.applyRegionalRenderOffset(mStack);
-        
-        BlockPos camPos = RenderUtils.getCameraBlockPos();
-        int regionX = (camPos.getX() >> 9) * 512;
-        int regionZ = (camPos.getZ() >> 9) * 512;
-
-        // // Check the settings
-        this.renderLength(regionX, regionZ, mStack);
-
-        // Pop the stack
-        mStack.pop();
-        
-        // GL resets
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glDisable(GL11.GL_LINE_SMOOTH);
-    }
-    private void renderBlock(BlockPos bPos, int regionX, int regionZ, MatrixStack mStack) {
-        // Make sure we actually do want to render that block.
-        if (!this.shouldRenderBlock(bPos)) return;
-
-        // Load the renderer
-        RenderSystem.setShader(GameRenderer::getPositionShader);
-
-        // Push a new item to the render stack
-        mStack.push();
-
-        // Translate the point of rendering
-        mStack.translate(
-            (bPos.getX() + 0.5) - regionX,
-            bPos.getY(),
-            (bPos.getZ() + 0.5) - regionZ
-        );
-        
-        // Update the size of the box.
-        mStack.scale(1, 1, 1);
-
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        
-        // Make it so it is our mobBox.
-        Shader shader = RenderSystem.getShader();
-        Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
-        blockBox.setShader(mStack.peek().getModel(), matrix4f, shader);
-        
-        // Pop the stack (i.e. render it)
-        mStack.pop();
-    }
-    private void renderLength(int regionX, int regionZ, MatrixStack mStack) {
         // Get the difference between the blocks
         BlockPos delta = this.start.add(this.end.multiply(-1));
 
@@ -141,13 +84,13 @@ public class TapeMeasure extends Cheat {
         BlockPos origin = this.start;
         
         // Firstly render the origin
-        this.renderBlock(origin, regionX, regionZ, mStack);
+        this.renderBlock(mStack, origin);
 
         // Render X
         for (int i = 1; i <= absDelta.getX(); i++) {
             BlockPos target = origin.add(i*-signX, 0, 0);
 
-            this.renderBlock(target, regionX, regionZ, mStack);
+            this.renderBlock(mStack, target);
         }
         origin = origin.add(-delta.getX(), 0, 0);
 
@@ -155,7 +98,7 @@ public class TapeMeasure extends Cheat {
         for (int i = 1; i <= absDelta.getZ(); i++) {
             BlockPos target = origin.add(0, 0, i*-signZ);
 
-            this.renderBlock(target, regionX, regionZ, mStack);
+            this.renderBlock(mStack, target);
         }
         origin = origin.add(0, 0, -delta.getZ());
 
@@ -163,10 +106,16 @@ public class TapeMeasure extends Cheat {
         for (int i = 1; i <= absDelta.getY(); i++) {
             BlockPos target = origin.add(0, i*-signY, 0);
 
-            this.renderBlock(target, regionX, regionZ, mStack);
+            this.renderBlock(mStack, target);
         }
         origin = origin.add(0, -delta.getY(), 0);
-	}
+    }
+    private void renderBlock(MatrixStack mStack, BlockPos bPos) {
+        // Make sure we actually do want to render that block.
+        if (!this.shouldRenderBlock(bPos)) return;
+
+        RenderUtils.renderBlockBox(mStack, bPos);
+    }
     
     private boolean shouldRender() {
         return (this.shouldRenderBlock(this.end) && this.shouldRenderBlock(this.start));
