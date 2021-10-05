@@ -132,6 +132,7 @@ public class CheatClient {
         Cheats.put("homegodmode", new HomeGodMode());
         Cheats.put("itemrendertweaks", new ItemRenderTweaks());
         Cheats.put("tracers", new Tracers());
+        Cheats.put("blockesp", new BlockESP());
 
         // Load the config
         Persistance.loadConfig();
