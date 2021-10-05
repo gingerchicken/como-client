@@ -54,6 +54,13 @@ public class RenderUtils {
 		RenderUtils.drawOutlinedBox(bb, simpleMobBox);
 	}
 
+	public static VertexBuffer blockBox;
+	static {
+		blockBox = new VertexBuffer();
+		Box bb = new Box(-0.5, 0, -0.5, 0.5, 1, 0.5);
+		RenderUtils.drawOutlinedBox(bb, blockBox);
+	}
+
 	private static void renderBox(Entity e, double partialTicks, MatrixStack mStack) {
 		renderBox(e, partialTicks, mStack, true, 0f);
 	}
@@ -948,5 +955,51 @@ public class RenderUtils {
 		
 		bufferBuilder.vertex(matrix, 0, 0, 0).next();
 		bufferBuilder.vertex(matrix, 0, 2, 1).next();
+	}
+
+	public static void renderBlockBox(MatrixStack mStack, BlockPos bPos, float r, float g, float b, float a) {
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+        // Load the renderer
+        RenderSystem.setShader(GameRenderer::getPositionShader);
+
+        // Push a new item to the render stack
+        mStack.push();
+
+        // Apply
+        RenderUtils.applyRegionalRenderOffset(mStack);
+
+        // Translate the point of rendering
+        mStack.translate(
+            (bPos.getX() + 0.5) - RenderUtils.getRegion().getX(),
+            bPos.getY(),
+            (bPos.getZ() + 0.5) - RenderUtils.getRegion().getZ()
+        );
+        
+        // Update the size of the box.
+        mStack.scale(1, 1, 1);
+
+		// Make it yellow
+        RenderSystem.setShaderColor(r/255, g/255, b/255, a/255);
+        
+        // Make it so it is our mobBox.
+        Shader shader = RenderSystem.getShader();
+        Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
+        blockBox.setShader(mStack.peek().getModel(), matrix4f, shader);
+        
+        // Pop the stack (i.e. render it)
+        mStack.pop();
+
+        // GL resets
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+	}
+
+	public static void renderBlockBox(MatrixStack mStack, BlockPos bPos) {
+		renderBlockBox(mStack, bPos, 255, 255, 255, 255);
 	}
 }
