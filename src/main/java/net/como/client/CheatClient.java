@@ -27,6 +27,8 @@ public class CheatClient {
     public static EventEmitter emitter = new EventEmitter();
     public static FriendsManager friendsManager = new FriendsManager();
 
+    public static GeneralConfig config;
+
     // Commands
     private static void registerCheatCommands() {
         // Add the friends command
@@ -133,6 +135,8 @@ public class CheatClient {
 
         // Load the config
         Persistance.loadConfig();
+        
+        config = new GeneralConfig();
 
         // Ready up all the commands
         registerCheatCommands();
