@@ -8,10 +8,13 @@ import java.util.List;
 
 import net.minecraft.client.font.TextRenderer;
 import net.como.client.CheatClient;
+import net.como.client.events.ClientTickEvent;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.structures.Cheat;
+import net.como.client.structures.Colour;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
+import net.como.client.utils.RenderUtils;
 
 public class ModList extends Cheat {
     private static interface ColouringMode {
@@ -44,6 +47,90 @@ public class ModList extends Cheat {
             });
         }
     }
+    private static class RGBColouring implements ColouringMode {
+        public RGBColouring() {
+            // Generate all of the steps, it is hard work but at least we only need to do it once.
+            this.generateSteps();
+
+            // We need to run a tick so we can generate at least one set.
+            this.tick();
+        }
+
+        // This is used to say where the head of the function is (i.e. 0)
+        private int head = 0;
+        private void generateSteps() {
+            // The 763 is the period of the "step" function (i.e. the thing generating all of the colours).
+            this.steps = new Colour[763];
+
+            // This is just from an RGB thing I found on a site this https://codepen.io/Codepixl/pen/ogWWaK
+            // Thanks <3
+
+            // The "steps" function
+            int r = 255, g = 0, b = 0;
+            for (int i = 0; i < this.steps.length; i++) {
+                if (r > 0 && b == 0){
+                    r--;
+                    g++;
+                }
+                if (g > 0 && r == 0){
+                    g--;
+                    b++;
+                }
+                if (b > 0 && g == 0){
+                    r++;
+                    b--;
+                }
+
+                // Place the new colour that we generated in the steps array.
+                this.steps[i] = new Colour(r, g, b, 255);
+            }
+        }
+        
+        // This is used to store all of the possible colours
+        private Colour[] steps;
+        
+        // This is used to store or of the possible colours for all of the cheats for the active tick.
+        private List<Colour> set;
+        private int speed = 15;
+
+        // This will prepare all of the colours so we can tick over them all at a constant rate (i.e. client TPS)
+        private void tick() {
+            set = new ArrayList<Colour>();
+            int totalCheats = CheatClient.Cheats.keySet().size();
+
+            // Loop through them all as if we are wanting them their and then.
+            for (int cur = 0; cur < totalCheats; cur++) {
+                int len = this.steps.length;
+
+                // If the cur == 0 then that must mean that it is the head.
+                if (cur == 0) {
+                    // This adds one to head
+                    // then makes sure that it is less than the length of the array so it can loop around.
+                    head = (head + 1) % len;
+                }
+                
+                // Get the element behind the head.
+                int i = head - cur*speed;
+
+                // If it is less than zero then loop it around the array, else then just leave it be.
+                i = i < 0 ? len - i : i;
+
+                // Add the step to the set
+                // ...making sure that i is less than len.
+                set.add(this.steps[i % len]);
+            }
+        }
+
+        // Return a colour for a given cheat.
+        @Override
+        public int getColour(int cur, int total) {
+            // Get the colour that would have been generated for this index
+            Colour c = this.set.get(cur);
+
+            // Return it as an integer
+            return RenderUtils.RGBA2Int((int)c.r, (int)c.g, (int)c.b, 255);
+        }
+    }
 
     private HashMap<String, ColouringMode> colouringModes;
 
@@ -59,6 +146,7 @@ public class ModList extends Cheat {
         colouringModes = new HashMap<String, ColouringMode>() {{
             put("default", new DefaultColouring());
             put("trans", new TransColouring());
+            put("rgb", new RGBColouring());
         }};
     }
 
@@ -76,16 +164,28 @@ public class ModList extends Cheat {
     @Override
     public void activate() {
         this.addListen(InGameHudRenderEvent.class);
+        this.addListen(ClientTickEvent.class);
     }
 
     @Override
     public void deactivate() {
         this.removeListen(InGameHudRenderEvent.class);
+        this.removeListen(ClientTickEvent.class);
     }
 
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
+            case "ClientTickEvent": {
+                ColouringMode mode = this.getColouringMode();
+                if (!(mode instanceof RGBColouring)) break;
+
+                RGBColouring rgbMode = (RGBColouring)mode;
+                // Generate our current set.
+                rgbMode.tick();
+
+                break;
+            }
             case "InGameHudRenderEvent": {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
