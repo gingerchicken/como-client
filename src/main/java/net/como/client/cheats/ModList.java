@@ -1,7 +1,9 @@
 package net.como.client.cheats;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.client.font.TextRenderer;
@@ -15,6 +17,21 @@ public class ModList extends Cheat {
         int getColour(int cur, int total);
     }
 
+    private static class DefaultColouring implements ColouringMode {
+        protected List<Integer> flat;
+
+        public DefaultColouring() {
+            this.flat = Arrays.asList(new Integer[]{
+                0xffffffff
+            });
+        }
+
+        @Override
+        public int getColour(int cur, int total) {
+            int index = (int)((float)flat.size() * ((float)cur/(float)total));
+            return this.flat.get(index);
+        }
+    }
     public ModList() {
         super("ModList");
         
