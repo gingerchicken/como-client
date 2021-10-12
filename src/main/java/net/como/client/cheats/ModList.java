@@ -11,6 +11,9 @@ import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 
 public class ModList extends Cheat {
+    private static interface ColouringMode {
+        int getColour(int cur, int total);
+    }
 
     public ModList() {
         super("ModList");
