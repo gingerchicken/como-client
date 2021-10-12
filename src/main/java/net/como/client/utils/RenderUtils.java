@@ -2,6 +2,7 @@ package net.como.client.utils;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.CheatClient;
@@ -1001,5 +1002,19 @@ public class RenderUtils {
 
 	public static void renderBlockBox(MatrixStack mStack, BlockPos bPos) {
 		renderBlockBox(mStack, bPos, 255, 255, 255, 255);
+	}
+
+	public static int RGBA2Int(int r, int g, int b, int a) {
+		int colour[] = {
+			a, r, g, b
+		};
+
+		String hex = "";
+		for (int part : colour) {
+			part = part > 255 ? 255 : part;
+			hex += StringUtils.leftPad(Integer.toHexString(part), 2, "0");
+		}
+
+		return (int)Long.parseLong(hex, 16);
 	}
 }
