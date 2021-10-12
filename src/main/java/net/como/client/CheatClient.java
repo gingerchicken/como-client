@@ -133,6 +133,7 @@ public class CheatClient {
         Cheats.put("itemrendertweaks", new ItemRenderTweaks());
         Cheats.put("tracers", new Tracers());
         Cheats.put("blockesp", new BlockESP());
+        Cheats.put("betternametags", new BetterNameTags());
 
         // Load the config
         Persistance.loadConfig();
