@@ -127,6 +127,7 @@ public class BetterNameTags extends Cheat {
         float textOffsets = 2.5f;
         Attribute[] attributes = {
             new NameAttribute(player),
+            new HealthAttribute(player),
             new PingAttribute(player)
         };
 
