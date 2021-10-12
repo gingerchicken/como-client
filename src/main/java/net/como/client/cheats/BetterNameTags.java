@@ -46,6 +46,17 @@ public class BetterNameTags extends Cheat {
         }
     }
 
+    private static class NameAttribute extends Attribute {
+        NameAttribute(PlayerEntity player) {
+            super(player);
+        }
+
+        @Override
+        public Text getText() {
+            return this.player.getName();
+        }
+    }
+
     public BetterNameTags() {
         super("BetterNameTags");
     }
