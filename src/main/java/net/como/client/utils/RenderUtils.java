@@ -1012,6 +1012,8 @@ public class RenderUtils {
 		String hex = "";
 		for (int part : colour) {
 			part = part > 255 ? 255 : part;
+			part = part < 0 ? 0 : part;
+
 			hex += StringUtils.leftPad(Integer.toHexString(part), 2, "0");
 		}
 
