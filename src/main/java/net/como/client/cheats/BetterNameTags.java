@@ -102,7 +102,11 @@ public class BetterNameTags extends Cheat {
         @Override
         public int getColour() {
             // TODO make it change colour the lower it goes.
-            return 0xFFffff00;
+            Integer hp = (int)player.getHealth(); 
+
+            float f = (hp / player.getMaxHealth()) * 255*2;
+
+            return RenderUtils.RGBA2Int((int)(255*2 - f), (int)(f), 0, 255);
         }
     }
 
