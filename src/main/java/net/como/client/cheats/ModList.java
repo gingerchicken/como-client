@@ -33,16 +33,32 @@ public class ModList extends Cheat {
             return this.flat.get(index);
         }
     }
+    private static class TransColouring extends DefaultColouring {
+        public TransColouring() {
+            this.flat = Arrays.asList(new Integer[]{
+                0xff55cdfc,
+                0xfff7a8b8,
+                0xffffffff,
+                0xfff7a8b8,
+                0xff55cdfc
+            });
+        }
+    }
+
+    private HashMap<String, ColouringMode> colouringModes;
+
     public ModList() {
         super("ModList");
         
         this.description = "Displays all of your enabled mods";
         this.modListDisplay = false;
+
         this.addSetting(new Setting("ColouringMode", "default"));
 
         // Setup colouring modes
         colouringModes = new HashMap<String, ColouringMode>() {{
             put("default", new DefaultColouring());
+            put("trans", new TransColouring());
         }};
     }
 
