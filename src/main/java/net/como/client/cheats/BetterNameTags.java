@@ -30,6 +30,22 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
 public class BetterNameTags extends Cheat {
+    private static class Attribute {
+        public final PlayerEntity player;
+
+        public int getColour() {
+            return 0xFFFFFFFF;
+        }
+
+        public Text getText() {
+            return Text.of("");
+        }
+
+        public Attribute(PlayerEntity player) {
+            this.player = player;
+        }
+    }
+
     public BetterNameTags() {
         super("BetterNameTags");
     }
