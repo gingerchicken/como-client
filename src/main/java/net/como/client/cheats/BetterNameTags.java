@@ -217,7 +217,8 @@ public class BetterNameTags extends Cheat {
             }
             case "renderLabelIfPresentEvent": {
                 renderLabelIfPresentEvent<Entity> e = (renderLabelIfPresentEvent<Entity>)event;
-                e.ci.cancel();
+                if (e.entity instanceof PlayerEntity) e.ci.cancel();
+
                 break;
             }
         }
