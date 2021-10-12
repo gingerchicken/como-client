@@ -17,6 +17,8 @@ import net.como.client.structures.events.Event;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -62,9 +64,21 @@ public class BetterNameTags extends Cheat {
             super(player);
         }
 
+        private Integer getPing() {
+            ClientPlayNetworkHandler lv = CheatClient.me().networkHandler;
+
+            // Get the player entry
+            PlayerListEntry entry = lv.getPlayerListEntry(player.getUuid());
+            
+            // We don't know em so they must be apart of the server right?
+            if (entry == null) return 0;
+
+            return entry.getLatency();
+        }
+
         @Override
         public Text getText() {
-            return Text.of("420ms");
+            return Text.of(String.format("%dms", this.getPing()));
         }
 
         @Override
