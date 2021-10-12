@@ -51,6 +51,23 @@ public class SettingsCommand extends Command {
 
                 return true;
             }
+            case "java.lang.Float": {
+                // TODO this is legit just a copy of the double thing, make this nicer I swear!
+                Float realValue = null;
+                
+                try {
+                    realValue = Float.valueOf(value);
+                } catch (Exception e) { }
+
+                if (realValue == null) {
+                    CheatClient.displayChatMessage(String.format("%sInvalid Value: recieved NaN as a parameter", ChatUtils.RED));
+                    return true;
+                }
+                
+                setting.value = realValue;
+
+                return true;
+            }
             // TODO come up with something better, this one is alot like the one underneath.
             case "java.lang.Double": {
                 Double realValue = null;
