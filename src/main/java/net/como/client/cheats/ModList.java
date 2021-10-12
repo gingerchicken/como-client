@@ -97,7 +97,7 @@ public class ModList extends Cheat {
 
                 int display = 0;
                 for (Cheat cheat : enabledMods) {
-                    int x = textRenderer.drawWithShadow(e.mStack, cheat.getName(), 1, 1+10*display, 0xFFFFFFFF);
+                    int x = textRenderer.drawWithShadow(e.mStack, cheat.getName(), 1, 1+10*display, this.getColouringMode().getColour(display, enabledMods.size()));
 
                     if (cheat.hasListOption()) {
                         textRenderer.drawWithShadow(e.mStack, String.format("[%s]", cheat.listOption()), x+2, 1+10*display, 0xFFadadad);
