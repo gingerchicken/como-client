@@ -11,6 +11,7 @@ import net.como.client.CheatClient;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
+import net.como.client.structures.settings.Setting;
 
 public class ModList extends Cheat {
     private static interface ColouringMode {
@@ -37,6 +38,23 @@ public class ModList extends Cheat {
         
         this.description = "Displays all of your enabled mods";
         this.modListDisplay = false;
+        this.addSetting(new Setting("ColouringMode", "default"));
+
+        // Setup colouring modes
+        colouringModes = new HashMap<String, ColouringMode>() {{
+            put("default", new DefaultColouring());
+        }};
+    }
+
+    private ColouringMode getColouringMode() {
+        String mode = (String)this.getSetting("ColouringMode").value;
+        mode = mode.toLowerCase();
+        
+        // If the mode doesn't exist return to default.
+        mode = (this.colouringModes.containsKey(mode)) ? mode : "default";
+
+        // Return the mode.
+        return this.colouringModes.get(mode);
     }
 
     @Override
