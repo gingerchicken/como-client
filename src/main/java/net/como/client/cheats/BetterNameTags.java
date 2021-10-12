@@ -12,6 +12,7 @@ import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderEntityEvent;
 import net.como.client.events.RenderWorldEvent;
+import net.como.client.events.renderLabelIfPresentEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.MathsUtils;
@@ -123,11 +124,13 @@ public class BetterNameTags extends Cheat {
     @Override
     public void activate() {
         this.addListen(OnRenderEvent.class);
+        this.addListen(renderLabelIfPresentEvent.class);
     }
 
     @Override
     public void deactivate() {
         this.removeListen(OnRenderEvent.class);
+        this.removeListen(renderLabelIfPresentEvent.class);
     }
 
     private void displayNameTag(PlayerEntity player, MatrixStack mStack, float tickDelta) {
@@ -210,6 +213,11 @@ public class BetterNameTags extends Cheat {
                     this.displayNameTag(player, e.mStack, e.tickDelta);
                 }
 
+                break;
+            }
+            case "renderLabelIfPresentEvent": {
+                renderLabelIfPresentEvent<Entity> e = (renderLabelIfPresentEvent<Entity>)event;
+                e.ci.cancel();
                 break;
             }
         }
