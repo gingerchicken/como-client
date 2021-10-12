@@ -179,7 +179,7 @@ public class BetterNameTags extends Cheat {
 		float c = (float)Math.sqrt(CheatClient.me().getLerpedPos(tickDelta).distanceTo(pos));
 
         float scale = (Float)(this.getSetting("Scale").value);
-		mStack.scale(-0.025F*c*scale, -0.025F*c*scale, 0.025F*c*scale);
+		mStack.scale(-0.025F*c*scale, -0.025F*c*scale, 0);
         Matrix4f matrix4f = mStack.peek().getModel();
 
 		float x = -len/2;
