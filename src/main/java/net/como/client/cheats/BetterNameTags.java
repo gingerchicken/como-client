@@ -15,6 +15,7 @@ import net.como.client.events.RenderWorldEvent;
 import net.como.client.events.renderLabelIfPresentEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
+import net.como.client.structures.settings.Setting;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
@@ -119,6 +120,8 @@ public class BetterNameTags extends Cheat {
 
     public BetterNameTags() {
         super("BetterNameTags");
+
+        this.addSetting(new Setting("Scale", 0.5f));
     }
 
     @Override
@@ -175,7 +178,8 @@ public class BetterNameTags extends Cheat {
 		mStack.multiply(CheatClient.getClient().getEntityRenderDispatcher().getRotation());
 		float c = (float)Math.sqrt(CheatClient.me().getLerpedPos(tickDelta).distanceTo(pos));
 
-		mStack.scale(-0.025F*c, -0.025F*c, 0.025F*c);
+        float scale = (Float)(this.getSetting("Scale").value);
+		mStack.scale(-0.025F*c*scale, -0.025F*c*scale, 0.025F*c*scale);
         Matrix4f matrix4f = mStack.peek().getModel();
 
 		float x = -len/2;
