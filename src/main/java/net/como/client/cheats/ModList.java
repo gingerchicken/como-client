@@ -48,7 +48,13 @@ public class ModList extends Cheat {
 
                 // Sort the enabledMods list by the cheat name
                 Collections.sort(enabledMods, (c1, c2) -> {
-                    return c2.getName().length() - c1.getName().length();
+                    int l1 = textRenderer.getWidth(c1.getName());
+                    int l2 = textRenderer.getWidth(c2.getName());
+
+                    l1 += c1.hasListOption() ? textRenderer.getWidth(c1.listOption()) + 1 : 0;
+                    l2 += c2.hasListOption() ? textRenderer.getWidth(c2.listOption()) + 1 : 0;
+
+                    return l2 - l1;
                 });
 
                 int display = 0;
