@@ -83,7 +83,13 @@ public class BetterNameTags extends Cheat {
 
         @Override
         public int getColour() {
-            return 0xFF00FF00;
+            Integer ping = this.getPing(); 
+
+            int badPing = 500;
+            float f = (float)ping/(float)badPing * 255;
+            if (f > 255) f = 255;
+
+            return RenderUtils.RGBA2Int((int)(2*f), (int)(255 - f), 0, 255);
         }
     }
 
