@@ -92,14 +92,14 @@ public class BetterNameTags extends Cheat {
         TextRenderer r = CheatClient.getClient().textRenderer;
 
         float textOffsets = 2.5f;
-        HashMap<Text, Integer> textsWithColours = new HashMap<Text, Integer>();
-
-        textsWithColours.put(player.getDisplayName(), 0xFFFFFFFF);
-        textsWithColours.put(Text.of("420ms"), 0xFF00FF00);
+        Attribute[] attributes = {
+            new NameAttribute(player),
+            new PingAttribute(player)
+        };
 
         int len = 0;
-        for (Text text : textsWithColours.keySet()) {
-            len += r.getWidth(text) + textOffsets;
+        for (Attribute attribute : attributes) {
+            len += r.getWidth(attribute.getText()) + textOffsets;
         }
 
 		GL11.glEnable(GL11.GL_BLEND);
@@ -134,8 +134,8 @@ public class BetterNameTags extends Cheat {
 		float x = -len/2;
 		float y = -10;
 
-        for (Text text : textsWithColours.keySet()) {
-            x = r.drawWithShadow(mStack, text, x + textOffsets, y, textsWithColours.get(text));
+        for (Attribute attribute : attributes) {
+            x = r.drawWithShadow(mStack, attribute.getText(), x + textOffsets, y, attribute.getColour());
         }
 
         // Pop the stack (i.e. render it)
