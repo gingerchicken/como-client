@@ -57,6 +57,22 @@ public class BetterNameTags extends Cheat {
         }
     }
 
+    private static class PingAttribute extends Attribute {
+        PingAttribute(PlayerEntity player) {
+            super(player);
+        }
+
+        @Override
+        public Text getText() {
+            return Text.of("420ms");
+        }
+
+        @Override
+        public int getColour() {
+            return 0xFF00FF00;
+        }
+    }
+
     public BetterNameTags() {
         super("BetterNameTags");
     }
