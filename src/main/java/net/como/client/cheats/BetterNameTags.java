@@ -87,6 +87,25 @@ public class BetterNameTags extends Cheat {
         }
     }
 
+    private static class HealthAttribute extends Attribute {
+        public HealthAttribute(PlayerEntity player) {
+            super(player);
+        }
+
+        @Override
+        public Text getText() {
+            Integer hp = (int)player.getHealth();
+
+            return Text.of(hp.toString());
+        }
+
+        @Override
+        public int getColour() {
+            // TODO make it change colour the lower it goes.
+            return 0xFFffff00;
+        }
+    }
+
     public BetterNameTags() {
         super("BetterNameTags");
     }
