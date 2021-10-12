@@ -39,6 +39,11 @@ public class SettingsCommand extends Command {
 
         // Update the setting in a horrible way.
         switch (setting.value.getClass().getName()) {
+            case "java.lang.String": {
+                setting.value = value;
+                
+                return true;
+            }
             case "java.lang.Boolean": {
                 boolean realValue = value.equals("true");
                 
