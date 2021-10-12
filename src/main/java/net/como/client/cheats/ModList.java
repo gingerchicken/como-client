@@ -141,6 +141,7 @@ public class ModList extends Cheat {
         this.modListDisplay = false;
 
         this.addSetting(new Setting("ColouringMode", "default"));
+        this.addSetting(new Setting("Scale", 1.0f));
 
         // Setup colouring modes
         colouringModes = new HashMap<String, ColouringMode>() {{
@@ -211,6 +212,11 @@ public class ModList extends Cheat {
                     return l2 - l1;
                 });
 
+                Float scale = (Float)this.getSetting("Scale").value;
+
+                e.mStack.push();
+                e.mStack.scale(scale, scale, 0);
+
                 int display = 0;
                 for (Cheat cheat : enabledMods) {
                     int x = textRenderer.drawWithShadow(e.mStack, cheat.getName(), 1, 1+10*display, this.getColouringMode().getColour(display, enabledMods.size()));
@@ -221,6 +227,8 @@ public class ModList extends Cheat {
                     
                     display++;
                 }
+
+                e.mStack.pop();
             }
         } 
     }
