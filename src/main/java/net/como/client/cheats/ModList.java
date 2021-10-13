@@ -56,6 +56,14 @@ public class ModList extends Cheat {
             this.tick();
         }
 
+        private Cheat getModList() {
+            return CheatClient.Cheats.get("modlist");
+        }
+
+        private int getSpeed() {
+            return (int)this.getModList().getSetting("RGBIntensity").value;
+        }
+
         // This is used to say where the head of the function is (i.e. 0)
         private int head = 0;
         private void generateSteps() {
@@ -91,12 +99,12 @@ public class ModList extends Cheat {
         
         // This is used to store or of the possible colours for all of the cheats for the active tick.
         private List<Colour> set;
-        private int speed = 15;
 
         // This will prepare all of the colours so we can tick over them all at a constant rate (i.e. client TPS)
         private void tick() {
             set = new ArrayList<Colour>();
             int totalCheats = CheatClient.Cheats.keySet().size();
+            int speed = this.getSpeed();
 
             // Loop through them all as if we are wanting them their and then.
             for (int cur = 0; cur < totalCheats; cur++) {
@@ -146,6 +154,7 @@ public class ModList extends Cheat {
 
         this.addSetting(new Setting("ColouringMode", "default"));
         this.addSetting(new Setting("Scale", 1.0f));
+        this.addSetting(new Setting("RGBIntensity", 5));
     }
 
     private ColouringMode getColouringMode() {
