@@ -122,6 +122,7 @@ public class BetterNameTags extends Cheat {
         super("BetterNameTags");
 
         this.addSetting(new Setting("Scale", 0.5f));
+        this.addSetting(new Setting("OutlineAlpha", 125));
     }
 
     @Override
@@ -176,7 +177,7 @@ public class BetterNameTags extends Cheat {
         
         // Update the size of the box.
 		mStack.multiply(CheatClient.getClient().getEntityRenderDispatcher().getRotation());
-		float c = (float)Math.sqrt(CheatClient.me().getLerpedPos(tickDelta).distanceTo(pos));
+		float c = (float)Math.sqrt(CheatClient.getClient().cameraEntity.getLerpedPos(tickDelta).distanceTo(pos));
 
         float scale = (Float)(this.getSetting("Scale").value);
 		mStack.scale(-0.025F*c*scale, -0.025F*c*scale, 0);
@@ -184,9 +185,15 @@ public class BetterNameTags extends Cheat {
 
 		float x = -len/2;
 		float y = -10;
+        int outlineAlpha = (int)this.getSetting("OutlineAlpha").value;
 
         for (Attribute attribute : attributes) {
-            x = r.drawWithShadow(mStack, attribute.getText(), x + textOffsets, y, attribute.getColour());
+            VertexConsumerProvider.Immediate immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
+            
+            r.drawWithOutline(attribute.getText().asOrderedText(), x + textOffsets, y, attribute.getColour(), RenderUtils.RGBA2Int(0, 0, 0, outlineAlpha + 5), matrix4f, immediate, 0);
+            x += r.getWidth(attribute.getText()) + textOffsets;
+            
+            immediate.draw();
         }
 
         // Pop the stack (i.e. render it)
@@ -221,7 +228,9 @@ public class BetterNameTags extends Cheat {
             }
             case "renderLabelIfPresentEvent": {
                 renderLabelIfPresentEvent<Entity> e = (renderLabelIfPresentEvent<Entity>)event;
-                if (e.entity instanceof PlayerEntity) e.ci.cancel();
+                if (!(e.entity instanceof PlayerEntity)) break;
+
+                e.ci.cancel();
 
                 break;
             }
