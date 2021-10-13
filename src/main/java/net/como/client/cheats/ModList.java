@@ -105,15 +105,14 @@ public class ModList extends Cheat {
                 // If the cur == 0 then that must mean that it is the head.
                 if (cur == 0) {
                     // This adds one to head
-                    // then makes sure that it is less than the length of the array so it can loop around.
-                    head = (head + 1) % len;
+                    head += speed;
                 }
                 
                 // Get the element behind the head.
                 int i = head - cur*speed;
 
                 // If it is less than zero then loop it around the array, else then just leave it be.
-                i = i < 0 ? len - i : i;
+                i = (i < 0 ? len - i : i);
 
                 // Add the step to the set
                 // ...making sure that i is less than len.
