@@ -106,6 +106,11 @@ public class ModList extends Cheat {
                 if (cur == 0) {
                     // This adds one to head
                     head += speed;
+
+                    // Technically this does mean that head will infinitely increase, however for it to be a problem the user needs to be on MC for a super long time, which all it would mean is that the int would wrap round to the negatives.
+                    // ...which would cause an error as it would be looking for a negative index in the set array... so I guess I will fix this...
+                    // So let's check for that
+                    head = head < 0 ? speed : head; 
                 }
                 
                 // Get the element behind the head.
