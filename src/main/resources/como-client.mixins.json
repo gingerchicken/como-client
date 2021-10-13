@@ -28,6 +28,7 @@
     "MinecraftClientMixin",
     "EntityRendererMixin",
 
+    "botch/PortalTypeMixin",
     "botch/NetherMixin",
     "botch/WorldMixin",
     "botch/TimerMixin",
