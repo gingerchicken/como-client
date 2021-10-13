@@ -134,6 +134,7 @@ public class CheatClient {
         Cheats.put("tracers", new Tracers());
         Cheats.put("blockesp", new BlockESP());
         Cheats.put("betternametags", new BetterNameTags());
+        Cheats.put("noportal", new NoPortal());
 
         // Load the config
         Persistance.loadConfig();
