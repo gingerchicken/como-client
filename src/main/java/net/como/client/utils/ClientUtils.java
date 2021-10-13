@@ -1,6 +1,7 @@
 package net.como.client.utils;
 
 import net.como.client.CheatClient;
+import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -51,5 +52,11 @@ public class ClientUtils {
 
     public static Boolean inGame() {
         return CheatClient.me() != null;
+    }
+
+    public static Boolean isInNetherPortal() {
+        IEntity me = (IEntity)CheatClient.me();
+        
+        return me.getInNetherPortal();
     }
 }
