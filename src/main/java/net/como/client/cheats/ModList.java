@@ -142,13 +142,6 @@ public class ModList extends Cheat {
 
         this.addSetting(new Setting("ColouringMode", "default"));
         this.addSetting(new Setting("Scale", 1.0f));
-
-        // Setup colouring modes
-        colouringModes = new HashMap<String, ColouringMode>() {{
-            put("default", new DefaultColouring());
-            put("trans", new TransColouring());
-            put("rgb", new RGBColouring());
-        }};
     }
 
     private ColouringMode getColouringMode() {
@@ -164,6 +157,13 @@ public class ModList extends Cheat {
 
     @Override
     public void activate() {
+        // Setup colouring modes
+        colouringModes = new HashMap<String, ColouringMode>() {{
+            put("default", new DefaultColouring());
+            put("trans", new TransColouring());
+            put("rgb", new RGBColouring());
+        }};
+
         this.addListen(InGameHudRenderEvent.class);
         this.addListen(ClientTickEvent.class);
     }
