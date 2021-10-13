@@ -22,6 +22,10 @@ import net.minecraft.util.math.Matrix4f;
 @Mixin(EntityRenderer.class)
 public abstract class EntityRendererMixin<T extends Entity>
 {
+    @Shadow
+    @Final
+    EntityRenderDispatcher dispatcher;
+
 	@Inject(at = {@At("HEAD")},
 		method = {
 			"renderLabelIfPresent(Lnet/minecraft/entity/Entity;Lnet/minecraft/text/Text;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"
@@ -37,7 +41,7 @@ public abstract class EntityRendererMixin<T extends Entity>
     ) {
 		CheatClient.emitter.triggerEvent(
             new renderLabelIfPresentEvent<T>(
-                entity, text, matrixStack, vertexConsumerProvider, i, ci
+                entity, text, matrixStack, vertexConsumerProvider, i, this.dispatcher, ci
             )
         );
 	}
