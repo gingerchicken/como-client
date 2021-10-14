@@ -16,6 +16,7 @@ import net.como.client.events.renderLabelIfPresentEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
+import net.como.client.utils.ClientUtils;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
@@ -215,7 +216,7 @@ public class BetterNameTags extends Cheat {
 
                 for (Entity entity : ents) {
                     // No render myself.
-                    if (!(entity instanceof PlayerEntity) || (PlayerEntity)entity == CheatClient.me()) {
+                    if (!(entity instanceof PlayerEntity) || ((PlayerEntity)entity == CheatClient.me() && !ClientUtils.isThirdperson())) {
                         continue;
                     }
 
