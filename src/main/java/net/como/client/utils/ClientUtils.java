@@ -59,4 +59,8 @@ public class ClientUtils {
         
         return me.getInNetherPortal();
     }
+
+    public static Boolean isThirdperson() {
+        return CheatClient.getClient().gameRenderer.getCamera().isThirdPerson();
+    }
 }
