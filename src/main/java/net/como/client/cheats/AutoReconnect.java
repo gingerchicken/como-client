@@ -40,29 +40,5 @@ public class AutoReconnect extends Cheat {
     }
     private double deltaTime() {
         return CheatClient.getCurrentTime() - startTime;
-    };
-    
-
-    @Override
-    public void activate() {
-        this.addListen(DisconnectEvent.class);
-    }
-
-    @Override
-    public void deactivate() {
-        this.removeListen(DisconnectEvent.class);
-    }
-
-    @Override
-    public void fireEvent(Event event) {
-        switch (event.getClass().getSimpleName()) {
-            case "DisconnectEvent": {
-                // Start timer if manual mode is not enabled.
-                if ((boolean)this.getSetting("Manual").value) return;
-                this.startCountdown();
-
-                break;
-            }
-        }
     }
 }
