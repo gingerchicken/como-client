@@ -65,6 +65,8 @@ public class AutoReconnectMixin extends Screen {
     public void init(CallbackInfo ci) {
         if (!this.getAutoReconnect().isEnabled()) return;
 
+        this.getAutoReconnect().startCountdown();
+
         int backButtonX = width / 2 - 100;
 		int backButtonY = Math.min(height / 2 + this.reasonHeight / 2 + 9, height - 30);
 
