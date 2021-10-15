@@ -47,6 +47,18 @@ public class ModList extends Cheat {
             });
         }
     }
+    private static class LGBTColouring extends DefaultColouring {
+        public LGBTColouring() {
+            this.flat = Arrays.asList(new Integer[]{
+                0xffe40303,
+                0xffff8c00,
+                0xffffed00,
+                0xff008026,
+                0xff004dff,
+                0xff750787
+            });
+        }
+    }
     private static class RGBColouring implements ColouringMode {
         public RGBColouring() {
             // Generate all of the steps, it is hard work but at least we only need to do it once.
@@ -175,6 +187,7 @@ public class ModList extends Cheat {
             put("default", new DefaultColouring());
             put("trans", new TransColouring());
             put("rgb", new RGBColouring());
+            put("lgbt", new LGBTColouring());
         }};
 
         this.addListen(InGameHudRenderEvent.class);
