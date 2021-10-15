@@ -27,6 +27,7 @@
     "ClientPlayerInteractionManagerMixin",
     "MinecraftClientMixin",
     "EntityRendererMixin",
+    "ScreenMixin",
 
     "botch/PortalTypeMixin",
     "botch/NetherMixin",
