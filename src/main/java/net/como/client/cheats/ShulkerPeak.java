@@ -72,7 +72,7 @@ public class ShulkerPeak extends Cheat {
         r.draw(matrices, stack.getName(), x + 7, y + 6, 0xFF404040);
     }
 
-    private void renderTooltip(MatrixStack mStack, ItemStack stack, int x, int y) {
+    private void renderShulkerDisplay(MatrixStack mStack, ItemStack stack, int x, int y) {
         List<ItemStack> items = this.getItems(stack);
         ItemRenderer ir = CheatClient.getClient().getItemRenderer();
         TextRenderer r = CheatClient.getClient().textRenderer;
@@ -121,7 +121,7 @@ public class ShulkerPeak extends Cheat {
                 int y = e.y - 16;
 
                 // Render the tool tip
-                this.renderTooltip(e.mStack, e.stack, x, y);
+                this.renderShulkerDisplay(e.mStack, e.stack, x, y);
 
                 break;
             }
