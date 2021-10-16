@@ -29,6 +29,7 @@ import net.minecraft.util.math.Vec2f;
 
 public class ShulkerPeak extends Cheat {
     private static final Identifier BACKGROUND_TEXTURE = new Identifier("como-client", "textures/gui/shulker_tooltip_header.png");
+    private static final int BACKGROUND_WIDTH = 176, BACKGROUND_HEIGHT = 78;
 
     public ShulkerPeak() {
         super("ShulkerPeak");
@@ -63,9 +64,9 @@ public class ShulkerPeak extends Cheat {
     }
 
     private void renderBackground(MatrixStack matrices, ItemStack stack, int x, int y) {
-        RenderSystem.setShaderTexture(0, this.BACKGROUND_TEXTURE);
+        RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
 
-        DrawableHelper.drawTexture(matrices, x, y, 0, 0, 176, 78, 176, 78);
+        DrawableHelper.drawTexture(matrices, x, y, 0, 0, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
         TextRenderer r = CheatClient.getClient().textRenderer;
 
         // r.draw(matrices, stack.getName(), x + 7, y - 4, 0xFF404040);
