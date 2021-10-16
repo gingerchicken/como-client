@@ -100,19 +100,27 @@ public class ShulkerPeak extends Cheat {
             i++;
         }
     }
+
+    private boolean isShulkerBox(ItemStack stack) {
+        Item item = stack.getItem();
+
+        // Make sure that it was a block
+        if (!(item instanceof BlockItem)) return false;
+
+        // Make sure it is a shulker
+        Block block = ((BlockItem)item).getBlock();
+
+        // Return if it is a shulker
+        return block instanceof ShulkerBoxBlock;
+    }
+
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "RenderTooltipEvent": {
                 RenderTooltipEvent e = (RenderTooltipEvent)event;
-                Item item = e.stack.getItem();
-                
-                // Make sure that it was a block
-                if (!(item instanceof BlockItem)) break;
 
-                // Make sure it is a shulker
-                Block block = ((BlockItem)item).getBlock();
-                if (!(block instanceof ShulkerBoxBlock)) break;
+                if (!this.isShulkerBox(e.stack)) break;
 
                 // Cancel the old tool tip
                 e.ci.cancel();
