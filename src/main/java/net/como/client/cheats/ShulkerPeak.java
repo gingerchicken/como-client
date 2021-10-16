@@ -25,6 +25,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.Vec2f;
 
 public class ShulkerPeak extends Cheat {
     private static final Identifier BACKGROUND_TEXTURE = new Identifier("como-client", "textures/gui/shulker_tooltip_header.png");
@@ -121,8 +122,12 @@ public class ShulkerPeak extends Cheat {
                 // Cancel the old tool tip
                 e.ci.cancel();
 
+                // Offset where we are going to render the tooltip
+                int x = e.x + 8;
+                int y = e.y - 16;
+
                 // Render the tool tip
-                this.renderTooltip(e.mStack, e.stack, e.x, e.y);
+                this.renderTooltip(e.mStack, e.stack, x, y);
 
                 break;
             }
