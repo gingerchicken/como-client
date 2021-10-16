@@ -8,9 +8,11 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.CheatClient;
+import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.RenderTooltipEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
+import net.como.client.structures.settings.Setting;
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.client.font.TextRenderer;
@@ -22,10 +24,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.Vec2f;
 
 public class ShulkerPeak extends Cheat {
     private static final Identifier BACKGROUND_TEXTURE = new Identifier("como-client", "textures/gui/shulker_tooltip_header.png");
@@ -33,16 +33,20 @@ public class ShulkerPeak extends Cheat {
 
     public ShulkerPeak() {
         super("ShulkerPeak");
+
+        this.addSetting(new Setting("HUDOverlay", false));
     }
 
     @Override
     public void activate() {
         this.addListen(RenderTooltipEvent.class);
+        this.addListen(InGameHudRenderEvent.class);
     }
 
     @Override
     public void deactivate() {
         this.removeListen(RenderTooltipEvent.class);
+        this.removeListen(InGameHudRenderEvent.class);
     }
 
     private List<ItemStack> getItems(ItemStack stack) {
@@ -131,6 +135,26 @@ public class ShulkerPeak extends Cheat {
 
                 // Render the tool tip
                 this.renderShulkerDisplay(e.mStack, e.stack, x, y);
+
+                break;
+            }
+            case "InGameHudRenderEvent": {
+                if (!(boolean)this.getSetting("HUDOverlay").value) break;
+                
+                // Get the active item.
+                ItemStack stack = CheatClient.me().getMainHandStack();
+
+                // Make sure that it is a shulker
+                if (!this.isShulkerBox(stack)) break;
+
+                // Get some event data
+                InGameHudRenderEvent e = (InGameHudRenderEvent)event;
+
+                // Render the shulker box
+                int x = CheatClient.getClient().getWindow().getScaledWidth()/2 - BACKGROUND_WIDTH/2;
+                int y = (int)(32/CheatClient.getClient().getWindow().getScaleFactor());
+
+                this.renderShulkerDisplay(e.mStack, stack, x, y);
 
                 break;
             }
