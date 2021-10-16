@@ -11,12 +11,14 @@ import net.como.client.CheatClient;
 import net.como.client.events.RenderTooltipEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
+import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -109,12 +111,20 @@ public class ShulkerPeak extends Cheat {
         switch (event.getClass().getSimpleName()) {
             case "RenderTooltipEvent": {
                 RenderTooltipEvent e = (RenderTooltipEvent)event;
-                ItemStack stack = e.stack;
+                Item item = e.stack.getItem();
                 
-                if (!stack.getItem().toString().equals("shulker_box")) break;
+                // Make sure that it was a block
+                if (!(item instanceof BlockItem)) break;
 
+                // Make sure it is a shulker
+                Block block = ((BlockItem)item).getBlock();
+                if (!(block instanceof ShulkerBoxBlock)) break;
+
+                // Cancel the old tool tip
                 e.ci.cancel();
-                this.renderTooltip(e.mStack, stack, e.x, e.y);
+
+                // Render the tool tip
+                this.renderTooltip(e.mStack, e.stack, e.x, e.y);
 
                 break;
             }
