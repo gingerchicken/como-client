@@ -62,12 +62,6 @@ public class ShulkerPeak extends Cheat {
         return items;
     }
 
-    private String getShulkerName(ItemStack stack) {
-        String name = stack.getName().asString();
-
-        return name;
-    }
-
     private void renderBackground(MatrixStack matrices, ItemStack stack, int x, int y) {
         RenderSystem.setShaderTexture(0, this.BACKGROUND_TEXTURE);
 
