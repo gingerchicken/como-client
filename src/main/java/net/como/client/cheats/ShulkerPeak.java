@@ -70,10 +70,11 @@ public class ShulkerPeak extends Cheat {
     private void renderBackground(MatrixStack matrices, ItemStack stack, int x, int y) {
         RenderSystem.setShaderTexture(0, this.BACKGROUND_TEXTURE);
 
-        DrawableHelper.drawTexture(matrices, x, y - 10, 0, 0, 176, 78, 176, 78);
+        DrawableHelper.drawTexture(matrices, x, y, 0, 0, 176, 78, 176, 78);
         TextRenderer r = CheatClient.getClient().textRenderer;
 
-        r.draw(matrices, stack.getName(), x + 7, y - 4, 0xFF404040);
+        // r.draw(matrices, stack.getName(), x + 7, y - 4, 0xFF404040);
+        r.draw(matrices, stack.getName(), x + 7, y + 6, 0xFF404040);
     }
 
     private void renderTooltip(MatrixStack mStack, ItemStack stack, int x, int y) {
@@ -83,15 +84,12 @@ public class ShulkerPeak extends Cheat {
 
         GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 
-        // Offset tool tip
-        x += 8;
-
         // Render background
         this.renderBackground(mStack, stack, x, y);
 
         // Item offsets
         x += 8;
-        y += 8;
+        y += 18;
 
         int spacing = 18;
         int shulkerWidth = 9;
