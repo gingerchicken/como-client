@@ -119,28 +119,26 @@ public class RenderUtils {
 	public static void drawLine3D(MatrixStack matrixStack, Vec3d start, Vec3d end) {
 		// TODO add colour
 
-		GL11.glEnable(GL11.GL_BLEND);
+		// GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		// GL11.glEnable(GL11.GL_LINE_SMOOTH);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 
 		matrixStack.push();
-		RenderUtils.applyRenderOffset(matrixStack);
-
+		RenderUtils.applyRegionalRenderOffset(matrixStack);
 		RenderSystem.setShaderColor(1, 1, 1, 0.5F);
-		
+
 		Matrix4f matrix = matrixStack.peek().getModel();
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		RenderSystem.setShader(GameRenderer::getPositionShader);
-
+		
 		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION);
-		bufferBuilder
-			.vertex(matrix, (float)start.x, (float)start.y, (float)start.z)
-			.next();
-
-		bufferBuilder
-			.vertex(matrix, (float)end.x, (float)end.y, (float)end.z)
-			.next();
+	
+		int regionX = getRegion().getX();
+		int regionZ = getRegion().getZ();
+		
+		bufferBuilder.vertex(matrix, (float)(start.x - regionX), (float)start.y, (float)(start.z - regionZ)).next();
+		bufferBuilder.vertex(matrix, (float)end.x - regionX, (float)end.y, (float)end.z - regionZ).next();
 		
 		bufferBuilder.end();
 		BufferRenderer.draw(bufferBuilder);
