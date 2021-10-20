@@ -4,7 +4,6 @@ import net.como.client.events.OnSubmersionTypeEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
-import net.minecraft.client.realms.dto.Subscription.SubscriptionType;
 import net.minecraft.client.render.CameraSubmersionType;
 
 public class NoSubmerge extends Cheat {
