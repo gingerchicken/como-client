@@ -3,11 +3,17 @@ package net.como.client.cheats;
 import net.como.client.events.OnSubmersionTypeEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
+import net.como.client.structures.settings.Setting;
+import net.minecraft.client.realms.dto.Subscription.SubscriptionType;
 import net.minecraft.client.render.CameraSubmersionType;
 
 public class NoSubmerge extends Cheat {
     public NoSubmerge() {
         super("NoSubmerge");
+
+        this.addSetting(new Setting("Lava", true));
+        this.addSetting(new Setting("Water", true));
+        this.addSetting(new Setting("PowderSnow", true));
     }
 
     @Override
@@ -26,7 +32,30 @@ public class NoSubmerge extends Cheat {
             case "OnSubmersionTypeEvent": {
                 OnSubmersionTypeEvent e = (OnSubmersionTypeEvent)event;
 
-                e.cir.setReturnValue(CameraSubmersionType.NONE);
+                Setting setting = null;
+                switch (e.cir.getReturnValue()) {
+                    case LAVA: {
+                        setting = this.getSetting("Lava");
+                        break;
+                    }
+                    case POWDER_SNOW: {
+                        setting = this.getSetting("PowderSnow");
+                        break;
+                    }
+                    case WATER: {
+                        setting = this.getSetting("Water");
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+
+                // Make sure it is something we catch.
+                if (setting == null) break;
+
+                // Hide it if we need to.
+                if ((boolean)setting.value) e.cir.setReturnValue(CameraSubmersionType.NONE);
 
                 break;
             }
