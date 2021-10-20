@@ -136,6 +136,7 @@ public class CheatClient {
         Cheats.put("betternametags", new BetterNameTags());
         Cheats.put("noportal", new NoPortal());
         Cheats.put("shulkerpeak", new ShulkerPeak());
+        Cheats.put("nosubmerge", new NoSubmerge());
 
         // Load the config
         Persistance.loadConfig();
