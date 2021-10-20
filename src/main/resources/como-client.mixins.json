@@ -28,6 +28,7 @@
     "MinecraftClientMixin",
     "EntityRendererMixin",
     "ScreenMixin",
+    "CameraMixin",
 
     "botch/PortalTypeMixin",
     "botch/NetherMixin",
