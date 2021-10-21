@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.CheatClient;
+import net.como.client.GeneralConfig;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
 import net.como.client.interfaces.mixin.IWorld;
 import net.como.client.structures.Cheat;
+import net.como.client.structures.Colour;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.BlockUtils;
@@ -35,6 +37,9 @@ public class Tracers extends Cheat {
         // Block/Ticker search
         this.addSetting(new Setting("Block", false));
         this.addSetting(new Setting("Blocks", new HashMap<String, Boolean>()));
+
+        // Rendering
+        this.addSetting(new Setting("Transparency", 1f));
     }
     
     @Override
@@ -87,6 +92,7 @@ public class Tracers extends Cheat {
 
             case "OnRenderEvent": {
                 OnRenderEvent e = (OnRenderEvent)event;
+                Float transparency = (Float)this.getSetting("Transparency").value;
 
                 // Render entity/player tracers
                 Iterable<Entity> ents = CheatClient.getClient().world.getEntities();
@@ -98,9 +104,11 @@ public class Tracers extends Cheat {
                         continue;
                     }
 
+                    // TODO add different colours for different entities
+                    Colour c = CheatClient.config.entityColour;
+
                     // Render tracers
-                    // TODO add colour from generalConfig
-                    RenderUtils.drawTracer(e.mStack, MathsUtils.getLerpedCentre(entity, e.tickDelta), e.tickDelta);
+                    RenderUtils.drawTracer(e.mStack, MathsUtils.getLerpedCentre(entity, e.tickDelta), e.tickDelta, c.r, c.g, c.b, c.a*transparency);
                 }
 
                 // Render chests etc.
@@ -108,7 +116,11 @@ public class Tracers extends Cheat {
                 for (BlockEntityTickInvoker ticker : tickers) {
                     if (!this.shouldDrawTracer(ticker)) continue;
 
-                    RenderUtils.drawTracer(e.mStack, BlockUtils.blockPos(ticker.getPos()).add(0.5, 0.5, 0.5), e.tickDelta);
+                    // This is only storage colouring for now but whatever.
+                    // TODO what if it isn't storage!?
+                    Colour c = CheatClient.config.storageColour;
+
+                    RenderUtils.drawTracer(e.mStack, BlockUtils.blockPos(ticker.getPos()).add(0.5, 0.5, 0.5), e.tickDelta, c.r, c.g, c.b, c.a * transparency);
                 }
 
                 break;
