@@ -111,16 +111,18 @@ public class Tracers extends Cheat {
                     RenderUtils.drawTracer(e.mStack, MathsUtils.getLerpedCentre(entity, e.tickDelta), e.tickDelta, c.r, c.g, c.b, c.a*transparency);
                 }
 
-                // Render chests etc.
-                List<BlockEntityTickInvoker> tickers = ((IWorld)(CheatClient.getClient().world)).getBlockEntityTickers();
-                for (BlockEntityTickInvoker ticker : tickers) {
-                    if (!this.shouldDrawTracer(ticker)) continue;
+                if ((boolean)this.getSetting("Block").value) {
+                    // Render blocks etc.
+                    List<BlockEntityTickInvoker> tickers = ((IWorld)(CheatClient.getClient().world)).getBlockEntityTickers();
+                    for (BlockEntityTickInvoker ticker : tickers) {
+                        if (!this.shouldDrawTracer(ticker)) continue;
 
-                    // This is only storage colouring for now but whatever.
-                    // TODO what if it isn't storage!?
-                    Colour c = CheatClient.config.storageColour;
+                        // This is only storage colouring for now but whatever.
+                        // TODO what if it isn't storage!?
+                        Colour c = CheatClient.config.storageColour;
 
-                    RenderUtils.drawTracer(e.mStack, BlockUtils.blockPos(ticker.getPos()).add(0.5, 0.5, 0.5), e.tickDelta, c.r, c.g, c.b, c.a * transparency);
+                        RenderUtils.drawTracer(e.mStack, BlockUtils.blockPos(ticker.getPos()).add(0.5, 0.5, 0.5), e.tickDelta, c.r, c.g, c.b, c.a * transparency);
+                    }
                 }
 
                 break;
