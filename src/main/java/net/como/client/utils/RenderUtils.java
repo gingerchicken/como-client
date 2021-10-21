@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.CheatClient;
+import net.como.client.structures.Colour;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BufferRenderer;
@@ -163,6 +164,10 @@ public class RenderUtils {
 
 	public static void drawTracer(MatrixStack matrixStack, Vec3d end, float delta) {
 		drawTracer(matrixStack, end, delta, 255, 255, 255, 255);
+	}
+
+	public static void drawTracer(MatrixStack matrixStack, Vec3d end, float delta, Colour colour) {
+		drawTracer(matrixStack, end, delta, colour.r, colour.g, colour.b, colour.a);
 	}
 
 	public static void scissorBox(int startX, int startY, int endX, int endY)
