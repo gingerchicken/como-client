@@ -120,7 +120,7 @@ public class RenderUtils {
 		return x/255f;
 	}
 
-	public static void drawLine3D(MatrixStack matrixStack, Vec3d start, Vec3d end, int r, int g, int b, int a) {
+	public static void drawLine3D(MatrixStack matrixStack, Vec3d start, Vec3d end, float r, float g, float b, float a) {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_BLEND);
@@ -152,7 +152,7 @@ public class RenderUtils {
 		GL11.glDisable(GL11.GL_LINE_SMOOTH);
 	}
 
-	public static void drawTracer(MatrixStack matrixStack, Vec3d end, float delta, int r, int g, int b, int a) {
+	public static void drawTracer(MatrixStack matrixStack, Vec3d end, float delta, float r, float g, float b, float a) {
 		RenderUtils.drawLine3D(
 			matrixStack,
 			RotationUtils.getClientLookVec().add(getCameraPos(delta)),
