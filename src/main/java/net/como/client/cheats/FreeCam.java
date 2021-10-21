@@ -8,8 +8,6 @@ import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.MathsUtils;
-import net.como.client.utils.RotationUtils;
-import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
@@ -31,6 +29,8 @@ public class FreeCam extends Cheat {
         CheatClient.me().setPos(origin.x, origin.y, origin.z);
         CheatClient.me().setYaw(this.originYaw);
         CheatClient.me().setPitch(this.originPitch);
+
+        CheatClient.me().noClip = false;
     }
 
     public FreeCam() {
