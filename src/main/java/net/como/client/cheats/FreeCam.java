@@ -11,6 +11,7 @@ import net.como.client.utils.RotationUtils;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.GameOptions;
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
 
@@ -70,7 +71,7 @@ public class FreeCam extends Cheat {
             }
             case "SendPacketEvent": {
                 SendPacketEvent e = (SendPacketEvent)event;
-                if (e.packet instanceof PlayerMoveC2SPacket) e.ci.cancel();
+                if (e.packet instanceof PlayerMoveC2SPacket || e.packet instanceof ClientCommandC2SPacket) e.ci.cancel();
 
                 break;
             }
