@@ -79,14 +79,14 @@ public class FreeCam extends Cheat {
             case "ClientTickEvent": {
                 // Vals
                 Vec3d v = Vec3d.ZERO;
+                Vec3d pos = me.getPos();
                 float speed = (float)this.getSetting("Speed").value;
 
                 if (me.isSprinting()) speed *= 2;
 
                 // Client settings
-                me.noClip = true;
-                me.flyingSpeed = speed;
                 me.setOnGround(true);
+                me.setVelocity(0, 0, 0);
 
                 // Game options
                 GameOptions opt = CheatClient.getClient().options;
@@ -102,10 +102,12 @@ public class FreeCam extends Cheat {
                 if (opt.keySneak.isPressed())   v = v.add(0, -1, 0);
 
                 // Calculate the speed.
-                v = v.multiply(speed);
+                v   = v.multiply(speed);
+                pos = pos.add(v);
 
                 // Set the velocity
-                me.setVelocity(v);
+                me.setPos(pos.x, pos.y, pos.z);
+
                 break;
             }
         }
