@@ -7,6 +7,7 @@ import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
+import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RotationUtils;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -83,14 +84,20 @@ public class FreeCam extends Cheat {
                 if (me.isSprinting()) speed *= 2;
 
                 // Client settings
-                me.setOnGround(false);
                 me.noClip = true;
                 me.flyingSpeed = speed;
+                me.setOnGround(true);
 
                 // Game options
                 GameOptions opt = CheatClient.getClient().options;
 
                 // Controls
+                if (opt.keyForward.isPressed()) v = v.add(CheatClient.me().getRotationVector());
+                if (opt.keyBack.isPressed())    v = v.add(CheatClient.me().getRotationVector().multiply(-1));
+
+                if (opt.keyRight.isPressed())   v = v.add(MathsUtils.getRightVelocity(CheatClient.me()));
+                if (opt.keyLeft.isPressed())    v = v.add(MathsUtils.getRightVelocity(CheatClient.me()).multiply(-1));
+
                 if (opt.keyJump.isPressed())    v = v.add(0,  1, 0);
                 if (opt.keySneak.isPressed())   v = v.add(0, -1, 0);
 
