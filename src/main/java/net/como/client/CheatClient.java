@@ -137,6 +137,7 @@ public class CheatClient {
         Cheats.put("noportal", new NoPortal());
         Cheats.put("shulkerpeak", new ShulkerPeak());
         Cheats.put("nosubmerge", new NoSubmerge());
+        Cheats.put("watermark", new Watermark());
 
         // Load the config
         Persistance.loadConfig();
