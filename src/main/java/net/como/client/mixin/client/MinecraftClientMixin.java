@@ -1,4 +1,4 @@
-package net.como.client.mixin;
+package net.como.client.mixin.client;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Inject;

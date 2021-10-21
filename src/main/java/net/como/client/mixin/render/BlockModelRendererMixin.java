@@ -1,4 +1,4 @@
-package net.como.client.mixin;
+package net.como.client.mixin.render;
 
 import java.util.Random;
 
