@@ -1,4 +1,4 @@
-package net.como.client.mixin;
+package net.como.client.mixin.client;
 
 import com.mojang.authlib.GameProfile;
 

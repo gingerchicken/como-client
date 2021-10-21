@@ -1,4 +1,4 @@
-package net.como.client.mixin;
+package net.como.client.mixin.render;
 
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
