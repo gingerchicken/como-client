@@ -116,9 +116,11 @@ public class RenderUtils {
         }
 	}
 
-	public static void drawLine3D(MatrixStack matrixStack, Vec3d start, Vec3d end) {
-		// TODO add colour
+	public static float normaliseColourPart(float x) {
+		return x/255f;
+	}
 
+	public static void drawLine3D(MatrixStack matrixStack, Vec3d start, Vec3d end, int r, int g, int b, int a) {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_BLEND);
@@ -126,7 +128,7 @@ public class RenderUtils {
 
 		matrixStack.push();
 		RenderUtils.applyRegionalRenderOffset(matrixStack);
-		RenderSystem.setShaderColor(1, 1, 1, 0.5F);
+		RenderSystem.setShaderColor(normaliseColourPart(r), normaliseColourPart(g), normaliseColourPart(b), normaliseColourPart(a));
 
 		Matrix4f matrix = matrixStack.peek().getModel();
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
@@ -150,12 +152,17 @@ public class RenderUtils {
 		GL11.glDisable(GL11.GL_LINE_SMOOTH);
 	}
 
-	public static void drawTracer(MatrixStack matrixStack, Vec3d end, float delta) {
+	public static void drawTracer(MatrixStack matrixStack, Vec3d end, float delta, int r, int g, int b, int a) {
 		RenderUtils.drawLine3D(
 			matrixStack,
 			RotationUtils.getClientLookVec().add(getCameraPos(delta)),
-			end
+			end,
+			r, g, b, a
 		);
+	}
+
+	public static void drawTracer(MatrixStack matrixStack, Vec3d end, float delta) {
+		drawTracer(matrixStack, end, delta, 255, 255, 255, 255);
 	}
 
 	public static void scissorBox(int startX, int startY, int endX, int endY)
