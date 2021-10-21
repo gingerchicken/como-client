@@ -57,6 +57,12 @@ public class Persistance {
         HashMap<String, HashMap<String, String>> flat = new Gson().fromJson(data, new TypeToken<HashMap<String, HashMap<String, String>>>() {}.getType());
         for (String name : flat.keySet()) {
             Cheat cheat = CheatClient.Cheats.get(name);
+            
+            // Check that we can get the cheat
+            if (cheat == null) {
+                System.out.println(String.format("Unable to find cheat '%s,' ignoring...", name));
+                continue;
+            }
 
             cheat.lift(flat.get(name));
         }
