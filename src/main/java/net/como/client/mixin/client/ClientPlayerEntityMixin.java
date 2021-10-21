@@ -11,16 +11,24 @@ import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.PreMovementPacketEvent;
 import net.como.client.events.PlayerChatEvent;
+import net.como.client.events.PlayerMoveEvent;
 import net.como.client.events.PostMovementPacketEvent;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.MovementType;
+import net.minecraft.util.math.Vec3d;
 
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
     public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
         super(world, profile);
+    }
+
+    @Inject(at = @At("HEAD"), method="move(Lnet/minecraft/entity/MovementType;Lnet/minecraft/util/math/Vec3d;)V")
+    private void onMove(MovementType type, Vec3d offset, CallbackInfo ci) {
+        CheatClient.emitter.triggerEvent(new PlayerMoveEvent(type, offset, ci));
     }
 
     @Inject(at = @At("HEAD"), method="sendChatMessage(Ljava/lang/String;)V", cancellable = true)
