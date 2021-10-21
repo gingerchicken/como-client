@@ -138,6 +138,7 @@ public class CheatClient {
         Cheats.put("shulkerpeak", new ShulkerPeak());
         Cheats.put("nosubmerge", new NoSubmerge());
         Cheats.put("watermark", new Watermark());
+        Cheats.put("freecam", new FreeCam());
 
         // Load the config
         Persistance.loadConfig();
