@@ -39,6 +39,7 @@ public class Watermark extends Cheat {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
                 RenderSystem.setShaderTexture(0, WATERMARK_TEXTURE);
+                RenderSystem.setShaderColor(1, 1, 1, 1);
 
                 // Scaling
                 double scale = ((double)this.getSetting("Scale").value)/6;
