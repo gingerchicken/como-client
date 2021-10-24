@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.util.Window;
 import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.InGameHudRenderEvent;
@@ -247,11 +248,27 @@ public class ModList extends Cheat {
                 e.mStack.scale(scale, scale, 0);
 
                 int display = 0;
+
+                // Positioning stuff
+                GUIPos pos = this.getPosition();
+
+                // Window sizes
+                Window window = CheatClient.getClient().getWindow();
+                int MAX_WIDTH  = window.getScaledWidth();
+                int MAX_HEIGHT = window.getScaledHeight();
+
                 for (Cheat cheat : enabledMods) {
-                    int x = textRenderer.drawWithShadow(e.mStack, cheat.getName(), 1, 1+10*display, this.getColouringMode().getColour(display, enabledMods.size()));
+                    // Positioning based stuff
+                    int x = pos.isRight() ? MAX_WIDTH - cheat.getTextWidth(textRenderer) : 0;
+                    
+                    int y = 1+10*(display + (pos.isBottom() ? 1 : 0));
+                    y = pos.isBottom() ? MAX_HEIGHT - y : y;
+
+                    x = textRenderer.drawWithShadow(e.mStack, cheat.getName(), x, y, this.getColouringMode().getColour(display, enabledMods.size()));
 
                     if (cheat.hasListOption()) {
-                        textRenderer.drawWithShadow(e.mStack, String.format("[%s]", cheat.listOption()), x+2, 1+10*display, 0xFFadadad);
+                        // The +2 is just for the space
+                        textRenderer.drawWithShadow(e.mStack, String.format("[%s]", cheat.listOption()), x + 2, y, 0xFFadadad);
                     }                    
                     
                     display++;
