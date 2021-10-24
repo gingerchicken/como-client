@@ -12,11 +12,19 @@ import net.como.client.events.ClientTickEvent;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.Colour;
+import net.como.client.structures.GUIPos;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.RenderUtils;
 
 public class ModList extends Cheat {
+    private GUIPos getPosition() {
+        return GUIPos.fromInt(
+            (int)this.getSetting("Positioning").value,
+            GUIPos.Type.TOP_LEFT
+        );
+    }
+
     private static interface ColouringMode {
         int getColour(int cur, int total);
     }
@@ -167,6 +175,7 @@ public class ModList extends Cheat {
         this.addSetting(new Setting("ColouringMode", "default"));
         this.addSetting(new Setting("Scale", 1.0f));
         this.addSetting(new Setting("RGBIntensity", 5));
+        this.addSetting(new Setting("Positioning", 1)); // TODO change this after implementing issue #44
     }
 
     private ColouringMode getColouringMode() {
