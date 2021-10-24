@@ -149,7 +149,7 @@ public class Cheat extends Settings implements EventListener {
     public int getTextWidth(TextRenderer textRenderer) {
         int w = textRenderer.getWidth(this.getName());
 
-        w += this.hasListOption() ? textRenderer.getWidth(this.listOption()) + 2 : 0;
+        w += (this.hasListOption() ? textRenderer.getWidth(this.listOption()) + 12 : 0);
 
         return w;
     }
