@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import net.como.client.CheatClient;
 import net.como.client.utils.ChatUtils;
+import net.minecraft.client.font.TextRenderer;
 import net.como.client.structures.settings.*;
 
 
@@ -143,5 +144,13 @@ public class Cheat extends Settings implements EventListener {
         }
 
         if (enable) this.enable();
+    }
+
+    public int getTextWidth(TextRenderer textRenderer) {
+        int w = textRenderer.getWidth(this.getName());
+
+        w += this.hasListOption() ? textRenderer.getWidth(this.listOption()) + 2 : 0;
+
+        return w;
     }
 }
