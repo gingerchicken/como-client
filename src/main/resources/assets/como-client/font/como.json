@@ -1,0 +1,12 @@
+{
+    "providers": [
+        {
+            "type": "ttf",
+            "file": "como-client:como.ttf",
+			"shift": [0, 1.5],
+			"size": 9.5,
+			"oversample": 6.0,
+			"skip": ""
+        }
+	]
+}
