@@ -37,6 +37,7 @@
     "botch/TimerMixin",
     "botch/AutoReconnectMixin",
     "botch/ClientInit",
+    "botch/FontManagerMixin",
 
     "AbstractBlockStateMixin",
     "WorldMixin"
