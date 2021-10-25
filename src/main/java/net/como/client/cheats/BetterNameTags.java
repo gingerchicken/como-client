@@ -140,7 +140,7 @@ public class BetterNameTags extends Cheat {
 
     private void displayNameTag(PlayerEntity player, MatrixStack mStack, float tickDelta) {
         Vec3d pos = player.getLerpedPos(tickDelta).add(0, player.getBoundingBox().maxY - player.getPos().y + 0.25, 0);
-        TextRenderer r = CheatClient.getClient().textRenderer;
+        TextRenderer r = CheatClient.textRenderer;
 
         float textOffsets = 2.5f;
         Attribute[] attributes = {
