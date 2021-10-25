@@ -149,6 +149,8 @@ public class Cheat extends Settings implements EventListener {
     public int getTextWidth(TextRenderer textRenderer) {
         int w = textRenderer.getWidth(this.getName());
 
+        // TODO the offset (i.e. 12), may change depending on different fonts being used.
+        // Can we for the love of gaming change this to something more dynamic.
         w += (this.hasListOption() ? textRenderer.getWidth(this.listOption()) + 12 : 0);
 
         return w;

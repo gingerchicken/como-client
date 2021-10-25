@@ -226,7 +226,7 @@ public class ModList extends Cheat {
             case "InGameHudRenderEvent": {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
-                TextRenderer textRenderer = CheatClient.getClient().textRenderer;
+                TextRenderer textRenderer = CheatClient.textRenderer;
                 List<Cheat> enabledMods = new ArrayList<Cheat>();
                 
                 for (String cheatName : CheatClient.Cheats.keySet()) {
