@@ -13,12 +13,16 @@ import net.como.client.commands.WaypointsCommand;
 import net.como.client.commands.structures.CheatCommand;
 import net.como.client.commands.structures.CommandHandler;
 import net.como.client.components.FriendsManager;
+import net.como.client.interfaces.mixin.IClient;
+import net.como.client.interfaces.mixin.IFontManager;
 import net.como.client.utils.*;
 
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.EventEmitter;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.util.Identifier;
 
 public class CheatClient {
     // Variables
@@ -26,8 +30,24 @@ public class CheatClient {
     public static CommandHandler commandHandler = new CommandHandler(".");
     public static EventEmitter emitter = new EventEmitter();
     public static FriendsManager friendsManager = new FriendsManager();
+    public static TextRenderer textRenderer;
 
     public static GeneralConfig config;
+    private static String fontId = new String();
+
+    public static void updateFont(String id) {
+        if (fontId.equals(id)) return;
+
+        fontId = id;
+        textRenderer = createTextRenderer();
+    }
+
+    public static TextRenderer createTextRenderer() {
+        IClient client = (IClient)getClient();
+        IFontManager fontManager = (IFontManager)client.getFontManager();
+
+        return fontManager.createTextRendererFromIdentifier(new Identifier(fontId));
+    }
 
     // Commands
     private static void registerCheatCommands() {
@@ -144,6 +164,9 @@ public class CheatClient {
         Persistance.loadConfig();
         
         config = new GeneralConfig();
+
+        // Generate textRenderer
+        updateFont(config.font);
 
         // Ready up all the commands
         registerCheatCommands();
