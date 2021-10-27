@@ -101,19 +101,18 @@ public class BetterNameTags extends Cheat {
             super(player);
         }
 
+        private Integer getHealth() {
+            return (int)player.getHealth();
+        }
+
         @Override
         public Text getText() {
-            Integer hp = (int)player.getHealth();
-
-            return Text.of(hp.toString());
+            return Text.of(this.getHealth().toString());
         }
 
         @Override
         public int getColour() {
-            // TODO make it change colour the lower it goes.
-            Integer hp = (int)player.getHealth(); 
-
-            float f = (hp / player.getMaxHealth()) * 255*2;
+            float f = (this.getHealth() / player.getMaxHealth()) * 255*2;
 
             return RenderUtils.RGBA2Int((int)(255*2 - f), (int)(f), 0, 255);
         }
