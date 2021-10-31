@@ -186,7 +186,7 @@ public class BetterNameTags extends Cheat {
         for (Attribute attribute : attributes) {
             VertexConsumerProvider.Immediate immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
             
-            r.drawWithOutline(attribute.getText().asOrderedText(), x, y, attribute.getColour(), RenderUtils.RGBA2Int(0, 0, 0, outlineAlpha + 5), matrix4f, immediate, 0);
+            r.drawWithOutline(attribute.getText().asOrderedText(), x, y, attribute.getColour(), RenderUtils.RGBA2Int(0, 0, 0, outlineAlpha + 5), matrix4f, immediate, 255);
             x += r.getWidth(attribute.getText()) + textOffsets;
             
             immediate.draw();
