@@ -3,6 +3,7 @@ package net.como.client.utils;
 import net.como.client.CheatClient;
 import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.utils.RotationUtils.Rotation;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,18 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 
 public class ClientUtils {
+    public static boolean isInStorage() {
+        Screen screen = CheatClient.getClient().currentScreen;
+        if (screen == null) return false;
+
+        switch (screen.getClass().getSimpleName()) {
+            case "ShulkerBoxScreen":
+            case "GenericContainerScreen": return true;
+            default: return false;
+        }
+    
+    }
+
     public static boolean hasElytraEquipt() {
         ItemStack chestSlot = CheatClient.me().getEquippedStack(EquipmentSlot.CHEST);
 		return (chestSlot.getItem() == Items.ELYTRA);
