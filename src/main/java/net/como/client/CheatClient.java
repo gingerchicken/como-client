@@ -159,6 +159,7 @@ public class CheatClient {
         Cheats.put("nosubmerge", new NoSubmerge());
         Cheats.put("watermark", new Watermark());
         Cheats.put("freecam", new FreeCam());
+        Cheats.put("autototem", new AutoTotem());
 
         // Load the config
         Persistance.loadConfig();
