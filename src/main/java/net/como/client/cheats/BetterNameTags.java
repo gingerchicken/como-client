@@ -101,19 +101,18 @@ public class BetterNameTags extends Cheat {
             super(player);
         }
 
+        private Integer getHealth() {
+            return (int)player.getHealth();
+        }
+
         @Override
         public Text getText() {
-            Integer hp = (int)player.getHealth();
-
-            return Text.of(hp.toString());
+            return Text.of(this.getHealth().toString());
         }
 
         @Override
         public int getColour() {
-            // TODO make it change colour the lower it goes.
-            Integer hp = (int)player.getHealth(); 
-
-            float f = (hp / player.getMaxHealth()) * 255*2;
+            float f = (this.getHealth() / player.getMaxHealth()) * 255*2;
 
             return RenderUtils.RGBA2Int((int)(255*2 - f), (int)(f), 0, 255);
         }
@@ -142,7 +141,7 @@ public class BetterNameTags extends Cheat {
         Vec3d pos = player.getLerpedPos(tickDelta).add(0, player.getBoundingBox().maxY - player.getPos().y + 0.25, 0);
         TextRenderer r = CheatClient.textRenderer;
 
-        float textOffsets = 2.5f;
+        float textOffsets = r.getWidth(" ")/2;
         Attribute[] attributes = {
             new NameAttribute(player),
             new HealthAttribute(player),
@@ -151,8 +150,9 @@ public class BetterNameTags extends Cheat {
 
         int len = 0;
         for (Attribute attribute : attributes) {
-            len += r.getWidth(attribute.getText()) + textOffsets;
+            len += r.getWidth(attribute.getText());
         }
+        len += (attributes.length - 1) * textOffsets;
 
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -191,7 +191,7 @@ public class BetterNameTags extends Cheat {
         for (Attribute attribute : attributes) {
             VertexConsumerProvider.Immediate immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
             
-            r.drawWithOutline(attribute.getText().asOrderedText(), x + textOffsets, y, attribute.getColour(), RenderUtils.RGBA2Int(0, 0, 0, outlineAlpha + 5), matrix4f, immediate, 0);
+            r.drawWithOutline(attribute.getText().asOrderedText(), x, y, attribute.getColour(), RenderUtils.RGBA2Int(0, 0, 0, outlineAlpha + 5), matrix4f, immediate, 0);
             x += r.getWidth(attribute.getText()) + textOffsets;
             
             immediate.draw();
