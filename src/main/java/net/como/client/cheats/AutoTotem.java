@@ -4,8 +4,8 @@ import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
+import net.como.client.utils.ClientUtils;
 import net.como.client.utils.InteractionUtils;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -80,6 +80,9 @@ public class AutoTotem extends Cheat {
             case "ClientTickEvent": {
                 // If we have a totem already we don't need to bother.
                 if (this.hasTotemEquip()) break;
+
+                // Make sure we are not in a storage container, slot numbers are a little spicy here.
+                if (ClientUtils.isInStorage()) break;
 
                 int totemSlot = this.getTotemSlot();
 
