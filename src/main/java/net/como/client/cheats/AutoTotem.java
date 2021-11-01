@@ -1,5 +1,8 @@
 package net.como.client.cheats;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.structures.Cheat;
@@ -17,6 +20,30 @@ public class AutoTotem extends Cheat {
         super("AutoTotem");
     }
     
+    private List<Integer> getTotemSlots(int total) {
+        List<Integer> totems = new ArrayList<Integer>();
+        
+        PlayerInventory inv = CheatClient.me().getInventory();
+
+        // Iterate over all items that are not armour, crafting, off-hand or hotbar.
+        for (int i = 9; i < PlayerInventory.MAIN_SIZE && total > 0; i++) {
+            if (this.isTotem(inv.main.get(i))) {
+                total--;
+                totems.add(i);
+            }
+        }
+
+        // Check the hotbar
+        for (int i = 0; i < 9 && total > 0; i++) {
+            if (this.isTotem(inv.main.get(i))) {
+                total--;
+                totems.add(i + 36);
+            }
+        }
+
+        return totems;
+    }
+
     private boolean isTotem(ItemStack item) {
         return item.isOf(Items.TOTEM_OF_UNDYING);
     }
