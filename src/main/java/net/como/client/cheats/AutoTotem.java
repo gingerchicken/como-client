@@ -20,6 +20,10 @@ public class AutoTotem extends Cheat {
         super("AutoTotem");
     }
     
+    private List<Integer> getAllTotemSlots() {
+        return this.getTotemSlots(CheatClient.me().getInventory().size());
+    }
+
     private List<Integer> getTotemSlots(int total) {
         List<Integer> totems = new ArrayList<Integer>();
         
