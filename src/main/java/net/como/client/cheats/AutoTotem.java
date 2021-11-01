@@ -59,19 +59,9 @@ public class AutoTotem extends Cheat {
     }
 
     private int getTotemSlot() {
-        PlayerInventory inv = CheatClient.me().getInventory();
-        
-        // Iterate over all items that are not armour, crafting, off-hand or hotbar.
-        for (int i = 9; i < PlayerInventory.MAIN_SIZE; i++) {
-            if (this.isTotem(inv.main.get(i))) return i;
-        }
+        List<Integer> slots = this.getTotemSlots(1);
 
-        // Check the hotbar
-        for (int i = 0; i < 9; i++) {
-            if (this.isTotem(inv.main.get(i))) return i + 36;
-        }
-
-        return -1;
+        return slots.size() == 0 ? -1 : slots.get(0);
     }
 
     private void equipTotem(int origin) {
