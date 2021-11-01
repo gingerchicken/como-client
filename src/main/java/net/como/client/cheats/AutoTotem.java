@@ -20,6 +20,16 @@ public class AutoTotem extends Cheat {
         super("AutoTotem");
     }
     
+    @Override
+    public String listOption() {
+        int total = 0;
+        
+        total += this.getAllTotemSlots().size();
+        total += this.hasTotemEquip() ? 1 : 0;
+
+        return Integer.toString(total);
+    }
+
     private List<Integer> getAllTotemSlots() {
         return this.getTotemSlots(CheatClient.me().getInventory().size());
     }
