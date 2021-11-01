@@ -27,7 +27,7 @@ git clone https://github.com/gingerchicken/como-client
 ```
 
 #### Step 2
-Install OpenJDK 16, there is probably already have a billion tutorials online how to do this but for me, while it tailored towards setting up a server, [this helpful gist from one of the spigot devs](https://gist.github.com/Proximyst/67615353e2575a71faaff3f7ae9cc2b4) worked best for me.
+Install OpenJDK 16, there is probably already have a billion tutorials online how to do this but for me, while its tailored towards setting up a server, [this helpful gist from one of the spigot devs](https://gist.github.com/Proximyst/67615353e2575a71faaff3f7ae9cc2b4) worked best for me.
 
 #### Step 3
 Finally, building the project, to do this we can run the following command:
@@ -48,4 +48,4 @@ Most of the features you will get in this client aren't too different to any oth
 
 ## Thanks
 ### The Wurst Project
-While developing this I was aided by the source code of the [Wurst Project](https://github.com/Wurst-Imperium/Wurst7), since this was my first ever mod for Minecraft that I had made, I was quite unfamiliar with the way Minecraft and its APIs work etc. therefore, by looking some parts of Wurst's source code, I could quickly understand the API and start making this mod.
+While developing this I was aided by the source code of the [Wurst Project](https://github.com/Wurst-Imperium/Wurst7), since this is my first ever mod for Minecraft, I was quite unfamiliar with the way Minecraft and its APIs work etc. therefore, by looking some parts of Wurst's source code, I could quickly understand the API and start making this mod.
