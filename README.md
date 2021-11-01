@@ -3,7 +3,13 @@
     <img src="src/main/resources/assets/como-client/textures/misc/watermark.png" width="500px"/>
     <br>
     <img src="https://github.com/gingerchicken/como-client/actions/workflows/build.yml/badge.svg" alt="Gradlew Build"/>
+    <img href="https://github.com/cabaletta/baritone/issues/" src="https://img.shields.io/github/issues/gingerchicken/como-client.svg" alt="issues">
+    <img src="https://img.shields.io/badge/MC-1.17.1-brightgreen.svg" alt="Minecraft"/>
+    <img src="https://img.shields.io/badge/license-GPL--3.0-green.svg" alt="GNU-3.0">
     <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="Contributions Welcome">
+    <br>
+    <img src="https://forthebadge.com/images/badges/built-with-love.svg" alt="Built With Love">
+    <img src="https://forthebadge.com/images/badges/built-by-codebabes.svg" alt="Built By Code Babes">
 </p>
 
 **A Minecraft "hacked client"** in the form of a Fabric mod developed with the aim of giving its users an advantage in most (if not all) situations (*but since I made it it probably won't to be honest...*), while still aiming to be as simplistic as possible.
