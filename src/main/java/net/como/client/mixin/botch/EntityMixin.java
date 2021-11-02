@@ -10,7 +10,7 @@ import net.como.client.interfaces.mixin.IEntity;
 import net.minecraft.entity.Entity;
 
 @Mixin(Entity.class)
-public class NetherMixin implements IEntity {
+public class EntityMixin implements IEntity {
     @Shadow
     protected boolean inNetherPortal;
 

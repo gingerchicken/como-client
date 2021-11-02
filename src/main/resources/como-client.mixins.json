@@ -32,7 +32,7 @@
     "screen/ScreenMixin",
 
     "botch/PortalTypeMixin",
-    "botch/NetherMixin",
+    "botch/EntityMixin",
     "botch/WorldMixin",
     "botch/TimerMixin",
     "botch/AutoReconnectMixin",
