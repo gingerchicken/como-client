@@ -160,6 +160,7 @@ public class CheatClient {
         Cheats.put("watermark", new Watermark());
         Cheats.put("freecam", new FreeCam());
         Cheats.put("autototem", new AutoTotem());
+        Cheats.put("antiinvisible", new AntiInvisible());
 
         // Load the config
         Persistance.loadConfig();
