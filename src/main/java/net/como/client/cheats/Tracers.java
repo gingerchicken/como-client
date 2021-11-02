@@ -7,9 +7,11 @@ import net.como.client.CheatClient;
 import net.como.client.GeneralConfig;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
+import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.interfaces.mixin.IWorld;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.Colour;
+import net.como.client.structures.EntityFlags;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.BlockUtils;
@@ -30,6 +32,7 @@ public class Tracers extends Cheat {
         this.addSetting(new Setting("Mob", true));
         this.addSetting(new Setting("Item", true));
         this.addSetting(new Setting("OtherEntities", true));
+        this.addSetting(new Setting("Invisible", false));
         
         // TODO add block search
         // TODO add entity search mode
@@ -59,15 +62,20 @@ public class Tracers extends Cheat {
         boolean drawMob           = (boolean)this.getSetting("Mob").value;
         boolean drawItem          = (boolean)this.getSetting("Item").value;
         boolean drawOtherEntities = (boolean)this.getSetting("OtherEntities").value;
+        boolean drawInvisible     = (boolean)this.getSetting("Invisible").value;
+
+        IEntity iEnt = (IEntity)ent;
 
         boolean isMob       = ent instanceof MobEntity;
         boolean isPlayer    = ent instanceof PlayerEntity;
         boolean isItem      = ent instanceof ItemEntity;
+        boolean isInvisible = iEnt.getEntFlag(EntityFlags.INVISIBLE_FLAG_INDEX);
 
         return (
                 (drawPlayer && isPlayer)
             ||  (drawMob && isMob)
             ||  (drawItem && isItem)
+            ||  (drawInvisible && isInvisible)
             ||  (drawOtherEntities && !isMob && !isPlayer && !isItem)
         );
     }
