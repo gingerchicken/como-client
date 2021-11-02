@@ -13,6 +13,7 @@
     "client/MinecraftClientMixin",
 
     "entity/PlayerEntityMixin",
+    "entity/EntityMixin",
 
     "render/ChatHudMixin",
     "render/HeldItemRendererMixin",
