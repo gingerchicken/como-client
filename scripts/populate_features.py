@@ -64,3 +64,7 @@ class Feature:
         return c
 
 features = [Feature(os.path.join(FEATURES_DIR, i)) for i in os.listdir(FEATURES_DIR)]
+
+print(len(features))
+for feature in features:
+    print(feature.get_name(), " - ", feature.get_description("No description available as of yet."))
