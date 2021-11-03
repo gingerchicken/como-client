@@ -1,5 +1,8 @@
 package net.como.client.structures;
 
+import net.como.client.CheatClient;
+import net.minecraft.entity.Entity;
+
 public class Colour {
     public float r,g,b,a;
 
@@ -18,5 +21,12 @@ public class Colour {
         this.a = clamp(a);
     }
 
+    public static Colour fromDistance(float distance) {
+        float f = distance / 20F;
+        return new Colour((2 - f) * 255, f*255, 0, 255/2);
+    }
+
+    public static Colour fromDistance(Entity entity) {
+        return fromDistance(CheatClient.me().distanceTo(entity));
     }
 }
