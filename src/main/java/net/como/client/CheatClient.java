@@ -161,6 +161,7 @@ public class CheatClient {
         Cheats.put("freecam", new FreeCam());
         Cheats.put("autototem", new AutoTotem());
         Cheats.put("antiinvisible", new AntiInvisible());
+        Cheats.put("norespond", new NoRespondAlert());
 
         // Load the config
         Persistance.loadConfig();
