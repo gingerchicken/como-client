@@ -162,6 +162,7 @@ public class CheatClient {
         Cheats.put("autototem", new AutoTotem());
         Cheats.put("antiinvisible", new AntiInvisible());
         Cheats.put("norespond", new NoRespondAlert());
+        Cheats.put("armourdisplay", new ArmourDisplay());
 
         // Load the config
         Persistance.loadConfig();
