@@ -88,7 +88,6 @@ public class ArmourDisplay extends Cheat {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "InGameHudRenderEvent": {
-                InGameHudRenderEvent e = (InGameHudRenderEvent)event;
                 Window window = CheatClient.getClient().getWindow();
 
                 this.renderDisplay(
