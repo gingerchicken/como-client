@@ -86,8 +86,10 @@ public class ArmourDisplay extends Cheat {
                 int x = window.getScaledWidth() / 2 + 5;
                 int y = window.getScaledHeight() - 55;
 
+                if (CheatClient.me().getAir() < 300) y -= 10;
+                System.out.println(CheatClient.me().getAir());
+
                 this.renderDisplay(x, y, 91);
-                
 
                 break;
             }
