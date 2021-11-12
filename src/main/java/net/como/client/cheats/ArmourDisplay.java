@@ -90,11 +90,10 @@ public class ArmourDisplay extends Cheat {
             case "InGameHudRenderEvent": {
                 Window window = CheatClient.getClient().getWindow();
 
-                this.renderDisplay(
-                    window.getScaledWidth() / 2 + 5,
-                    window.getScaledHeight() - 55,
-                    91
-                );
+                int x = window.getScaledWidth() / 2 + 5;
+                int y = window.getScaledHeight() - 55;
+
+                this.renderDisplay(x, y, 91);
                 
 
                 break;
