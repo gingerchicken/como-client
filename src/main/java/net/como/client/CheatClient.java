@@ -163,6 +163,7 @@ public class CheatClient {
         Cheats.put("antiinvisible", new AntiInvisible());
         Cheats.put("norespond", new NoRespondAlert());
         Cheats.put("armourdisplay", new ArmourDisplay());
+        Cheats.put("crystalaura", new CrystalAura());
 
         // Load the config
         Persistance.loadConfig();
