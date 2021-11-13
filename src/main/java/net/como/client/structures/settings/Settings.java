@@ -25,5 +25,10 @@ public class Settings {
         return this.settings.get(name);
     }
 
+    // TODO add more of these since they are super useful.
+    public Boolean getBoolSetting(String name) {
+        return (Boolean)this.getSetting(name).value;
+    }
+
     public Settings() { }
 }
