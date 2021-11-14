@@ -340,7 +340,7 @@ public class CrystalAura extends Cheat {
     private void layCrystals(List<Entity> targets) {
         for (Entity target : targets) {
             List<BlockPos> blocks = this.getCloseOpenBlocks(target, (Integer)this.getSetting("MaxCrystals").value);
-            this.crystalBlocks = new ArrayList<>();
+            this.crystalBlocks.clear();
 
             for (BlockPos pos : blocks) {
                 if (!this.placeCrystal(pos)) continue;
@@ -374,6 +374,7 @@ public class CrystalAura extends Cheat {
                 // Hit all crystals
                 if (!crystals.isEmpty() && !targets.isEmpty()) {
                     this.detonate(crystals);
+                    crystalBlocks.clear();
                     break;
                 }
 
