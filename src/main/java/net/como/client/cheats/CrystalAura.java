@@ -246,12 +246,13 @@ public class CrystalAura extends Cheat {
         return BlockUtils.canBeClicked(pos);
     }
 
+    private boolean holdThisTick = false;
     private boolean holdCrystal() {
         // If we already have a crystal then we don't need to do anything
         if (CheatClient.me().getMainHandStack().isOf(Items.END_CRYSTAL)) return true;
     
         // Check if we want to select a crystal
-        if (!this.getBoolSetting("SelectCrystal")) return false;
+        if (!this.getBoolSetting("SelectCrystal") || holdThisTick) return false;
 
         int slot = InventoryUtils.getSlotWithItem(Items.END_CRYSTAL);
         if (slot == -1) return false;
@@ -262,6 +263,7 @@ public class CrystalAura extends Cheat {
         // Move the item to the current hand
         InventoryUtils.moveItem(slot, to);
 
+        holdThisTick = true;
         return true;
     }
 
@@ -366,6 +368,7 @@ public class CrystalAura extends Cheat {
             case "ClientTickEvent": {
                 List<Entity> crystals = this.getCloseCrystals();
                 List<Entity> targets = this.getCloseTargets();
+                this.holdThisTick = false;
                 
                 // Hit all crystals
                 if (!crystals.isEmpty() && !targets.isEmpty()) {
