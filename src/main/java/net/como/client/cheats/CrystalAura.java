@@ -250,8 +250,11 @@ public class CrystalAura extends Cheat {
         int slot = InventoryUtils.getSlotWithItem(Items.END_CRYSTAL);
         if (slot == -1) return false;
 
+        // Get the current hand's item slot
+        int to = InventoryUtils.getMainHandSlot();
+
         // Move the item to the current hand
-        InventoryUtils.moveItem(slot, 36);
+        InventoryUtils.moveItem(slot, to);
 
         return true;
     }
