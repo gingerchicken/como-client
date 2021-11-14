@@ -47,6 +47,7 @@ public class CrystalAura extends Cheat {
         this.addSetting(new Setting("MaxDistance", 6d));
         this.addSetting(new Setting("LineOfSight", true));
 
+        this.addSetting(new Setting("MinHeightDiff", 1d));
         this.addSetting(new Setting("MaxCrystals", 4));
 
         this.addSetting(new Setting("RenderTargetBlock", true));
@@ -226,7 +227,7 @@ public class CrystalAura extends Cheat {
             if (!this.checkHeight(vPos)) continue;
 
             // Make sure that the crystal would be the same height as the target
-            if (pos.getY() - targetEyeVec.getY() > 0) continue;
+            if (pos.getY() - targetEyeVec.getY() > this.getDoubleSetting("MinHeightDiff")) continue;
 
             // Make sure that the target is not too far away
             if (lookPos.squaredDistanceTo(vPos) > d2) continue;
