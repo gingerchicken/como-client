@@ -177,7 +177,7 @@ public class CrystalAura extends Cheat {
     }
 
     private boolean checkHeight(Vec3d pos) {
-        return this.getBoolSetting("AllowLow") || pos.getY() <= CheatClient.me().getPos().getY();
+        return this.getBoolSetting("AllowLow") || pos.getY() > CheatClient.me().getPos().getY();
     }
 
     // Get the blocks closest to a target.
@@ -186,7 +186,7 @@ public class CrystalAura extends Cheat {
         double d2 = this.getSquaredDistance(0.5);
 
         // Make sure that they are higher than us
-        if (this.checkHeight(target.getPos())) return new ArrayList<>();
+        if (!this.checkHeight(target.getPos())) return new ArrayList<>();
 
         // Get the range of blocks that we should check around the player.
         BlockPos blockRange = new BlockPos(2, 2, 2);
@@ -223,7 +223,7 @@ public class CrystalAura extends Cheat {
             if (!this.airAbove(pos)) continue;
 
             // Make sure that it isn't lower than us
-            if (this.checkHeight(vPos)) continue;
+            if (!this.checkHeight(vPos)) continue;
 
             // Make sure that the crystal would be the same height as the target
             if (pos.getY() - targetEyeVec.getY() >= 0) continue;
@@ -326,7 +326,7 @@ public class CrystalAura extends Cheat {
 
     private void detonate(List<Entity> crystals) {
         for (Entity crystal : crystals) {
-            if (this.checkHeight(crystal.getPos())) continue;
+            if (!this.checkHeight(crystal.getPos())) continue;
 
             // Look at crystal
             this.scRot.lookAtPosServer(crystal.getBoundingBox().getCenter());
