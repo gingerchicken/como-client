@@ -33,5 +33,10 @@ public class Settings {
     public Integer getIntSetting(String name) {
         return (Integer)this.getSetting(name).value;
     }
+
+    public Double getDoubleSetting(String name) {
+        return (Double)this.getSetting(name).value;
+    }
+
     public Settings() { }
 }
