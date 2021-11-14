@@ -11,6 +11,7 @@ import java.util.stream.StreamSupport;
 import net.como.client.CheatClient;
 import net.como.client.components.ServerClientRotation;
 import net.como.client.events.ClientTickEvent;
+import net.como.client.events.RenderWorldEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
@@ -18,6 +19,7 @@ import net.como.client.utils.BlockUtils;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.InteractionUtils;
 import net.como.client.utils.InventoryUtils;
+import net.como.client.utils.RenderUtils;
 import net.como.client.utils.RotationUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -47,6 +49,8 @@ public class CrystalAura extends Cheat {
 
         this.addSetting(new Setting("MaxCrystals", 4));
 
+        this.addSetting(new Setting("RenderTargetBlock", true));
+
         // TODO just check if the local player is safe rather than just doing this.
         this.addSetting(new Setting("AllowLow", false));
 
@@ -65,6 +69,7 @@ public class CrystalAura extends Cheat {
     @Override
     public void activate() {
         this.addListen(ClientTickEvent.class);
+        this.addListen(RenderWorldEvent.class);
 
         scRot.addListeners(this);
     }
@@ -72,6 +77,7 @@ public class CrystalAura extends Cheat {
     @Override
     public void deactivate() {
         this.removeListen(ClientTickEvent.class);
+        this.removeListen(RenderWorldEvent.class);
 
         scRot.removeListeners(this);
     }
@@ -331,18 +337,32 @@ public class CrystalAura extends Cheat {
     private void layCrystals(List<Entity> targets) {
         for (Entity target : targets) {
             List<BlockPos> blocks = this.getCloseOpenBlocks(target, (Integer)this.getSetting("MaxCrystals").value);
-            
+            this.crystalBlocks = new ArrayList<>();
+
             for (BlockPos pos : blocks) {
                 if (!this.placeCrystal(pos)) continue;
 
+                this.crystalBlocks.add(pos);
                 break;
             }
         }
     }
 
+    private List<BlockPos> crystalBlocks = new ArrayList<>();
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
+            case "RenderWorldEvent": {
+                if (!this.getBoolSetting("RenderTargetBlock")) break;
+
+                RenderWorldEvent e = (RenderWorldEvent)event;
+                
+                for (BlockPos bPos : crystalBlocks) {
+                    RenderUtils.renderBlockBox(e.mStack, bPos);
+                }
+
+                break;
+            }
             case "ClientTickEvent": {
                 List<Entity> crystals = this.getCloseCrystals();
                 List<Entity> targets = this.getCloseTargets();
