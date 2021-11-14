@@ -305,7 +305,8 @@ public class CrystalAura extends Cheat {
             this.scRot.lookAtPosServer(hitVec);
 
             // Place the crystal
-            InteractionUtils.rightClickBlock(proximate.add(0, 1, 0), side.getOpposite(), hitVec);
+            int dy = CheatClient.me().getBlockY() - proximate.getY() >= 0 ? 1 : -1;
+            InteractionUtils.rightClickBlock(proximate.add(0, dy, 0), side.getOpposite(), hitVec);
 
             return true;
         }
