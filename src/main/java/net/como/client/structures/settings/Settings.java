@@ -30,5 +30,8 @@ public class Settings {
         return (Boolean)this.getSetting(name).value;
     }
 
+    public Integer getIntSetting(String name) {
+        return (Integer)this.getSetting(name).value;
+    }
     public Settings() { }
 }
