@@ -67,6 +67,6 @@ public class InventoryUtils {
         ClientPlayerEntity me = CheatClient.me();
         PlayerInventory inv = me.getInventory();
 
-        return inv.getSlotWithStack(me.getMainHandStack());
+        return inv.selectedSlot + 36;
     }
 }
