@@ -46,6 +46,8 @@ public class NoRespondAlert extends Cheat {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "InGameHudRenderEvent": {
+                if (!CheatClient.me().isAlive()) break;
+
                 float noRespTime = (float) (CheatClient.getCurrentTime() - lastResp);
                 if (noRespTime < (Double)this.getSetting("WarningTime").value) break;
 
