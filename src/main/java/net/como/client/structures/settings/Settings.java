@@ -38,5 +38,9 @@ public class Settings {
         return (Double)this.getSetting(name).value;
     }
 
+    public String getStringSetting(String name) {
+        return (String)this.getSetting(name).value;
+    }
+
     public Settings() { }
 }
