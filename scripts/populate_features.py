@@ -1,6 +1,8 @@
 import os
 
 FEATURES_DIR = "src/main/java/net/como/client/cheats"
+TARGET_PATH = "FEATURES.md"
+NOT_PRESENT = "No description available as of yet."
 
 class NotJavaPath(Exception):
     """The path specified was not a Java file and hence must not be a feature."""
@@ -62,9 +64,23 @@ class Feature:
         c + "." if not c.endswith(".") else c
 
         return c
+    
+    # TODO maybe get the settings
+
+    def get_readme_line(self, not_present) -> str():
+        return f"{self.get_name()} - {self.get_description(not_present)}"
 
 features = [Feature(os.path.join(FEATURES_DIR, i)) for i in os.listdir(FEATURES_DIR)]
 
-print(len(features))
+print(f"Detected {len(features)} features... Generating Feature List...")
+output = ""
 for feature in features:
-    print(feature.get_name(), " - ", feature.get_description("No description available as of yet."))
+    output += feature.get_readme_line(NOT_PRESENT) + '\n'
+
+print(output)
+
+print(f"Saving to {TARGET_PATH}...")
+f = open(TARGET_PATH, 'w')
+f.write(output)
+f.close()
+print("Finished.")
