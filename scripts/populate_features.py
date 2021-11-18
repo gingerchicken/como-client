@@ -19,10 +19,20 @@ class Setting:
         return self.__default
 
     @staticmethod
-    def from_line(line):
-        # TODO from line
+    def from_line(line = str()):
+        line = line.strip()
 
-        pass
+        line = line.replace("this.addSetting(new Setting(", "")
+        line = line.replace("));", "")
+
+        # Parse the name
+        name = line[1:]
+        name = name[:name.find("\"")]
+
+        # Parse the value
+        default = line[len("\"\",") + len(name):]
+
+        return Setting(name, default)
 
 class Feature:
     # Just incase we want to easily change it in the future.
