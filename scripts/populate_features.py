@@ -71,7 +71,8 @@ class Feature:
         line = ""
 
         line += f"## {self.get_name()}\n"
-        line += self.get_description(not_present) + "\n"
+        line += f"[(Source Code)]({self.__path}) "
+        line += self.get_description(not_present)
 
         return line
 
