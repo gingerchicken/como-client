@@ -35,6 +35,8 @@ public class ShulkerPeak extends Cheat {
         super("ShulkerPeak");
 
         this.addSetting(new Setting("HUDOverlay", false));
+        
+        this.description = "Displays the contents of shulkers without opening them.";
     }
 
     @Override

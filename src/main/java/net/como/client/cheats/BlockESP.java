@@ -21,6 +21,8 @@ public class BlockESP extends Cheat {
         super("BlockESP");
 
         this.addSetting(new Setting("Blocks", new HashMap<String, Boolean>()));
+    
+        this.description = "Makes specific blocks visible through walls.";
     }
 
     @Override

@@ -39,6 +39,8 @@ public class KillAura extends Cheat {
 
         this.addSetting(new Setting("TargetTracers", true));
         this.addSetting(new Setting("TracerLifeSpan", 0.25d));
+    
+        this.description = "Automatically attacks specified targets.";
     }
     
     private ServerClientRotation scRot = new ServerClientRotation();

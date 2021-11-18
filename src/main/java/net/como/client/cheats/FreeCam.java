@@ -37,6 +37,8 @@ public class FreeCam extends Cheat {
         super("FreeCam");
 
         this.addSetting(new Setting("Speed", 1f));
+
+        this.description = "Allows you to fly around the world (but client-side)";
     }
     
     @Override

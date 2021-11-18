@@ -118,6 +118,8 @@ public class BetterNameTags extends Cheat {
 
         this.addSetting(new Setting("Scale", 0.5f));
         this.addSetting(new Setting("OutlineAlpha", 125));
+    
+        this.description = "Renders a different kind of name-tag above nearby players.";
     }
 
     @Override

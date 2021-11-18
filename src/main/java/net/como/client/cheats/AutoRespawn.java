@@ -8,6 +8,8 @@ import net.como.client.structures.events.Event;
 public class AutoRespawn extends Cheat {
     public AutoRespawn() {
         super("AutoRespawn");
+
+        this.description = "Automatically respawns the player.";
     }
 
     @Override
