@@ -11,9 +11,10 @@ class NotJavaPath(Exception):
 class SettingType(Enum):
     STRING = 1,
     STR_BOOL_HASHMAP = 2,
-    NUMBER = 3,
+    FLOAT = 3,
     BOOLEAN = 4,
-    OTHER = 5
+    OTHER = 5,
+    INTEGER = 6
 
 class Setting:
     def __init__(self, name, default) -> None:
@@ -28,11 +29,11 @@ class Setting:
         
         # Floats/Doubles
         if (v.endswith("d") or v.endswith("f")) and v[:-1].replace('.','',1).isdigit():
-            return SettingType.NUMBER
+            return SettingType.FLOAT
 
         # Ints
         if v.isdigit():
-            return SettingType.NUMBER
+            return SettingType.INTEGER
 
         # Boolean
         if v == "true" or v == "false":
