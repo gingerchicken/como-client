@@ -51,9 +51,26 @@ class Setting:
     def get_default_value(self):
         return self.__default
 
-        # TODO add this
     def get_parsed_default(self):
-        return self.get_default_value()
+        setting_type = self.get_type()
+        v = self.get_default_value()
+
+        if setting_type == SettingType.FLOAT:
+            return float(v.replace("d", "").replace("f", ""))
+        
+        if setting_type == SettingType.INTEGER:
+            return int(v)
+        
+        if setting_type == SettingType.BOOLEAN:
+            return bool(v)
+
+        if setting_type == SettingType.STR_BOOL_HASHMAP:
+            return "{ ... }"
+        
+        if setting_type == SettingType.STRING:
+            return str(v)
+
+        return v
 
     @staticmethod
     def from_line(line = str()):
