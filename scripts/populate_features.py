@@ -188,6 +188,7 @@ class Feature:
 
             i = code.find(selector, i + 1)
 
+        settings.sort(key=lambda x: x.get_name())
         return settings
 
 features = [Feature(os.path.join(FEATURES_DIR, i)) for i in os.listdir(FEATURES_DIR)]
