@@ -68,7 +68,12 @@ class Feature:
     # TODO maybe get the settings
 
     def get_readme_line(self, not_present) -> str():
-        return f"## {self.get_name()}\n{self.get_description(not_present)}\n"
+        line = ""
+
+        line += f"## {self.get_name()}\n"
+        line += self.get_description(not_present) + "\n"
+
+        return line
 
 features = [Feature(os.path.join(FEATURES_DIR, i)) for i in os.listdir(FEATURES_DIR)]
 
