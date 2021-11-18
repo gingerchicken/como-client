@@ -68,12 +68,12 @@ class Feature:
     # TODO maybe get the settings
 
     def get_readme_line(self, not_present) -> str():
-        return f"{self.get_name()} - {self.get_description(not_present)}"
+        return f"## {self.get_name()}\n{self.get_description(not_present)}\n"
 
 features = [Feature(os.path.join(FEATURES_DIR, i)) for i in os.listdir(FEATURES_DIR)]
 
 print(f"Detected {len(features)} features... Generating Feature List...")
-output = ""
+output = '''# List of Features\n'''
 for feature in features:
     output += feature.get_readme_line(NOT_PRESENT) + '\n'
 
