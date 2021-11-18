@@ -1,3 +1,4 @@
+from enum import Enum
 import os
 
 FEATURES_DIR = "src/main/java/net/como/client/cheats"
@@ -7,10 +8,41 @@ NOT_PRESENT = "No description available as of yet."
 class NotJavaPath(Exception):
     """The path specified was not a Java file and hence must not be a feature."""
 
+class SettingType(Enum):
+    STRING = 1,
+    STR_BOOL_HASHMAP = 2,
+    NUMBER = 3,
+    BOOLEAN = 4,
+    OTHER = 5
+
 class Setting:
     def __init__(self, name, default) -> None:
         self.__name = name
         self.__default = default
+
+    def get_type(self):
+        v = self.get_default_value()
+
+        if v.startswith("\"") and v.endswith("\""):
+            return SettingType.STRING
+        
+        # Floats/Doubles
+        if (v.endswith("d") or v.endswith("f")) and v[:-1].replace('.','',1).isdigit():
+            return SettingType.NUMBER
+
+        # Ints
+        if v.isdigit():
+            return SettingType.NUMBER
+
+        # Boolean
+        if v == "true" or v == "false":
+            return SettingType.BOOLEAN
+
+        # HashMap thing
+        if v == "new HashMap<String, Boolean>()":
+            return SettingType.STR_BOOL_HASHMAP
+        
+        return SettingType.OTHER
 
     def get_name(self):
         return self.__name
@@ -30,7 +62,7 @@ class Setting:
         name = name[:name.find("\"")]
 
         # Parse the value
-        default = line[len("\"\",") + len(name):]
+        default = line[len("\"\",") + len(name):].strip()
 
         return Setting(name, default)
 
