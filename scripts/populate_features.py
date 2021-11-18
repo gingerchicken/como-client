@@ -93,12 +93,31 @@ class Feature:
         line += f"[(Source Code)]({self.__path}) "
         line += self.get_description(not_present)
 
+        self.get_settings()
+
         return line
 
     def get_settings(self):
-        # TODO get files
+        code = self.__get_code()
+        selector = "this.addSetting(new Setting("
 
-        pass
+        settings = []
+        
+        i = code.find(selector)
+        while i != -1:
+            part = c =''
+            j = 0
+
+            while c != ';':
+                c = code[i + j]
+                part += c
+
+                j += 1
+            settings.append(Setting.from_line(part))
+
+            i = code.find(selector, i + 1)
+
+        return settings
 
 features = [Feature(os.path.join(FEATURES_DIR, i)) for i in os.listdir(FEATURES_DIR)]
 
