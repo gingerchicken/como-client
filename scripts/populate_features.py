@@ -162,7 +162,7 @@ class Feature:
         # Display settings
         settings = self.get_settings()
         if len(settings) > 0:
-            line += "### Setting Defaults\n"
+            line += "### Default Settings\n"
             for setting in settings:
                 line += f" - {setting.get_name()}: `{setting.get_parsed_default()}`\n"
 
