@@ -162,7 +162,7 @@ class Feature:
         if len(settings) > 0:
             line += "### Settings\n"
             for setting in settings:
-                line += f" - {setting.get_name()}: *{setting.get_parsed_default()}*\n"
+                line += f" - {setting.get_name()}: `{setting.get_parsed_default()}`\n"
 
         return line
 
