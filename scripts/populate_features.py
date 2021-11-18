@@ -155,7 +155,7 @@ class Feature:
         line = ""
 
         # Display basic information
-        line += f"## {self.get_name()} (*`{self.get_command()}`*)\n"
+        line += f"## {self.get_name()} (`{self.get_command()}`)\n"
         line += f"[(Source Code)]({self.__path}) "
         line += self.get_description(not_present) + "\n"
 
