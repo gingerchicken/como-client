@@ -146,14 +146,16 @@ class Feature:
 
         return c
     
-    # TODO add command to activate the cheat
     # TODO populate the file with screenshots
+
+    def get_command(self):
+        return f".{self.get_name().lower()}"
 
     def get_readme_line(self, not_present) -> str():
         line = ""
 
         # Display basic information
-        line += f"## {self.get_name()}\n"
+        line += f"## {self.get_name()} (*`{self.get_command()}`*)\n"
         line += f"[(Source Code)]({self.__path}) "
         line += self.get_description(not_present) + "\n"
 
