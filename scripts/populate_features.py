@@ -191,6 +191,7 @@ class Feature:
         return settings
 
 features = [Feature(os.path.join(FEATURES_DIR, i)) for i in os.listdir(FEATURES_DIR)]
+features.sort(key=lambda x: x.get_name())
 
 print(f"Detected {len(features)} features... Generating Feature List...")
 output = '''# List of Features\n'''
