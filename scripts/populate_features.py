@@ -50,6 +50,10 @@ class Setting:
     def get_default_value(self):
         return self.__default
 
+    def get_default_value_str(self):
+        # TODO add this
+        return self.get_default_value()
+
     @staticmethod
     def from_line(line = str()):
         line = line.strip()
@@ -131,11 +135,16 @@ class Feature:
     def get_readme_line(self, not_present) -> str():
         line = ""
 
+        # Display basic information
         line += f"## {self.get_name()}\n"
         line += f"[(Source Code)]({self.__path}) "
-        line += self.get_description(not_present)
+        line += self.get_description(not_present) + "\n"
 
-        self.get_settings()
+        # Display settings
+        line += "### Settings\n"
+        settings = self.get_settings()
+        for setting in settings:
+            line += f" - {setting.get_name()}: *{setting.get_default_value_str()}*\n"
 
         return line
 
