@@ -66,6 +66,8 @@ class Feature:
         return c
     
     # TODO maybe get the settings
+    # TODO add command to activate the cheat
+    # TODO populate the file with screenshots
 
     def get_readme_line(self, not_present) -> str():
         line = ""
