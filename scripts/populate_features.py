@@ -7,6 +7,23 @@ NOT_PRESENT = "No description available as of yet."
 class NotJavaPath(Exception):
     """The path specified was not a Java file and hence must not be a feature."""
 
+class Setting:
+    def __init__(self, name, default) -> None:
+        self.__name = name
+        self.__default = default
+
+    def get_name(self):
+        return self.__name
+
+    def get_default_value(self):
+        return self.__default
+
+    @staticmethod
+    def from_line(line):
+        # TODO from line
+
+        pass
+
 class Feature:
     # Just incase we want to easily change it in the future.
     __desc_selector = "this.description = \""
@@ -77,6 +94,11 @@ class Feature:
         line += self.get_description(not_present)
 
         return line
+
+    def get_settings(self):
+        # TODO get files
+
+        pass
 
 features = [Feature(os.path.join(FEATURES_DIR, i)) for i in os.listdir(FEATURES_DIR)]
 
