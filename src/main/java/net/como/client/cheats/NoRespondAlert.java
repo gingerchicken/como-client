@@ -22,6 +22,8 @@ public class NoRespondAlert extends Cheat {
 
         this.addSetting(new Setting("WarningTime", 1d));
         this.addSetting(new Setting("DisplayHeight", 150));
+    
+        this.description = "Displays an alert when the server has stopped sending data.";
     }
 
     @Override

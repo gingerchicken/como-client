@@ -8,5 +8,7 @@ public class Timer extends Cheat {
         super("Timer");
 
         this.addSetting(new Setting("Speed", 1d));
+
+        this.description = "Change the client-side tick rate.";
     }
 }

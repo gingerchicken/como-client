@@ -13,6 +13,8 @@ public class Waypoints extends Cheat {
 
     public Waypoints() {
         super("Waypoints");
+
+        this.description = "Renders where waypoints are in the world.";
     }
 
     @Override

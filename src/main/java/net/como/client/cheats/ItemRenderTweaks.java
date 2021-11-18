@@ -36,6 +36,8 @@ public class ItemRenderTweaks extends Cheat {
         this.addSetting(new Setting("LScaleX", 1.0d));
         this.addSetting(new Setting("LScaleY", 1.0d));
         this.addSetting(new Setting("LScaleZ", 1.0d));
+
+        this.description = "Allows you to change how held items are rendered.";
     }
 
     private static class HandRenderSettings {

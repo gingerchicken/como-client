@@ -20,6 +20,7 @@ public class ArmourDisplay extends Cheat {
         super("ArmourDisplay");
 
         this.addSetting(new Setting("RenderEmpty", false));
+        this.description = "Renders armour above the hot bar.";
     }
 
     @Override

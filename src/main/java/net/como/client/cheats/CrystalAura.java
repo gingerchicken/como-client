@@ -63,6 +63,8 @@ public class CrystalAura extends Cheat {
 
         this.addSetting(new Setting("Player", true));
         this.addSetting(new Setting("Mob", false));
+
+        this.description = "Automatically places/destroys nearby crystals.";
     }
 
     private ServerClientRotation scRot = new ServerClientRotation();

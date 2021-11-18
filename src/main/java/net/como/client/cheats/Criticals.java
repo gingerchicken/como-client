@@ -10,6 +10,8 @@ import net.minecraft.util.math.Vec3d;
 public class Criticals extends Cheat {
     public Criticals() {
         super("Criticals");
+
+        this.description = "Makes every hit a critical hit.";
     }
 
     @Override

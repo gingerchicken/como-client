@@ -20,6 +20,8 @@ public class Watermark extends Cheat {
         super("Watermark");
 
         this.addSetting(new Setting("Scale", 1.0d));
+
+        this.description = "Renders the Como Client watermark on the screen.";
     }
     
     @Override

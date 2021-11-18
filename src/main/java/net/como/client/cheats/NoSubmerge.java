@@ -13,6 +13,8 @@ public class NoSubmerge extends Cheat {
         this.addSetting(new Setting("Lava", true));
         this.addSetting(new Setting("Water", true));
         this.addSetting(new Setting("PowderSnow", true));
+    
+        this.description = "Allows submerge overlays to be toggled.";
     }
 
     @Override

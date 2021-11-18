@@ -18,6 +18,8 @@ public class AutoTotem extends Cheat {
 
     public AutoTotem() {
         super("AutoTotem");
+
+        this.description = "Automatically places a totem into your off hand";
     }
     
     @Override

@@ -15,6 +15,8 @@ public class NoPortal extends Cheat {
         this.addSetting(new Setting("NoOverlay", true));
         this.addSetting(new Setting("NoNausea", true));
         this.addSetting(new Setting("AllowTyping", true));
+    
+        this.description = "Allows portal effects to be toggled.";
     }
 
     @Override
