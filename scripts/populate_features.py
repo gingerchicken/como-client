@@ -50,8 +50,8 @@ class Setting:
     def get_default_value(self):
         return self.__default
 
-    def get_default_value_str(self):
         # TODO add this
+    def get_parsed_default(self):
         return self.get_default_value()
 
     @staticmethod
@@ -141,10 +141,11 @@ class Feature:
         line += self.get_description(not_present) + "\n"
 
         # Display settings
-        line += "### Settings\n"
         settings = self.get_settings()
-        for setting in settings:
-            line += f" - {setting.get_name()}: *{setting.get_default_value_str()}*\n"
+        if len(settings) > 0:
+            line += "### Settings\n"
+            for setting in settings:
+                line += f" - {setting.get_name()}: *{setting.get_parsed_default()}*\n"
 
         return line
 
