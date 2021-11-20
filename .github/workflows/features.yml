@@ -1,14 +1,13 @@
 name: Update features list
 on: push
 jobs:
-  date:
+  update:
     runs-on: ubuntu-latest
     steps:
-      # Checkout the branch
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install python
+      - name: Install Python
         uses: actions/setup-python@v2
 
       - name: Generate FEATURES.md
