@@ -1,5 +1,6 @@
 from enum import Enum
 import os
+import hashlib
 
 FEATURES_DIR = "src/main/java/net/como/client/cheats"
 TARGET_PATH = "FEATURES.md"
@@ -204,12 +205,29 @@ output = '''# List of Features\n'''
 for feature in features:
     output += feature.get_readme_line(NOT_PRESENT) + '\n'
 
+# See if there was a change
+# Hashing function
+def hash(x):
+    return hashlib.md5(x.encode()).hexdigest()
 
-print(f"Saving to {TARGET_PATH}...")
-
-# Save the new FEATURES.md to a file
-f = open(TARGET_PATH, 'w')
-f.write(output)
+# Read the file
+f = open(TARGET_PATH, 'r')
+old_output = f.read()
 f.close()
 
-print("Finished.")    print("There are no changes detected. Aborting...")
+# Make the hashes
+old_hash = hash(old_output)
+new_hash = hash(output)
+
+print(f"{TARGET_PATH}: {old_hash} -> {new_hash}")
+
+# Compare the hashes
+if old_hash != new_hash:
+    # Save the new FEATURES.md to a file
+    f = open(TARGET_PATH, 'w')
+    f.write(output)
+    f.close()
+
+    print("Changes made and saved.")
+else:
+    print("There are no changes detected. Aborting...")
