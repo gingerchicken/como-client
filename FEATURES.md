@@ -11,7 +11,7 @@
  - RenderEmpty: `True`
 
 ## AutoReconnect (`.autoreconnect`)
-[(Source Code)](src/main/java/net/como/client/cheats/AutoReconnect.java) Automatically reconnects to a server after a given time
+[(Source Code)](src/main/java/net/como/client/cheats/AutoReconnect.java) Automatically reconnects to a server after a given time.
 ### Default Settings
  - Delay: `5`
  - Manual: `True`
