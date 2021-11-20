@@ -28,7 +28,7 @@ git clone https://github.com/gingerchicken/como-client
 ```
 
 #### Step 2
-Install OpenJDK 16, there is probably already have a billion tutorials online how to do this but for me, while its tailored towards setting up a server, [this helpful gist from one of the spigot devs](https://gist.github.com/Proximyst/67615353e2575a71faaff3f7ae9cc2b4) worked best for me.
+Install OpenJDK 16, there is probably already half a billion tutorials online how to do this but for me, while its tailored towards setting up a server, [this helpful gist from one of the spigot devs](https://gist.github.com/Proximyst/67615353e2575a71faaff3f7ae9cc2b4) worked best for me.
 
 #### Step 3
 Finally, building the project, to do this we can run the following command:
