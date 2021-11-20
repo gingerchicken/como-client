@@ -1,0 +1,29 @@
+name: Update features list
+on: push
+jobs:
+  date:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the branch
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: install python
+        uses: actions/setup-python@v2
+
+      - name: generate features list
+        run: |
+          python3 scripts/populate_features.py
+
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+
+      - name: commit
+        run: |
+          # Stage the file, commit and push
+          # Hopefully this shouldn't cause another one to trigger since if there are no changes, there shouldn't be a commit.
+          git add FEATURES.md
+          git commit -m "Auto-generated FEATURES.md"
+          git push origin master
