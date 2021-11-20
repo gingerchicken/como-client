@@ -5,22 +5,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checkout the branch
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: install python
+      - name: Install python
         uses: actions/setup-python@v2
 
-      - name: generate features list
+      - name: Generate FEATURES.md
         run: |
           python3 scripts/populate_features.py
 
-      - name: setup git config
+      - name: Configure Git
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
 
-      - name: commit
+      - name: Commit FEATURES.md
         run: |
           # Stage the file, commit and push
           # Hopefully this shouldn't cause another one to trigger since if there are no changes, there shouldn't be a commit.
