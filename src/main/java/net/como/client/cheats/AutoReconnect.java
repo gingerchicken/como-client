@@ -15,7 +15,7 @@ public class AutoReconnect extends Cheat {
         this.addSetting(new Setting("Delay", 5));
         this.addSetting(new Setting("Manual", false));
 
-        this.description = "Automatically reconnects to a server after a given time";
+        this.description = "Automatically reconnects to a server after a given time.";
     }
 
     private double startTime = 0;
