@@ -27,3 +27,4 @@ jobs:
           git add FEATURES.md
           git commit -m "Auto-generated FEATURES.md"
           git push
+        continue-on-error: true
