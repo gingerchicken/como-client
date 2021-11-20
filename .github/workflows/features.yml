@@ -26,4 +26,4 @@ jobs:
           # Hopefully this shouldn't cause another one to trigger since if there are no changes, there shouldn't be a commit.
           git add FEATURES.md
           git commit -m "Auto-generated FEATURES.md"
-          git push origin master
+          git push
