@@ -204,8 +204,6 @@ output = '''# List of Features\n'''
 for feature in features:
     output += feature.get_readme_line(NOT_PRESENT) + '\n'
 
-# Show the new FEATURES.md in the command line
-print(output)
 
 print(f"Saving to {TARGET_PATH}...")
 
@@ -214,4 +212,4 @@ f = open(TARGET_PATH, 'w')
 f.write(output)
 f.close()
 
-print("Finished.")
+print("Finished.")    print("There are no changes detected. Aborting...")
