@@ -191,18 +191,27 @@ class Feature:
         settings.sort(key=lambda x: x.get_name())
         return settings
 
+# Scan for all of the features
 features = [Feature(os.path.join(FEATURES_DIR, i)) for i in os.listdir(FEATURES_DIR)]
+
+# Sort them alphabetically
 features.sort(key=lambda x: x.get_name())
 
 print(f"Detected {len(features)} features... Generating Feature List...")
+
+# Generate the new FEATURES.md
 output = '''# List of Features\n'''
 for feature in features:
     output += feature.get_readme_line(NOT_PRESENT) + '\n'
 
+# Show the new FEATURES.md in the command line
 print(output)
 
 print(f"Saving to {TARGET_PATH}...")
+
+# Save the new FEATURES.md to a file
 f = open(TARGET_PATH, 'w')
 f.write(output)
 f.close()
+
 print("Finished.")
