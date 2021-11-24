@@ -8,6 +8,8 @@ import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
 public class XCarry extends Cheat {
     public XCarry() {
         super("XCarry");
+
+        this.description = "Allows odd behavior such as storing items in the crafting table slot.";
     }
 
     @Override
