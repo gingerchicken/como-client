@@ -233,7 +233,7 @@
 [(Source Code)](src/main/java/net/como/client/cheats/Waypoints.java) Renders where waypoints are in the world.
 
 ## XCarry (`.xcarry`)
-[(Source Code)](src/main/java/net/como/client/cheats/XCarry.java) No description available as of yet.
+[(Source Code)](src/main/java/net/como/client/cheats/XCarry.java) Allows odd behavior such as storing items in the crafting table slot.
 
 ## XRay (`.xray`)
 [(Source Code)](src/main/java/net/como/client/cheats/XRay.java) See blocks through the floor.
