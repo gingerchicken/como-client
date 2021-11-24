@@ -164,6 +164,7 @@ public class CheatClient {
         Cheats.put("norespond", new NoRespondAlert());
         Cheats.put("armourdisplay", new ArmourDisplay());
         Cheats.put("crystalaura", new CrystalAura());
+        Cheats.put("xcarry", new XCarry());
 
         // Load the config
         Persistance.loadConfig();
