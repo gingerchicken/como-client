@@ -232,6 +232,9 @@
 ## Waypoints (`.waypoints`)
 [(Source Code)](src/main/java/net/como/client/cheats/Waypoints.java) Renders where waypoints are in the world.
 
+## XCarry (`.xcarry`)
+[(Source Code)](src/main/java/net/como/client/cheats/XCarry.java) No description available as of yet.
+
 ## XRay (`.xray`)
 [(Source Code)](src/main/java/net/como/client/cheats/XRay.java) See blocks through the floor.
 ### Default Settings
