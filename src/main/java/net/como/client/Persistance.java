@@ -42,7 +42,7 @@ public class Persistance {
         writer.close();
     }
 
-    public static void loadConfig() {
+    public static Boolean loadConfig() {
         String data;
         try {
             data = readConfig(CONFIG_PATH);
@@ -50,7 +50,7 @@ public class Persistance {
             System.out.println("No config file found... creating one...");
             saveConfig();
 
-            return;
+            return false;
         }
 
         // Load all of the flattened states
@@ -66,6 +66,8 @@ public class Persistance {
 
             cheat.lift(flat.get(name));
         }
+
+        return true;
     }
 
     public static String makeConfig() {
