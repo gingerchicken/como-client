@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.CheatClient;
+import net.como.client.commands.BindsCommand;
 import net.como.client.events.OnKeyEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
@@ -142,6 +143,8 @@ public class Binds extends Cheat {
         super("Binds");
 
         this.description = "Allows you to bind client commands to keys.";
+
+        CheatClient.commandHandler.registerCommand(new BindsCommand());
     }
 
     @Override
@@ -171,6 +174,9 @@ public class Binds extends Cheat {
                     this.displayMessage(String.format("The key you just pressed had code %s%d", ChatUtils.GREEN, e.key));
 
                     logNextKey = false;
+                    e.ci.cancel();
+
+                    break;
                 }
 
                 this.fireBind(e.key);
