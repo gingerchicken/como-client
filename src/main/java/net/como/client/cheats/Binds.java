@@ -10,7 +10,6 @@ import net.como.client.events.OnKeyEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ChatUtils;
-import net.minecraft.util.ChatUtil;
 
 public class Binds extends Cheat {
     private enum KeyAction {
