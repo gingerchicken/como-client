@@ -165,6 +165,7 @@ public class CheatClient {
         Cheats.put("armourdisplay", new ArmourDisplay());
         Cheats.put("crystalaura", new CrystalAura());
         Cheats.put("xcarry", new XCarry());
+        Cheats.put("binds", new Binds());
 
         // Load the config
         Persistance.loadConfig();
