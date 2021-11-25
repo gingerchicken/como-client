@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import net.como.client.CheatClient;
 import net.como.client.commands.BindsCommand;
 import net.como.client.events.OnKeyEvent;
+import net.como.client.interfaces.Flatternable;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ChatUtils;
 
 public class Binds extends Cheat {
-    private enum KeyAction {
+    private static enum KeyAction {
         DOWN,
         UP,
         HOLD;
@@ -31,7 +34,7 @@ public class Binds extends Cheat {
         }
     }
 
-    public class Bind {
+    public static class Bind {
         private int key;
         private String command;
 
@@ -54,6 +57,21 @@ public class Binds extends Cheat {
 
         public void executeCommand() {
             CheatClient.commandHandler.handle(this.getTriggerCommand());
+        }
+
+        public HashMap<String, String> flattern() {
+            HashMap<String, String> flat = new HashMap<>();
+            flat.put("key", ((Integer)this.getKey()).toString());
+            flat.put("command", this.command);
+
+            return flat;
+        }
+
+        public static Bind fromLift(HashMap<String, String> flat) {
+            int key = Integer.parseInt(flat.get("key"));
+            String command = flat.get("command");
+
+            return new Bind(key, command);
         }
     }
 
@@ -183,5 +201,53 @@ public class Binds extends Cheat {
                 break;
             }
         }
+    }
+
+    // This works but it is nasty
+    @Override
+    public void lift(HashMap<String, String> data) {
+        if (data.containsKey("binds")) {
+            Gson gson = new Gson();
+
+            String rawBindsObj = data.get("binds");
+            HashMap<String, String> bindsObj = gson.fromJson(rawBindsObj, this.binds.getClass());
+
+            for (String key : bindsObj.keySet()) {
+                List<String> bindsList = new ArrayList<>();
+                bindsList = gson.fromJson(bindsObj.get(key), bindsList.getClass());
+
+                for (String strBind : bindsList) {
+                    HashMap<String, String> bind = new HashMap<>();
+                    bind = gson.fromJson(strBind, bind.getClass());
+
+                    this.addBind(Bind.fromLift(bind));
+                }
+            }
+    
+            data.remove("binds");
+        }
+
+        super.lift(data);
+    }
+
+    @Override
+    public HashMap<String, String> flatten() {
+        HashMap<String, String> data = super.flatten();
+        
+        Gson gson = new Gson();
+        HashMap<String, String> flatBindsList = new HashMap<>();
+        for (Integer key : this.binds.keySet()) {
+            List<String> flatBinds = new ArrayList<>();
+
+            for (Bind bind : this.binds.get(key)) {
+                flatBinds.add(gson.toJson(bind.flattern()));
+            }
+
+            flatBindsList.put(key.toString(), gson.toJson(flatBinds));
+        }
+
+        data.put("binds", gson.toJson(flatBindsList));
+
+        return data;
     }
 }
