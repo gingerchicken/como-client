@@ -166,6 +166,7 @@ public class CheatClient {
         Cheats.put("crystalaura", new CrystalAura());
         Cheats.put("xcarry", new XCarry());
         Cheats.put("binds", new Binds());
+        Cheats.put("unfocuscpu", new UnfocusCPU());
 
         // Load the config
         if (!Persistance.loadConfig()) {
