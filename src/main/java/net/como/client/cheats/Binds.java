@@ -13,9 +13,9 @@ public class Binds extends Cheat {
         public static KeyAction fromInt(int x) {
             switch (x) {
                 case 0:
-                    return DOWN;
-                case 1:
                     return UP;
+                case 1:
+                    return DOWN;
                 case 2:
                     return HOLD;
                 default:
