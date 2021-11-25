@@ -59,21 +59,6 @@ public class Binds extends Cheat {
         public void executeCommand() {
             CheatClient.commandHandler.handle(this.getTriggerCommand());
         }
-
-        public HashMap<String, String> flattern() {
-            HashMap<String, String> flat = new HashMap<>();
-            flat.put("key", ((Integer)this.getKey()).toString());
-            flat.put("command", this.command);
-
-            return flat;
-        }
-
-        public static Bind fromLift(HashMap<String, String> flat) {
-            int key = Integer.parseInt(flat.get("key"));
-            String command = flat.get("command");
-
-            return new Bind(key, command);
-        }
     }
 
     private HashMap<Integer, List<Bind>> binds = new HashMap<Integer, List<Bind>>();
