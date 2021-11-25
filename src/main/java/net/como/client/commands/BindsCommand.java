@@ -17,7 +17,6 @@ public class BindsCommand extends CommandNode {
         @Override
         public boolean shouldShowHelp(String[] args) {
             if (args.length < 2) return true;
-            if (Integer.valueOf(args[0]) == null) return true;
 
             return false;
         }
