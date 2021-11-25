@@ -187,7 +187,7 @@ public class Binds extends Cheat {
                     break;
                 }
 
-                this.fireBind(e.key);
+                if (CheatClient.getClient().currentScreen == null) this.fireBind(e.key);
 
                 break;
             }
