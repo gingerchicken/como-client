@@ -168,7 +168,7 @@ public class ModList extends Cheat {
     private HashMap<String, ColouringMode> colouringModes;
 
     public ModList() {
-        super("ModList");
+        super("ModList", true);
         
         this.description = "Displays all of your enabled mods";
         this.modListDisplay = false;

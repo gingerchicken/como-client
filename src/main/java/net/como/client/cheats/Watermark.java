@@ -17,7 +17,7 @@ public class Watermark extends Cheat {
     private static final int BACKGROUND_HEIGHT = 646;
 
     public Watermark() {
-        super("Watermark");
+        super("Watermark", true);
 
         this.addSetting(new Setting("Scale", 1.0d));
 
