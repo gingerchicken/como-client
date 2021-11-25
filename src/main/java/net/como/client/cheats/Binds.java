@@ -145,7 +145,7 @@ public class Binds extends Cheat {
     }
 
     public Binds() {
-        super("Binds");
+        super("Binds", true);
 
         this.description = "Allows you to bind client commands to keys.";
 
