@@ -34,6 +34,11 @@
  - OutlineAlpha: `125`
  - Scale: `0.5`
 
+## Binds (`.binds`)
+[(Source Code)](src/main/java/net/como/client/cheats/Binds.java) Allows you to bind client commands to keys.
+### Default Settings
+ - HideCommandOutput: `True`
+
 ## Blink (`.blink`)
 [(Source Code)](src/main/java/net/como/client/cheats/Blink.java) Delay your packets being sent.
 
