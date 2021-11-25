@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.google.gson.Gson;
 
 import net.como.client.CheatClient;
+import net.como.client.interfaces.Flatternable;
 import net.como.client.utils.ChatUtils;
 import net.minecraft.client.font.TextRenderer;
 import net.como.client.structures.settings.*;
@@ -14,7 +15,7 @@ import net.como.client.structures.events.EventListener;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.events.EventEmitter;
 
-public class Cheat extends Settings implements EventListener {
+public class Cheat extends Settings implements EventListener, Flatternable {
     private String name;
     private boolean enabled;
 
