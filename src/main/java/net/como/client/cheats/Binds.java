@@ -75,6 +75,7 @@ public class Binds extends Cheat {
     public boolean addBind(int key, String command) {
         return this.addBind(new Bind(key, command));
     }
+    
     public boolean removeBind(int key, String command) {
         int index = getBindIndex(key, command);
 
@@ -100,6 +101,7 @@ public class Binds extends Cheat {
         // We good.
         return true;
     }
+    
     public boolean fireBind(int key) {
         if (!this.binds.containsKey(key)) return false;
 
@@ -152,6 +154,8 @@ public class Binds extends Cheat {
         this.removeListen(OnKeyEvent.class);
     }
 
+    public boolean logNextKey = false;
+
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
@@ -161,6 +165,15 @@ public class Binds extends Cheat {
 
                 // For now, we will only handle key down.
                 if (action != KeyAction.DOWN) break;
+
+                // Print the key that the user pressed if they want us to do that.
+                if (logNextKey) {
+                    this.displayMessage(String.format("The key you just pressed had code %s%d", ChatUtils.GREEN, e.key));
+
+                    logNextKey = false;
+                }
+
+                this.fireBind(e.key);
 
                 break;
             }
