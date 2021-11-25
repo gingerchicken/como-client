@@ -13,6 +13,7 @@ import net.como.client.commands.BindsCommand;
 import net.como.client.events.OnKeyEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
+import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ChatUtils;
 
 public class Binds extends Cheat {
@@ -112,6 +113,7 @@ public class Binds extends Cheat {
         List<Bind> active = this.binds.get(key);
 
         for (Bind bind : active) {
+            ChatUtils.hideNextChat = this.getBoolSetting("HideCommandOutput");
             bind.executeCommand();
         }
 
@@ -146,6 +148,9 @@ public class Binds extends Cheat {
         super("Binds");
 
         this.description = "Allows you to bind client commands to keys.";
+
+        // TODO make this per bind
+        this.addSetting(new Setting("HideCommandOutput", true));
 
         CheatClient.commandHandler.registerCommand(new BindsCommand());
     }

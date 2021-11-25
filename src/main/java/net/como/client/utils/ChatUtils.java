@@ -6,7 +6,8 @@ import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.text.Text;
 
 public class ChatUtils {
-    
+    public static boolean hideNextChat = false;
+
     public final static String BLACK        = "\u00a70";
     public final static String DARKBLUE     = "\u00a71";
     public final static String DARKGREEN    = "\u00a72";
@@ -25,6 +26,12 @@ public class ChatUtils {
     public final static String WHITE        = "\u00a7f";
     
     public static void displayMessage(String message) {
+        if (hideNextChat) {
+            hideNextChat = false;
+
+            return;
+        }
+
         // Make sure that they are in game.
         if (!ClientUtils.inGame()) return;
 
