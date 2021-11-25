@@ -1,15 +1,16 @@
 package net.como.client.cheats;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import net.como.client.CheatClient;
 import net.como.client.commands.BindsCommand;
 import net.como.client.events.OnKeyEvent;
-import net.como.client.interfaces.Flatternable;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ChatUtils;
@@ -210,18 +211,15 @@ public class Binds extends Cheat {
             Gson gson = new Gson();
 
             String rawBindsObj = data.get("binds");
-            HashMap<String, String> bindsObj = gson.fromJson(rawBindsObj, this.binds.getClass());
+
+            HashMap<String, String> bindsObj = new HashMap<>();
+            bindsObj = gson.fromJson(rawBindsObj, bindsObj.getClass());
 
             for (String key : bindsObj.keySet()) {
-                List<String> bindsList = new ArrayList<>();
-                bindsList = gson.fromJson(bindsObj.get(key), bindsList.getClass());
+                Type type = new TypeToken<ArrayList<Bind>>() {}.getType();
+                List<Bind> bindsList = gson.fromJson(bindsObj.get(key), type);
 
-                for (String strBind : bindsList) {
-                    HashMap<String, String> bind = new HashMap<>();
-                    bind = gson.fromJson(strBind, bind.getClass());
-
-                    this.addBind(Bind.fromLift(bind));
-                }
+                this.binds.put(Integer.parseInt(key), bindsList);
             }
     
             data.remove("binds");
@@ -237,10 +235,10 @@ public class Binds extends Cheat {
         Gson gson = new Gson();
         HashMap<String, String> flatBindsList = new HashMap<>();
         for (Integer key : this.binds.keySet()) {
-            List<String> flatBinds = new ArrayList<>();
+            List<Bind> flatBinds = new ArrayList<>();
 
             for (Bind bind : this.binds.get(key)) {
-                flatBinds.add(gson.toJson(bind.flattern()));
+                flatBinds.add(bind);
             }
 
             flatBindsList.put(key.toString(), gson.toJson(flatBinds));
