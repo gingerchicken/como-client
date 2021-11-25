@@ -12,7 +12,7 @@ public class CommandHandler {
     
     private HashMap<String, Command> commands;
 
-    public int handle(String rawMessage, CallbackInfo ci) {
+    public int handle(String rawMessage) {
         // -1 unhandled but not command
         if (!rawMessage.startsWith(this.delimiter)) return -1;
 

@@ -73,7 +73,7 @@ public class CheatClient {
     // Chat
     public static void processChatPost(String message, CallbackInfo ci) {
         // Command Handling
-        Integer commandHandlerOutput = commandHandler.handle(message, ci);
+        Integer commandHandlerOutput = commandHandler.handle(message);
 
         switch (commandHandlerOutput) {
             case -1:
