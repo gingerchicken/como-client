@@ -90,6 +90,16 @@ public class Cheat extends Settings implements EventListener {
         this.name = name;
     }
 
+    private Boolean autoEnable = false;
+    protected Cheat(String name, Boolean autoEnable) {
+        this.name = name;
+        this.autoEnable = autoEnable;
+    }
+
+    public Boolean shouldAutoEnable() {
+        return this.autoEnable;
+    }
+
     // Events
     private EventEmitter emitter = CheatClient.emitter;
 
