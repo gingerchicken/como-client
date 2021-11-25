@@ -229,6 +229,11 @@
  - Player: `True`
  - Transparency: `1.0`
 
+## UnfocusCPU (`.unfocuscpu`)
+[(Source Code)](src/main/java/net/como/client/cheats/UnfocusCPU.java) Decreases game performance while the window is not focused.
+### Default Settings
+ - MaxFPS: `15`
+
 ## Watermark (`.watermark`)
 [(Source Code)](src/main/java/net/como/client/cheats/Watermark.java) Renders the Como Client watermark on the screen.
 ### Default Settings
