@@ -168,7 +168,16 @@ public class CheatClient {
         Cheats.put("binds", new Binds());
 
         // Load the config
-        Persistance.loadConfig();
+        if (!Persistance.loadConfig()) {
+            // It must be a new config.
+
+            // Auto enable those that should be auto-enabled.
+            for (String key : Cheats.keySet()) {
+                Cheat cheat = Cheats.get(key);
+                
+                if (cheat.shouldAutoEnable()) cheat.enable();
+            }
+        }
         
         config = new GeneralConfig();
 
