@@ -103,7 +103,7 @@ public class RenderUtils {
         // Make it so it is our mobBox.
         Shader shader = RenderSystem.getShader();
         Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
-        simpleMobBox.setShader(mStack.peek().getModel(), matrix4f, shader);
+        simpleMobBox.setShader(mStack.peek().getPositionMatrix(), matrix4f, shader);
         
         // Pop the stack (i.e. render it)
         mStack.pop();
@@ -131,7 +131,7 @@ public class RenderUtils {
 		RenderUtils.applyRegionalRenderOffset(matrixStack);
 		RenderSystem.setShaderColor(normaliseColourPart(r), normaliseColourPart(g), normaliseColourPart(b), normaliseColourPart(a));
 
-		Matrix4f matrix = matrixStack.peek().getModel();
+		Matrix4f matrix = matrixStack.peek().getPositionMatrix();
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		RenderSystem.setShader(GameRenderer::getPositionShader);
 		
@@ -258,7 +258,7 @@ public class RenderUtils {
 	
 	public static void drawSolidBox(Box bb, MatrixStack matrixStack)
 	{
-		Matrix4f matrix = matrixStack.peek().getModel();
+		Matrix4f matrix = matrixStack.peek().getPositionMatrix();
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		RenderSystem.setShader(GameRenderer::getPositionShader);
 		
@@ -397,7 +397,7 @@ public class RenderUtils {
 	
 	public static void drawOutlinedBox(Box bb, MatrixStack matrixStack)
 	{
-		Matrix4f matrix = matrixStack.peek().getModel();
+		Matrix4f matrix = matrixStack.peek().getPositionMatrix();
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		RenderSystem.setShader(GameRenderer::getPositionShader);
 		
@@ -543,7 +543,7 @@ public class RenderUtils {
 	
 	public static void drawCrossBox(Box bb, MatrixStack matrixStack)
 	{
-		Matrix4f matrix = matrixStack.peek().getModel();
+		Matrix4f matrix = matrixStack.peek().getPositionMatrix();
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		
 		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
@@ -688,7 +688,7 @@ public class RenderUtils {
 	
 	public static void drawNode(Box bb, MatrixStack matrixStack)
 	{
-		Matrix4f matrix = matrixStack.peek().getModel();
+		Matrix4f matrix = matrixStack.peek().getPositionMatrix();
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		RenderSystem.setShader(GameRenderer::getPositionShader);
 		
@@ -835,7 +835,7 @@ public class RenderUtils {
 		double endZ = to.z;
 		
 		matrixStack.push();
-		Matrix4f matrix = matrixStack.peek().getModel();
+		Matrix4f matrix = matrixStack.peek().getPositionMatrix();
 		
 		bufferBuilder
 			.vertex(matrix, (float)startX, (float)startY, (float)startZ).next();
@@ -999,7 +999,7 @@ public class RenderUtils {
         // Make it so it is our mobBox.
         Shader shader = RenderSystem.getShader();
         Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
-        blockBox.setShader(mStack.peek().getModel(), matrix4f, shader);
+        blockBox.setShader(mStack.peek().getPositionMatrix(), matrix4f, shader);
         
         // Pop the stack (i.e. render it)
         mStack.pop();
