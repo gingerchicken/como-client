@@ -13,7 +13,7 @@
     <img src="https://forthebadge.com/images/badges/built-by-codebabes.svg" alt="Built By Code Babes">
 </p>
 
-**A Minecraft "hacked client"** in the form of a Fabric mod developed with the aim of giving its users an advantage in most (if not all) situations (*but since I made it it probably won't to be honest...*), while still aiming to be as simplistic as possible.
+A Minecraft utility mod developed with the aim of giving its users an advantage in most (if not all) situations (*but since I made it it probably won't to be honest...*), while still aiming to be as simplistic as possible.
 
 ## Installation
 Como Client is just a Fabric mod, so it should just install like any other Fabric mod. If you are unsure how to install mods with Fabric - (*don't worry it is pretty straight forward*) - there are quite a few guides elsewhere on how to do this.
