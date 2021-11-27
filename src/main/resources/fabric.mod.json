@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Como Client",
-  "description": "A Minecraft \"hacked client\" in the form of a Fabric mod developed with the aim of giving its users an advantage in most (if not all) situations (but since I made it it probably won't to be honest...), while still aiming to be as simplistic as possible.",
+  "description": "A Minecraft utility mod developed with the aim of giving its users an advantage in most (if not all) situations (but since I made it it probably won't to be honest...), while still aiming to be as simplistic as possible.",
   "authors": [
     "gingerchicken"
   ],
