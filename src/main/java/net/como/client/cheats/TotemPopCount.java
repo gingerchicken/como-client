@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
+import net.como.client.events.DeathEvent;
 import net.como.client.events.DisconnectEvent;
 import net.como.client.events.OnEntityStatusEvent;
 import net.como.client.structures.Cheat;
@@ -20,6 +21,12 @@ public class TotemPopCount extends Cheat {
         // Default One min
         this.addSetting(new Setting("CountDuration", 60d));
         this.addSetting(new Setting("DeathMessage", true));
+    }
+
+    private Integer localPopCount = 0;
+
+    public Integer getTotalPops() {
+        return this.localPopCount / 2;
     }
 
     private static class PlayerEntry {
@@ -55,8 +62,14 @@ public class TotemPopCount extends Cheat {
     private HashMap<UUID, PlayerEntry> entries = new HashMap<>();
 
     @Override
+    public String listOption() {
+        return (this.getTotalPops()).toString();
+    }
+
+    @Override
     public void activate() {
         this.addListen(ClientTickEvent.class);
+        this.addListen(DeathEvent.class);
         this.addListen(OnEntityStatusEvent.class);
         this.addListen(DisconnectEvent.class);
     }
@@ -64,11 +77,18 @@ public class TotemPopCount extends Cheat {
     @Override
     public void deactivate() {
         this.removeListen(DisconnectEvent.class);
+        this.removeListen(DeathEvent.class);
         this.removeListen(ClientTickEvent.class);
         this.removeListen(OnEntityStatusEvent.class);
     }
 
     public PlayerEntry playerPop(PlayerEntity player) {
+        if (player == CheatClient.me()) {
+            this.localPopCount++;
+
+            return null;
+        }
+
         UUID uuid = player.getUuid();
 
         if (!this.entries.containsKey(uuid)) {
@@ -80,17 +100,27 @@ public class TotemPopCount extends Cheat {
         return entry;
     }
 
+    private void resetLocal() {
+        this.localPopCount = 0;
+    }
 
     private void resetEntries() {
         this.entries.clear();
     }
 
     private void resetAll() {
+        this.resetLocal();
         this.resetEntries();
     }
+
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
+            case "DeathEvent": {
+                this.resetLocal();
+                break;
+            }
+
             case "DisconnectEvent": {
                 this.resetAll();
                 break;
@@ -140,7 +170,7 @@ public class TotemPopCount extends Cheat {
                 PlayerEntry entry = this.playerPop(player);
 
                 // MC is a bit wacky when handling totem popping.
-                if (!entry.isPop()) break;
+                if (entry == null || !entry.isPop()) break;
 
                 this.displayMessage(String.format("%s has popped %d totems so far.", player.getDisplayName().asString(), entry.getPops()));
 
