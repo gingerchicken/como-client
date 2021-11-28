@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
+import net.como.client.events.DisconnectEvent;
 import net.como.client.events.OnEntityStatusEvent;
 import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
@@ -57,10 +58,12 @@ public class TotemPopCount extends Cheat {
     public void activate() {
         this.addListen(ClientTickEvent.class);
         this.addListen(OnEntityStatusEvent.class);
+        this.addListen(DisconnectEvent.class);
     }
 
     @Override
     public void deactivate() {
+        this.removeListen(DisconnectEvent.class);
         this.removeListen(ClientTickEvent.class);
         this.removeListen(OnEntityStatusEvent.class);
     }
@@ -77,9 +80,22 @@ public class TotemPopCount extends Cheat {
         return entry;
     }
 
+
+    private void resetEntries() {
+        this.entries.clear();
+    }
+
+    private void resetAll() {
+        this.resetEntries();
+    }
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
+            case "DisconnectEvent": {
+                this.resetAll();
+                break;
+            }
+
             case "ClientTickEvent": {
                 for (PlayerEntity player : CheatClient.getClient().world.getPlayers()) {
                     UUID uuid = player.getUuid();
