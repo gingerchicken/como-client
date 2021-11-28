@@ -18,6 +18,8 @@ public class TotemPopCount extends Cheat {
     public TotemPopCount() {
         super("TotemPopCount");
 
+        this.description = "This counts the total number of totems used by a player before death.";
+
         // Default One min
         this.addSetting(new Setting("CountDuration", 60d));
         this.addSetting(new Setting("DeathMessage", true));
