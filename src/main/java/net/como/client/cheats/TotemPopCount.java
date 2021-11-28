@@ -119,6 +119,8 @@ public class TotemPopCount extends Cheat {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "DeathEvent": {
+                if (this.getBoolSetting("DeathMessage") && this.getTotalPops() > 0) this.displayMessage(String.format("You used %d totems before you died.", this.getTotalPops()));
+
                 this.resetLocal();
                 break;
             }
