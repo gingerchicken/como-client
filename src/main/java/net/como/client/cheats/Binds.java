@@ -15,6 +15,7 @@ import net.como.client.structures.Cheat;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ChatUtils;
+import net.como.client.utils.ClientUtils;
 
 public class Binds extends Cheat {
     private static enum KeyAction {
@@ -165,6 +166,12 @@ public class Binds extends Cheat {
         this.removeListen(OnKeyEvent.class);
     }
 
+    private Boolean isChatDelimiter(Integer key) {
+        char keyChar = Character.toChars(key)[0];
+
+        return (keyChar == CheatClient.commandHandler.delimiter.charAt(0));
+    }
+
     public boolean logNextKey = false;
 
     @Override
@@ -187,7 +194,13 @@ public class Binds extends Cheat {
                     break;
                 }
 
+                // Handle the keypress
                 if (CheatClient.getClient().currentScreen == null) this.fireBind(e.key);
+
+                // Open chat if it is our command button.
+                if (this.isChatDelimiter(e.key) && CheatClient.getClient().currentScreen == null) {
+                    ClientUtils.openChatScreen();
+                }
 
                 break;
             }
