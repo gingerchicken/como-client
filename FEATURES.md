@@ -217,6 +217,12 @@
 ## TotemHide (`.totemhide`)
 [(Source Code)](src/main/java/net/como/client/cheats/TotemHide.java) Hide the totem item.
 
+## TotemPopCount (`.totempopcount`)
+[(Source Code)](src/main/java/net/como/client/cheats/TotemPopCount.java) This counts the total number of totems used by a player before death.
+### Default Settings
+ - CountDuration: `60.0`
+ - DeathMessage: `True`
+
 ## Tracers (`.tracers`)
 [(Source Code)](src/main/java/net/como/client/cheats/Tracers.java) Draws tracers to specified targets.
 ### Default Settings

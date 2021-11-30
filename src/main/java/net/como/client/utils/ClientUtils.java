@@ -3,6 +3,7 @@ package net.como.client.utils;
 import net.como.client.CheatClient;
 import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.utils.RotationUtils.Rotation;
+import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -75,5 +76,15 @@ public class ClientUtils {
 
     public static Boolean isThirdperson() {
         return CheatClient.getClient().gameRenderer.getCamera().isThirdPerson();
+    }
+
+    public static void openChatScreen(String text) {
+        if (!inGame()) return;
+
+        CheatClient.getClient().setScreen(new ChatScreen(text));
+    }
+
+    public static void openChatScreen() {
+        openChatScreen("");
     }
 }

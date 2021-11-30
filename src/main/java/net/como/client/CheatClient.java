@@ -167,6 +167,7 @@ public class CheatClient {
         Cheats.put("xcarry", new XCarry());
         Cheats.put("binds", new Binds());
         Cheats.put("unfocuscpu", new UnfocusCPU());
+        Cheats.put("totempopcount", new TotemPopCount());
 
         // Load the config
         if (!Persistance.loadConfig()) {
