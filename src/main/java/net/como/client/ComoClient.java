@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.como.client.commands.FriendsCommand;
 import net.como.client.commands.PanicCommand;
 import net.como.client.commands.WaypointsCommand;
-import net.como.client.commands.structures.CheatCommand;
+import net.como.client.commands.structures.ModuleCommand;
 import net.como.client.commands.structures.CommandHandler;
 import net.como.client.components.FriendsManager;
 import net.como.client.interfaces.mixin.IClient;
@@ -63,7 +63,7 @@ public class ComoClient {
 
         // Add all of the cheats as commands.
         for (Entry<String, Module> entry : Cheats.entrySet()) {
-            commandHandler.registerCommand(new CheatCommand(entry.getKey(), entry.getValue()));
+            commandHandler.registerCommand(new ModuleCommand(entry.getKey(), entry.getValue()));
         }
     }
 

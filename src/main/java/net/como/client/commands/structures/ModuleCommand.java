@@ -3,10 +3,10 @@ package net.como.client.commands.structures;
 import net.como.client.commands.settings.SettingsCommand;
 import net.como.client.structures.Module;
 
-public class CheatCommand extends CommandNode {
+public class ModuleCommand extends CommandNode {
     public Module cheat;
 
-    public CheatCommand(String command, Module cheat) {
+    public ModuleCommand(String command, Module cheat) {
         super(command, cheat.description);
         
         this.cheat = cheat;
