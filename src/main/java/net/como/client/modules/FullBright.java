@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.structures.Module;
 import net.minecraft.client.MinecraftClient;
 
@@ -15,7 +15,7 @@ public class FullBright extends Module {
     
     @Override
     public void activate() {
-        MinecraftClient client = CheatClient.getClient();
+        MinecraftClient client = ComoClient.getClient();
 
         this.normalGamma = client.options.gamma;
         client.options.gamma = 16;
@@ -23,7 +23,7 @@ public class FullBright extends Module {
 
     @Override
     public void deactivate() {
-        MinecraftClient client = CheatClient.getClient();
+        MinecraftClient client = ComoClient.getClient();
 
         client.options.gamma = this.normalGamma;
     }

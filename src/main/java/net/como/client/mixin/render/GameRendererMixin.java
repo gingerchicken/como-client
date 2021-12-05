@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.BobViewWhenHurtEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
@@ -19,7 +19,7 @@ import net.minecraft.client.util.math.MatrixStack;
 public class GameRendererMixin {
     @Inject(at = @At("HEAD"), method="bobViewWhenHurt(Lnet/minecraft/client/util/math/MatrixStack;F)V", cancellable = true)
     void onBobViewWhenHurt(MatrixStack mStack, float f, CallbackInfo ci) {
-        CheatClient.emitter.triggerEvent(new BobViewWhenHurtEvent(mStack, f, ci));
+        ComoClient.emitter.triggerEvent(new BobViewWhenHurtEvent(mStack, f, ci));
     }
 
     @Inject(
@@ -33,7 +33,7 @@ public class GameRendererMixin {
         cancellable = true
     )
     private void onRender(float tickDelta, long limitTime, MatrixStack matrix, CallbackInfo ci) {
-        CheatClient.emitter.triggerEvent(new OnRenderEvent(
+        ComoClient.emitter.triggerEvent(new OnRenderEvent(
             tickDelta, limitTime, matrix, ci
         ));
     }
@@ -46,7 +46,7 @@ public class GameRendererMixin {
 	private void onRenderWorldViewBobbing(GameRenderer gameRenderer, MatrixStack matrixStack, float partalTicks) {
         RenderWorldViewBobbingEvent event = new RenderWorldViewBobbingEvent(gameRenderer, matrixStack, partalTicks);
 
-        CheatClient.emitter.triggerEvent(event);
+        ComoClient.emitter.triggerEvent(event);
 
         if (event.cancel) {
             return;

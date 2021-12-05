@@ -7,7 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.lwjgl.opengl.GL11;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.RenderTooltipEvent;
 import net.como.client.structures.Module;
@@ -73,7 +73,7 @@ public class ShulkerPeak extends Module {
         RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
 
         DrawableHelper.drawTexture(matrices, x, y, 0, 0, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
-        TextRenderer r = CheatClient.getClient().textRenderer;
+        TextRenderer r = ComoClient.getClient().textRenderer;
 
         // r.draw(matrices, stack.getName(), x + 7, y - 4, 0xFF404040);
         r.draw(matrices, stack.getName(), x + 7, y + 6, 0xFF404040);
@@ -81,8 +81,8 @@ public class ShulkerPeak extends Module {
 
     private void renderShulkerDisplay(MatrixStack mStack, ItemStack stack, int x, int y) {
         List<ItemStack> items = this.getItems(stack);
-        ItemRenderer ir = CheatClient.getClient().getItemRenderer();
-        TextRenderer r = CheatClient.getClient().textRenderer;
+        ItemRenderer ir = ComoClient.getClient().getItemRenderer();
+        TextRenderer r = ComoClient.getClient().textRenderer;
 
         GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 
@@ -144,7 +144,7 @@ public class ShulkerPeak extends Module {
                 if (!(boolean)this.getSetting("HUDOverlay").value) break;
                 
                 // Get the active item.
-                ItemStack stack = CheatClient.me().getMainHandStack();
+                ItemStack stack = ComoClient.me().getMainHandStack();
 
                 // Make sure that it is a shulker
                 if (!this.isShulkerBox(stack)) break;
@@ -153,8 +153,8 @@ public class ShulkerPeak extends Module {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
                 // Render the shulker box
-                int x = CheatClient.getClient().getWindow().getScaledWidth()/2 - BACKGROUND_WIDTH/2;
-                int y = (int)(32/CheatClient.getClient().getWindow().getScaleFactor());
+                int x = ComoClient.getClient().getWindow().getScaledWidth()/2 - BACKGROUND_WIDTH/2;
+                int y = (int)(32/ComoClient.getClient().getWindow().getScaleFactor());
 
                 this.renderShulkerDisplay(e.mStack, stack, x, y);
 

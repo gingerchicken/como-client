@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.PreMovementPacketEvent;
 import net.como.client.events.PlayerChatEvent;
@@ -28,29 +28,29 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
     @Inject(at = @At("HEAD"), method="move(Lnet/minecraft/entity/MovementType;Lnet/minecraft/util/math/Vec3d;)V")
     private void onMove(MovementType type, Vec3d offset, CallbackInfo ci) {
-        CheatClient.emitter.triggerEvent(new PlayerMoveEvent(type, offset, ci));
+        ComoClient.emitter.triggerEvent(new PlayerMoveEvent(type, offset, ci));
     }
 
     @Inject(at = @At("HEAD"), method="sendChatMessage(Ljava/lang/String;)V", cancellable = true)
     private void onSendChatMessage(String message, CallbackInfo ci) {
         // Handle commands etc.
-        CheatClient.processChatPost(message, ci);
+        ComoClient.processChatPost(message, ci);
 
-        CheatClient.emitter.triggerEvent(new PlayerChatEvent(message, ci));
+        ComoClient.emitter.triggerEvent(new PlayerChatEvent(message, ci));
     }
 
     @Inject(at = @At("HEAD"), method="sendMovementPackets()V", cancellable = true)
     private void beforeSendMovementPackets(CallbackInfo ci) {
-        CheatClient.emitter.triggerEvent(new PreMovementPacketEvent(ci));
+        ComoClient.emitter.triggerEvent(new PreMovementPacketEvent(ci));
     }
 
     @Inject(at = @At("TAIL"), method="sendMovementPackets()V", cancellable = false)
     private void afterSendMovementPackets(CallbackInfo ci) {
-        CheatClient.emitter.triggerEvent(new PostMovementPacketEvent(ci));
+        ComoClient.emitter.triggerEvent(new PostMovementPacketEvent(ci));
     }
 
     @Inject(at = @At("RETURN"), method="tick()V", cancellable = false)
     private void onTick(CallbackInfo ci) {
-        CheatClient.emitter.triggerEvent(new ClientTickEvent(ci));
+        ComoClient.emitter.triggerEvent(new ClientTickEvent(ci));
     }
 }

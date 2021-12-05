@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.PlayerMoveEvent;
 import net.como.client.events.SendPacketEvent;
@@ -19,18 +19,18 @@ public class FreeCam extends Module {
     private float originPitch = 0, originYaw = 0;
 
     private void setOrigin() {
-        this.origin = CheatClient.me().getPos();
-        this.originYaw = CheatClient.me().getYaw();
-        this.originPitch = CheatClient.me().getPitch();
+        this.origin = ComoClient.me().getPos();
+        this.originYaw = ComoClient.me().getYaw();
+        this.originPitch = ComoClient.me().getPitch();
         
     }
 
     private void revertOrigin() {
-        CheatClient.me().setPos(origin.x, origin.y, origin.z);
-        CheatClient.me().setYaw(this.originYaw);
-        CheatClient.me().setPitch(this.originPitch);
+        ComoClient.me().setPos(origin.x, origin.y, origin.z);
+        ComoClient.me().setYaw(this.originYaw);
+        ComoClient.me().setPitch(this.originPitch);
 
-        CheatClient.me().noClip = false;
+        ComoClient.me().noClip = false;
     }
 
     public FreeCam() {
@@ -65,7 +65,7 @@ public class FreeCam extends Module {
 
     @Override
     public void fireEvent(Event event) {
-        ClientPlayerEntity me = CheatClient.me();
+        ClientPlayerEntity me = ComoClient.me();
 
         switch (event.getClass().getSimpleName()) {
             case "PlayerMoveEvent": {
@@ -91,14 +91,14 @@ public class FreeCam extends Module {
                 me.setVelocity(0, 0, 0);
 
                 // Game options
-                GameOptions opt = CheatClient.getClient().options;
+                GameOptions opt = ComoClient.getClient().options;
 
                 // Controls
-                if (opt.keyForward.isPressed()) v = v.add(CheatClient.me().getRotationVector());
-                if (opt.keyBack.isPressed())    v = v.add(CheatClient.me().getRotationVector().multiply(-1));
+                if (opt.keyForward.isPressed()) v = v.add(ComoClient.me().getRotationVector());
+                if (opt.keyBack.isPressed())    v = v.add(ComoClient.me().getRotationVector().multiply(-1));
 
-                if (opt.keyRight.isPressed())   v = v.add(MathsUtils.getRightVelocity(CheatClient.me()));
-                if (opt.keyLeft.isPressed())    v = v.add(MathsUtils.getRightVelocity(CheatClient.me()).multiply(-1));
+                if (opt.keyRight.isPressed())   v = v.add(MathsUtils.getRightVelocity(ComoClient.me()));
+                if (opt.keyLeft.isPressed())    v = v.add(MathsUtils.getRightVelocity(ComoClient.me()).multiply(-1));
 
                 if (opt.keyJump.isPressed())    v = v.add(0,  1, 0);
                 if (opt.keySneak.isPressed())   v = v.add(0, -1, 0);

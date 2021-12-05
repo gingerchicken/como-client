@@ -7,7 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.opengl.GL11;
 
 import io.netty.util.internal.MathUtil;
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.renderLabelIfPresentEvent;
@@ -63,7 +63,7 @@ public class BetterNameTags extends Module {
         }
 
         private Integer getPing() {
-            ClientPlayNetworkHandler lv = CheatClient.me().networkHandler;
+            ClientPlayNetworkHandler lv = ComoClient.me().networkHandler;
 
             // Get the player entry
             PlayerListEntry entry = lv.getPlayerListEntry(player.getUuid());
@@ -136,7 +136,7 @@ public class BetterNameTags extends Module {
 
     private void displayNameTag(PlayerEntity player, MatrixStack mStack, float tickDelta) {
         Vec3d pos = player.getLerpedPos(tickDelta).add(0, player.getBoundingBox().maxY - player.getPos().y + 0.25, 0);
-        TextRenderer r = CheatClient.textRenderer;
+        TextRenderer r = ComoClient.textRenderer;
 
         float textOffsets = r.getWidth(" ")/2;
         Attribute[] attributes = {
@@ -174,8 +174,8 @@ public class BetterNameTags extends Module {
         );
         
         // Update the size of the box.
-		mStack.multiply(CheatClient.getClient().getEntityRenderDispatcher().getRotation());
-		float c = (float)Math.sqrt(CheatClient.getClient().cameraEntity.getLerpedPos(tickDelta).distanceTo(pos));
+		mStack.multiply(ComoClient.getClient().getEntityRenderDispatcher().getRotation());
+		float c = (float)Math.sqrt(ComoClient.getClient().cameraEntity.getLerpedPos(tickDelta).distanceTo(pos));
 
         float scale = (Float)(this.getSetting("Scale").value);
 		mStack.scale(-0.025F*c*scale, -0.025F*c*scale, 0);
@@ -209,11 +209,11 @@ public class BetterNameTags extends Module {
         switch (event.getClass().getSimpleName()) {
             case "OnRenderEvent": {
                 OnRenderEvent e = (OnRenderEvent)event;
-                Iterable<Entity> ents = CheatClient.getClient().world.getEntities();
+                Iterable<Entity> ents = ComoClient.getClient().world.getEntities();
 
                 for (Entity entity : ents) {
                     // No render myself.
-                    if (!(entity instanceof PlayerEntity) || ((PlayerEntity)entity == CheatClient.me() && !ClientUtils.isThirdperson())) {
+                    if (!(entity instanceof PlayerEntity) || ((PlayerEntity)entity == ComoClient.me() && !ClientUtils.isThirdperson())) {
                         continue;
                     }
 

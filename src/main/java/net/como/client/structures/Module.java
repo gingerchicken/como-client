@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.google.gson.Gson;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.interfaces.Flatternable;
 import net.como.client.utils.ChatUtils;
 import net.minecraft.client.font.TextRenderer;
@@ -70,13 +70,13 @@ public class Module extends Settings implements EventListener, Flatternable {
 
     // Chat display message things
     public void onEnabled() { 
-        CheatClient.displayChatMessage(
+        ComoClient.displayChatMessage(
             String.format("%s has been %senabled%s.", this.getName(), ChatUtils.GREEN, ChatUtils.WHITE)
         );
         activate();
     }
     public void onDisabled() {
-        CheatClient.displayChatMessage(
+        ComoClient.displayChatMessage(
             String.format("%s has been %sdisabled%s.", this.getName(), ChatUtils.RED, ChatUtils.WHITE)
         );
         deactivate();
@@ -102,7 +102,7 @@ public class Module extends Settings implements EventListener, Flatternable {
     }
 
     // Events
-    private EventEmitter emitter = CheatClient.emitter;
+    private EventEmitter emitter = ComoClient.emitter;
 
     @Override
     public void addListen(Class<? extends Event> event) {

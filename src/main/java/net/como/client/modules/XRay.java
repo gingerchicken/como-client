@@ -2,7 +2,7 @@ package net.como.client.modules;
 
 import java.util.HashMap;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.BlockCracksRenderEvent;
 import net.como.client.events.BlockEntityRenderEvent;
 import net.como.client.events.GetAmbientOcclusionLightLevelEvent;
@@ -53,12 +53,12 @@ public class XRay extends Module {
 
     @Override
     public void activate() {
-        MinecraftClient client = CheatClient.getClient();
+        MinecraftClient client = ComoClient.getClient();
         client.worldRenderer.reload();
 
-        this.fullbrightWasEnabled = CheatClient.Cheats.get("fullbright").isEnabled();
+        this.fullbrightWasEnabled = ComoClient.Cheats.get("fullbright").isEnabled();
 
-        if (this.shouldOverrideFullbright()) CheatClient.Cheats.get("fullbright").enable();
+        if (this.shouldOverrideFullbright()) ComoClient.Cheats.get("fullbright").enable();
 
         this.addListen(BlockEntityRenderEvent.class);
         this.addListen(BlockCracksRenderEvent.class);
@@ -73,10 +73,10 @@ public class XRay extends Module {
         this.removeListen(ShouldDrawBlockSideEvent.class);
         this.removeListen(GetAmbientOcclusionLightLevelEvent.class);
 
-        MinecraftClient client = CheatClient.getClient();
+        MinecraftClient client = ComoClient.getClient();
         client.worldRenderer.reload();
 
-        if (this.shouldOverrideFullbright()) CheatClient.Cheats.get("fullbright").disable();
+        if (this.shouldOverrideFullbright()) ComoClient.Cheats.get("fullbright").disable();
         
         this.fullbrightWasEnabled = null;
     }

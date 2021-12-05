@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.components.ServerClientRotation;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.RenderWorldEvent;
@@ -99,7 +99,7 @@ public class CrystalAura extends Module {
 
     // Get the entities furthest away from the player.
     private Comparator<Entity> entitiesByDistance() {
-        Vec3d pos = CheatClient.me().getPos();
+        Vec3d pos = ComoClient.me().getPos();
         
         return (
             Comparator.<Entity> comparingDouble(e -> pos.squaredDistanceTo(e.getPos()))
@@ -110,9 +110,9 @@ public class CrystalAura extends Module {
     // Get a stream of nearby entities
     private Stream<Entity> getEntityStream() {
         double d2 = this.getSquaredDistance();
-        Vec3d pos = CheatClient.me().getPos();
+        Vec3d pos = ComoClient.me().getPos();
 
-        return StreamSupport.stream(CheatClient.getClient().world.getEntities().spliterator(), true)
+        return StreamSupport.stream(ComoClient.getClient().world.getEntities().spliterator(), true)
             .filter(e -> !e.isRemoved())
             .filter(e -> pos.squaredDistanceTo(e.getPos()) <= d2);
     }
@@ -135,7 +135,7 @@ public class CrystalAura extends Module {
 
         // Make sure that the entity is not us.
         entities = entities
-            .filter(e -> e != CheatClient.me())
+            .filter(e -> e != ComoClient.me())
 
             // Must be alive and a living entity
             .filter(e -> (e instanceof LivingEntity))
@@ -180,7 +180,7 @@ public class CrystalAura extends Module {
     }
 
     private boolean checkHeight(Vec3d pos) {
-        return this.getBoolSetting("AllowLow") || pos.getY() > CheatClient.me().getPos().getY();
+        return this.getBoolSetting("AllowLow") || pos.getY() > ComoClient.me().getPos().getY();
     }
 
     // Get the blocks closest to a target.
@@ -252,7 +252,7 @@ public class CrystalAura extends Module {
     private boolean holdThisTick = false;
     private boolean holdCrystal() {
         // If we already have a crystal then we don't need to do anything
-        if (CheatClient.me().getMainHandStack().isOf(Items.END_CRYSTAL)) return true;
+        if (ComoClient.me().getMainHandStack().isOf(Items.END_CRYSTAL)) return true;
     
         // Check if we want to select a crystal
         if (!this.getBoolSetting("SelectCrystal") || holdThisTick) return false;
@@ -296,8 +296,8 @@ public class CrystalAura extends Module {
 
             // Check that we can see the side with a ray (i.e. line of sight).
             if (this.getBoolSetting("LineOfSight")
-                && CheatClient.getClient().world.raycast(
-                    new RaycastContext(eyePos, hitVec, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, CheatClient.me())
+                && ComoClient.getClient().world.raycast(
+                    new RaycastContext(eyePos, hitVec, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, ComoClient.me())
                 ).getType() == HitResult.Type.MISS
             ) continue;
 
@@ -308,7 +308,7 @@ public class CrystalAura extends Module {
             this.scRot.lookAtPosServer(hitVec);
 
             // Place the crystal
-            int dy = CheatClient.me().getBlockY() - proximate.getY() >= 0 ? 1 : -1;
+            int dy = ComoClient.me().getBlockY() - proximate.getY() >= 0 ? 1 : -1;
             InteractionUtils.rightClickBlock(proximate.add(0, dy, 0), side.getOpposite(), hitVec);
 
             return true;

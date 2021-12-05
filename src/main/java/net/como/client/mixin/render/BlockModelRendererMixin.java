@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.At;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.BlockCracksRenderEvent;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.VertexConsumer;
@@ -27,6 +27,6 @@ public class BlockModelRendererMixin {
         cancellable = true
     )
 	private void onRenderBlock(BlockRenderView world, BakedModel model, BlockState state, BlockPos pos, MatrixStack matrix, VertexConsumer vertexConsumer, boolean cull, Random random, long seed, int overlay, CallbackInfoReturnable<Boolean> cir) {
-        CheatClient.emitter.triggerEvent(new BlockCracksRenderEvent(world, model, state, pos, matrix, vertexConsumer, cull, random, seed, overlay, cir));
+        ComoClient.emitter.triggerEvent(new BlockCracksRenderEvent(world, model, state, pos, matrix, vertexConsumer, cull, random, seed, overlay, cir));
     }
 }

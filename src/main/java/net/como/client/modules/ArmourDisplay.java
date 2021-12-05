@@ -3,7 +3,7 @@ package net.como.client.modules;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -34,7 +34,7 @@ public class ArmourDisplay extends Module {
     }
 
     private void renderDisplay(int x, int y, int length) {
-        MinecraftClient client = CheatClient.getClient();
+        MinecraftClient client = ComoClient.getClient();
         ItemRenderer ir = client.getItemRenderer();
         TextRenderer r  = client.textRenderer;
 
@@ -49,7 +49,7 @@ public class ArmourDisplay extends Module {
         // Iterate backwards over the armour set
         for (int i = 3; i >= 0; i--) {
             // Get the piece
-            ItemStack piece = CheatClient.me().getInventory().getArmorStack(i);
+            ItemStack piece = ComoClient.me().getInventory().getArmorStack(i);
 
             // If the piece is nothing and we don't want to render nothing, don't add it to the list to be rendered.
             if (!piece.isEmpty() || renderEmpty) {
@@ -82,12 +82,12 @@ public class ArmourDisplay extends Module {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "InGameHudRenderEvent": {
-                Window window = CheatClient.getClient().getWindow();
+                Window window = ComoClient.getClient().getWindow();
 
                 int x = window.getScaledWidth() / 2 + 5;
                 int y = window.getScaledHeight() - 55;
 
-                if (CheatClient.me().getAir() < 300) y -= 10;
+                if (ComoClient.me().getAir() < 300) y -= 10;
 
                 this.renderDisplay(x, y, 91);
 

@@ -8,7 +8,7 @@ import java.util.List;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.commands.BindsCommand;
 import net.como.client.events.OnKeyEvent;
 import net.como.client.structures.Module;
@@ -50,7 +50,7 @@ public class Binds extends Module {
         }
 
         private String getTriggerCommand() {
-            return String.format("%s%s", CheatClient.commandHandler.delimiter, this.getCommand());
+            return String.format("%s%s", ComoClient.commandHandler.delimiter, this.getCommand());
         }
 
         public Bind(int key, String command) {
@@ -59,7 +59,7 @@ public class Binds extends Module {
         }
 
         public void executeCommand() {
-            CheatClient.commandHandler.handle(this.getTriggerCommand());
+            ComoClient.commandHandler.handle(this.getTriggerCommand());
         }
     }
 
@@ -153,7 +153,7 @@ public class Binds extends Module {
         // TODO make this per bind
         this.addSetting(new Setting("HideCommandOutput", true));
 
-        CheatClient.commandHandler.registerCommand(new BindsCommand());
+        ComoClient.commandHandler.registerCommand(new BindsCommand());
     }
 
     @Override
@@ -169,7 +169,7 @@ public class Binds extends Module {
     private Boolean isChatDelimiter(Integer key) {
         char keyChar = Character.toChars(key)[0];
 
-        return (keyChar == CheatClient.commandHandler.delimiter.charAt(0));
+        return (keyChar == ComoClient.commandHandler.delimiter.charAt(0));
     }
 
     public boolean logNextKey = false;
@@ -195,10 +195,10 @@ public class Binds extends Module {
                 }
 
                 // Handle the keypress
-                if (CheatClient.getClient().currentScreen == null) this.fireBind(e.key);
+                if (ComoClient.getClient().currentScreen == null) this.fireBind(e.key);
 
                 // Open chat if it is our command button.
-                if (this.isChatDelimiter(e.key) && CheatClient.getClient().currentScreen == null) {
+                if (this.isChatDelimiter(e.key) && ComoClient.getClient().currentScreen == null) {
                     ClientUtils.openChatScreen();
                 }
 

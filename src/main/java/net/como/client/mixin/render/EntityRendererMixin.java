@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.renderLabelIfPresentEvent;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -39,7 +39,7 @@ public abstract class EntityRendererMixin<T extends Entity>
         VertexConsumerProvider vertexConsumerProvider,
 		int i, CallbackInfo ci
     ) {
-		CheatClient.emitter.triggerEvent(
+		ComoClient.emitter.triggerEvent(
             new renderLabelIfPresentEvent<T>(
                 entity, text, matrixStack, vertexConsumerProvider, i, this.dispatcher, ci
             )

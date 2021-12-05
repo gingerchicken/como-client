@@ -1,6 +1,6 @@
 package net.como.client.utils;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
@@ -13,17 +13,17 @@ import net.minecraft.util.math.Vec3d;
 
 public class InteractionUtils {
     public static ClientPlayerInteractionManager getManager() {        
-        return CheatClient.getClient().interactionManager;
+        return ComoClient.getClient().interactionManager;
     }
 
     public static void pickupItem(int slot) {
-        getManager().clickSlot(0, slot, 0, SlotActionType.PICKUP, CheatClient.me());
+        getManager().clickSlot(0, slot, 0, SlotActionType.PICKUP, ComoClient.me());
     }
 
     public static void rightClickBlock(BlockPos pos, Direction side, Vec3d hitVec) {
         ClientPlayerInteractionManager im = getManager();
-        MinecraftClient client = CheatClient.getClient();
-        ClientPlayerEntity me = CheatClient.me();
+        MinecraftClient client = ComoClient.getClient();
+        ClientPlayerEntity me = ComoClient.me();
 
         // Send block packet
         im.interactBlock(me, client.world, Hand.MAIN_HAND, new BlockHitResult(hitVec, side, pos, false));

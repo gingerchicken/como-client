@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.DisconnectEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -24,7 +24,7 @@ public class AutoReconnect extends Module {
        ServerUtils.connectToServer(ServerUtils.getLastServer(), prevScreen);
     }
     public void startCountdown() {
-        this.startTime = CheatClient.getCurrentTime();
+        this.startTime = ComoClient.getCurrentTime();
     }
     
     public double workCountdown(Screen prevScreen) {
@@ -41,6 +41,6 @@ public class AutoReconnect extends Module {
         return timeRemaining;
     }
     private double deltaTime() {
-        return CheatClient.getCurrentTime() - startTime;
+        return ComoClient.getCurrentTime() - startTime;
     }
 }

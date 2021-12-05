@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.OnAttackEntityEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -25,7 +25,7 @@ public class Criticals extends Module {
     }
 
     private void packetJump() {
-        Vec3d v = CheatClient.me().getPos();
+        Vec3d v = ComoClient.me().getPos();
 
         ClientUtils.sendPos(v.add(0, 0.0625d, 0), true);
         ClientUtils.sendPos(v, true);

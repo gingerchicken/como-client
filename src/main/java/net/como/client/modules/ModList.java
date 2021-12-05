@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.Window;
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.structures.Module;
@@ -78,7 +78,7 @@ public class ModList extends Module {
         }
 
         private Module getModList() {
-            return CheatClient.Cheats.get("modlist");
+            return ComoClient.Cheats.get("modlist");
         }
 
         private int getSpeed() {
@@ -124,7 +124,7 @@ public class ModList extends Module {
         // This will prepare all of the colours so we can tick over them all at a constant rate (i.e. client TPS)
         private void tick() {
             set = new ArrayList<Colour>();
-            int totalCheats = CheatClient.Cheats.keySet().size();
+            int totalCheats = ComoClient.Cheats.keySet().size();
             int speed = this.getSpeed();
 
             // Loop through them all as if we are wanting them their and then.
@@ -226,11 +226,11 @@ public class ModList extends Module {
             case "InGameHudRenderEvent": {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
-                TextRenderer textRenderer = CheatClient.textRenderer;
+                TextRenderer textRenderer = ComoClient.textRenderer;
                 List<Module> enabledMods = new ArrayList<Module>();
                 
-                for (String cheatName : CheatClient.Cheats.keySet()) {
-                    Module cheat = CheatClient.Cheats.get(cheatName);
+                for (String cheatName : ComoClient.Cheats.keySet()) {
+                    Module cheat = ComoClient.Cheats.get(cheatName);
 
                     if (!cheat.shouldDisplayInModList()) continue;
                     
@@ -253,7 +253,7 @@ public class ModList extends Module {
                 GUIPos pos = this.getPosition();
 
                 // Window sizes
-                Window window = CheatClient.getClient().getWindow();
+                Window window = ComoClient.getClient().getWindow();
                 int MAX_WIDTH  = window.getScaledWidth();
                 int MAX_HEIGHT = window.getScaledHeight();
 

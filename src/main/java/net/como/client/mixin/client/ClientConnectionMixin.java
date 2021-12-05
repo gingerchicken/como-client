@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.DisconnectEvent;
 import net.minecraft.network.ClientConnection;
 
@@ -13,6 +13,6 @@ import net.minecraft.network.ClientConnection;
 public class ClientConnectionMixin {
     @Inject(at = @At("HEAD"), method = "handleDisconnection()V", cancellable = false)
     public void handleDisconnection(CallbackInfo ci) {
-        CheatClient.emitter.triggerEvent(new DisconnectEvent(ci));
+        ComoClient.emitter.triggerEvent(new DisconnectEvent(ci));
     }
 }

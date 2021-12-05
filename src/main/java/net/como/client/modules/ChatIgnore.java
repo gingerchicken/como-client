@@ -2,7 +2,7 @@ package net.como.client.modules;
 
 import java.util.HashMap;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.commands.CommandChatIgnore;
 import net.como.client.events.AddMessageEvent;
 import net.como.client.structures.Module;
@@ -19,7 +19,7 @@ public class ChatIgnore extends Module {
         this.addSetting(new Setting("Phrases", new HashMap<String, Boolean>()));
 
         // Registering commandsCommandChatIgnore
-        CheatClient.commandHandler.registerCommand(new CommandChatIgnore());
+        ComoClient.commandHandler.registerCommand(new CommandChatIgnore());
     }
 
     // TODO potential bug with blocking our own messages.

@@ -2,7 +2,7 @@ package net.como.client.modules;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -48,8 +48,8 @@ public class Watermark extends Module {
                 int width  = (int)(BACKGROUND_WIDTH * scale);
                 int height = (int)(BACKGROUND_HEIGHT * scale);
 
-                int x = CheatClient.getClient().getWindow().getScaledWidth() - width;
-                int y = CheatClient.getClient().getWindow().getScaledHeight() - height;
+                int x = ComoClient.getClient().getWindow().getScaledWidth() - width;
+                int y = ComoClient.getClient().getWindow().getScaledHeight() - height;
 
                 DrawableHelper.drawTexture(e.mStack, x, y, 0, 0, width, height, width, height);
 

@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.IsEntityGlowingEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderEntityEvent;
@@ -50,7 +50,7 @@ public class EntityESP extends Module {
 	}
 
     private boolean shouldRender(Entity entity) {
-        return !(entity instanceof PlayerEntity && (PlayerEntity)entity == CheatClient.me());
+        return !(entity instanceof PlayerEntity && (PlayerEntity)entity == ComoClient.me());
     }
 
     // This is just for normalising the setting till we get a enum setting type.
@@ -113,7 +113,7 @@ public class EntityESP extends Module {
                 if (this.getDrawMode() != MODE_MOB_BOX) break;
 
                 OnRenderEvent e = (OnRenderEvent)event;
-                Iterable<Entity> ents = CheatClient.getClient().world.getEntities();
+                Iterable<Entity> ents = ComoClient.getClient().world.getEntities();
 
                 for (Entity entity : ents) {
                     // Don't render stuff we don't want to see!

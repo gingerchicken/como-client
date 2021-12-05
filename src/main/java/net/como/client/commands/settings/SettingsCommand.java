@@ -3,7 +3,7 @@ package net.como.client.commands.settings;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.structures.settings.*;
 import net.como.client.utils.ChatUtils;
@@ -33,7 +33,7 @@ public class SettingsCommand extends Command {
 
         // If they didn't provide a new value, just show them what it is currently.
         if (value == null) {
-            CheatClient.displayChatMessage(String.format("%sSetting Value: %s", ChatUtils.WHITE, setting.value.toString()));
+            ComoClient.displayChatMessage(String.format("%sSetting Value: %s", ChatUtils.WHITE, setting.value.toString()));
             return true;
         }
 
@@ -60,7 +60,7 @@ public class SettingsCommand extends Command {
                 } catch (Exception e) { }
 
                 if (realValue == null) {
-                    CheatClient.displayChatMessage(String.format("%sInvalid Value: recieved NaN as a parameter", ChatUtils.RED));
+                    ComoClient.displayChatMessage(String.format("%sInvalid Value: recieved NaN as a parameter", ChatUtils.RED));
                     return true;
                 }
                 
@@ -77,7 +77,7 @@ public class SettingsCommand extends Command {
                 } catch (Exception e) { }
 
                 if (realValue == null) {
-                    CheatClient.displayChatMessage(String.format("%sInvalid Value: recieved NaN as a parameter", ChatUtils.RED));
+                    ComoClient.displayChatMessage(String.format("%sInvalid Value: recieved NaN as a parameter", ChatUtils.RED));
                     return true;
                 }
                 
@@ -93,7 +93,7 @@ public class SettingsCommand extends Command {
                 } catch (Exception e) { }
 
                 if (realValue == null) {
-                    CheatClient.displayChatMessage(String.format("%sInvalid Value: recieved NaN as a parameter", ChatUtils.RED));
+                    ComoClient.displayChatMessage(String.format("%sInvalid Value: recieved NaN as a parameter", ChatUtils.RED));
                     return true;
                 }
                 
@@ -119,9 +119,9 @@ public class SettingsCommand extends Command {
     } 
 
     private boolean displayList(String[] args) {
-        CheatClient.displayChatMessage("Current Settings:");
+        ComoClient.displayChatMessage("Current Settings:");
         for (String name : settings.getSettings()) {
-            CheatClient.displayChatMessage(
+            ComoClient.displayChatMessage(
                 String.format("-> %s - %s", name, settings.getSetting(name).value.toString())
             );
         }
@@ -134,7 +134,7 @@ public class SettingsCommand extends Command {
         if (this.handleHelp(args)) return true;
 
         if (args.length == 0) {
-            CheatClient.displayChatMessage(String.format("%s%s", ChatUtils.WHITE, this.getHelpText()));
+            ComoClient.displayChatMessage(String.format("%s%s", ChatUtils.WHITE, this.getHelpText()));
             return true;
         }
 

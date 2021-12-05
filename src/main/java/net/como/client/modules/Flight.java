@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -23,14 +23,14 @@ public class Flight extends Module {
     public void deactivate() {
         this.removeListen(ClientTickEvent.class);
 
-        CheatClient.me().getAbilities().allowFlying = false;
+        ComoClient.me().getAbilities().allowFlying = false;
     }
 
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
-                ClientPlayerEntity me = CheatClient.me();
+                ClientPlayerEntity me = ComoClient.me();
                 if (me == null) return;
 
                 me.getAbilities().allowFlying = true;

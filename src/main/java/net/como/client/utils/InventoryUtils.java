@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -15,7 +15,7 @@ public class InventoryUtils {
     public static List<Integer> getItemSlots(int total, Predicate<ItemStack> isItem) {
         List<Integer> slots = new ArrayList<Integer>();
         
-        PlayerInventory inv = CheatClient.me().getInventory();
+        PlayerInventory inv = ComoClient.me().getInventory();
 
         // Iterate over all items that are not armour, crafting, off-hand or hotbar.
         for (int i = 9; i < PlayerInventory.MAIN_SIZE && total > 0; i++) {
@@ -48,7 +48,7 @@ public class InventoryUtils {
         if (from == to) return;
 
         // Check if it was empty before since if we move something into it, it won't be empty anymore.
-        boolean wasEmpty = CheatClient.me().getInventory().getStack(to).isEmpty();
+        boolean wasEmpty = ComoClient.me().getInventory().getStack(to).isEmpty();
 
         // Click the slot
         InteractionUtils.pickupItem(from);
@@ -64,7 +64,7 @@ public class InventoryUtils {
     }
 
     public static int getMainHandSlot() {
-        ClientPlayerEntity me = CheatClient.me();
+        ClientPlayerEntity me = ComoClient.me();
         PlayerInventory inv = me.getInventory();
 
         return inv.selectedSlot + 36;

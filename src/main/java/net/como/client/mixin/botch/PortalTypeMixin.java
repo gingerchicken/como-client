@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.modules.NoPortal;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -27,7 +27,7 @@ public class PortalTypeMixin {
 		opcode = Opcodes.GETFIELD,
 		ordinal = 0), method = {"updateNausea()V"}, cancellable = true)
 	private void beforeUpdateNausea(CallbackInfo ci) {
-        NoPortal noPortal = (NoPortal)CheatClient.Cheats.get("noportal");
+        NoPortal noPortal = (NoPortal)ComoClient.Cheats.get("noportal");
         if (!noPortal.isEnabled() || !(boolean)noPortal.getSetting("AllowTyping").value) return;
 
         tempCurrentScreen = client.currentScreen;

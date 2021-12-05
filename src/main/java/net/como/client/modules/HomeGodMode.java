@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.DeathEvent;
 import net.como.client.events.RenderWorldEvent;
@@ -20,7 +20,7 @@ public class HomeGodMode extends Module {
 
     @Override
     public void activate() {
-        if (CheatClient.Cheats.get("autorespawn").isEnabled()) this.displayMessage("Please disable 'AutoRespawn' as it may mess with respawn times.");
+        if (ComoClient.Cheats.get("autorespawn").isEnabled()) this.displayMessage("Please disable 'AutoRespawn' as it may mess with respawn times.");
 
         this.addListen(RenderWorldEvent.class);
     }
@@ -31,11 +31,11 @@ public class HomeGodMode extends Module {
     }
 
     private void setHome() {
-        CheatClient.me().sendChatMessage(String.format("/sethome %s", this.getStringSetting("HomeName")));
+        ComoClient.me().sendChatMessage(String.format("/sethome %s", this.getStringSetting("HomeName")));
     }
 
     private void home() {
-        CheatClient.me().sendChatMessage(String.format("/home %s", this.getStringSetting("HomeName")));
+        ComoClient.me().sendChatMessage(String.format("/home %s", this.getStringSetting("HomeName")));
     }
 
     boolean deathTrigger = false;
@@ -47,7 +47,7 @@ public class HomeGodMode extends Module {
     }
 
     private boolean shouldRespawn() {
-        return CheatClient.getCurrentTime() >= this.nextRespawnTime();
+        return ComoClient.getCurrentTime() >= this.nextRespawnTime();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class HomeGodMode extends Module {
         switch (event.getClass().getSimpleName()) {
             case "RenderWorldEvent": {
                 // Check for the death
-                if (CheatClient.me().isAlive()) {
+                if (ComoClient.me().isAlive()) {
                     if (deathTrigger) {
                         // Do /home
                         this.home();
@@ -72,13 +72,13 @@ public class HomeGodMode extends Module {
                     this.setHome();
 
                     deathTrigger = true;
-                    deathTime = CheatClient.getCurrentTime();
+                    deathTime = ComoClient.getCurrentTime();
 
                     break;
                 }
 
                 // See if we should respawn
-                if (this.shouldRespawn()) CheatClient.me().requestRespawn();
+                if (this.shouldRespawn()) ComoClient.me().requestRespawn();
 
                 break;
             }

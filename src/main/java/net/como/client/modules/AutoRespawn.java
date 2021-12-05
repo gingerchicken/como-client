@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.DeathEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -26,7 +26,7 @@ public class AutoRespawn extends Module {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "DeathEvent": {
-                CheatClient.me().requestRespawn();
+                ComoClient.me().requestRespawn();
                 break;
             }
         }

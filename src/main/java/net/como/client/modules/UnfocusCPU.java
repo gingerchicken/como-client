@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -32,11 +32,11 @@ public class UnfocusCPU extends Module {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
-                Window window = CheatClient.getClient().getWindow();
-                if (!CheatClient.getClient().isWindowFocused()) {
+                Window window = ComoClient.getClient().getWindow();
+                if (!ComoClient.getClient().isWindowFocused()) {
                     window.setFramerateLimit(this.getIntSetting("MaxFPS"));
                 } else {
-                    window.setFramerateLimit(CheatClient.getClient().options.maxFps);
+                    window.setFramerateLimit(ComoClient.getClient().options.maxFps);
                 }
             }
         }

@@ -1,13 +1,13 @@
 package net.como.client.utils;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public class RotationUtils {
     public static Vec3d getEyePos() {
-        ClientPlayerEntity me = CheatClient.me();
+        ClientPlayerEntity me = ComoClient.me();
 
         return new Vec3d(
             me.getX(),
@@ -17,7 +17,7 @@ public class RotationUtils {
     }
     
 	public static Vec3d getClientLookVec() {
-		ClientPlayerEntity player = CheatClient.me();
+		ClientPlayerEntity player = ComoClient.me();
 		return getVec(player.getYaw(), player.getPitch());
 	}
 
