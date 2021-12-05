@@ -2,12 +2,12 @@ package net.como.client.modules;
 
 import net.como.client.CheatClient;
 import net.como.client.events.PreMovementPacketEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.util.math.Vec3d;
 
-public class CamFlight extends Cheat {
+public class CamFlight extends Module {
     public CamFlight() {
         super("CameraFlight");
 

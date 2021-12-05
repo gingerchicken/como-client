@@ -11,7 +11,7 @@ import net.como.client.CheatClient;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.renderLabelIfPresentEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ClientUtils;
@@ -29,7 +29,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
-public class BetterNameTags extends Cheat {
+public class BetterNameTags extends Module {
     private static class Attribute {
         public final PlayerEntity player;
 

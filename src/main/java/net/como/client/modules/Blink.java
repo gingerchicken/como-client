@@ -1,8 +1,8 @@
 package net.como.client.modules;
 
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 
-public class Blink extends Cheat {
+public class Blink extends Module {
 
     public Blink() {
         super("BlinkMode");

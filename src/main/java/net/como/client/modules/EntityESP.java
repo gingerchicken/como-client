@@ -4,7 +4,7 @@ import net.como.client.CheatClient;
 import net.como.client.events.IsEntityGlowingEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderEntityEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.Colour;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
@@ -15,7 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 
 
-public class EntityESP extends Cheat {
+public class EntityESP extends Module {
     private final static int MODE_GLOW      = 1;
     private final static int MODE_MOB_BOX   = 2;
 

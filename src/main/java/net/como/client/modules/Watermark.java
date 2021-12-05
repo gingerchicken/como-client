@@ -4,13 +4,13 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.como.client.CheatClient;
 import net.como.client.events.InGameHudRenderEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.util.Identifier;
 
-public class Watermark extends Cheat {
+public class Watermark extends Module {
     private static final Identifier WATERMARK_TEXTURE = new Identifier("como-client", "textures/misc/watermark.png");
 
     private static final int BACKGROUND_WIDTH = 1193;

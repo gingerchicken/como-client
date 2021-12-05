@@ -11,13 +11,13 @@ import com.google.gson.Gson;
 import net.como.client.CheatClient;
 import net.como.client.commands.BindsCommand;
 import net.como.client.events.OnKeyEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.ClientUtils;
 
-public class Binds extends Cheat {
+public class Binds extends Module {
     private static enum KeyAction {
         DOWN,
         UP,

@@ -2,9 +2,9 @@ package net.como.client.modules;
 
 import net.como.client.structures.events.Event;
 import net.como.client.events.RenderEntityEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 
-public class AntiItemDrop extends Cheat {
+public class AntiItemDrop extends Module {
     public AntiItemDrop() {
         super("NoItemRender");
 

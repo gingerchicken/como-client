@@ -5,11 +5,11 @@ import java.util.HashMap;
 import net.como.client.CheatClient;
 import net.como.client.commands.CommandChatIgnore;
 import net.como.client.events.AddMessageEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 
-public class ChatIgnore extends Cheat {
+public class ChatIgnore extends Module {
 
     public ChatIgnore() {
         super("ChatIgnore");

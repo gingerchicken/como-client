@@ -2,13 +2,13 @@ package net.como.client.modules;
 
 import net.como.client.CheatClient;
 import net.como.client.events.DisconnectEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ServerUtils;
 import net.minecraft.client.gui.screen.Screen;
 
-public class AutoReconnect extends Cheat {
+public class AutoReconnect extends Module {
     public AutoReconnect() {
         super("AutoReconnect");
 

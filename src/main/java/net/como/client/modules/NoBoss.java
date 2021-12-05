@@ -2,10 +2,10 @@ package net.como.client.modules;
 
 import net.como.client.events.BossBarHudRenderEvent;
 import net.como.client.events.BossBarHudSkyEffectsEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 
-public class NoBoss extends Cheat {
+public class NoBoss extends Module {
     public NoBoss() {
         super("NoBoss");
 

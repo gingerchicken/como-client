@@ -1,10 +1,10 @@
 package net.como.client.modules;
 
 import net.como.client.CheatClient;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.minecraft.client.MinecraftClient;
 
-public class FullBright extends Cheat {
+public class FullBright extends Module {
     private Double normalGamma = 0d;
 
     public FullBright() {

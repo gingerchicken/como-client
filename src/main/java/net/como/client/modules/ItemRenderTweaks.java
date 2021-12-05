@@ -2,12 +2,12 @@ package net.como.client.modules;
 
 import net.como.client.CheatClient;
 import net.como.client.events.RenderItemEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.util.math.Vec3d;
 
-public class ItemRenderTweaks extends Cheat {
+public class ItemRenderTweaks extends Module {
     public ItemRenderTweaks() {
         super("ItemRenderTweaks");
 
@@ -42,7 +42,7 @@ public class ItemRenderTweaks extends Cheat {
 
     private static class HandRenderSettings {
         private String prefix;
-        private Cheat parent; // prob a better way just to get the container object but whatever.
+        private Module parent; // prob a better way just to get the container object but whatever.
 
         private Setting getSetting(String name) {
             return parent.getSetting(String.format("%s%s", this.prefix, name));
@@ -64,7 +64,7 @@ public class ItemRenderTweaks extends Cheat {
             );
         }
 
-        HandRenderSettings(String prefix, Cheat parent) {
+        HandRenderSettings(String prefix, Module parent) {
             this.prefix = prefix;
             this.parent = parent;
         }

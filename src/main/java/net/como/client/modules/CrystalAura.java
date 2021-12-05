@@ -12,7 +12,7 @@ import net.como.client.CheatClient;
 import net.como.client.components.ServerClientRotation;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.RenderWorldEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.BlockUtils;
@@ -40,7 +40,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
-public class CrystalAura extends Cheat {
+public class CrystalAura extends Module {
     public CrystalAura() {
         super("CrystalAura");
 

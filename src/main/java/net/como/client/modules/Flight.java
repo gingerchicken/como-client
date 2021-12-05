@@ -2,11 +2,11 @@ package net.como.client.modules;
 
 import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.minecraft.client.network.ClientPlayerEntity;
 
-public class Flight extends Cheat {
+public class Flight extends Module {
 
     public Flight() {
         super("Flight");

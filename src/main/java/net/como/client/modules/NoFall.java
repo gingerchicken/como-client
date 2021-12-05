@@ -2,13 +2,13 @@ package net.como.client.modules;
 
 import net.como.client.CheatClient;
 import net.como.client.events.PreMovementPacketEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ClientUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
-public class NoFall extends Cheat {
+public class NoFall extends Module {
     public NoFall() {
         super("NoFall");
 

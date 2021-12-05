@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.como.client.CheatClient;
 import net.como.client.events.InGameHudRenderEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.client.font.TextRenderer;
@@ -14,7 +14,7 @@ import net.minecraft.client.util.Window;
 import net.minecraft.item.ItemStack;
 import net.minecraft.client.MinecraftClient;
 
-public class ArmourDisplay extends Cheat {
+public class ArmourDisplay extends Module {
 
     public ArmourDisplay() {
         super("ArmourDisplay");

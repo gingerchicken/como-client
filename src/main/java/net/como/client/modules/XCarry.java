@@ -1,11 +1,11 @@
 package net.como.client.modules;
 
 import net.como.client.events.SendPacketEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
 
-public class XCarry extends Cheat {
+public class XCarry extends Module {
     public XCarry() {
         super("XCarry");
 

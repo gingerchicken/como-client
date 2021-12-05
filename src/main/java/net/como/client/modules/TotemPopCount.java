@@ -8,13 +8,13 @@ import net.como.client.events.ClientTickEvent;
 import net.como.client.events.DeathEvent;
 import net.como.client.events.DisconnectEvent;
 import net.como.client.events.OnEntityStatusEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class TotemPopCount extends Cheat {
+public class TotemPopCount extends Module {
     public TotemPopCount() {
         super("TotemPopCount");
 
