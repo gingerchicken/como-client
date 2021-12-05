@@ -2,7 +2,7 @@ from enum import Enum
 import os
 import hashlib
 
-FEATURES_DIR = "src/main/java/net/como/client/cheats"
+FEATURES_DIR = "src/main/java/net/como/client/modules"
 TARGET_PATH = "FEATURES.md"
 NOT_PRESENT = "No description available as of yet."
 
