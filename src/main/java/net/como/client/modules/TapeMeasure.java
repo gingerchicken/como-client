@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 import net.como.client.CheatClient;
 import net.como.client.events.RenderWorldEvent;
 import net.como.client.events.SendPacketEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.MathsUtils;
@@ -23,7 +23,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
-public class TapeMeasure extends Cheat {
+public class TapeMeasure extends Module {
 
     BlockPos start, end;
     Integer clickCount = 0;

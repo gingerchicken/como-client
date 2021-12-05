@@ -2,7 +2,7 @@ package net.como.client.components;
 
 import net.como.client.events.PostMovementPacketEvent;
 import net.como.client.events.PreMovementPacketEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.RotationUtils;
@@ -21,11 +21,11 @@ public class ServerClientRotation {
     }
 
     // easier binding for cheats.
-    public void addListeners(Cheat parentCheat) {
+    public void addListeners(Module parentCheat) {
         parentCheat.addListen(PreMovementPacketEvent.class);
         parentCheat.addListen(PostMovementPacketEvent.class);
     }
-    public void removeListeners(Cheat parentCheat) {
+    public void removeListeners(Module parentCheat) {
         parentCheat.removeListen(PreMovementPacketEvent.class);
         parentCheat.removeListen(PostMovementPacketEvent.class);
     }

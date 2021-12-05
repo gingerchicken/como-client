@@ -11,14 +11,14 @@ import net.minecraft.client.util.Window;
 import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.InGameHudRenderEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.Colour;
 import net.como.client.structures.GUIPos;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.RenderUtils;
 
-public class ModList extends Cheat {
+public class ModList extends Module {
     private GUIPos getPosition() {
         return GUIPos.fromInt(
             (int)this.getSetting("Positioning").value,
@@ -77,7 +77,7 @@ public class ModList extends Cheat {
             this.tick();
         }
 
-        private Cheat getModList() {
+        private Module getModList() {
             return CheatClient.Cheats.get("modlist");
         }
 
@@ -227,10 +227,10 @@ public class ModList extends Cheat {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
                 TextRenderer textRenderer = CheatClient.textRenderer;
-                List<Cheat> enabledMods = new ArrayList<Cheat>();
+                List<Module> enabledMods = new ArrayList<Module>();
                 
                 for (String cheatName : CheatClient.Cheats.keySet()) {
-                    Cheat cheat = CheatClient.Cheats.get(cheatName);
+                    Module cheat = CheatClient.Cheats.get(cheatName);
 
                     if (!cheat.shouldDisplayInModList()) continue;
                     
@@ -257,7 +257,7 @@ public class ModList extends Cheat {
                 int MAX_WIDTH  = window.getScaledWidth();
                 int MAX_HEIGHT = window.getScaledHeight();
 
-                for (Cheat cheat : enabledMods) {
+                for (Module cheat : enabledMods) {
                     // Positioning based stuff
                     int x = pos.isRight() ? MAX_WIDTH - cheat.getTextWidth(textRenderer) : 0;
                     

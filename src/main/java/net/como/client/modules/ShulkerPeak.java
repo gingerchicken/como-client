@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 import net.como.client.CheatClient;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.RenderTooltipEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.block.Block;
@@ -27,7 +27,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 
-public class ShulkerPeak extends Cheat {
+public class ShulkerPeak extends Module {
     private static final Identifier BACKGROUND_TEXTURE = new Identifier("como-client", "textures/gui/shulker_tooltip_header.png");
     private static final int BACKGROUND_WIDTH = 176, BACKGROUND_HEIGHT = 78;
 

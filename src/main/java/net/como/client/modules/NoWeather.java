@@ -1,10 +1,10 @@
 package net.como.client.modules;
 
 import net.como.client.events.GetRainGradientEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 
-public class NoWeather extends Cheat {
+public class NoWeather extends Module {
     public NoWeather() {
         super("AntiBritish");
 

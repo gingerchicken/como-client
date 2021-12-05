@@ -2,11 +2,11 @@ package net.como.client.modules;
 
 import net.como.client.CheatClient;
 import net.como.client.events.RenderItemEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.minecraft.client.render.model.json.ModelTransformation;
 
-public class TotemHide extends Cheat {
+public class TotemHide extends Module {
     public TotemHide() {
         super("TotemHide");
 

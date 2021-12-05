@@ -2,7 +2,7 @@ package net.como.client.commands;
 
 import net.como.client.CheatClient;
 import net.como.client.commands.structures.Command;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 
 public class PanicCommand extends Command {
 
@@ -22,7 +22,7 @@ public class PanicCommand extends Command {
         }
 
         // Disable all
-        for (Cheat cheat : CheatClient.Cheats.values()) {
+        for (Module cheat : CheatClient.Cheats.values()) {
             if (cheat.isEnabled()) cheat.disable();
         }
         this.displayChatMessage("All mods have been disabled.");

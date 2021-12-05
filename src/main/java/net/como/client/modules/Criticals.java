@@ -2,12 +2,12 @@ package net.como.client.modules;
 
 import net.como.client.CheatClient;
 import net.como.client.events.OnAttackEntityEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ClientUtils;
 import net.minecraft.util.math.Vec3d;
 
-public class Criticals extends Cheat {
+public class Criticals extends Module {
     public Criticals() {
         super("Criticals");
 

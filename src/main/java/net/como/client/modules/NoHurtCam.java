@@ -1,10 +1,10 @@
 package net.como.client.modules;
 
 import net.como.client.events.BobViewWhenHurtEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 
-public class NoHurtCam extends Cheat {
+public class NoHurtCam extends Module {
     public NoHurtCam() {
         super("NoHurtCam");
 

@@ -8,7 +8,7 @@ import net.como.client.events.ClientTickEvent;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.OnWorldTimeUpdateEvent;
 import net.como.client.events.SendPacketEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.Colour;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
@@ -16,7 +16,7 @@ import net.como.client.utils.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.text.Text;
 
-public class NoRespondAlert extends Cheat {
+public class NoRespondAlert extends Module {
     public NoRespondAlert() {
         super("NoRespondAlert");
 

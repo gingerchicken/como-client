@@ -2,13 +2,13 @@ package net.como.client.modules;
 
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.WaypointSystem;
 import net.como.client.structures.WaypointSystem.Waypoint;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.RenderUtils;
 
-public class Waypoints extends Cheat {
+public class Waypoints extends Module {
     public WaypointSystem waypoints = new WaypointSystem();
 
     public Waypoints() {

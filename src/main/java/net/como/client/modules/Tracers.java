@@ -9,7 +9,7 @@ import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
 import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.interfaces.mixin.IWorld;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.Colour;
 import net.como.client.structures.EntityFlags;
 import net.como.client.structures.events.Event;
@@ -23,7 +23,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.chunk.BlockEntityTickInvoker;
 
-public class Tracers extends Cheat {
+public class Tracers extends Module {
 
     public Tracers() {
         super("Tracers");

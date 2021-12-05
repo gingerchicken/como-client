@@ -6,14 +6,14 @@ import java.util.List;
 import net.como.client.CheatClient;
 import net.como.client.events.RenderWorldEvent;
 import net.como.client.interfaces.mixin.IWorld;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.Colour;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.world.chunk.BlockEntityTickInvoker;
 
-public class BlockESP extends Cheat {
+public class BlockESP extends Module {
     // Currently for ticker entities only!
     // TODO make it work for all blocks
 

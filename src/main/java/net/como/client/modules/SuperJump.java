@@ -3,10 +3,10 @@ package net.como.client.modules;
 import net.como.client.structures.events.*;
 import net.como.client.CheatClient;
 import net.como.client.events.JumpEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.settings.Setting;
 
-public class SuperJump extends Cheat {
+public class SuperJump extends Module {
     public SuperJump() {
         super("SuperJump");
         this.description = "Jump higher than you should.";

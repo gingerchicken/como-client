@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.InteractionUtils;
@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 
-public class AutoTotem extends Cheat {
+public class AutoTotem extends Module {
 
     public AutoTotem() {
         super("AutoTotem");

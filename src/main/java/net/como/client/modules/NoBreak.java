@@ -2,14 +2,14 @@ package net.como.client.modules;
 
 import net.como.client.CheatClient;
 import net.como.client.events.SendPacketEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.Action;
 
-public class NoBreak extends Cheat {
+public class NoBreak extends Module {
     public NoBreak() {
         super("NoBreak");
 

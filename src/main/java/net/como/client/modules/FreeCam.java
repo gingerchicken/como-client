@@ -4,7 +4,7 @@ import net.como.client.CheatClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.PlayerMoveEvent;
 import net.como.client.events.SendPacketEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.MathsUtils;
@@ -14,7 +14,7 @@ import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
 
-public class FreeCam extends Cheat {
+public class FreeCam extends Module {
     private Vec3d origin = new Vec3d(0, 0, 0);
     private float originPitch = 0, originYaw = 0;
 

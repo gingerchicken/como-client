@@ -2,10 +2,10 @@ package net.como.client.modules;
 
 import net.como.client.CheatClient;
 import net.como.client.events.DeathEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 
-public class AutoRespawn extends Cheat {
+public class AutoRespawn extends Module {
     public AutoRespawn() {
         super("AutoRespawn");
 

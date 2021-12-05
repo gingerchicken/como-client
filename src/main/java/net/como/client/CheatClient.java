@@ -17,7 +17,7 @@ import net.como.client.interfaces.mixin.IFontManager;
 import net.como.client.modules.*;
 import net.como.client.utils.*;
 
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.EventEmitter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -62,13 +62,13 @@ public class CheatClient {
         ));
 
         // Add all of the cheats as commands.
-        for (Entry<String, Cheat> entry : Cheats.entrySet()) {
+        for (Entry<String, Module> entry : Cheats.entrySet()) {
             commandHandler.registerCommand(new CheatCommand(entry.getKey(), entry.getValue()));
         }
     }
 
     // Cheats
-    public static HashMap<String, Cheat> Cheats = new HashMap<String, Cheat>();
+    public static HashMap<String, Module> Cheats = new HashMap<String, Module>();
 
     // Chat
     public static void processChatPost(String message, CallbackInfo ci) {
@@ -175,7 +175,7 @@ public class CheatClient {
 
             // Auto enable those that should be auto-enabled.
             for (String key : Cheats.keySet()) {
-                Cheat cheat = Cheats.get(key);
+                Module cheat = Cheats.get(key);
                 
                 if (cheat.shouldAutoEnable()) cheat.enable();
             }

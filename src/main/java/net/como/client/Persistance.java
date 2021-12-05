@@ -10,7 +10,7 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 
 public class Persistance {
     public static final String CONFIG_PATH = "como-config.json";
@@ -56,7 +56,7 @@ public class Persistance {
         // Load all of the flattened states
         HashMap<String, HashMap<String, String>> flat = new Gson().fromJson(data, new TypeToken<HashMap<String, HashMap<String, String>>>() {}.getType());
         for (String name : flat.keySet()) {
-            Cheat cheat = CheatClient.Cheats.get(name);
+            Module cheat = CheatClient.Cheats.get(name);
             
             // Check that we can get the cheat
             if (cheat == null) {
@@ -76,7 +76,7 @@ public class Persistance {
         // Save all of the cheats
         HashMap<String, HashMap<String, String>> flat = new HashMap<String, HashMap<String, String>>();
         for (String name : CheatClient.Cheats.keySet()) {
-            Cheat cheat = CheatClient.Cheats.get(name);
+            Module cheat = CheatClient.Cheats.get(name);
 
             flat.put(name, cheat.flatten());
         }

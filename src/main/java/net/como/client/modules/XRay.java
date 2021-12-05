@@ -7,14 +7,14 @@ import net.como.client.events.BlockCracksRenderEvent;
 import net.como.client.events.BlockEntityRenderEvent;
 import net.como.client.events.GetAmbientOcclusionLightLevelEvent;
 import net.como.client.events.ShouldDrawBlockSideEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.client.MinecraftClient;
 import net.como.client.utils.BlockUtils;
 
 @SuppressWarnings("unchecked")
-public class XRay extends Cheat {
+public class XRay extends Module {
     private Boolean fullbrightWasEnabled;
 
     public XRay() {

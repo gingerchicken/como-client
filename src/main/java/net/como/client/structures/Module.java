@@ -15,7 +15,7 @@ import net.como.client.structures.events.EventListener;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.events.EventEmitter;
 
-public class Cheat extends Settings implements EventListener, Flatternable {
+public class Module extends Settings implements EventListener, Flatternable {
     private String name;
     private boolean enabled;
 
@@ -86,13 +86,13 @@ public class Cheat extends Settings implements EventListener, Flatternable {
     public void activate() { }
     public void deactivate() { }
 
-    protected Cheat(String name) {
+    protected Module(String name) {
         // Set the name
         this.name = name;
     }
 
     private Boolean autoEnable = false;
-    protected Cheat(String name, Boolean autoEnable) {
+    protected Module(String name, Boolean autoEnable) {
         this.name = name;
         this.autoEnable = autoEnable;
     }

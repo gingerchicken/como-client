@@ -1,10 +1,10 @@
 package net.como.client.modules;
 
 import net.como.client.events.RenderFireOverlayEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 
-public class NoFireCam extends Cheat {
+public class NoFireCam extends Module {
     public NoFireCam() {
         super("NoFireCam");
 

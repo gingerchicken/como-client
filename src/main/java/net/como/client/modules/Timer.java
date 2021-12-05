@@ -1,9 +1,9 @@
 package net.como.client.modules;
 
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.settings.Setting;
 
-public class Timer extends Cheat {
+public class Timer extends Module {
     public Timer() {
         super("Timer");
 

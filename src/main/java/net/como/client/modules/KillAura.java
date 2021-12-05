@@ -11,7 +11,7 @@ import net.como.client.components.ServerClientRotation;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
-import net.como.client.structures.Cheat;
+import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ClientUtils;
@@ -24,7 +24,7 @@ import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
-public class KillAura extends Cheat {
+public class KillAura extends Module {
 
     public KillAura() {
         super("KillAura");
