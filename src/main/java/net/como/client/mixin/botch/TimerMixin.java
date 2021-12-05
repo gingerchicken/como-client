@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.modules.Timer;
 import net.como.client.utils.ClientUtils;
 import net.minecraft.client.render.RenderTickCounter;
@@ -29,7 +29,7 @@ public class TimerMixin {
         // Make sure that we are playing
         if (!ClientUtils.inGame()) return;
 
-        Timer timer = (Timer)CheatClient.Cheats.get("timer");
+        Timer timer = (Timer)ComoClient.Cheats.get("timer");
         if (!timer.isEnabled()) return;
 
 		lastFrameDuration *= (double)timer.getSetting("Speed").value;

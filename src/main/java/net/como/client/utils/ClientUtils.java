@@ -1,6 +1,6 @@
 package net.como.client.utils;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -15,7 +15,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class ClientUtils {
     public static boolean isInStorage() {
-        Screen screen = CheatClient.getClient().currentScreen;
+        Screen screen = ComoClient.getClient().currentScreen;
         if (screen == null) return false;
 
         switch (screen.getClass().getSimpleName()) {
@@ -27,13 +27,13 @@ public class ClientUtils {
     }
 
     public static boolean hasElytraEquipt() {
-        ItemStack chestSlot = CheatClient.me().getEquippedStack(EquipmentSlot.CHEST);
+        ItemStack chestSlot = ComoClient.me().getEquippedStack(EquipmentSlot.CHEST);
 		return (chestSlot.getItem() == Items.ELYTRA);
     }
 
     public static void applyRotation(Rotation rot) {
-        CheatClient.me().setYaw((float)rot.yaw);
-        CheatClient.me().setPitch((float)rot.pitch);
+        ComoClient.me().setYaw((float)rot.yaw);
+        ComoClient.me().setPitch((float)rot.pitch);
     }
 
     public static void lookAtPos(Vec3d pos) {
@@ -43,19 +43,19 @@ public class ClientUtils {
     }
 
     public static void hitEntity(Entity target) {
-        CheatClient.getClient().interactionManager.attackEntity(CheatClient.me(), target);
-        CheatClient.me().swingHand(Hand.MAIN_HAND);
+        ComoClient.getClient().interactionManager.attackEntity(ComoClient.me(), target);
+        ComoClient.me().swingHand(Hand.MAIN_HAND);
     }
 
     public static Rotation getRotation() {
         return new Rotation(
-            (double)CheatClient.me().getYaw(),
-            (double)CheatClient.me().getPitch()
+            (double)ComoClient.me().getYaw(),
+            (double)ComoClient.me().getPitch()
         );
     }
 
     public static void sendPos(double x, double y, double z, boolean onGround) {
-        CheatClient.me().networkHandler.sendPacket(
+        ComoClient.me().networkHandler.sendPacket(
             new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, onGround)
         );
     }
@@ -65,23 +65,23 @@ public class ClientUtils {
     }
 
     public static Boolean inGame() {
-        return CheatClient.me() != null;
+        return ComoClient.me() != null;
     }
 
     public static Boolean isInNetherPortal() {
-        IEntity me = (IEntity)CheatClient.me();
+        IEntity me = (IEntity)ComoClient.me();
         
         return me.getInNetherPortal();
     }
 
     public static Boolean isThirdperson() {
-        return CheatClient.getClient().gameRenderer.getCamera().isThirdPerson();
+        return ComoClient.getClient().gameRenderer.getCamera().isThirdPerson();
     }
 
     public static void openChatScreen(String text) {
         if (!inGame()) return;
 
-        CheatClient.getClient().setScreen(new ChatScreen(text));
+        ComoClient.getClient().setScreen(new ChatScreen(text));
     }
 
     public static void openChatScreen() {

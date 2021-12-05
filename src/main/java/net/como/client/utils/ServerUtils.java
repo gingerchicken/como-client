@@ -2,7 +2,7 @@ package net.como.client.utils;
 
 import java.util.List;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.minecraft.client.gui.screen.ConnectScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -23,11 +23,11 @@ public class ServerUtils {
     public static void connectToServer(ServerInfo info, Screen prevScreen) {
         if (info == null) return;
 
-        ConnectScreen.connect(prevScreen, CheatClient.getClient(), ServerAddress.parse(info.address), info);
+        ConnectScreen.connect(prevScreen, ComoClient.getClient(), ServerAddress.parse(info.address), info);
     }
 
     public static AbstractClientPlayerEntity getPlayerByName(String name) {
-        List<AbstractClientPlayerEntity> players = CheatClient.getClient().world.getPlayers();
+        List<AbstractClientPlayerEntity> players = ComoClient.getClient().world.getPlayers();
 
         for (AbstractClientPlayerEntity player : players) {
             if (player.getDisplayName().asString().equals(name)) {

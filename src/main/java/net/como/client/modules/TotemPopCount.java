@@ -3,7 +3,7 @@ package net.como.client.modules;
 import java.util.HashMap;
 import java.util.UUID;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.DeathEvent;
 import net.como.client.events.DisconnectEvent;
@@ -57,7 +57,7 @@ public class TotemPopCount extends Module {
         }
 
         public void valid() {
-            this.lastValid = CheatClient.getCurrentTime();
+            this.lastValid = ComoClient.getCurrentTime();
         }
     }
 
@@ -85,7 +85,7 @@ public class TotemPopCount extends Module {
     }
 
     public PlayerEntry playerPop(PlayerEntity player) {
-        if (player == CheatClient.me()) {
+        if (player == ComoClient.me()) {
             this.localPopCount++;
 
             return null;
@@ -131,7 +131,7 @@ public class TotemPopCount extends Module {
             }
 
             case "ClientTickEvent": {
-                for (PlayerEntity player : CheatClient.getClient().world.getPlayers()) {
+                for (PlayerEntity player : ComoClient.getClient().world.getPlayers()) {
                     UUID uuid = player.getUuid();
 
                     if (!this.entries.containsKey(uuid)) continue;
@@ -152,7 +152,7 @@ public class TotemPopCount extends Module {
 
                     Double lastValid = entry.getLastValid();
 
-                    if (CheatClient.getCurrentTime() - lastValid >= duration) {
+                    if (ComoClient.getCurrentTime() - lastValid >= duration) {
                         this.entries.remove(uuid);
                     }
                 }
@@ -165,7 +165,7 @@ public class TotemPopCount extends Module {
 
                 if (e.packet.getStatus() != 35) break;
 
-                Entity entity = e.packet.getEntity(CheatClient.me().world);
+                Entity entity = e.packet.getEntity(ComoClient.me().world);
                 
                 // I mean I have no idea how that would work but like whatever.
                 if (!(entity instanceof PlayerEntity)) break;

@@ -1,6 +1,6 @@
 package net.como.client.commands;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.structures.Module;
 import net.como.client.utils.ChatUtils;
@@ -16,7 +16,7 @@ public class CommandChatIgnore extends Command {
     @SuppressWarnings("unchecked")
     @Override
     public Boolean trigger(String[] args) {
-        Module chatIgnore = CheatClient.Cheats.get("chatignore");
+        Module chatIgnore = ComoClient.Cheats.get("chatignore");
         if (!chatIgnore.isEnabled()) {
             chatIgnore.displayMessage(String.format("%sChatIgnore is currently not enabled, enable it and try again.", ChatUtils.RED));
             return true;

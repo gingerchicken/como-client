@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.DisconnectEvent;
 import net.como.client.events.OnClientCloseEvent;
 import net.como.client.interfaces.mixin.IClient;
@@ -19,10 +19,10 @@ import net.minecraft.client.gui.screen.Screen;
 public class MinecraftClientMixin implements IClient {
     @Inject(at = @At("HEAD"), method = "close()V", cancellable = false)
     private void onClose(CallbackInfo ci) {
-        CheatClient.emitter.triggerEvent(new OnClientCloseEvent(ci));
+        ComoClient.emitter.triggerEvent(new OnClientCloseEvent(ci));
 
         // Close our client after all is said and done.
-        CheatClient.close();
+        ComoClient.close();
     }
 
     @Shadow
@@ -36,6 +36,6 @@ public class MinecraftClientMixin implements IClient {
 
     @Inject(at = @At("HEAD"), method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;)V", cancellable = true)
     private void onDisconnect(Screen screen, CallbackInfo ci) {
-        CheatClient.emitter.triggerEvent(new DisconnectEvent(ci));
+        ComoClient.emitter.triggerEvent(new DisconnectEvent(ci));
     }
 }

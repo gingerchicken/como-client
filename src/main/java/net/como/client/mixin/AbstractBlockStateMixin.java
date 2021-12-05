@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.At;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.GetAmbientOcclusionLightLevelEvent;
 import net.minecraft.block.AbstractBlock.AbstractBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -20,6 +20,6 @@ public class AbstractBlockStateMixin {
         cancellable = true
     )
     private void onGetAmbientOcclusionLightLevel(BlockView blockView, BlockPos blockPos, CallbackInfoReturnable<Float> cir) {
-        CheatClient.emitter.triggerEvent(new GetAmbientOcclusionLightLevelEvent(blockView, blockPos, cir));
+        ComoClient.emitter.triggerEvent(new GetAmbientOcclusionLightLevelEvent(blockView, blockPos, cir));
     }
 }

@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.RenderPortalOverlayEvent;
 import net.como.client.structures.Module;
@@ -37,8 +37,8 @@ public class NoPortal extends Module {
             case "ClientTickEvent": {
                 if (!ClientUtils.isInNetherPortal() || !(boolean)this.getSetting("NoNausea").value) break;
 
-                CheatClient.me().lastNauseaStrength = 0;
-                CheatClient.me().nextNauseaStrength = 0.00001f;
+                ComoClient.me().lastNauseaStrength = 0;
+                ComoClient.me().nextNauseaStrength = 0.00001f;
 
                 break;
             }

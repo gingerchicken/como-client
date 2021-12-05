@@ -1,6 +1,6 @@
 package net.como.client.structures;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.minecraft.entity.Entity;
 
 public class Colour {
@@ -27,6 +27,6 @@ public class Colour {
     }
 
     public static Colour fromDistance(Entity entity) {
-        return fromDistance(CheatClient.me().distanceTo(entity));
+        return fromDistance(ComoClient.me().distanceTo(entity));
     }
 }

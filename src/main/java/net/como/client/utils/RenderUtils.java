@@ -5,7 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.structures.Colour;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferBuilder;
@@ -97,7 +97,7 @@ public class RenderUtils {
         mStack.scale(e.getWidth() + extraSize, e.getHeight() + extraSize, e.getWidth() + extraSize);
 
         // Make the boxes change colour depending on their distance.
-        float f = CheatClient.me().distanceTo(e) / 20F;
+        float f = ComoClient.me().distanceTo(e) / 20F;
         RenderSystem.setShaderColor(2 - f, f, 0, 0.5F);
         
         // Make it so it is our mobBox.
@@ -175,8 +175,8 @@ public class RenderUtils {
 	{
 		int width = endX - startX;
 		int height = endY - startY;
-		int bottomY = CheatClient.getClient().currentScreen.height - endY;
-		double factor = CheatClient.getClient().getWindow().getScaleFactor();
+		int bottomY = ComoClient.getClient().currentScreen.height - endY;
+		double factor = ComoClient.getClient().getWindow().getScaleFactor();
 		
 		int scissorX = (int)(startX * factor);
 		int scissorY = (int)(bottomY * factor);
@@ -233,7 +233,7 @@ public class RenderUtils {
 	}
 	
 	public static Vec3d getCameraPos(float delta) {
-		Entity ent = CheatClient.getClient().cameraEntity;
+		Entity ent = ComoClient.getClient().cameraEntity;
 
 		Vec3d deltaPos = ent.getEyePos().add(
 			ent.getPos().multiply(-1)
@@ -243,11 +243,11 @@ public class RenderUtils {
 	}
 
 	public static Vec3d getCameraPos() {
-		return CheatClient.getClient().getBlockEntityRenderDispatcher().camera.getPos();
+		return ComoClient.getClient().getBlockEntityRenderDispatcher().camera.getPos();
 	}
 	
 	public static BlockPos getCameraBlockPos() {
-		return CheatClient.getClient().getBlockEntityRenderDispatcher().camera
+		return ComoClient.getClient().getBlockEntityRenderDispatcher().camera
 			.getBlockPos();
 	}
 	

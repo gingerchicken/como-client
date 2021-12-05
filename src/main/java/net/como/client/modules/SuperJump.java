@@ -1,7 +1,7 @@
 package net.como.client.modules;
 
 import net.como.client.structures.events.*;
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.JumpEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.settings.Setting;
@@ -35,7 +35,7 @@ public class SuperJump extends Module {
                 Double upwardSpeed = (Double)this.getSetting("UpwardSpeed").value;
 
                 // Add the new speed.
-                CheatClient.me().addVelocity(0, upwardSpeed, 0);
+                ComoClient.me().addVelocity(0, upwardSpeed, 0);
             }
         }
     }

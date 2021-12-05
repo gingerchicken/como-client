@@ -2,7 +2,7 @@ package net.como.client.commands;
 
 import java.util.Arrays;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
 import net.como.client.modules.Binds;
@@ -22,7 +22,7 @@ public class BindsCommand extends CommandNode {
         }
 
         public Binds getBinds() {
-            return (Binds)CheatClient.Cheats.get("binds");
+            return (Binds)ComoClient.Cheats.get("binds");
         }
 
         public String getCommandArg(String[] args) {

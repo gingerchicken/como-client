@@ -2,7 +2,7 @@ package net.como.client.commands;
 
 import java.util.HashMap;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.utils.ChatUtils;
 
@@ -27,7 +27,7 @@ public class HelpCommand extends Command {
         }
 
         // Tell them how it be.
-        CheatClient.displayChatMessage(String.format("%s%s", ChatUtils.WHITE, displayText));
+        ComoClient.displayChatMessage(String.format("%s%s", ChatUtils.WHITE, displayText));
 
         // How can help go wrong?!
         return true;

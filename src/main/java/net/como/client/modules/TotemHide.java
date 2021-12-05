@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.RenderItemEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -31,7 +31,7 @@ public class TotemHide extends Module {
                 RenderItemEvent e = (RenderItemEvent)event;
 
                 // We want to see it if there are other players.
-                if (e.entity != CheatClient.me()) break;
+                if (e.entity != ComoClient.me()) break;
 
                 // Only left hand/first person
                 if (e.renderMode != ModelTransformation.Mode.FIRST_PERSON_LEFT_HAND) break;

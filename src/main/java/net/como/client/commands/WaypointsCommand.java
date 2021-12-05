@@ -2,7 +2,7 @@ package net.como.client.commands;
 
 import java.util.List;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
 import net.como.client.structures.WaypointSystem;
@@ -85,10 +85,10 @@ public class WaypointsCommand extends CommandNode {
 
             Vec3d pos;
             if (current) {
-                pos = CheatClient.me().getPos();
+                pos = ComoClient.me().getPos();
             } else {
                 pos = args.length == 3 
-                    ? this.vec3dFromString(args[1], "0", args[2]).add(0, CheatClient.me().getY(), 0)
+                    ? this.vec3dFromString(args[1], "0", args[2]).add(0, ComoClient.me().getY(), 0)
                     : this.vec3dFromString(args[1], args[2], args[3]);
             }
             

@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.components.ServerClientRotation;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.OnRenderEvent;
@@ -84,7 +84,7 @@ public class KillAura extends Module {
             .filter(e -> !(e instanceof EndCrystalEntity))
 
             // Make sure that they are not over our max distance
-            .filter(e -> !(e.distanceTo(CheatClient.me()) > (double)this.getSetting("MaxDistance").value))
+            .filter(e -> !(e.distanceTo(ComoClient.me()) > (double)this.getSetting("MaxDistance").value))
 
             // Make sure they are not out of the FOV range
             .filter(e -> !(this.getLookDistance(e) > (double)this.getSetting("MaxFOV").value))
@@ -93,10 +93,10 @@ public class KillAura extends Module {
             .filter(e -> e.isAlive())
 
             // Make sure that we are not attacking friends where needed
-            .filter(e -> !(e instanceof PlayerEntity) || !(CheatClient.friendsManager.onFriendList((PlayerEntity)e)) || (boolean)this.getSetting("AttackFriends").value )
+            .filter(e -> !(e instanceof PlayerEntity) || !(ComoClient.friendsManager.onFriendList((PlayerEntity)e)) || (boolean)this.getSetting("AttackFriends").value )
             
             // Make sure it ain't us
-            .filter(e -> e != CheatClient.me());
+            .filter(e -> e != ComoClient.me());
     }
 
     private Comparator<Entity> getComparator() {
@@ -112,7 +112,7 @@ public class KillAura extends Module {
 
         return new Comparator<Entity>() {
             public int compare(Entity e1, Entity e2) {
-                return Double.compare(e1.distanceTo(CheatClient.me()), e2.distanceTo(CheatClient.me()));
+                return Double.compare(e1.distanceTo(ComoClient.me()), e2.distanceTo(ComoClient.me()));
             }
         };
     }
@@ -122,8 +122,8 @@ public class KillAura extends Module {
     private boolean shouldDoAttack() {
         // idk what the baseTime does
         return
-                CheatClient.me().getAttackCooldownProgress(0) == 1.0f
-                && CheatClient.getCurrentTime() >= this.nextValidTime;
+                ComoClient.me().getAttackCooldownProgress(0) == 1.0f
+                && ComoClient.getCurrentTime() >= this.nextValidTime;
     }
 
     @Override
@@ -136,7 +136,7 @@ public class KillAura extends Module {
 
                 Stream<Entity> stream = this.applyFilters(
                     StreamSupport.stream(
-                        CheatClient.getClient().world.getEntities().spliterator(),
+                        ComoClient.getClient().world.getEntities().spliterator(),
                         true
                     )
                 );
@@ -145,7 +145,7 @@ public class KillAura extends Module {
                 if (target == null) break;
 
                 // Make sure they are not too far
-                Double distance = target.getPos().distanceTo(CheatClient.me().getPos());
+                Double distance = target.getPos().distanceTo(ComoClient.me().getPos());
                 if (distance > (double)this.getSetting("MaxDistance").value) break;
 
                 Vec3d targetPos = target.getEyePos();
@@ -159,11 +159,11 @@ public class KillAura extends Module {
                 ClientUtils.hitEntity(target);
 
                 // Get the next time
-                this.nextValidTime = CheatClient.getCurrentTime() + (Double)this.getSetting("Delay").value;
+                this.nextValidTime = ComoClient.getCurrentTime() + (Double)this.getSetting("Delay").value;
                 
                 // For tracers
                 if ((boolean)this.getSetting("TargetTracers").value)
-                    this.prevTargets.put(target, CheatClient.getCurrentTime());
+                    this.prevTargets.put(target, ComoClient.getCurrentTime());
 
                 break;
             }
@@ -179,7 +179,7 @@ public class KillAura extends Module {
 
                     // Make sure that they are not out of date.
                     Double span = (Double)this.getSetting("TracerLifeSpan").value;
-                    if (span > 0 && CheatClient.getCurrentTime() - hitTime > span) {
+                    if (span > 0 && ComoClient.getCurrentTime() - hitTime > span) {
                         it.remove();
                         continue;
                     }

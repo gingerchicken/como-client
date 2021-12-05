@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.PreMovementPacketEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -30,16 +30,16 @@ public class CamFlight extends Module {
         switch (event.getClass().getSimpleName()) {
             case "PreMovementPacketEvent": {
                 // This makes things a lot more controllable.
-                if (!CheatClient.me().input.pressingForward) break;
+                if (!ComoClient.me().input.pressingForward) break;
 
                 // Get the speed from our settings system.
                 Double speed = (Double) this.getSetting("Speed").value;
 
                 // Calculate the velocity.
-                Vec3d fasterVelocity = CheatClient.me().getRotationVector().multiply(new Vec3d(speed, speed, speed));
+                Vec3d fasterVelocity = ComoClient.me().getRotationVector().multiply(new Vec3d(speed, speed, speed));
 
                 // Update our velocity.
-                CheatClient.me().setVelocity(fasterVelocity);
+                ComoClient.me().setVelocity(fasterVelocity);
             }
         }
     }

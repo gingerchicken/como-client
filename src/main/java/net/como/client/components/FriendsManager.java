@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.utils.ServerUtils;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -31,7 +31,7 @@ public class FriendsManager {
         }
 
         public boolean isOnline() {
-            return CheatClient.getClient().world.getPlayerByUuid(this.uuid) != null;
+            return ComoClient.getClient().world.getPlayerByUuid(this.uuid) != null;
         }
 
         public String getUsernameOrUuid() {
@@ -41,7 +41,7 @@ public class FriendsManager {
         }
 
         public String getUsername() {
-            PlayerEntity player = CheatClient.getClient().world.getPlayerByUuid(this.uuid);
+            PlayerEntity player = ComoClient.getClient().world.getPlayerByUuid(this.uuid);
             if (player != null) {
                 username = player.getDisplayName().asString();
             }

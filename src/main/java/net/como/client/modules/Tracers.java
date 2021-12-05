@@ -3,7 +3,7 @@ package net.como.client.modules;
 import java.util.HashMap;
 import java.util.List;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.GeneralConfig;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
@@ -105,17 +105,17 @@ public class Tracers extends Module {
                 Float transparency = (Float)this.getSetting("Transparency").value;
 
                 // Render entity/player tracers
-                Iterable<Entity> ents = CheatClient.getClient().world.getEntities();
+                Iterable<Entity> ents = ComoClient.getClient().world.getEntities();
                 for (Entity entity : ents) {
                     if (!this.shouldDrawTracer(entity)) continue;
 
                     // No render myself.
-                    if (entity instanceof PlayerEntity && (PlayerEntity)entity == CheatClient.me()) {
+                    if (entity instanceof PlayerEntity && (PlayerEntity)entity == ComoClient.me()) {
                         continue;
                     }
 
                     // TODO add different colours for different entities
-                    Colour c = CheatClient.config.entityColour;
+                    Colour c = ComoClient.config.entityColour;
 
                     // Render tracers
                     RenderUtils.drawTracer(e.mStack, MathsUtils.getLerpedCentre(entity, e.tickDelta), e.tickDelta, c.r, c.g, c.b, c.a*transparency);
@@ -123,13 +123,13 @@ public class Tracers extends Module {
 
                 if ((boolean)this.getSetting("Block").value) {
                     // Render blocks etc.
-                    List<BlockEntityTickInvoker> tickers = ((IWorld)(CheatClient.getClient().world)).getBlockEntityTickers();
+                    List<BlockEntityTickInvoker> tickers = ((IWorld)(ComoClient.getClient().world)).getBlockEntityTickers();
                     for (BlockEntityTickInvoker ticker : tickers) {
                         if (!this.shouldDrawTracer(ticker)) continue;
 
                         // This is only storage colouring for now but whatever.
                         // TODO what if it isn't storage!?
-                        Colour c = CheatClient.config.storageColour;
+                        Colour c = ComoClient.config.storageColour;
 
                         RenderUtils.drawTracer(e.mStack, BlockUtils.blockPos(ticker.getPos()).add(0.5, 0.5, 0.5), e.tickDelta, c.r, c.g, c.b, c.a * transparency);
                     }

@@ -24,7 +24,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.Identifier;
 
-public class CheatClient {
+public class ComoClient {
     // Variables
     private static String CHAT_PREFIX = ChatUtils.chatPrefix("Como Client");
     public static CommandHandler commandHandler = new CommandHandler(".");
@@ -81,7 +81,7 @@ public class CheatClient {
             
             case 0: {
                 // TODO have it display the command's help text.
-                CheatClient.displayChatMessage(String.format("%sUnknown Command: Use 'help' for a list of commands.", ChatUtils.RED));
+                ComoClient.displayChatMessage(String.format("%sUnknown Command: Use 'help' for a list of commands.", ChatUtils.RED));
             }
 
             default: {
@@ -193,5 +193,5 @@ public class CheatClient {
         System.out.println("Como Client loaded!");
     }
 
-    CheatClient() { }
+    ComoClient() { }
 }

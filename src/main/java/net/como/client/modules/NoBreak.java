@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -42,7 +42,7 @@ public class NoBreak extends Module {
                 switch (actionPacket.getAction()) {
                     case STOP_DESTROY_BLOCK: {
                         // Get the current item in the player's hand
-                        ItemStack usedItem = CheatClient.me().getMainHandStack();
+                        ItemStack usedItem = ComoClient.me().getMainHandStack();
 
                         // Ignore if it is not a mining tool.
                         if (!(usedItem.getItem() instanceof net.minecraft.item.MiningToolItem)) break;
@@ -61,7 +61,7 @@ public class NoBreak extends Module {
 
                         // We just need to tell the server that we actually stopped mining the block
                         PlayerActionC2SPacket stopPacket = new PlayerActionC2SPacket(Action.ABORT_DESTROY_BLOCK, actionPacket.getPos(), actionPacket.getDirection());
-                        CheatClient.me().networkHandler.sendPacket(stopPacket);
+                        ComoClient.me().networkHandler.sendPacket(stopPacket);
 
                         // Cancel the original packet that was to be sent.
                         e.ci.cancel();

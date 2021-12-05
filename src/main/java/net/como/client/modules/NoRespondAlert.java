@@ -3,7 +3,7 @@ package net.como.client.modules;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.OnWorldTimeUpdateEvent;
@@ -48,14 +48,14 @@ public class NoRespondAlert extends Module {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "InGameHudRenderEvent": {
-                if (!CheatClient.me().isAlive()) break;
+                if (!ComoClient.me().isAlive()) break;
 
-                float noRespTime = (float) (CheatClient.getCurrentTime() - lastResp);
+                float noRespTime = (float) (ComoClient.getCurrentTime() - lastResp);
                 if (noRespTime < (Double)this.getSetting("WarningTime").value) break;
 
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
-                TextRenderer t = CheatClient.textRenderer;
+                TextRenderer t = ComoClient.textRenderer;
                 Text message = Text.of("Server not responded for ");
                 Text timer = Text.of(String.format("%.2f", noRespTime));
 
@@ -65,8 +65,8 @@ public class NoRespondAlert extends Module {
                 // See where the user wants to put it on the screen
                 int userHeight = (int)this.getSetting("DisplayHeight").value;
 
-                int x = CheatClient.getClient().getWindow().getScaledWidth()/2 - width/2;
-                int y = (int)((double)userHeight/CheatClient.getClient().getWindow().getScaleFactor());
+                int x = ComoClient.getClient().getWindow().getScaledWidth()/2 - width/2;
+                int y = (int)((double)userHeight/ComoClient.getClient().getWindow().getScaleFactor());
 
                 // Timer colour thing
                 float badDistance = 15f - noRespTime;
@@ -82,7 +82,7 @@ public class NoRespondAlert extends Module {
                 break;
             }
             case "OnWorldTimeUpdateEvent": {
-                lastResp = CheatClient.getCurrentTime();
+                lastResp = ComoClient.getCurrentTime();
 
                 break;
             }

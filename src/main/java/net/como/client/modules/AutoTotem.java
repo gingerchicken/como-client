@@ -3,7 +3,7 @@ package net.como.client.modules;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -33,13 +33,13 @@ public class AutoTotem extends Module {
     }
 
     private List<Integer> getAllTotemSlots() {
-        return this.getTotemSlots(CheatClient.me().getInventory().size());
+        return this.getTotemSlots(ComoClient.me().getInventory().size());
     }
 
     private List<Integer> getTotemSlots(int total) {
         List<Integer> totems = new ArrayList<Integer>();
         
-        PlayerInventory inv = CheatClient.me().getInventory();
+        PlayerInventory inv = ComoClient.me().getInventory();
 
         // Iterate over all items that are not armour, crafting, off-hand or hotbar.
         for (int i = 9; i < PlayerInventory.MAIN_SIZE && total > 0; i++) {
@@ -65,7 +65,7 @@ public class AutoTotem extends Module {
     }
 
     private ItemStack getOffHandStack() {
-        return CheatClient.me().getStackInHand(Hand.OFF_HAND);
+        return ComoClient.me().getStackInHand(Hand.OFF_HAND);
     }
 
     private boolean hasTotemEquip() {

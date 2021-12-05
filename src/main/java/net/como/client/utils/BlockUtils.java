@@ -4,7 +4,7 @@ package net.como.client.utils;
 
 import java.util.ArrayList;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -19,7 +19,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 
 public class BlockUtils {
-	private static final MinecraftClient client = CheatClient.getClient();
+	private static final MinecraftClient client = ComoClient.getClient();
 	
 	public static BlockState getState(BlockPos pos) {
 		return client.world.getBlockState(pos);

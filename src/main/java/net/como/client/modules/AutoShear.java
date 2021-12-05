@@ -3,7 +3,7 @@ package net.como.client.modules;
 import java.util.HashMap;
 
 import net.como.client.structures.events.Event;
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.RenderEntityEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.settings.Setting;
@@ -32,8 +32,8 @@ public class AutoShear extends Module {
         // Make sure that we want that wool
         if (!desiredColours.containsKey(sheepColour)) return;
 
-        PlayerInteractEntityC2SPacket shearPacket = PlayerInteractEntityC2SPacket.interact(sheep, CheatClient.me().isSneaking(), Hand.MAIN_HAND);
-        CheatClient.me().networkHandler.sendPacket(shearPacket);
+        PlayerInteractEntityC2SPacket shearPacket = PlayerInteractEntityC2SPacket.interact(sheep, ComoClient.me().isSneaking(), Hand.MAIN_HAND);
+        ComoClient.me().networkHandler.sendPacket(shearPacket);
 
         // TODO I swear that there are more packets that are normally sent to the server when this occurs?  Please double check because I don't want to make ACs cry for such a small thing.
     }
@@ -49,7 +49,7 @@ public class AutoShear extends Module {
     }
 
     public void fireEvent(Event event) {
-        if (!(CheatClient.me().getMainHandStack().getItem() instanceof net.minecraft.item.ShearsItem)) return;
+        if (!(ComoClient.me().getMainHandStack().getItem() instanceof net.minecraft.item.ShearsItem)) return;
 
         switch (event.getClass().getSimpleName()) {
             case "RenderEntityEvent": {
@@ -68,7 +68,7 @@ public class AutoShear extends Module {
                 Double maxDistance = (Double)this.getSetting("MaxDistance").value;
 
                 // Make sure that the sheep is in range.
-                if (sheep.distanceTo(CheatClient.me()) > maxDistance) break;
+                if (sheep.distanceTo(ComoClient.me()) > maxDistance) break;
 
                 // Shear the sheep
                 this.shear(sheep);

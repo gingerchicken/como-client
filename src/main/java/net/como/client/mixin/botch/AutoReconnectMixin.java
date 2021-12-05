@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.modules.AutoReconnect;
 import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -23,7 +23,7 @@ public class AutoReconnectMixin extends Screen {
     private AutoReconnect getAutoReconnect() {
         // Make sure that it isn't null
         if (this._autoReconnect == null) {
-            this._autoReconnect = (AutoReconnect)CheatClient.Cheats.get("autoreconnect");
+            this._autoReconnect = (AutoReconnect)ComoClient.Cheats.get("autoreconnect");
         } 
 
         // Find it

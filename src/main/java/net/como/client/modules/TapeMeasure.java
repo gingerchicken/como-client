@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.lwjgl.opengl.GL11;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.RenderWorldEvent;
 import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Module;
@@ -126,8 +126,8 @@ public class TapeMeasure extends Module {
 
         Vec3d blockVec = MathsUtils.blockPosToVec3d(pos);
 
-        double distanceToBlock = CheatClient.me().getPos().distanceTo(blockVec);
-        CheatClient.me();
+        double distanceToBlock = ComoClient.me().getPos().distanceTo(blockVec);
+        ComoClient.me();
         double maxDistance = (Entity.getRenderDistanceMultiplier()*8)*16;
 
         return distanceToBlock <= maxDistance;

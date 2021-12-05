@@ -3,7 +3,7 @@ package net.como.client.modules;
 import java.util.HashMap;
 import java.util.List;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.RenderWorldEvent;
 import net.como.client.interfaces.mixin.IWorld;
 import net.como.client.structures.Module;
@@ -46,9 +46,9 @@ public class BlockESP extends Module {
             case "RenderWorldEvent": {
                 RenderWorldEvent e = (RenderWorldEvent)event;
 
-                Colour colour = CheatClient.config.storageColour;
+                Colour colour = ComoClient.config.storageColour;
 
-                List<BlockEntityTickInvoker> tickers = ((IWorld)(CheatClient.getClient().world)).getBlockEntityTickers();
+                List<BlockEntityTickInvoker> tickers = ((IWorld)(ComoClient.getClient().world)).getBlockEntityTickers();
                 for (BlockEntityTickInvoker ticker : tickers) {
                     if (!this.shouldRender(ticker)) continue;
                     RenderUtils.renderBlockBox(e.mStack, ticker.getPos(), colour.r, colour.g, colour.b, colour.a);

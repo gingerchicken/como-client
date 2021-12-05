@@ -1,6 +1,6 @@
 package net.como.client.utils;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.text.Text;
@@ -35,7 +35,7 @@ public class ChatUtils {
         // Make sure that they are in game.
         if (!ClientUtils.inGame()) return;
 
-        MinecraftClient client = CheatClient.getClient();
+        MinecraftClient client = ComoClient.getClient();
         ChatHud chatHud = client.inGameHud.getChatHud();
 
         chatHud.addMessage(Text.of(message));

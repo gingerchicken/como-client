@@ -1,6 +1,6 @@
 package net.como.client.modules;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.PreMovementPacketEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
@@ -30,7 +30,7 @@ public class NoFall extends Module {
         switch (event.getClass().getSimpleName()) {
             case "PreMovementPacketEvent": {
                 // Get the localplayer.
-                ClientPlayerEntity player = CheatClient.me();
+                ClientPlayerEntity player = ComoClient.me();
 
                 // Use to make sure that flight is less gittery
                 if(player.fallDistance <= (player.isFallFlying() ? 1 : 2)) break;

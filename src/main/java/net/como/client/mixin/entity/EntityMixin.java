@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.como.client.CheatClient;
+import net.como.client.ComoClient;
 import net.como.client.events.IsEntityGlowingEvent;
 import net.como.client.events.IsEntityInvisibleEvent;
 import net.minecraft.entity.Entity;
@@ -14,13 +14,13 @@ import net.minecraft.entity.Entity;
 public class EntityMixin {
     @Inject(at = @At("RETURN"), method="isInvisible()Z", cancellable = true)
     public void onIsInvisible(CallbackInfoReturnable<Boolean> cir) {
-        CheatClient.emitter.triggerEvent(new IsEntityInvisibleEvent(cir));
+        ComoClient.emitter.triggerEvent(new IsEntityInvisibleEvent(cir));
     }
 
     @Inject(at = @At("RETURN"), method="isGlowing()Z", cancellable = true)
     public void onIsGlowing(CallbackInfoReturnable<Boolean> cir) {
         Entity ent = (Entity)((Object)(this));
 
-        CheatClient.emitter.triggerEvent(new IsEntityGlowingEvent(ent, cir));
+        ComoClient.emitter.triggerEvent(new IsEntityGlowingEvent(ent, cir));
     }
 }
