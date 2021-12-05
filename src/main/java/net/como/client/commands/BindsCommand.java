@@ -3,9 +3,9 @@ package net.como.client.commands;
 import java.util.Arrays;
 
 import net.como.client.CheatClient;
-import net.como.client.cheats.Binds;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
+import net.como.client.modules.Binds;
 import net.como.client.utils.ChatUtils;
 
 public class BindsCommand extends CommandNode {
