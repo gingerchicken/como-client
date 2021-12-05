@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.como.client.cheats.*;
 import net.como.client.commands.FriendsCommand;
 import net.como.client.commands.PanicCommand;
 import net.como.client.commands.WaypointsCommand;
@@ -15,6 +14,7 @@ import net.como.client.commands.structures.CommandHandler;
 import net.como.client.components.FriendsManager;
 import net.como.client.interfaces.mixin.IClient;
 import net.como.client.interfaces.mixin.IFontManager;
+import net.como.client.modules.*;
 import net.como.client.utils.*;
 
 import net.como.client.structures.Cheat;
