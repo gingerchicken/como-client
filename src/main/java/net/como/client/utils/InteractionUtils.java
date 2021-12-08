@@ -16,6 +16,10 @@ public class InteractionUtils {
         return ComoClient.getClient().interactionManager;
     }
 
+    public static int getSyncId() {
+        return ComoClient.me().currentScreenHandler.syncId;
+    }
+
     public static void pickupItem(int slot) {
         getManager().clickSlot(0, slot, 0, SlotActionType.PICKUP, ComoClient.me());
     }
