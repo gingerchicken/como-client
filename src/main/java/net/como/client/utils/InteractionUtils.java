@@ -21,7 +21,11 @@ public class InteractionUtils {
     }
 
     public static void pickupItem(int slot) {
-        getManager().clickSlot(0, slot, 0, SlotActionType.PICKUP, ComoClient.me());
+        getManager().clickSlot(getSyncId(), slot, 0, SlotActionType.PICKUP, ComoClient.me());
+    }
+
+    public static void fastPickupItem(int slot) {
+        getManager().clickSlot(getSyncId(), slot, 0, SlotActionType.QUICK_MOVE, ComoClient.me());
     }
 
     public static void rightClickBlock(BlockPos pos, Direction side, Vec3d hitVec) {
