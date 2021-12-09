@@ -28,6 +28,7 @@
     "render/InGameOverlayRenderMixin",
     "render/EntityRendererMixin",
     "render/CameraMixin",
+    "render/RenderTickCounterMixin",
 
     "screen/MultiplayerScreenMixin",
     "screen/DeathScreenMixin",
