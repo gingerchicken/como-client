@@ -169,6 +169,7 @@ public class ComoClient {
         Cheats.put("unfocuscpu", new UnfocusCPU());
         Cheats.put("totempopcount", new TotemPopCount());
         Cheats.put("shulkerdupe", new ShulkerDupe());
+        Cheats.put("discordrpc", new DiscordRichPres());
 
         // Load the config
         if (!Persistance.loadConfig()) {
