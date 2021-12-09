@@ -37,4 +37,10 @@ public class ServerUtils {
 
         return null;
     }
+
+    public static Integer getTotalOnlinePlayers() {
+        if (ComoClient.getClient().world == null) return -1;
+
+        return ComoClient.getClient().world.getPlayers().size();
+    }
 }
