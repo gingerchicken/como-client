@@ -28,6 +28,13 @@ public class ShulkerDupe extends Module {
         this.addSetting(new Setting("TargetSlot", 0));
     }
 
+    @Override
+    public String listOption() {
+        if (this.getBoolSetting("DupeAll")) return "All";
+
+        return String.format("Slot%d", this.getIntSetting("TargetSlot"));
+    }
+
     public Boolean performDupe = false;
 
     private ItemStack getTargetSlotStack() {
