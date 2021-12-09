@@ -41,6 +41,9 @@
     "botch/ClientInit",
     "botch/FontManagerMixin",
 
+    "botch/shulkerdupe/ShulkerScreenMixin",
+    "botch/shulkerdupe/ClientPlayNetworkHandlerMixin",
+
     "AbstractBlockStateMixin",
     "WorldMixin"
   ],

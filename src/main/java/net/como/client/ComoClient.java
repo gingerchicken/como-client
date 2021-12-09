@@ -168,6 +168,7 @@ public class ComoClient {
         Cheats.put("binds", new Binds());
         Cheats.put("unfocuscpu", new UnfocusCPU());
         Cheats.put("totempopcount", new TotemPopCount());
+        Cheats.put("shulkerdupe", new ShulkerDupe());
 
         // Load the config
         if (!Persistance.loadConfig()) {
