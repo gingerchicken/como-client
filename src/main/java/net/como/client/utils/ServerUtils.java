@@ -43,4 +43,9 @@ public class ServerUtils {
 
         return ComoClient.getClient().world.getPlayers().size();
     }
+
+    // This current doesn't work but whatever.
+    public static Integer getTotalPlayerSlots() {
+        return getTotalOnlinePlayers() + 1;
+    }
 }
