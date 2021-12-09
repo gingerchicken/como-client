@@ -87,4 +87,8 @@ public class ClientUtils {
     public static void openChatScreen() {
         openChatScreen("");
     }
+
+    public static ItemStack getHandlerSlot(int i) {
+        return ComoClient.me().currentScreenHandler.getSlot(i).getStack();
+    }
 }
