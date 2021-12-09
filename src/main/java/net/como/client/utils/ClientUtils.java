@@ -5,6 +5,8 @@ import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -90,5 +92,14 @@ public class ClientUtils {
 
     public static ItemStack getHandlerSlot(int i) {
         return ComoClient.me().currentScreenHandler.getSlot(i).getStack();
+    }
+
+    public static Integer getPing() {
+        ClientPlayNetworkHandler lv = ComoClient.me().networkHandler;
+        PlayerListEntry entry = lv.getPlayerListEntry(ComoClient.me().getUuid());
+        
+        if (entry == null) return 0;
+
+        return entry.getLatency();
     }
 }
