@@ -74,6 +74,11 @@
  - RenderTargetBlock: `True`
  - SelectCrystal: `True`
 
+## DiscordRichPres (`.discordrichpres`)
+[(Source Code)](src/main/java/net/como/client/modules/DiscordRichPres.java) No description available as of yet.
+### Default Settings
+ - ShowServer: `True`
+
 ## ElytraFlight (`.elytraflight`)
 [(Source Code)](src/main/java/net/como/client/modules/ElytraFlight.java) Fly with the elytra but without needing fireworks etc.
 ### Default Settings
