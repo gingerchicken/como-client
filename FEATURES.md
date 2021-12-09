@@ -187,6 +187,12 @@
 ## NoWeather (`.noweather`)
 [(Source Code)](src/main/java/net/como/client/modules/NoWeather.java) Hides the rain.
 
+## ShulkerDupe (`.shulkerdupe`)
+[(Source Code)](src/main/java/net/como/client/modules/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
+### Default Settings
+ - DupeAll: `True`
+ - TargetSlot: `0`
+
 ## ShulkerPeak (`.shulkerpeak`)
 [(Source Code)](src/main/java/net/como/client/modules/ShulkerPeak.java) Displays the contents of shulkers without opening them.
 ### Default Settings
