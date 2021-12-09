@@ -102,4 +102,11 @@ public class ClientUtils {
 
         return entry.getLatency();
     }
+
+    public static String getGamemode() {
+        if (ComoClient.me().isSpectator()) return "Spectator";
+        if (ComoClient.me().isCreative()) return "Creative";
+
+        return "Survival";
+    }
 }
