@@ -2,15 +2,18 @@ package net.como.client.modules;
 
 import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
-import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
+import net.como.client.utils.ClientUtils;
 import net.como.client.utils.InteractionUtils;
 import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.screen.ShulkerBoxScreenHandler;
+import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +29,26 @@ public class ShulkerDupe extends Module {
     }
 
     public Boolean performDupe = false;
+
+    private ItemStack getTargetSlotStack() {
+        return ClientUtils.getHandlerSlot(this.getIntSetting("TargetSlot"));
+    }
+
+    public Text getDupeButtonText() {
+        if (this.getBoolSetting("DupeAll")) return Text.of("Dupe All");
+
+        ItemStack stack = this.getTargetSlotStack();
+        String itemName = stack.getItem().toString().toUpperCase();
+        Integer totalItems = stack.getCount();
+
+        return Text.of(
+            String.format("Dupe Slot %d (%s x%d)", this.getIntSetting("TargetSlot"), itemName, totalItems)
+        );
+    }
+
+    public Boolean shouldActivateButton() {
+        return !this.performDupe && (this.getBoolSetting("DupeAll") || this.getTargetSlotStack().getItem() != Items.AIR);
+    }
 
     private void takeItems() {
 		if (this.getBoolSetting("DupeAll")) {
