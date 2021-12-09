@@ -15,26 +15,43 @@ import net.minecraft.text.Text;
 
 @Mixin(ShulkerBoxScreen.class)
 public class ShulkerScreenMixin extends Screen {
+    ButtonWidget buttonWidget = null;
 
     protected ShulkerScreenMixin(Text title) {
         super(title);
     }
-    
-    @Inject(at = @At("TAIL"), method = "render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V")
-    public void renderScreen(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        ShulkerDupe shulkerDupe = (ShulkerDupe)(ComoClient.Cheats.get("shulkerdupe"));
-        
-        double width = 50;
+
+    private ShulkerDupe ShulkerDupe() {
+        return (ShulkerDupe)(ComoClient.Cheats.get("shulkerdupe"));
+    }
+
+    // It didn't like init sooo
+    private void renderDupeButton() {
+        if (this.buttonWidget != null) this.remove(buttonWidget);;
+
+        Text buttonText = this.ShulkerDupe().getDupeButtonText();
+
+        double padding = 5;
+        double width = this.textRenderer.getWidth(buttonText) + padding*2;
         double height = 20;
 
         double x = ComoClient.getClient().getWindow().getScaledWidth() / 2 - width/2;
-        double y = 32/ComoClient.getClient().getWindow().getScaleFactor();
+        double y = ((this.height - 166) / 2) - height - padding;
 
-        this.addDrawableChild(new ButtonWidget((int)x, (int)y, (int)width, (int)height, Text.of("Dupe"), (button) -> {
-            shulkerDupe.performDupe = true;
+        this.buttonWidget = this.addDrawableChild(new ButtonWidget((int)x, (int)y, (int)width, (int)height, buttonText, (button) -> {
+            this.ShulkerDupe().performDupe = true;
         }));
 
-        x += width;
+        this.buttonWidget.active = ShulkerDupe().shouldActivateButton();
+    }
 
+    @Inject(at = @At("TAIL"), method = "render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V")
+    public void renderScreen(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+        ShulkerDupe shulkerDupe = this.ShulkerDupe();
+        
+        // Make sure that the dupe is enabled.
+        if (!shulkerDupe.isEnabled()) return;
+
+        this.renderDupeButton();
     }
 }
