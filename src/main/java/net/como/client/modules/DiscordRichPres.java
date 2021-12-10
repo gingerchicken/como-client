@@ -27,6 +27,8 @@ public class DiscordRichPres extends Module {
     public DiscordRichPres() {
         super("DiscordRPC");
 
+        this.description = "Displays which client you are using in discord rich presence.";
+
         this.addSetting(new Setting("ShowServer", false));
     }
 
