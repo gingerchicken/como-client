@@ -29,7 +29,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Discord RPC @ https://github.com/Vatuu/discord-rpc
-	implementation "com.github.Vatuu:discord-rpc:${project.discord_rpc_version}"
+	include(implementation("com.github.Vatuu:discord-rpc:${project.discord_rpc_version}"))
+
 }
 
 processResources {
