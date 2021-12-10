@@ -5,7 +5,7 @@
     <img src="https://github.com/gingerchicken/como-client/actions/workflows/build.yml/badge.svg" alt="Gradlew Build"/>
     <a href="https://github.com/gingerchicken/como-client/issues/"><img src="https://img.shields.io/github/issues/gingerchicken/como-client.svg" alt="issues"></a>
     <img src="https://img.shields.io/tokei/lines/github/gingerchicken/como-client.svg" alt="lines">
-    <a href="https://minecraft.net/"><img src="https://img.shields.io/badge/MC-1.18-brightgreen.svg" alt="Minecraft"/></a>
+    <a href="https://minecraft.net/"><img src="https://img.shields.io/badge/MC-1.18.1-brightgreen.svg" alt="Minecraft"/></a>
     <img src="https://img.shields.io/badge/license-GPL--3.0-green.svg" alt="GNU-3.0">
     <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="Contributions Welcome">
     <br>
