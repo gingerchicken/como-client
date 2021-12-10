@@ -75,7 +75,7 @@
  - SelectCrystal: `True`
 
 ## DiscordRichPres (`.discordrichpres`)
-[(Source Code)](src/main/java/net/como/client/modules/DiscordRichPres.java) No description available as of yet.
+[(Source Code)](src/main/java/net/como/client/modules/DiscordRichPres.java) Displays which client you are using in discord rich presence.
 ### Default Settings
  - ShowServer: `True`
 
