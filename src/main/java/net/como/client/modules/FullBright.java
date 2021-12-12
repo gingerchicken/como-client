@@ -6,8 +6,6 @@ import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 
@@ -22,6 +20,11 @@ public class FullBright extends Module {
 
         // TODO change this once you add EnumSettings
         this.addSetting(new Setting("PotionEffect", false));
+    }
+
+    @Override
+    public String listOption() {
+        return this.getBoolSetting("PotionEffect") ? "Potion" : "Gamma";
     }
     
     @Override
