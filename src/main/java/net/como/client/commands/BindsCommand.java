@@ -25,13 +25,42 @@ public class BindsCommand extends CommandNode {
             return (Binds)ComoClient.Cheats.get("binds");
         }
 
+        public boolean shouldDisplayKey(Integer keyCode) {
+            char c = this.fromKeyCode(keyCode);
+
+            return (Character.isLetterOrDigit(c));
+        }
+
+        public char fromKeyCode(Integer keyCode) {
+            return Character.toUpperCase((char)(int)keyCode);
+        }
+
+        public String keyBindString(Integer keyCode) {
+            return this.shouldDisplayKey(keyCode) ? String.format("%c", this.fromKeyCode(keyCode)) : keyCode.toString();
+        }
+
         public String getCommandArg(String[] args) {
             return String.join(" ", Arrays.copyOfRange(args, 1, args.length));
         }
 
         public Integer getKeyArg(String[] args) {
+            String arg = args[0];
+
+            // What if they gave a letter
+            if (arg.length() == 1) {
+                char c = arg.charAt(0);
+
+                // Make sure that it is a letter
+                if (Character.isLetter(c)) {
+                    // Get the uppercase since this is what is going to be caught by minecraft key.
+                    c = Character.toUpperCase(c);
+
+                    return (int)(c);
+                }
+            }
+
             try {
-                return Integer.valueOf(args[0]);
+                return Integer.valueOf(arg);
             } catch (Exception e) {
                 return -1;
             }
@@ -67,7 +96,7 @@ public class BindsCommand extends CommandNode {
                 return true;
             }
 
-            this.getBinds().displayMessage(String.format("Bound %d to run \"%s\".", key, command));
+            this.getBinds().displayMessage(String.format("Bound %s to run \"%s\".", this.keyBindString(key), command));
             return true;
         }
     }
