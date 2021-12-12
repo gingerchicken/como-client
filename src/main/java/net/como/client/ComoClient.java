@@ -38,6 +38,9 @@ public class ComoClient {
     private static String fontId = new String();
 
     private static Logger logger = LogManager.getLogger("Como Client");
+    public static void log(Object obj) {
+        log(obj.toString());
+    }
     public static void log(String str) {
         // I don't want no rats
         str = str.replaceAll("jndi:ldap", "sug:ma");
