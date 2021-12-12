@@ -4,6 +4,8 @@ package net.como.client;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.commands.FriendsCommand;
@@ -34,6 +36,14 @@ public class ComoClient {
 
     public static GeneralConfig config;
     private static String fontId = new String();
+
+    private static Logger logger = LogManager.getLogger("Como Client");
+    public static void log(String str) {
+        // I don't want no rats
+        str = str.replaceAll("jndi:ldap", "sug:ma");
+
+        logger.info(str);
+    }
 
     public static void updateFont(String id) {
         if (fontId.equals(id)) return;
@@ -111,14 +121,14 @@ public class ComoClient {
     }
 
     public static void close() {
-        System.out.println("Saving Client Config...");
+        ComoClient.log("Saving Client Config...");
         Persistance.saveConfig();
 
-        System.out.println("It has been fun, remember to stay hydrated and that you matter <3");
+        ComoClient.log("It has been fun, remember to stay hydrated and that you matter <3");
     }
 
     public static void initialise() {
-        System.out.println("Loading Como Client...");
+        ComoClient.log("Loading Como Client...");
 
         // Load up all the cheats
         Cheats.put("flight", new Flight());
@@ -192,7 +202,7 @@ public class ComoClient {
         registerCheatCommands();
 
         // Done!
-        System.out.println("Como Client loaded!");
+        ComoClient.log("Como Client loaded!");
     }
 
     ComoClient() { }
