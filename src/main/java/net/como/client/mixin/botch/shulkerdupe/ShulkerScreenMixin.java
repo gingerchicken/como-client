@@ -22,7 +22,7 @@ public class ShulkerScreenMixin extends Screen {
     }
 
     private ShulkerDupe ShulkerDupe() {
-        return (ShulkerDupe)(ComoClient.Cheats.get("shulkerdupe"));
+        return (ShulkerDupe)(ComoClient.Modules.get("shulkerdupe"));
     }
 
     // It didn't like init sooo

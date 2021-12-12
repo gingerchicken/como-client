@@ -17,7 +17,7 @@ public class ClientPlayNetworkHandlerMixin {
     // The shulker dupe needs to be tick perfect hence we are directly hooking it.
     @Inject(at = @At("TAIL"), method="sendPacket(Lnet/minecraft/network/Packet;)V", cancellable = true)
     public void onSendPacket(Packet<?> packet, CallbackInfo ci) {
-        ShulkerDupe shulkerDupe = (ShulkerDupe)(ComoClient.Cheats.get("shulkerdupe"));
+        ShulkerDupe shulkerDupe = (ShulkerDupe)(ComoClient.Modules.get("shulkerdupe"));
 
         if (shulkerDupe.isEnabled()) shulkerDupe.handlePacket(packet);
     }

@@ -22,8 +22,8 @@ public class PanicCommand extends Command {
         }
 
         // Disable all
-        for (Module cheat : ComoClient.Cheats.values()) {
-            if (cheat.isEnabled()) cheat.disable();
+        for (Module module : ComoClient.Modules.values()) {
+            if (module.isEnabled()) module.disable();
         }
         this.displayChatMessage("All mods have been disabled.");
         return true;

@@ -56,15 +56,15 @@ public class Persistance {
         // Load all of the flattened states
         HashMap<String, HashMap<String, String>> flat = new Gson().fromJson(data, new TypeToken<HashMap<String, HashMap<String, String>>>() {}.getType());
         for (String name : flat.keySet()) {
-            Module cheat = ComoClient.Cheats.get(name);
+            Module module = ComoClient.Modules.get(name);
             
-            // Check that we can get the cheat
-            if (cheat == null) {
-                ComoClient.log(String.format("Unable to find cheat '%s,' ignoring...", name));
+            // Check that we can get the module
+            if (module == null) {
+                ComoClient.log(String.format("Unable to find module '%s,' ignoring...", name));
                 continue;
             }
 
-            cheat.lift(flat.get(name));
+            module.lift(flat.get(name));
         }
 
         return true;
@@ -73,12 +73,12 @@ public class Persistance {
     public static String makeConfig() {
         Gson gson = new Gson();
 
-        // Save all of the cheats
+        // Save all of the modules
         HashMap<String, HashMap<String, String>> flat = new HashMap<String, HashMap<String, String>>();
-        for (String name : ComoClient.Cheats.keySet()) {
-            Module cheat = ComoClient.Cheats.get(name);
+        for (String name : ComoClient.Modules.keySet()) {
+            Module module = ComoClient.Modules.get(name);
 
-            flat.put(name, cheat.flatten());
+            flat.put(name, module.flatten());
         }
 
         // TODO Save friends list

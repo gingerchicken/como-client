@@ -23,7 +23,7 @@ public class AutoReconnectMixin extends Screen {
     private AutoReconnect getAutoReconnect() {
         // Make sure that it isn't null
         if (this._autoReconnect == null) {
-            this._autoReconnect = (AutoReconnect)ComoClient.Cheats.get("autoreconnect");
+            this._autoReconnect = (AutoReconnect)ComoClient.Modules.get("autoreconnect");
         } 
 
         // Find it

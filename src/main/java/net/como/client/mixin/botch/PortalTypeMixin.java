@@ -27,7 +27,7 @@ public class PortalTypeMixin {
 		opcode = Opcodes.GETFIELD,
 		ordinal = 0), method = {"updateNausea()V"}, cancellable = true)
 	private void beforeUpdateNausea(CallbackInfo ci) {
-        NoPortal noPortal = (NoPortal)ComoClient.Cheats.get("noportal");
+        NoPortal noPortal = (NoPortal)ComoClient.Modules.get("noportal");
         if (!noPortal.isEnabled() || !(boolean)noPortal.getSetting("AllowTyping").value) return;
 
         tempCurrentScreen = client.currentScreen;
