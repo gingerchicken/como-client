@@ -79,7 +79,7 @@ public class BindsCommand extends CommandNode {
 
     private static class AddBind extends BindsSub {
         public AddBind() {
-            super("add", "bind add <key code> <command (without dot e.g. \"flight\")>", "Make a new key binding");
+            super("add", "bind add <key code|character> <command (without dot e.g. \"flight\")>", "Make a new key binding");
         }
 
         @Override
@@ -120,7 +120,7 @@ public class BindsCommand extends CommandNode {
 
     private static class RemoveBind extends BindsSub {
         public RemoveBind() {
-            super("remove", "<key id> <optional specific command>", "Removes a bind from the list of binds");
+            super("remove", "<key id|character> <optional specific command>", "Removes a bind from the list of binds");
         }
 
         @Override
@@ -139,7 +139,7 @@ public class BindsCommand extends CommandNode {
             // Handle entire key
             if (args.length == 1) {
                 if (!this.getBinds().removeBind(key)) {
-                    this.getBinds().displayMessage(String.format("%sFailed to remove key bind for key '%d'.", ChatUtils.RED, key));
+                    this.getBinds().displayMessage(String.format("%sFailed to remove key bind for key '%s'.", ChatUtils.RED, this.keyBindString(key)));
                 }
                 return true;
             }
