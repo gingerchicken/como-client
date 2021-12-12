@@ -147,7 +147,7 @@ public class Module extends Settings implements EventListener, Flatternable {
 
             // Make sure that the setting is valid
             if (setting == null) {
-                System.out.println(String.format("Unknown setting '%s' in mod '%s.'", name, this.getName()));
+                ComoClient.log(String.format("Unknown setting '%s' in mod '%s.'", name, this.getName()));
                 continue;
             }
 

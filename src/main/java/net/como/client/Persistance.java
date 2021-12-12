@@ -47,7 +47,7 @@ public class Persistance {
         try {
             data = readConfig(CONFIG_PATH);
         } catch (FileNotFoundException e) {
-            System.out.println("No config file found... creating one...");
+            ComoClient.log("No config file found... creating one...");
             saveConfig();
 
             return false;
@@ -60,7 +60,7 @@ public class Persistance {
             
             // Check that we can get the cheat
             if (cheat == null) {
-                System.out.println(String.format("Unable to find cheat '%s,' ignoring...", name));
+                ComoClient.log(String.format("Unable to find cheat '%s,' ignoring...", name));
                 continue;
             }
 
@@ -91,7 +91,7 @@ public class Persistance {
         try {
             writeConfig(json, CONFIG_PATH);
         } catch (IOException e) {
-            System.out.println(e);
+            ComoClient.log(e);
         }
     }
 }

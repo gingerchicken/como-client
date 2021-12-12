@@ -91,7 +91,7 @@ public class DiscordRichPres extends Module {
 
     public void initialiseDiscord() {
         handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
-            System.out.println("Welcome " + user.username + "#" + user.discriminator + "!");
+            ComoClient.log("Welcome " + user.username + "#" + user.discriminator + "!");
         }).build();
 
         DiscordRPC.discordInitialize(APPLICATION_ID, handlers, true);

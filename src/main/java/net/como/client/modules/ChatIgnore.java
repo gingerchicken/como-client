@@ -51,7 +51,7 @@ public class ChatIgnore extends Module {
                 String rawMessage = e.chatText.getString();
 
                 if (this.shouldBlock(rawMessage)) {
-                    System.out.println(String.format("(BLOCKED MESSAGE) %s", rawMessage));
+                    ComoClient.log(String.format("(BLOCKED MESSAGE) %s", rawMessage));
 
                     e.ci.cancel();
                 }
