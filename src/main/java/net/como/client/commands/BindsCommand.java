@@ -36,7 +36,7 @@ public class BindsCommand extends CommandNode {
         }
 
         public String keyBindString(Integer keyCode) {
-            return this.shouldDisplayKey(keyCode) ? String.format("%c", this.fromKeyCode(keyCode)) : keyCode.toString();
+            return this.shouldDisplayKey(keyCode) ? String.format("%c", this.fromKeyCode(keyCode)) : String.format("0x%X", keyCode & 0xFFFFF);
         }
 
         public String getCommandArg(String[] args) {
