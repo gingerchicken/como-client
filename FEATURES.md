@@ -104,6 +104,8 @@
 
 ## FullBright (`.fullbright`)
 [(Source Code)](src/main/java/net/como/client/modules/FullBright.java) Allows you to see anywhere as if it was day.
+### Default Settings
+ - PotionEffect: `True`
 
 ## HomeGodMode (`.homegodmode`)
 [(Source Code)](src/main/java/net/como/client/modules/HomeGodMode.java) Exploits the /sethome and /home feature on servers
