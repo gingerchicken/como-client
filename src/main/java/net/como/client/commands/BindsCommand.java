@@ -148,7 +148,7 @@ public class BindsCommand extends CommandNode {
 
             // Handle key + command
             if (!this.getBinds().removeBind(key, command)) {
-                this.getBinds().displayMessage(String.format("%sFailed to remove key bind for key '%d' with command '%s'.", ChatUtils.RED, key, command));
+                this.getBinds().displayMessage(String.format("%sFailed to remove key bind for key '%s' with command '%s'.", ChatUtils.RED, this.keyBindString(key), command));
             }
             return true;
 
