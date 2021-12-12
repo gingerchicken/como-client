@@ -29,7 +29,7 @@ public class TimerMixin {
         // Make sure that we are playing
         if (!ClientUtils.inGame()) return;
 
-        Timer timer = (Timer)ComoClient.Cheats.get("timer");
+        Timer timer = (Timer)ComoClient.Modules.get("timer");
         if (!timer.isEnabled()) return;
 
 		lastFrameDuration *= (double)timer.getSetting("Speed").value;

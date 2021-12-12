@@ -56,9 +56,9 @@ public class XRay extends Module {
         MinecraftClient client = ComoClient.getClient();
         client.worldRenderer.reload();
 
-        this.fullbrightWasEnabled = ComoClient.Cheats.get("fullbright").isEnabled();
+        this.fullbrightWasEnabled = ComoClient.Modules.get("fullbright").isEnabled();
 
-        if (this.shouldOverrideFullbright()) ComoClient.Cheats.get("fullbright").enable();
+        if (this.shouldOverrideFullbright()) ComoClient.Modules.get("fullbright").enable();
 
         this.addListen(BlockEntityRenderEvent.class);
         this.addListen(BlockCracksRenderEvent.class);
@@ -76,7 +76,7 @@ public class XRay extends Module {
         MinecraftClient client = ComoClient.getClient();
         client.worldRenderer.reload();
 
-        if (this.shouldOverrideFullbright()) ComoClient.Cheats.get("fullbright").disable();
+        if (this.shouldOverrideFullbright()) ComoClient.Modules.get("fullbright").disable();
         
         this.fullbrightWasEnabled = null;
     }

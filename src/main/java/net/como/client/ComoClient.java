@@ -63,7 +63,7 @@ public class ComoClient {
     }
 
     // Commands
-    private static void registerCheatCommands() {
+    private static void registerModuleCommands() {
         // Add the friends command
         commandHandler.registerCommand(new FriendsCommand(friendsManager));
 
@@ -71,17 +71,17 @@ public class ComoClient {
         commandHandler.registerCommand(new PanicCommand());
 
         commandHandler.registerCommand(new WaypointsCommand(
-            ((Waypoints)Cheats.get("waypoints")).waypoints
+            ((Waypoints)Modules.get("waypoints")).waypoints
         ));
 
-        // Add all of the cheats as commands.
-        for (Entry<String, Module> entry : Cheats.entrySet()) {
+        // Add all of the modules as commands.
+        for (Entry<String, Module> entry : Modules.entrySet()) {
             commandHandler.registerCommand(new ModuleCommand(entry.getKey(), entry.getValue()));
         }
     }
 
-    // Cheats
-    public static HashMap<String, Module> Cheats = new HashMap<String, Module>();
+    // Modules
+    public static HashMap<String, Module> Modules = new HashMap<String, Module>();
 
     // Chat
     public static void processChatPost(String message, CallbackInfo ci) {
@@ -133,66 +133,66 @@ public class ComoClient {
     public static void initialise() {
         ComoClient.log("Loading Como Client...");
 
-        // Load up all the cheats
-        Cheats.put("flight", new Flight());
-        Cheats.put("blink", new Blink());
-        Cheats.put("chatignore", new ChatIgnore());
-        Cheats.put("totemhide", new TotemHide());
-        Cheats.put("entityesp", new EntityESP());
-        Cheats.put("speed", new SpeedHack());
-        Cheats.put("superjump", new SuperJump());
-        Cheats.put("antiitemdrop", new AntiItemDrop());
-        Cheats.put("noweather", new NoWeather());
-        Cheats.put("nofall", new NoFall());
-        Cheats.put("camflight", new CamFlight());
-        Cheats.put("noboss", new NoBoss());
-        Cheats.put("elytraflight", new ElytraFlight());
-        Cheats.put("xray", new XRay());
-        Cheats.put("noenchantbook", new NoEnchantmentBook());
-        Cheats.put("nobreak", new NoBreak());
-        Cheats.put("autoshear", new AutoShear());
-        Cheats.put("tapemeasure", new TapeMeasure());
-        Cheats.put("modlist", new ModList());
-        Cheats.put("nohurtcam", new NoHurtCam());
-        Cheats.put("fullbright", new FullBright());
-        Cheats.put("autoreconnect", new AutoReconnect());
-        Cheats.put("autorespawn", new AutoRespawn());
-        Cheats.put("nofirecam", new NoFireCam());
-        Cheats.put("killaura", new KillAura());
-        Cheats.put("timer", new Timer());
-        Cheats.put("criticals", new Criticals());
-        Cheats.put("waypoints", new Waypoints());
-        Cheats.put("homegodmode", new HomeGodMode());
-        Cheats.put("itemrendertweaks", new ItemRenderTweaks());
-        Cheats.put("tracers", new Tracers());
-        Cheats.put("blockesp", new BlockESP());
-        Cheats.put("betternametags", new BetterNameTags());
-        Cheats.put("noportal", new NoPortal());
-        Cheats.put("shulkerpeak", new ShulkerPeak());
-        Cheats.put("nosubmerge", new NoSubmerge());
-        Cheats.put("watermark", new Watermark());
-        Cheats.put("freecam", new FreeCam());
-        Cheats.put("autototem", new AutoTotem());
-        Cheats.put("antiinvisible", new AntiInvisible());
-        Cheats.put("norespond", new NoRespondAlert());
-        Cheats.put("armourdisplay", new ArmourDisplay());
-        Cheats.put("crystalaura", new CrystalAura());
-        Cheats.put("xcarry", new XCarry());
-        Cheats.put("binds", new Binds());
-        Cheats.put("unfocuscpu", new UnfocusCPU());
-        Cheats.put("totempopcount", new TotemPopCount());
-        Cheats.put("shulkerdupe", new ShulkerDupe());
-        Cheats.put("discordrpc", new DiscordRichPres());
+        // Load up all the modules
+        Modules.put("flight", new Flight());
+        Modules.put("blink", new Blink());
+        Modules.put("chatignore", new ChatIgnore());
+        Modules.put("totemhide", new TotemHide());
+        Modules.put("entityesp", new EntityESP());
+        Modules.put("speed", new SpeedHack());
+        Modules.put("superjump", new SuperJump());
+        Modules.put("antiitemdrop", new AntiItemDrop());
+        Modules.put("noweather", new NoWeather());
+        Modules.put("nofall", new NoFall());
+        Modules.put("camflight", new CamFlight());
+        Modules.put("noboss", new NoBoss());
+        Modules.put("elytraflight", new ElytraFlight());
+        Modules.put("xray", new XRay());
+        Modules.put("noenchantbook", new NoEnchantmentBook());
+        Modules.put("nobreak", new NoBreak());
+        Modules.put("autoshear", new AutoShear());
+        Modules.put("tapemeasure", new TapeMeasure());
+        Modules.put("modlist", new ModList());
+        Modules.put("nohurtcam", new NoHurtCam());
+        Modules.put("fullbright", new FullBright());
+        Modules.put("autoreconnect", new AutoReconnect());
+        Modules.put("autorespawn", new AutoRespawn());
+        Modules.put("nofirecam", new NoFireCam());
+        Modules.put("killaura", new KillAura());
+        Modules.put("timer", new Timer());
+        Modules.put("criticals", new Criticals());
+        Modules.put("waypoints", new Waypoints());
+        Modules.put("homegodmode", new HomeGodMode());
+        Modules.put("itemrendertweaks", new ItemRenderTweaks());
+        Modules.put("tracers", new Tracers());
+        Modules.put("blockesp", new BlockESP());
+        Modules.put("betternametags", new BetterNameTags());
+        Modules.put("noportal", new NoPortal());
+        Modules.put("shulkerpeak", new ShulkerPeak());
+        Modules.put("nosubmerge", new NoSubmerge());
+        Modules.put("watermark", new Watermark());
+        Modules.put("freecam", new FreeCam());
+        Modules.put("autototem", new AutoTotem());
+        Modules.put("antiinvisible", new AntiInvisible());
+        Modules.put("norespond", new NoRespondAlert());
+        Modules.put("armourdisplay", new ArmourDisplay());
+        Modules.put("crystalaura", new CrystalAura());
+        Modules.put("xcarry", new XCarry());
+        Modules.put("binds", new Binds());
+        Modules.put("unfocuscpu", new UnfocusCPU());
+        Modules.put("totempopcount", new TotemPopCount());
+        Modules.put("shulkerdupe", new ShulkerDupe());
+        Modules.put("discordrpc", new DiscordRichPres());
 
         // Load the config
         if (!Persistance.loadConfig()) {
             // It must be a new config.
 
             // Auto enable those that should be auto-enabled.
-            for (String key : Cheats.keySet()) {
-                Module cheat = Cheats.get(key);
+            for (String key : Modules.keySet()) {
+                Module module = Modules.get(key);
                 
-                if (cheat.shouldAutoEnable()) cheat.enable();
+                if (module.shouldAutoEnable()) module.enable();
             }
         }
         
@@ -202,7 +202,7 @@ public class ComoClient {
         updateFont(config.font);
 
         // Ready up all the commands
-        registerCheatCommands();
+        registerModuleCommands();
 
         // Done!
         ComoClient.log("Como Client loaded!");

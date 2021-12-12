@@ -20,7 +20,7 @@ public class HomeGodMode extends Module {
 
     @Override
     public void activate() {
-        if (ComoClient.Cheats.get("autorespawn").isEnabled()) this.displayMessage("Please disable 'AutoRespawn' as it may mess with respawn times.");
+        if (ComoClient.Modules.get("autorespawn").isEnabled()) this.displayMessage("Please disable 'AutoRespawn' as it may mess with respawn times.");
 
         this.addListen(RenderWorldEvent.class);
     }

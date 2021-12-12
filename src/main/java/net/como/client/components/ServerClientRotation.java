@@ -20,14 +20,14 @@ public class ServerClientRotation {
         active = false;
     }
 
-    // easier binding for cheats.
-    public void addListeners(Module parentCheat) {
-        parentCheat.addListen(PreMovementPacketEvent.class);
-        parentCheat.addListen(PostMovementPacketEvent.class);
+    // easier binding for modules.
+    public void addListeners(Module parentModule) {
+        parentModule.addListen(PreMovementPacketEvent.class);
+        parentModule.addListen(PostMovementPacketEvent.class);
     }
-    public void removeListeners(Module parentCheat) {
-        parentCheat.removeListen(PreMovementPacketEvent.class);
-        parentCheat.removeListen(PostMovementPacketEvent.class);
+    public void removeListeners(Module parentModule) {
+        parentModule.removeListen(PreMovementPacketEvent.class);
+        parentModule.removeListen(PostMovementPacketEvent.class);
     }
 
     private Rotation server;

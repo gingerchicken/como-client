@@ -4,23 +4,23 @@ import net.como.client.commands.settings.SettingsCommand;
 import net.como.client.structures.Module;
 
 public class ModuleCommand extends CommandNode {
-    public Module cheat;
+    public Module module;
 
-    public ModuleCommand(String command, Module cheat) {
-        super(command, cheat.description);
+    public ModuleCommand(String command, Module module) {
+        super(command, module.description);
         
-        this.cheat = cheat;
+        this.module = module;
 
         // Register the settings.
-        super.addSubCommand(new SettingsCommand(this.cheat));
+        super.addSubCommand(new SettingsCommand(this.module));
     }
 
     @Override
     public Boolean trigger(String[] args) {
         if (args.length == 0) {
-            // Toggle the cheat.
+            // Toggle the module.
 
-            cheat.toggle();
+            module.toggle();
             return true;
         }
 

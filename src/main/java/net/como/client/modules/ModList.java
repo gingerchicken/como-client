@@ -78,7 +78,7 @@ public class ModList extends Module {
         }
 
         private Module getModList() {
-            return ComoClient.Cheats.get("modlist");
+            return ComoClient.Modules.get("modlist");
         }
 
         private int getSpeed() {
@@ -118,17 +118,17 @@ public class ModList extends Module {
         // This is used to store all of the possible colours
         private Colour[] steps;
         
-        // This is used to store or of the possible colours for all of the cheats for the active tick.
+        // This is used to store or of the possible colours for all of the modules for the active tick.
         private List<Colour> set;
 
         // This will prepare all of the colours so we can tick over them all at a constant rate (i.e. client TPS)
         private void tick() {
             set = new ArrayList<Colour>();
-            int totalCheats = ComoClient.Cheats.keySet().size();
+            int totalModules = ComoClient.Modules.keySet().size();
             int speed = this.getSpeed();
 
             // Loop through them all as if we are wanting them their and then.
-            for (int cur = 0; cur < totalCheats; cur++) {
+            for (int cur = 0; cur < totalModules; cur++) {
                 int len = this.steps.length;
 
                 // If the cur == 0 then that must mean that it is the head.
@@ -154,7 +154,7 @@ public class ModList extends Module {
             }
         }
 
-        // Return a colour for a given cheat.
+        // Return a colour for a given module.
         @Override
         public int getColour(int cur, int total) {
             // Get the colour that would have been generated for this index
@@ -229,15 +229,15 @@ public class ModList extends Module {
                 TextRenderer textRenderer = ComoClient.textRenderer;
                 List<Module> enabledMods = new ArrayList<Module>();
                 
-                for (String cheatName : ComoClient.Cheats.keySet()) {
-                    Module cheat = ComoClient.Cheats.get(cheatName);
+                for (String moduleName : ComoClient.Modules.keySet()) {
+                    Module module = ComoClient.Modules.get(moduleName);
 
-                    if (!cheat.shouldDisplayInModList()) continue;
+                    if (!module.shouldDisplayInModList()) continue;
                     
-                    enabledMods.add(cheat);
+                    enabledMods.add(module);
                 }
 
-                // Sort the enabledMods list by the cheat name
+                // Sort the enabledMods list by the module name
                 Collections.sort(enabledMods, (c1, c2) -> {
                     return c2.getTextWidth(textRenderer) - c1.getTextWidth(textRenderer);
                 });
@@ -257,18 +257,18 @@ public class ModList extends Module {
                 int MAX_WIDTH  = window.getScaledWidth();
                 int MAX_HEIGHT = window.getScaledHeight();
 
-                for (Module cheat : enabledMods) {
+                for (Module module : enabledMods) {
                     // Positioning based stuff
-                    int x = pos.isRight() ? MAX_WIDTH - cheat.getTextWidth(textRenderer) : 0;
+                    int x = pos.isRight() ? MAX_WIDTH - module.getTextWidth(textRenderer) : 0;
                     
                     int y = 1+10*(display + (pos.isBottom() ? 1 : 0));
                     y = pos.isBottom() ? MAX_HEIGHT - y : y;
 
-                    x = textRenderer.drawWithShadow(e.mStack, cheat.getName(), x, y, this.getColouringMode().getColour(display, enabledMods.size()));
+                    x = textRenderer.drawWithShadow(e.mStack, module.getName(), x, y, this.getColouringMode().getColour(display, enabledMods.size()));
 
-                    if (cheat.hasListOption()) {
+                    if (module.hasListOption()) {
                         // The +2 is just for the space
-                        textRenderer.drawWithShadow(e.mStack, String.format("[%s]", cheat.listOption()), x + 2, y, 0xFFadadad);
+                        textRenderer.drawWithShadow(e.mStack, String.format("[%s]", module.listOption()), x + 2, y, 0xFFadadad);
                     }                    
                     
                     display++;

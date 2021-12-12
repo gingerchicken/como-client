@@ -22,7 +22,7 @@ public class BindsCommand extends CommandNode {
         }
 
         public Binds getBinds() {
-            return (Binds)ComoClient.Cheats.get("binds");
+            return (Binds)ComoClient.Modules.get("binds");
         }
 
         public boolean shouldDisplayKey(Integer keyCode) {
