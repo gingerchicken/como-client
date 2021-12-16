@@ -52,6 +52,11 @@ To retrieve the built files, go to the `/build/libs` directory. Now you can plac
 ### Other Requirements
 Once you have built the jar or downloaded a pre-built jar for the mod, you will need one more library to accompany it: the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api). Place this in the your mods folder **along side** the Como Client jar, and it should work. If it doesn't work make sure to [create an issue](https://github.com/gingerchicken/como-client/issues).
 
+### Contributions
+I am yet to setup a code of conduct for this project, however this will be done at some point.
+
+The setup is simple since it doesn't change from any old Fabric Mod, instructions on which can be found on the [Fabric Wiki](https://fabricmc.net/wiki/tutorial:setup)
+
 ## Features
 Most of the features you will get in this client aren't too different to any other client, however, if you're *that* interested you may wish to [read the features list](/FEATURES.md).
 
