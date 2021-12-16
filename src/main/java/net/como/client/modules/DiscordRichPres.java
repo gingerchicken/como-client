@@ -35,11 +35,27 @@ public class DiscordRichPres extends Module {
     public String getState() {
         return this.state;
     }
-    public void setState(String state) {
-        if (state == null) return;
-        if (state.equals(Strings.EMPTY)) state = null;
 
-        Boolean changed = this.state == null || !this.state.equals(state);
+    private Boolean isNewState(String state) {
+        if (this.state == null) {
+            return state != null;
+        }
+
+        return !this.state.equals(state);
+    }
+
+    private Boolean isNewDetails(String details) {
+        if (this.details == null) {
+            return details != null;
+        }
+
+        return !this.details.equals(details);
+    }
+
+    public void setState(String state) {
+        if (state == null) return; // Use last state
+
+        Boolean changed = this.isNewState(state);
         this.state = state;
 
         if (changed) this.createNewPresence();
@@ -49,7 +65,7 @@ public class DiscordRichPres extends Module {
         return details;
     }
     public void setDetails(String details) {
-        Boolean changed = this.details == null || !this.details.equals(details);
+        Boolean changed = this.isNewDetails(details);
         this.details = details;
 
         if (changed) this.createNewPresence();
