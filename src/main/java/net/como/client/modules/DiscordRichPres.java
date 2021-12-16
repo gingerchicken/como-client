@@ -1,5 +1,7 @@
 package net.como.client.modules;
 
+import java.util.HashMap;
+
 import joptsimple.internal.Strings;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
@@ -12,11 +14,20 @@ import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.ServerUtils;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ServerInfo;
+
+// Screens
+import net.minecraft.client.gui.screen.AddServerScreen;
+import net.minecraft.client.gui.screen.ConfirmScreen;
+import net.minecraft.client.gui.screen.DirectConnectScreen;
+import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
-import net.minecraft.client.network.ServerInfo;
+import net.minecraft.client.gui.screen.world.CreateWorldScreen;
+import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 
 public class DiscordRichPres extends Module {
     private final String APPLICATION_ID = "918490057546039407";
@@ -134,29 +145,35 @@ public class DiscordRichPres extends Module {
         this.closeDiscord();
     }
 
+    // Welp since I cannot cuse switch statements.
+    private HashMap<Class<? extends Screen>, String> screenStates = new HashMap<Class<? extends Screen>, String>() {
+        {
+            String stateMessage;
+            this.put(TitleScreen.class, "Title Screen");
+            
+            stateMessage = "Looking for a multiplayer game";
+            this.put(DirectConnectScreen.class, stateMessage);
+            this.put(AddServerScreen.class, stateMessage);
+            this.put(MultiplayerScreen.class, stateMessage);
+        
+            stateMessage = "Looking to play alone";
+            this.put(CreateWorldScreen.class, stateMessage);
+            this.put(SelectWorldScreen.class, stateMessage);
+            
+            this.put(ConfirmScreen.class, "Are you sure about that?");
+            
+            this.put(GameMenuScreen.class, "Paused");
+        }
+    };
+
     private String getScreenState() {
         Screen current = ComoClient.getClient().currentScreen;
         if (current == null) return null;
 
         // I cannot be bothered to type out like 50 things
         if (current instanceof OptionsScreen || current instanceof GameOptionsScreen) return "Tweaking Settings";
-
-        switch (current.getClass().getSimpleName()) {
-            case "TitleScreen": return "Title Screen";
-
-            case "DirectConnectScreen":
-            case "AddServerScreen":
-            case "MultiplayerScreen": return "Looking for a multiplayer game";
-
-            case "CreateWorldScreen":
-            case "SelectWorldScreen": return "Looking to play alone";
-
-            case "GameMenuScreen": return "Paused";
-
-            case "ConfirmScreen": return "Are you sure about that?";
-        }
-
-        return null;
+        
+        return screenStates.containsKey(current.getClass()) ? screenStates.get(current.getClass()) : null;
     }
 
     private String getGameState() {
