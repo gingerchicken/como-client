@@ -107,6 +107,9 @@
 ### Default Settings
  - PotionEffect: `True`
 
+## HideTitleMessage (`.hidetitlemessage`)
+[(Source Code)](src/main/java/net/como/client/modules/HideTitleMessage.java) Hides the thank you message on the title screen.
+
 ## HomeGodMode (`.homegodmode`)
 [(Source Code)](src/main/java/net/como/client/modules/HomeGodMode.java) Exploits the /sethome and /home feature on servers
 ### Default Settings
