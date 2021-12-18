@@ -183,6 +183,7 @@ public class ComoClient {
         Modules.put("totempopcount", new TotemPopCount());
         Modules.put("shulkerdupe", new ShulkerDupe());
         Modules.put("discordrpc", new DiscordRichPres());
+        Modules.put("hidetitlemessage", new HideTitleMessage());
 
         // Load the config
         if (!Persistance.loadConfig()) {
