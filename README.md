@@ -37,7 +37,7 @@ sudo apt install openjdk-17-jdk
 
 ##### Manjaro/Arch Linux
 `
-sudo pacman -Sy openjdk
+sudo pacman -Sy jdk-openjdk
 `
 
 #### Step 3
