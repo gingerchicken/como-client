@@ -41,6 +41,7 @@
     "botch/AutoReconnectMixin",
     "botch/ClientInit",
     "botch/FontManagerMixin",
+    "botch/TitleScreenLogoMixin",
 
     "botch/shulkerdupe/ShulkerScreenMixin",
     "botch/shulkerdupe/ClientPlayNetworkHandlerMixin",
