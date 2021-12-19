@@ -195,6 +195,7 @@ public class ComoClient {
         Modules.put("shulkerdupe", new ShulkerDupe());
         Modules.put("discordrpc", new DiscordRichPres());
         Modules.put("hidetitlemessage", new HideTitleMessage());
+        Modules.put("fastbreak", new FastBreak());
 
         // Load the config (more module related stuff.)
         if (!Persistance.loadConfig()) {
