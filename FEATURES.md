@@ -94,6 +94,13 @@
  - DrawMode: `MODE_GLOW`
  - GlowColour: `True`
 
+## FastBreak (`.fastbreak`)
+[(Source Code)](src/main/java/net/como/client/modules/FastBreak.java) Allows you to break blocks a bit quicker.
+### Default Settings
+ - BreakDelay: `0.0`
+ - Potion: `True`
+ - PotionAmplifier: `3`
+
 ## Flight (`.flight`)
 [(Source Code)](src/main/java/net/como/client/modules/Flight.java) Basic flight (a bit terrible tbh).
 
