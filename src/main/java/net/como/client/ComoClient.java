@@ -29,7 +29,7 @@ import net.minecraft.util.Identifier;
 public class ComoClient {
     // Variables
     private static String CHAT_PREFIX = ChatUtils.chatPrefix("Como Client");
-    public static CommandHandler commandHandler = new CommandHandler(".");
+    public static CommandHandler commandHandler;
     public static EventEmitter emitter = new EventEmitter();
     public static FriendsManager friendsManager = new FriendsManager();
     public static TextRenderer textRenderer;
@@ -133,6 +133,13 @@ public class ComoClient {
     public static void initialise() {
         ComoClient.log("Loading Como Client...");
 
+        // TODO add persistance for the general config.
+        // General config
+        config = new GeneralConfig();
+
+        // Setup the chat command system.
+        commandHandler = new CommandHandler(config.commandPrefix);
+
         // Load up all the modules
         Modules.put("flight", new Flight());
         Modules.put("blink", new Blink());
@@ -185,7 +192,7 @@ public class ComoClient {
         Modules.put("discordrpc", new DiscordRichPres());
         Modules.put("hidetitlemessage", new HideTitleMessage());
 
-        // Load the config
+        // Load the config (more module related stuff.)
         if (!Persistance.loadConfig()) {
             // It must be a new config.
 
@@ -196,8 +203,6 @@ public class ComoClient {
                 if (module.shouldAutoEnable()) module.enable();
             }
         }
-        
-        config = new GeneralConfig();
 
         // Generate textRenderer
         updateFont(config.font);
