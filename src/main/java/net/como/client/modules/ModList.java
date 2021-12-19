@@ -259,9 +259,16 @@ public class ModList extends Module {
 
                 for (Module module : enabledMods) {
                     // Positioning based stuff
-                    int x = pos.isRight() ? MAX_WIDTH - module.getTextWidth(textRenderer) : 0;
+                    float actualWScale = pos.isRight() ? scale : 1;
+                    float actualHScale = pos.isBottom() ? scale : 1;
+
+                    // Do some magic
+                    float deltaWidth = ((float)MAX_WIDTH * (actualWScale - 1))/actualWScale; 
+                    float deltaHeight = ((float)MAX_HEIGHT * (actualHScale - 1))/actualHScale;
+
+                    int x = pos.isRight() ? MAX_WIDTH - (int)((float)module.getTextWidth(textRenderer)) - (int)deltaWidth : 0;
                     
-                    int y = 1+10*(display + (pos.isBottom() ? 1 : 0));
+                    int y = 1+10*(display + (pos.isBottom() ? 1 : 0)) + (int)deltaHeight;
                     y = pos.isBottom() ? MAX_HEIGHT - y : y;
 
                     x = textRenderer.drawWithShadow(e.mStack, module.getName(), x, y, this.getColouringMode().getColour(display, enabledMods.size()));
