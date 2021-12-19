@@ -24,7 +24,7 @@ public class FastBreak extends Module {
 
         this.addSetting(new Setting("PotionAmplifier", 3));
         this.addSetting(new Setting("Potion", true));
-        this.addSetting(new Setting("BreakDelay", 1d));
+        this.addSetting(new Setting("BreakDelay", 0d));
     }
 
     @Override
