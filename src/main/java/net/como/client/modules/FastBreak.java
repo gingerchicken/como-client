@@ -50,6 +50,7 @@ public class FastBreak extends Module {
         this.removeListen(SendPacketEvent.class);
 
         this.resetPotionEffect();
+        this.targetBlocks.clear();
     }
 
     private static class TimedBreak {
