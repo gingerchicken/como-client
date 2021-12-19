@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.como.client.commands.FontCommand;
 import net.como.client.commands.FriendsCommand;
 import net.como.client.commands.PanicCommand;
 import net.como.client.commands.WaypointsCommand;
@@ -64,6 +65,9 @@ public class ComoClient {
 
     // Commands
     private static void registerModuleCommands() {
+        // Add the font command
+        commandHandler.registerCommand(new FontCommand());
+
         // Add the friends command
         commandHandler.registerCommand(new FriendsCommand(friendsManager));
 
