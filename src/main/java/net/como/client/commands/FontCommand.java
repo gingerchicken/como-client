@@ -1,7 +1,6 @@
 package net.como.client.commands;
 
 import net.como.client.ComoClient;
-import net.como.client.GeneralConfig;
 import net.como.client.commands.structures.Command;
 
 public class FontCommand extends Command {

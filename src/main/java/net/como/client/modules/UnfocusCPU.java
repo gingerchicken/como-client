@@ -5,7 +5,6 @@ import net.como.client.events.ClientTickEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
-import net.minecraft.client.option.Option;
 import net.minecraft.client.util.Window;
 
 public class UnfocusCPU extends Module {

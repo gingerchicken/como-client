@@ -1,9 +1,7 @@
 package net.como.client.modules;
 
 import net.como.client.ComoClient;
-import net.como.client.events.DisconnectEvent;
 import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ServerUtils;
 import net.minecraft.client.gui.screen.Screen;

@@ -1,14 +1,10 @@
 package net.como.client.modules;
 
-import java.util.HashMap;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.lwjgl.opengl.GL11;
 
-import io.netty.util.internal.MathUtil;
 import net.como.client.ComoClient;
-import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.renderLabelIfPresentEvent;
 import net.como.client.structures.Module;

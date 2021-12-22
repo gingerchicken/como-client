@@ -3,8 +3,6 @@ package net.como.client.commands.structures;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import net.como.client.commands.HelpCommand;
 
 public class CommandHandler {

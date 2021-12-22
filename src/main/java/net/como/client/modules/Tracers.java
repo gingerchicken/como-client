@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
-import net.como.client.GeneralConfig;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
 import net.como.client.interfaces.mixin.IEntity;

@@ -1,7 +1,5 @@
 package net.como.client.mixin.render;
 
-import javax.security.auth.callback.Callback;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;

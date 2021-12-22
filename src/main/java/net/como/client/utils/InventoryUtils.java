@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import net.como.client.ComoClient;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
