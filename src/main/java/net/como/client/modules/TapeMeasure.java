@@ -1,9 +1,5 @@
 package net.como.client.modules;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
-import org.lwjgl.opengl.GL11;
-
 import net.como.client.ComoClient;
 import net.como.client.events.RenderWorldEvent;
 import net.como.client.events.SendPacketEvent;
@@ -13,14 +9,11 @@ import net.como.client.structures.settings.Setting;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.gl.VertexBuffer;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Shader;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
 public class TapeMeasure extends Module {

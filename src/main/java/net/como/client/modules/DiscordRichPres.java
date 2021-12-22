@@ -8,7 +8,6 @@ import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.como.client.ComoClient;
 import net.como.client.events.BeginRenderTickEvent;
-import net.como.client.events.ClientTickEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

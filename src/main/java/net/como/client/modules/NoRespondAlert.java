@@ -1,8 +1,5 @@
 package net.como.client.modules;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.InGameHudRenderEvent;
