@@ -94,6 +94,12 @@
  - DrawMode: `MODE_GLOW`
  - GlowColour: `True`
 
+## EntitySpeed (`.entityspeed`)
+[(Source Code)](src/main/java/net/como/client/modules/EntitySpeed.java) Allows you to set a mounted entity's speed.
+### Default Settings
+ - Flight: `True`
+ - Speed: `5.0`
+
 ## FastBreak (`.fastbreak`)
 [(Source Code)](src/main/java/net/como/client/modules/FastBreak.java) Allows you to break blocks a bit quicker.
 ### Default Settings
