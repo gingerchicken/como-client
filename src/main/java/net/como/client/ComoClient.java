@@ -197,6 +197,7 @@ public class ComoClient {
         Modules.put("hidetitlemessage", new HideTitleMessage());
         Modules.put("fastbreak", new FastBreak());
         Modules.put("entityspeed", new EntitySpeed());
+        Modules.put("noeffect", new NoEffect());
 
         // Load the config (more module related stuff.)
         if (!Persistance.loadConfig()) {
