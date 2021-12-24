@@ -14,6 +14,7 @@ public class EntitySpeed extends Module {
 
         this.addSetting(new Setting("Speed", 5d));
         this.addSetting(new Setting("Flight", false));
+        this.addSetting(new Setting("ForceAngles", true));
 
         this.description = "Allows you to set a mounted entity's speed.";
     }
@@ -39,6 +40,11 @@ public class EntitySpeed extends Module {
             case "ClientTickEvent": {
                 Entity ent = ComoClient.me().getVehicle();
                 if (ent == null) break;
+
+                if (this.getBoolSetting("ForceAngles")) {
+                    ent.setYaw(ComoClient.me().getYaw());
+                    ent.setPitch(ComoClient.me().getPitch());
+                }
 
                 ClientUtils.entitySpeedControl(ent, this.getDoubleSetting("Speed"), this.getBoolSetting("Flight"));
 
