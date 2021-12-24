@@ -175,6 +175,11 @@
 ### Default Settings
  - MinDurability: `1`
 
+## NoEffect (`.noeffect`)
+[(Source Code)](src/main/java/net/como/client/modules/NoEffect.java) Allows you to disable specific effects.
+### Default Settings
+ - Effects: `{ ... }`
+
 ## NoEnchantmentBook (`.noenchantmentbook`)
 [(Source Code)](src/main/java/net/como/client/modules/NoEnchantmentBook.java) Hide the enchantment book on the enchantment table.
 
