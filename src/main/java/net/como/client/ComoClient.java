@@ -198,6 +198,7 @@ public class ComoClient {
         Modules.put("fastbreak", new FastBreak());
         Modules.put("entityspeed", new EntitySpeed());
         Modules.put("noeffect", new NoEffect());
+        Modules.put("chatspam", new ChatSpam());
 
         // Load the config (more module related stuff.)
         if (!Persistance.loadConfig()) {
