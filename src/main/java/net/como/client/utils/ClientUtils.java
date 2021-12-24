@@ -109,4 +109,30 @@ public class ClientUtils {
 
         return "Survival";
     }
+
+    public static void entitySpeedControl(Entity ent, Double speed, Boolean allowFlight) {
+        // Initialize as still, or somewhat still.
+        Vec3d velocity = new Vec3d(0, allowFlight ? 0 : ent.getVelocity().getY(), 0);
+
+        // We only need these two velocities since the other you can calculate just by multiplying these out by -1 :P
+        Vec3d forward = MathsUtils.getForwardVelocity(ent);
+        Vec3d right   = MathsUtils.getRightVelocity(ent);
+
+        // Forward + Back
+        if (ComoClient.me().input.pressingForward) velocity = velocity.add(forward.multiply(new Vec3d(speed, 0, speed)));
+        if (ComoClient.me().input.pressingBack)    velocity = velocity.add(forward.multiply(new Vec3d(-speed, 0, -speed)));
+
+        // Right + Left
+        if (ComoClient.me().input.pressingRight) velocity = velocity.add(right.multiply(new Vec3d(speed, 0, speed)));
+        if (ComoClient.me().input.pressingLeft)  velocity = velocity.add(right.multiply(new Vec3d(-speed, 0, -speed)));
+
+        if (allowFlight) {
+            // Up + Down
+            if (ComoClient.me().input.jumping)  velocity = velocity.add(0, speed, 0);
+            if (ComoClient.me().input.sneaking) velocity = velocity.add(0, -speed, 0);
+        }
+
+        // Set the velocity
+        ent.setVelocity(velocity);
+    }
 }
