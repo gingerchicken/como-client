@@ -42,5 +42,10 @@ public class Settings {
         return (String)this.getSetting(name).value;
     }
 
+    @SuppressWarnings("unchecked")
+    public HashMap<String, Boolean> getHashMapSetting(String name) {
+        return (HashMap<String, Boolean>)(this.getSetting(name).value);
+    }
+
     public Settings() { }
 }
