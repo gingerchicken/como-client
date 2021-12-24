@@ -95,9 +95,10 @@
  - GlowColour: `True`
 
 ## EntitySpeed (`.entityspeed`)
-[(Source Code)](src/main/java/net/como/client/modules/EntitySpeed.java) Allows you to set a mounted entity's speed.
+[(Source Code)](src/main/java/net/como/client/modules/EntitySpeed.java) Allows you to set a mounted entity's speed, you can also control entities without saddles.
 ### Default Settings
  - Flight: `True`
+ - ForceAngles: `True`
  - Speed: `5.0`
 
 ## FastBreak (`.fastbreak`)
