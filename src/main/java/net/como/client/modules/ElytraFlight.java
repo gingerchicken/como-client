@@ -38,32 +38,6 @@ public class ElytraFlight extends Module {
 
         ComoClient.me().setVelocity(velocity);
     }
-    private void moveNormalMode() {
-        // Initialize as still.
-        Vec3d velocity = new Vec3d(0, 0, 0);
-
-        // Get the required setting(s)
-        Double maxSpeed = (Double)this.getSetting("MaxSpeed").value;
-
-        // We only need these two velocities since the other you can calculate just by multiplying these out by -1 :P
-		Vec3d forward = MathsUtils.getForwardVelocity(ComoClient.me());
-        Vec3d right   = MathsUtils.getRightVelocity(ComoClient.me());
-
-        // Forward + Back
-        if (ComoClient.me().input.pressingForward) velocity = velocity.add(forward.multiply(new Vec3d(maxSpeed, 0, maxSpeed)));
-        if (ComoClient.me().input.pressingBack)    velocity = velocity.add(forward.multiply(new Vec3d(-maxSpeed, 0, -maxSpeed)));
-
-        // Right + Left
-        if (ComoClient.me().input.pressingRight) velocity = velocity.add(right.multiply(new Vec3d(maxSpeed, 0, maxSpeed)));
-        if (ComoClient.me().input.pressingLeft)  velocity = velocity.add(right.multiply(new Vec3d(-maxSpeed, 0, -maxSpeed)));
-
-        // Up + Down
-        if (ComoClient.me().input.jumping)  velocity = velocity.add(0, maxSpeed, 0);
-        if (ComoClient.me().input.sneaking) velocity = velocity.add(0, -maxSpeed, 0);
-
-        // Set the velocity
-        ComoClient.me().setVelocity(velocity);
-    }
 
     @Override
     public void activate() {
@@ -88,7 +62,7 @@ public class ElytraFlight extends Module {
                 if ((Boolean)this.getSetting("LegitMode").value)
                     this.moveLegitMode();
                 else
-                    this.moveNormalMode();
+                    ClientUtils.entitySpeedControl(ComoClient.me(), this.getDoubleSetting("MaxSpeed"), true);
 
                 break;
             }
