@@ -196,6 +196,7 @@ public class ComoClient {
         Modules.put("discordrpc", new DiscordRichPres());
         Modules.put("hidetitlemessage", new HideTitleMessage());
         Modules.put("fastbreak", new FastBreak());
+        Modules.put("entityspeed", new EntitySpeed());
 
         // Load the config (more module related stuff.)
         if (!Persistance.loadConfig()) {
