@@ -19,6 +19,11 @@ public class EntitySpeed extends Module {
     }
 
     @Override
+    public String listOption() {
+        return this.getBoolSetting("Flight") ? "Flight" : "Travel";
+    }
+
+    @Override
     public void activate() {
         this.addListen(ClientTickEvent.class);
     }
