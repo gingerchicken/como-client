@@ -61,3 +61,10 @@ Most of the features you will get in this client aren't too different to any oth
 ## Thanks
 ### The Wurst Project
 While developing this I was aided by the source code of the [Wurst Project](https://github.com/Wurst-Imperium/Wurst7), since this is my first ever mod for Minecraft, I was quite unfamiliar with the way Minecraft and its APIs work etc. therefore, by looking some parts of Wurst's source code, I could quickly understand the API and start making this mod.
+
+## Reviews
+### Happy Customer #1
+Here is a very satisfied and happy customer !!!
+<p align="center">
+    <img src="src/main/resources/assets/como-client/review.png"/>
+</p>
