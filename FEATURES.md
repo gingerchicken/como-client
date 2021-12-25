@@ -57,6 +57,15 @@
 ### Default Settings
  - Phrases: `{ ... }`
 
+## ChatSpam (`.chatspam`)
+[(Source Code)](src/main/java/net/como/client/modules/ChatSpam.java) Spams the chat with different messages
+### Default Settings
+ - Delay: `0.5`
+ - HashPrefix: `True`
+ - Messages: `{ ... }`
+ - RandPrefix: `True`
+ - RandomCase: `True`
+
 ## Criticals (`.criticals`)
 [(Source Code)](src/main/java/net/como/client/modules/Criticals.java) Makes every hit a critical hit.
 
