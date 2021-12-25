@@ -26,6 +26,8 @@ public class ChatSpam extends Module {
 
         this.addSetting(new Setting("RandPrefix", true));
         this.addSetting(new Setting("HashPrefix", true));
+
+        this.addSetting(new Setting("RandomCase", false));
     }
 
     private Random random = new Random();
@@ -49,6 +51,20 @@ public class ChatSpam extends Module {
         }
 
         return msg;
+    }
+
+    private String randomCase(String str) {
+        char[] chars = str.toCharArray();
+
+        for (int i = 0; i < chars.length; i++) {
+            if (this.random.nextInt() % 2 == 0) {
+                chars[i] = Character.toUpperCase(chars[i]);
+            } else {
+                chars[i] = Character.toLowerCase(chars[i]);
+            }
+        }
+
+        return new String(chars);
     }
 
     private String getRandomPrefix(Boolean hash) {
@@ -84,13 +100,12 @@ public class ChatSpam extends Module {
     private Double lastPostTime = 0d;
 
     private String generateMessage() {
-        return this.getBoolSetting("RandPrefix")
-        ? String.format(
-            "%s [%s]",
-            this.getMessage(),
-            this.getRandomPrefix(this.getBoolSetting("HashPrefix"))
-        ) 
-        : this.getMessage();
+        String msg = this.getMessage();
+
+        msg = this.getBoolSetting("RandPrefix") ? String.format("%s [%s]", msg, this.getRandomPrefix(this.getBoolSetting("HashPrefix"))) : msg;
+        msg = this.getBoolSetting("RandomCase") ? this.randomCase(msg) : msg;
+
+        return msg;
     }
 
     @Override
