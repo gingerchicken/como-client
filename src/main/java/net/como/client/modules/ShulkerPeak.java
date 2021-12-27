@@ -28,7 +28,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 
 public class ShulkerPeak extends Module {
-    private static final Identifier BACKGROUND_TEXTURE = new Identifier("como-client", "textures/gui/shulker_tooltip_header.png");
+    private static final Identifier BACKGROUND_TEXTURE = new Identifier("como-client", "textures/gui/misc/shulker_tooltip_header.png");
     private static final int BACKGROUND_WIDTH = 176, BACKGROUND_HEIGHT = 78;
 
     public ShulkerPeak() {
