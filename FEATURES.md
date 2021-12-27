@@ -139,6 +139,9 @@
  - HomeName: `"Death"`
  - RespawnDelay: `250.0`
 
+## InfChat (`.infchat`)
+[(Source Code)](src/main/java/net/como/client/modules/InfChat.java) Allows you to type as much as you want in the chat.
+
 ## ItemRenderTweaks (`.itemrendertweaks`)
 [(Source Code)](src/main/java/net/como/client/modules/ItemRenderTweaks.java) Allows you to change how held items are rendered.
 ### Default Settings
