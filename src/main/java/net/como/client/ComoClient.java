@@ -199,6 +199,7 @@ public class ComoClient {
         Modules.put("entityspeed", new EntitySpeed());
         Modules.put("noeffect", new NoEffect());
         Modules.put("chatspam", new ChatSpam());
+        Modules.put("infchat", new InfChat());
 
         // Load the config (more module related stuff.)
         if (!Persistance.loadConfig()) {
