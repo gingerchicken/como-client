@@ -42,6 +42,7 @@
     "botch/ClientInit",
     "botch/FontManagerMixin",
     "botch/TitleScreenLogoMixin",
+    "botch/InfChatMixin",
 
     "botch/shulkerdupe/ShulkerScreenMixin",
     "botch/shulkerdupe/ClientPlayNetworkHandlerMixin",
