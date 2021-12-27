@@ -25,12 +25,12 @@ public class SimpleContainer extends Widget {
 
     @Override
     public void render(MatrixStack matrixStack) {
-      Render2DUtils.renderBox(matrixStack,
-        (int)this.getPosition().x,
-        (int)this.getPosition().y,
-        (int)this.getRightPosition().x,
-        (int)this.getRightPosition().y
-      );
+        Render2DUtils.renderBox(matrixStack,
+            (int)this.getPosition().x,
+            (int)this.getPosition().y,
+            (int)this.getRightPosition().x,
+            (int)this.getRightPosition().y
+        );
     }
 
 }
