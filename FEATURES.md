@@ -66,6 +66,9 @@
  - RandPrefix: `True`
  - RandomCase: `True`
 
+## ClickGUI (`.clickgui`)
+[(Source Code)](src/main/java/net/como/client/modules/ClickGUI.java) CURRENTLY JUST A TEST MODULE - ignore this please.
+
 ## Criticals (`.criticals`)
 [(Source Code)](src/main/java/net/como/client/modules/Criticals.java) Makes every hit a critical hit.
 
