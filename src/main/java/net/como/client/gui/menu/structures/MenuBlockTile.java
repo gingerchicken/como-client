@@ -4,6 +4,7 @@ import net.como.client.ComoClient;
 import net.como.client.gui.Widget;
 import net.como.client.gui.menu.MenuBlock;
 import net.como.client.structures.Colour;
+import net.como.client.utils.ClientUtils;
 import net.como.client.utils.Render2DUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.util.math.MatrixStack;
@@ -81,17 +82,19 @@ public class MenuBlockTile extends Widget {
             this.getOutlineColour()
         );
 
-        Render2DUtils.renderBoxShadow(
-            matrixStack,
-            (int)pos.x,
-            (int)pos.y,
-            (int)(pos.x + size.x),
-            (int)(pos.y + size.y)
-        );
+        if (!this.isMouseOver()) {
+            Render2DUtils.renderBoxShadow(
+                matrixStack,
+                (int)pos.x,
+                (int)pos.y,
+                (int)(pos.x + size.x),
+                (int)(pos.y + size.y)
+            );
+        }
 
+        // Text offsets
         float offsetX = 2;
         float offsetY = 3;
-
         ComoClient.textRenderer.drawWithShadow(
             matrixStack,
             Text.of(this.title),
