@@ -201,6 +201,9 @@ public class ComoClient {
         Modules.put("chatspam", new ChatSpam());
         Modules.put("infchat", new InfChat());
 
+        // TESTING DON'T GET EXCITED!
+        Modules.put("clickgui", new ClickGUI());
+
         // Load the config (more module related stuff.)
         if (!Persistance.loadConfig()) {
             // It must be a new config.
