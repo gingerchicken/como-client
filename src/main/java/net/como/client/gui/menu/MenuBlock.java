@@ -23,7 +23,7 @@ public class MenuBlock extends Widget {
         super(position, size);
     
         this.bgColour = new Colour(0, 0, 0, 150);
-        this.outline  = new Colour(255, 255, 255, 150);
+        this.outline  = new Colour(0, 0, 0, 255);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MenuBlock extends Widget {
             matrixStack,
             (int)pos.x,
             (int)pos.y,
-            (int)(pos.x + size.x),
+            (int)(pos.x + size.x ),
             (int)(pos.y + size.y), // -1 cus something messed up
             bgColour,
             outline
