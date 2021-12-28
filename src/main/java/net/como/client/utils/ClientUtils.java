@@ -3,16 +3,20 @@ package net.como.client.utils;
 import net.como.client.ComoClient;
 import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.utils.RotationUtils.Rotation;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Mouse;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.client.util.Window;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 
 public class ClientUtils {
@@ -134,5 +138,19 @@ public class ClientUtils {
 
         // Set the velocity
         ent.setVelocity(velocity);
+    }
+
+    public static Vec2f getMousePosition() {
+        MinecraftClient client = ComoClient.getClient();
+        Mouse mouse = client.mouse;
+        Window window = client.getWindow();
+
+        if (mouse.isCursorLocked()) return new Vec2f(window.getScaledWidth()/2, window.getScaledHeight()/2);
+
+        double scaleFactor = window.getScaleFactor();
+        int posX = (int)(mouse.getX()/scaleFactor);
+        int posY = (int)(mouse.getY()/scaleFactor);
+
+        return new Vec2f(posX, posY);
     }
 }
