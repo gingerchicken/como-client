@@ -157,7 +157,7 @@ public class Render2DUtils {
 
     public static void renderBoxShadow(MatrixStack matrixStack, int x, int y, int x2, int y2) {
         renderBoxShadow(
-            matrixStack, x, y, x2, y2, new Colour(0, 0, 0, 15)
+            matrixStack, x, y, x2, y2, new Colour(0, 0, 0, 5)
         );
     }
 }
