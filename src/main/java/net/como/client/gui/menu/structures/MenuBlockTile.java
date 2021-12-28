@@ -81,6 +81,14 @@ public class MenuBlockTile extends Widget {
             this.getOutlineColour()
         );
 
+        Render2DUtils.renderBoxShadow(
+            matrixStack,
+            (int)pos.x,
+            (int)pos.y,
+            (int)(pos.x + size.x),
+            (int)(pos.y + size.y)
+        );
+
         float offsetX = 2;
         float offsetY = 3;
 
