@@ -69,6 +69,13 @@ public class Widget {
         );
     }
 
+    public Vec2f getRightScreenPosition() {
+        return new Vec2f(
+            this.getScreenPosition().x + this.getSize().x,
+            this.getScreenPosition().y + this.getSize().y
+        );
+    }
+
     public Vec2f getSize() {
         return this.size;
     }
