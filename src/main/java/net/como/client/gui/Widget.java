@@ -83,6 +83,14 @@ public class Widget {
         this.size = size;
     }
 
+    public boolean isInBounds(int x, int y) {
+        return (x >= this.getScreenPosition().x && x <= this.getRightScreenPosition().x) && (y >= this.getScreenPosition().y && y <= this.getRightScreenPosition().y);
+    }
+
+    public boolean isInBounds(Vec2f vec) {
+        return this.isInBounds((int)vec.x, (int)vec.y);
+    }
+    
     public void render(MatrixStack matrixStack) {}
     public void clicked() {}
 }
