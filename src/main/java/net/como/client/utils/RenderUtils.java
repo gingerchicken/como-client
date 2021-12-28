@@ -1015,6 +1015,10 @@ public class RenderUtils {
 		renderBlockBox(mStack, bPos, 255, 255, 255, 255);
 	}
 
+	public static int RGBA2Int(Colour c) {
+		return RGBA2Int((int)c.r, (int)c.g, (int)c.b, (int)c.a);
+	}
+
 	public static int RGBA2Int(int r, int g, int b, int a) {
 		int colour[] = {
 			a, r, g, b
