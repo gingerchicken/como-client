@@ -144,31 +144,20 @@ public class Render2DUtils {
         renderBox(matrixStack, x, y, x2, y2, outline);
     }
 
-    public static void renderBoxShadow(MatrixStack matrixStack, int x, int y, int x2, int y2, Colour shadowColour, int gradient, int steps) {
-        for (int i = steps; i >= 0; i--) {
-            Colour c = new Colour(
-                shadowColour.r, shadowColour.g, shadowColour.b, shadowColour.a - i * gradient
-            );
+    public static void renderBoxShadow(MatrixStack matrixStack, int x, int y, int x2, int y2, Colour shadowColour) {
+        Vec2f size = new Vec2f(x2 - x, y2 - y);
+        
+        int sideWidth = 2;
+        int bottomWidth = 4;
 
-            begin(matrixStack, c);
-            BufferContainer bufferContainer = new BufferContainer(matrixStack);
-    
-            // Right
-            bufferContainer.vertex2D(x2 - i, y);
-            bufferContainer.vertex2D(x2 - i, y2 - i);
-    
-            // Bottom
-            bufferContainer.vertex2D(x , y2 - i);
-            bufferContainer.vertex2D(x2 - i, y2 - i);
-    
-            bufferContainer.close();
-            finish(matrixStack);
-        }
+        int offsetY = (int)(size.y) - bottomWidth;
+        renderBackground(matrixStack, x, y + offsetY, x2 - sideWidth, y2, shadowColour);
+        renderBackground(matrixStack, x2 - sideWidth, y, x2, y2, shadowColour);
     }
 
     public static void renderBoxShadow(MatrixStack matrixStack, int x, int y, int x2, int y2) {
         renderBoxShadow(
-            matrixStack, x, y, x2, y2, new Colour(0, 0, 0, 150), 50, 1
+            matrixStack, x, y, x2, y2, new Colour(0, 0, 0, 15)
         );
     }
 }
