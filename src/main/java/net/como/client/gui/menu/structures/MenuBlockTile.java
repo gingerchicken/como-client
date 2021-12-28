@@ -24,6 +24,12 @@ public class MenuBlockTile extends Widget {
         return this.bgColour;
     }
 
+    public Colour getOutlineColour() {
+        Colour c = this.getBackgroundColour();
+
+        return new Colour(c.r, c.g, c.b, c.a - 50);
+    }
+
     public MenuBlockTile(MenuBlock container, String title, Colour backgroundColour) {
         super(
             new Vec2f(0, MenuBlock.calculateHeight(container.getChildren().size())),
@@ -36,7 +42,7 @@ public class MenuBlockTile extends Widget {
         this.setParent(container);
 
         this.textColour = new Colour(255, 255, 255, 255);
-        this.bgColour   = backgroundColour; // new Colour(255, 255, 255, 150);
+        this.bgColour   = backgroundColour;
     }
 
     private MenuBlock getParentMenuBlock() {
@@ -67,12 +73,12 @@ public class MenuBlockTile extends Widget {
 
         Render2DUtils.renderBackgroundBox(
             matrixStack,
-            (int)pos.x + 1,
+            (int)pos.x,
             (int)pos.y,
-            (int)(pos.x + size.x - 1),
+            (int)(pos.x + size.x),
             (int)(pos.y + size.y),
             this.getBackgroundColour(),
-            this.outlineColour
+            this.getOutlineColour()
         );
 
         float offsetX = 2;
