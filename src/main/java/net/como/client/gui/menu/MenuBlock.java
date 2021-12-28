@@ -35,8 +35,8 @@ public class MenuBlock extends Widget {
             matrixStack,
             (int)pos.x,
             (int)pos.y,
-            (int)(pos.x + size.x ),
-            (int)(pos.y + size.y), // -1 cus something messed up
+            (int)(pos.x + size.x),
+            (int)(pos.y + size.y - 1), // -1 cus something messed up
             bgColour,
             outline
         );
