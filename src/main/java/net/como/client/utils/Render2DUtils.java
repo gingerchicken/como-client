@@ -143,4 +143,32 @@ public class Render2DUtils {
         renderBackground(matrixStack, x, y, x2, y2, bgColour);
         renderBox(matrixStack, x, y, x2, y2, outline);
     }
+
+    public static void renderBoxShadow(MatrixStack matrixStack, int x, int y, int x2, int y2, Colour shadowColour, int gradient, int steps) {
+        for (int i = steps; i >= 0; i--) {
+            Colour c = new Colour(
+                shadowColour.r, shadowColour.g, shadowColour.b, shadowColour.a - i * gradient
+            );
+
+            begin(matrixStack, c);
+            BufferContainer bufferContainer = new BufferContainer(matrixStack);
+    
+            // Right
+            bufferContainer.vertex2D(x2 - i, y);
+            bufferContainer.vertex2D(x2 - i, y2 - i);
+    
+            // Bottom
+            bufferContainer.vertex2D(x , y2 - i);
+            bufferContainer.vertex2D(x2 - i, y2 - i);
+    
+            bufferContainer.close();
+            finish(matrixStack);
+        }
+    }
+
+    public static void renderBoxShadow(MatrixStack matrixStack, int x, int y, int x2, int y2) {
+        renderBoxShadow(
+            matrixStack, x, y, x2, y2, new Colour(0, 0, 0, 150), 50, 1
+        );
+    }
 }
