@@ -25,6 +25,9 @@
  - DesiredColours: `{ ... }`
  - MaxDistance: `3.0`
 
+## AutoSprint (`.autosprint`)
+[(Source Code)](src/main/java/net/como/client/modules/AutoSprint.java) Makes you sprint whenever you move.
+
 ## AutoTotem (`.autototem`)
 [(Source Code)](src/main/java/net/como/client/modules/AutoTotem.java) Automatically places a totem into your off hand
 
