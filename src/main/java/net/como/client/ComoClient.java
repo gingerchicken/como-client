@@ -201,6 +201,7 @@ public class ComoClient {
         Modules.put("chatspam", new ChatSpam());
         Modules.put("infchat", new InfChat());
         Modules.put("autowalk", new AutoWalk());
+        Modules.put("autosprint", new AutoSprint());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
