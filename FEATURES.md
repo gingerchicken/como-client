@@ -28,6 +28,9 @@
 ## AutoTotem (`.autototem`)
 [(Source Code)](src/main/java/net/como/client/modules/AutoTotem.java) Automatically places a totem into your off hand
 
+## AutoWalk (`.autowalk`)
+[(Source Code)](src/main/java/net/como/client/modules/AutoWalk.java) A simple module that just walks forward without you having to press anything.
+
 ## BetterNameTags (`.betternametags`)
 [(Source Code)](src/main/java/net/como/client/modules/BetterNameTags.java) Renders a different kind of name-tag above nearby players.
 ### Default Settings
