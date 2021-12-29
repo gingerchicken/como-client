@@ -202,6 +202,7 @@ public class ComoClient {
         Modules.put("infchat", new InfChat());
         Modules.put("autowalk", new AutoWalk());
         Modules.put("autosprint", new AutoSprint());
+        Modules.put("entityspin", new EntitySpin());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
