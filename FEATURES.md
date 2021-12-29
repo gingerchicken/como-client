@@ -119,6 +119,13 @@
  - ForceAngles: `True`
  - Speed: `5.0`
 
+## EntitySpin (`.entityspin`)
+[(Source Code)](src/main/java/net/como/client/modules/EntitySpin.java) Rotates the ridden entity at varying speed.
+### Default Settings
+ - Pitch: `True`
+ - Speed: `5.0`
+ - Yaw: `True`
+
 ## FastBreak (`.fastbreak`)
 [(Source Code)](src/main/java/net/como/client/modules/FastBreak.java) Allows you to break blocks a bit quicker.
 ### Default Settings
