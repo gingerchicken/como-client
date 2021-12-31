@@ -17,7 +17,13 @@ import net.como.client.commands.structures.CommandHandler;
 import net.como.client.components.FriendsManager;
 import net.como.client.interfaces.mixin.IClient;
 import net.como.client.interfaces.mixin.IFontManager;
-import net.como.client.modules.*;
+
+import net.como.client.modules.chat.*;
+import net.como.client.modules.combat.*;
+import net.como.client.modules.exploits.*;
+import net.como.client.modules.movement.*;
+import net.como.client.modules.render.*;
+import net.como.client.modules.utilities.*;
 import net.como.client.utils.*;
 
 import net.como.client.structures.Module;

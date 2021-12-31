@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
-import net.como.client.modules.AutoReconnect;
+import net.como.client.modules.utilities.AutoReconnect;
 import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.LiteralText;
