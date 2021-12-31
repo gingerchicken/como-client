@@ -5,7 +5,7 @@ import java.util.Arrays;
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
-import net.como.client.modules.Binds;
+import net.como.client.modules.utilities.Binds;
 import net.como.client.utils.ChatUtils;
 
 public class BindsCommand extends CommandNode {

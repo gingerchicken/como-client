@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.como.client.ComoClient;
-import net.como.client.modules.Timer;
+import net.como.client.modules.movement.Timer;
 import net.como.client.utils.ClientUtils;
 import net.minecraft.client.render.RenderTickCounter;
 
