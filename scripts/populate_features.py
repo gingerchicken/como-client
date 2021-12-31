@@ -1,6 +1,7 @@
 from enum import Enum
 import os
 import hashlib
+from pathlib import Path
 
 FEATURES_DIR = "src/main/java/net/como/client/modules"
 TARGET_PATH = "FEATURES.md"
@@ -193,7 +194,7 @@ class Feature:
         return settings
 
 # Scan for all of the features
-features = [Feature(os.path.join(FEATURES_DIR, i)) for i in os.listdir(FEATURES_DIR)]
+features = [Feature(str(path)) for path in Path(FEATURES_DIR).rglob("*.java")]
 
 # Sort them alphabetically
 features.sort(key=lambda x: x.get_name())
