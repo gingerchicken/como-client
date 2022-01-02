@@ -26,6 +26,8 @@ public class XRay extends Module {
         // Non-specific search (more lag expected)
         this.addSetting(new Setting("NonSpecificSearch", false));
         this.addSetting(new Setting("BlockSearch", new HashMap<String, Boolean>()));
+
+        this.setCategory("Render");
     }
 
     private boolean shouldOverrideFullbright() {

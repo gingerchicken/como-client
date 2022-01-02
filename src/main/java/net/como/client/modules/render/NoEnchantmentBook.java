@@ -9,6 +9,7 @@ public class NoEnchantmentBook extends Module {
         super("NoEnchantBook");
 
         this.description = "Hide the enchantment book on the enchantment table.";
+        this.setCategory("Render");
     }
 
     @Override

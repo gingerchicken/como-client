@@ -12,6 +12,8 @@ public class Flight extends Module {
         super("Flight");
 
         this.description = "Basic flight (a bit terrible tbh).";
+
+        this.setCategory("Movement");
     }
     
     @Override

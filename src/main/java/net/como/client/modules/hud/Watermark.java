@@ -18,10 +18,11 @@ public class Watermark extends Module {
 
     public Watermark() {
         super("Watermark", true);
+        this.description = "Renders the Como Client watermark on the screen.";
 
         this.addSetting(new Setting("Scale", 1.0d));
-
-        this.description = "Renders the Como Client watermark on the screen.";
+        
+        this.setCategory("HUD");
     }
     
     @Override

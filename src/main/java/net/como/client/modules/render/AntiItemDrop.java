@@ -9,6 +9,7 @@ public class AntiItemDrop extends Module {
         super("NoItemRender");
 
         this.description = "Hide all dropped items so then your friends cannot kill your client repeatedly.";
+        this.setCategory("Render");
     }
 
     @Override

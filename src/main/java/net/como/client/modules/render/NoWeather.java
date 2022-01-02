@@ -9,6 +9,7 @@ public class NoWeather extends Module {
         super("AntiBritish");
 
         this.description = "Hides the rain.";
+        this.setCategory("Render");
     }
 
     @Override

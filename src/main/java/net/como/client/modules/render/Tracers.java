@@ -44,6 +44,7 @@ public class Tracers extends Module {
         this.addSetting(new Setting("Transparency", 1f));
     
         this.description = "Draws tracers to specified targets.";
+        this.setCategory("Render");
     }
     
     @Override

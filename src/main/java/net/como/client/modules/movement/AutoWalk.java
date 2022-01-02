@@ -13,6 +13,8 @@ public class AutoWalk extends Module {
         this.description = "A simple module that just walks forward without you having to press anything.";
 
         // TODO make it stop when there is a hole ahead and add a setting for it.
+
+        this.setCategory("Movement");
     }
 
     @Override

@@ -17,6 +17,8 @@ public class EntitySpeed extends Module {
         this.addSetting(new Setting("ForceAngles", true));
 
         this.description = "Allows you to set a mounted entity's speed, you can also control entities without saddles.";
+
+        this.setCategory("Movement");
     }
 
     @Override

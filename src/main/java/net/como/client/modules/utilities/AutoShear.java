@@ -20,6 +20,7 @@ public class AutoShear extends Module {
         this.addSetting(new Setting("DesiredColours", new HashMap<String, Boolean>()));
 
         this.description = "Shear sheep with a specific colour of wool automatically.";
+        this.setCategory("Utilities");
     }
 
     @SuppressWarnings("unchecked")

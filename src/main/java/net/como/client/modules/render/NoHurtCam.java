@@ -9,6 +9,7 @@ public class NoHurtCam extends Module {
         super("NoHurtCam");
 
         this.description = "Disables the screen rotation when getting damaged.";
+        this.setCategory("Render");
     }
 
     @Override

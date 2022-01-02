@@ -23,6 +23,8 @@ public class TotemPopCount extends Module {
         // Default One min
         this.addSetting(new Setting("CountDuration", 60d));
         this.addSetting(new Setting("DeathMessage", true));
+        
+        this.setCategory("Combat");
     }
 
     private Integer localPopCount = 0;

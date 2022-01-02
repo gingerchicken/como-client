@@ -17,6 +17,7 @@ public class NoBreak extends Module {
         this.addSetting(new Setting("MinDurability", 1));
 
         this.description = "Prevent your pickaxes from accidentally breaking.";
+        this.setCategory("Utilities");
     }
 
     @Override

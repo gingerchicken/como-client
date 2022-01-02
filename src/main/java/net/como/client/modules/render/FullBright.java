@@ -20,6 +20,8 @@ public class FullBright extends Module {
 
         // TODO change this once you add EnumSettings
         this.addSetting(new Setting("PotionEffect", false));
+
+        this.setCategory("Render");
     }
 
     @Override

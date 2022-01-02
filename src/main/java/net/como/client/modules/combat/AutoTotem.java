@@ -20,6 +20,8 @@ public class AutoTotem extends Module {
         super("AutoTotem");
 
         this.description = "Automatically places a totem into your off hand";
+
+        this.setCategory("Combat");
     }
     
     @Override

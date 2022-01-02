@@ -28,6 +28,8 @@ public class ChatSpam extends Module {
         this.addSetting(new Setting("HashPrefix", true));
 
         this.addSetting(new Setting("RandomCase", false));
+
+        this.setCategory("Chat");
     }
 
     private Random random = new Random();

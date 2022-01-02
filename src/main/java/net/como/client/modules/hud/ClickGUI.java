@@ -19,6 +19,8 @@ public class ClickGUI extends Module {
     public ClickGUI() {
         super("ClickGUI");
         this.description = "CURRENTLY JUST A TEST MODULE - ignore this please.";
+
+        this.setCategory("HUD");
     }
 
     private List<MenuBlock> menuBlocks = new ArrayList<>();

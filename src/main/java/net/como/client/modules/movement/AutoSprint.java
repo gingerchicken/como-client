@@ -11,6 +11,8 @@ public class AutoSprint extends Module {
     public AutoSprint() {
         super("AutoSprint");
         this.description = "Makes you sprint whenever you move.";
+
+        this.setCategory("Movement");
     }
 
     @Override

@@ -154,6 +154,7 @@ public class Binds extends Module {
         this.addSetting(new Setting("HideCommandOutput", true));
 
         ComoClient.commandHandler.registerCommand(new BindsCommand());
+        this.setCategory("Utilities");
     }
 
     @Override

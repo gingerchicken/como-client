@@ -10,5 +10,7 @@ public class Timer extends Module {
         this.addSetting(new Setting("Speed", 1d));
 
         this.description = "Change the client-side tick rate.";
+
+        this.setCategory("Movement");
     }
 }
