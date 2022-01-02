@@ -12,6 +12,7 @@
     "client/ClientPlayNetworkHandlerMixin",
     "client/MinecraftClientMixin",
     "client/KeyboardMixin",
+    "client/MouseMixin",
 
     "entity/PlayerEntityMixin",
     "entity/EntityMixin",
