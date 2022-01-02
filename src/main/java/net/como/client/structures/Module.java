@@ -24,6 +24,10 @@ public class Module extends Settings implements EventListener, Flatternable {
         return this.category;
     }
 
+    protected void setCategory(String category) {
+        this.category = category;
+    }
+
     public String description;
     public boolean modListDisplay = true;
     
