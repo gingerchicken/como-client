@@ -26,4 +26,8 @@ public class ModBlockTile extends MenuBlockTile {
         this.module = module;
     }
     
+    @Override
+    public void clicked() {
+        this.module.toggle();
+    }
 }
