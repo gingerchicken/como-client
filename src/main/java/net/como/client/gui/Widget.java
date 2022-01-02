@@ -23,7 +23,7 @@ public class Widget {
     private List<Widget> children = new ArrayList<>();
 
     public boolean hasChild() {
-        return this.getChildren().size() == 0;
+        return this.getChildren().size() > 0;
     }
 
     public List<Widget> getChildren() {
