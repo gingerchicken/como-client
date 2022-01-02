@@ -24,6 +24,8 @@ public class MenuBlock extends Widget {
     
         this.bgColour = new Colour(0, 0, 0, 150);
         this.outline  = new Colour(0, 0, 0, 255);
+
+        this.clickable = true;
     }
 
     @Override

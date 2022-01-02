@@ -44,6 +44,8 @@ public class MenuBlockTile extends Widget {
 
         this.textColour = new Colour(255, 255, 255, 255);
         this.bgColour   = backgroundColour;
+        
+        this.clickable = true;
     }
 
     private MenuBlock getParentMenuBlock() {
