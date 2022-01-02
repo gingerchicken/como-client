@@ -12,7 +12,7 @@ import net.minecraft.util.math.Vec2f;
 public class Widget {
     private Vec2f pos;
     private Vec2f size;
-    private boolean clickable;
+    protected boolean clickable;
 
     public Widget(Vec2f position, Vec2f size) {
         this.setPosition(position);
@@ -99,5 +99,14 @@ public class Widget {
     }
 
     public void render(MatrixStack matrixStack) {}
-    public void clicked() {}
+    public void clicked() {
+        if (!this.isClickable() || !this.hasChild()) return;
+
+        for (Widget widget : this.getChildren()) {
+            if (widget.isMouseOver()) {
+                widget.clicked();
+                break;
+            }
+        }
+    }
 }
