@@ -18,6 +18,11 @@ import net.como.client.structures.events.EventEmitter;
 public class Module extends Settings implements EventListener, Flatternable {
     private String name;
     private boolean enabled;
+    private String category = "misc";
+
+    public String getCategory() {
+        return this.category;
+    }
 
     public String description;
     public boolean modListDisplay = true;
