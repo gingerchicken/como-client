@@ -10,6 +10,7 @@ public class NoBoss extends Module {
         super("NoBoss");
 
         this.description = "Hide annoying boss bars and their effects.";
+        this.setCategory("Render");
     }
   
     @Override

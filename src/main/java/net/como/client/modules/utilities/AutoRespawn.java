@@ -10,6 +10,7 @@ public class AutoRespawn extends Module {
         super("AutoRespawn");
 
         this.description = "Automatically respawns the player.";
+        this.setCategory("Utilities");
     }
 
     @Override

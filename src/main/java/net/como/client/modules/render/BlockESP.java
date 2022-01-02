@@ -23,6 +23,8 @@ public class BlockESP extends Module {
         this.addSetting(new Setting("Blocks", new HashMap<String, Boolean>()));
     
         this.description = "Makes specific blocks visible through walls.";
+
+        this.setCategory("Render");
     }
 
     @Override

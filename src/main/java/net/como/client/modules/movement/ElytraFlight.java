@@ -19,6 +19,8 @@ public class ElytraFlight extends Module {
         this.addSetting(new Setting("LegitMode", false));
 
         this.description = "Fly with the elytra but without needing fireworks etc.";
+
+        this.setCategory("Movement");
     }
 
     private void moveLegitMode() {

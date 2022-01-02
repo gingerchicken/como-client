@@ -60,6 +60,7 @@ public class CrystalAura extends Module {
         this.addSetting(new Setting("Mob", false));
 
         this.description = "Automatically places/destroys nearby crystals.";
+        this.setCategory("Combat");
     }
 
     private ServerClientRotation scRot = new ServerClientRotation();

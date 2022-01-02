@@ -14,6 +14,7 @@ public class AutoReconnect extends Module {
         this.addSetting(new Setting("Manual", false));
 
         this.description = "Automatically reconnects to a server after a given time.";
+        this.setCategory("Utilities");
     }
 
     private double startTime = 0;

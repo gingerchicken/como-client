@@ -17,6 +17,7 @@ public class NoPortal extends Module {
         this.addSetting(new Setting("AllowTyping", true));
     
         this.description = "Allows portal effects to be toggled.";
+        this.setCategory("Render");
     }
 
     @Override

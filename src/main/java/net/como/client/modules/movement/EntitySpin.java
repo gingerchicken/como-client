@@ -17,6 +17,8 @@ public class EntitySpin extends Module {
         
         this.addSetting(new Setting("Yaw", true));
         this.addSetting(new Setting("Pitch", true));
+
+        this.setCategory("Movement");
     }
 
     @Override

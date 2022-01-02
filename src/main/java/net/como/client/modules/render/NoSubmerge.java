@@ -15,6 +15,7 @@ public class NoSubmerge extends Module {
         this.addSetting(new Setting("PowderSnow", true));
     
         this.description = "Allows submerge overlays to be toggled.";
+        this.setCategory("Render");
     }
 
     @Override

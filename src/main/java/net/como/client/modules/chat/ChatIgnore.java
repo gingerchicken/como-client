@@ -20,6 +20,8 @@ public class ChatIgnore extends Module {
 
         // Registering commandsCommandChatIgnore
         ComoClient.commandHandler.registerCommand(new CommandChatIgnore());
+
+        this.setCategory("Chat");
     }
 
     // TODO potential bug with blocking our own messages.

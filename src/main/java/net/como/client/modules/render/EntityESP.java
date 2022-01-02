@@ -33,6 +33,8 @@ public class EntityESP extends Module {
         this.addSetting(new Setting("DrawMode", MODE_GLOW));
 
         this.description = "Know where entities are more easily.";
+
+        this.setCategory("Render");
     }
 
     @Override

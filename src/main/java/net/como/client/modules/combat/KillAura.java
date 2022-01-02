@@ -41,6 +41,7 @@ public class KillAura extends Module {
         this.addSetting(new Setting("TracerLifeSpan", 0.25d));
     
         this.description = "Automatically attacks specified targets.";
+        this.setCategory("Combat");
     }
     
     private ServerClientRotation scRot = new ServerClientRotation();

@@ -177,6 +177,8 @@ public class ModList extends Module {
         this.addSetting(new Setting("Scale", 1.0f));
         this.addSetting(new Setting("RGBIntensity", 5));
         this.addSetting(new Setting("Positioning", 1)); // TODO change this after implementing issue #44
+
+        this.setCategory("HUD");
     }
 
     private ColouringMode getColouringMode() {

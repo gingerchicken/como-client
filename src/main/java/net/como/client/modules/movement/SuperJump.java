@@ -12,6 +12,8 @@ public class SuperJump extends Module {
         this.description = "Jump higher than you should.";
 
         this.addSetting(new Setting("UpwardSpeed", 2d));
+
+        this.setCategory("Movement");
     }
 
     @Override

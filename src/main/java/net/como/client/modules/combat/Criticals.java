@@ -12,6 +12,8 @@ public class Criticals extends Module {
         super("Criticals");
 
         this.description = "Makes every hit a critical hit.";
+
+        this.setCategory("Combat");
     }
 
     @Override

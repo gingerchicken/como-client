@@ -17,6 +17,8 @@ public class SpeedHack extends Module {
         this.addSetting(new Setting("MaxSpeed", 2d));
 
         this.description = "Go quicker than normal.";
+
+        this.setCategory("Movement");
     }
 
     private double getSpeed(Vec3d vec) {
