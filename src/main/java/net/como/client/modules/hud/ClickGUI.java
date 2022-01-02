@@ -1,6 +1,7 @@
 package net.como.client.modules.hud;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
@@ -28,30 +29,48 @@ public class ClickGUI extends Module {
     private void populateMenuBlocks() {
         menuBlocks.clear();
 
-        String catagories[] = {"Test Category"};
+        // Let's get the categories
+        HashMap<String, List<Module>> categories = new HashMap<>();
 
-        int padding = 50;
+        for (Module mod : ComoClient.Modules.values()) {
+            String cat = mod.getCategory();
+
+            categories.putIfAbsent(cat, new ArrayList<Module>());
+            categories.get(cat).add(mod);
+        }
+
+        // To start, we will place it 50 pixels into the screen.
+        int x = 50;
+
+        // this will be the default spacing between the blocks (if they don't get moved)
         int spacing = 15;
 
+        // This will be the width of the menu blocks
         int boxWidth = 100;
 
-        int x = padding;
+        // TODO add it so the user can move these around trivially.
 
-        for (int i = 0; i < catagories.length; i++) {
-            int totalMods = 16; // TODO GET THIS WHEN YOU HAVE CATAGORIES
+        for (String categoryName : categories.keySet()) {
+            List<Module> category = categories.get(categoryName);
 
-            MenuBlock block = new MenuBlock(new Vec2f(x, 15), new Vec2f(boxWidth, MenuBlock.calculateHeight(totalMods + 2)));
-            new BlockTitle(block, catagories[i]);
+            // Create a menu block
+            MenuBlock block = new MenuBlock(
+                new Vec2f(x, 15),
+                new Vec2f(boxWidth, MenuBlock.calculateHeight(category.size() + 1))
+            );
 
-            int j = 0;
-            for (Module mod : ComoClient.Modules.values()) {
+            // Add a title
+            new BlockTitle(block, categoryName);
+
+            // Add the modules to the list.
+            for (Module mod : category) {
                 new ModBlockTile(block, mod);
-
-                if (j >= 16) break;
-                j++;
             }
 
+            // Add the block
             this.menuBlocks.add(block);
+
+            // Calculate where we are going to place the next block
             x += boxWidth + spacing;
         }
     }
