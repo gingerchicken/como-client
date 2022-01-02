@@ -1,4 +1,4 @@
-package net.como.client.modules.render;
+package net.como.client.modules.hud;
 
 import java.util.ArrayList;
 import java.util.Arrays;

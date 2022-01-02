@@ -1,4 +1,4 @@
-package net.como.client.modules.render;
+package net.como.client.modules.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
