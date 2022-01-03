@@ -322,3 +322,6 @@
  - DesiredBlocks: `{ ... }`
  - NonSpecificSearch: `True`
 
+## XStorage (`.xstorage`)
+[(Source Code)](src/main/java/net/como/client/modules/exploits/XStorage.java) Cancels the close screen packet for everything other than inventory.
+
