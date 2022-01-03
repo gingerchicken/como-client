@@ -6,7 +6,7 @@
 [(Source Code)](src/main/java/net/como/client/modules/render/AntiItemDrop.java) Hide all dropped items so then your friends cannot kill your client repeatedly.
 
 ## ArmourDisplay (`.armourdisplay`)
-[(Source Code)](src/main/java/net/como/client/modules/render/ArmourDisplay.java) Renders armour above the hot bar.
+[(Source Code)](src/main/java/net/como/client/modules/hud/ArmourDisplay.java) Renders armour above the hot bar.
 ### Default Settings
  - RenderEmpty: `True`
 
@@ -73,7 +73,7 @@
  - RandomCase: `True`
 
 ## ClickGUI (`.clickgui`)
-[(Source Code)](src/main/java/net/como/client/modules/render/ClickGUI.java) CURRENTLY JUST A TEST MODULE - ignore this please.
+[(Source Code)](src/main/java/net/como/client/modules/hud/ClickGUI.java) CURRENTLY JUST A TEST MODULE - ignore this please.
 
 ## Criticals (`.criticals`)
 [(Source Code)](src/main/java/net/como/client/modules/combat/Criticals.java) Makes every hit a critical hit.
@@ -189,7 +189,7 @@
  - TracerLifeSpan: `0.25`
 
 ## ModList (`.modlist`)
-[(Source Code)](src/main/java/net/como/client/modules/render/ModList.java) Displays all of your enabled mods
+[(Source Code)](src/main/java/net/como/client/modules/hud/ModList.java) Displays all of your enabled mods
 ### Default Settings
  - ColouringMode: `"default"`
  - Positioning: `1`
@@ -304,7 +304,7 @@
  - MaxFPS: `15`
 
 ## Watermark (`.watermark`)
-[(Source Code)](src/main/java/net/como/client/modules/render/Watermark.java) Renders the Como Client watermark on the screen.
+[(Source Code)](src/main/java/net/como/client/modules/hud/Watermark.java) Renders the Como Client watermark on the screen.
 ### Default Settings
  - Scale: `1.0`
 
