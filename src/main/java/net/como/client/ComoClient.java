@@ -213,6 +213,7 @@ public class ComoClient {
         Modules.put("autowalk", new AutoWalk());
         Modules.put("autosprint", new AutoSprint());
         Modules.put("entityspin", new EntitySpin());
+        Modules.put("xstorage", new XStorage());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
