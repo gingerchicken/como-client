@@ -218,6 +218,9 @@ public class ComoClient {
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
 
+        // Private
+        Modules.put("runewaredupe", new RunewareDupe());
+
         // Load the config (more module related stuff.)
         if (!Persistance.loadConfig()) {
             // It must be a new config.

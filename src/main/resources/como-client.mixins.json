@@ -48,6 +48,8 @@
     "botch/shulkerdupe/ShulkerScreenMixin",
     "botch/shulkerdupe/ClientPlayNetworkHandlerMixin",
 
+    "botch/runewaredupe/EnderChestScreenMixin",
+
     "AbstractBlockStateMixin",
     "WorldMixin"
   ],
