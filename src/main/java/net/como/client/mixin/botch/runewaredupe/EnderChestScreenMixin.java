@@ -14,6 +14,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.text.Text;
+import net.minecraft.util.hit.BlockHitResult;
 
 @Mixin(GenericContainerScreen.class)
 public class EnderChestScreenMixin extends Screen {
@@ -50,9 +51,10 @@ public class EnderChestScreenMixin extends Screen {
 
     @Inject(at = @At("TAIL"), method = "render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V")
     public void renderScreen(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        // TODO check if end chest
-
         RunewareDupe runewareDupe = this.RunewareDupe();
+
+        BlockHitResult hit = runewareDupe.getBlockInFront();
+        if (hit == null || !runewareDupe.isBlockEChest(hit.getBlockPos())) return;
         
         // Make sure that the dupe is enabled.
         if (!runewareDupe.isEnabled()) return;
