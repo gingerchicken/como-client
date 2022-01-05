@@ -247,8 +247,8 @@
 ## RunewareDupe (`.runewaredupe`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/RunewareDupe.java) No description available as of yet.
 ### Default Settings
- - Delay: `1.0`
- - TakeDelay: `0.1`
+ - Delay: `0.5`
+ - TakeDelay: `0.05`
 
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
