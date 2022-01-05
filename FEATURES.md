@@ -244,6 +244,12 @@
 ## NoWeather (`.noweather`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoWeather.java) Hides the rain.
 
+## RunewareDupe (`.runewaredupe`)
+[(Source Code)](src/main/java/net/como/client/modules/exploits/RunewareDupe.java) No description available as of yet.
+### Default Settings
+ - Delay: `1.0`
+ - TakeDelay: `0.1`
+
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
 ### Default Settings
