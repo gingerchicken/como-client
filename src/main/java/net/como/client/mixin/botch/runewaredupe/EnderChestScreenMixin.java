@@ -52,10 +52,10 @@ public class EnderChestScreenMixin extends Screen {
     public void renderScreen(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         // TODO check if end chest
 
-        RunewareDupe RunewareDupe = this.RunewareDupe();
+        RunewareDupe runewareDupe = this.RunewareDupe();
         
         // Make sure that the dupe is enabled.
-        if (!RunewareDupe.isEnabled()) return;
+        if (!runewareDupe.isEnabled()) return;
 
         this.renderDupeButton();
     }
