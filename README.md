@@ -1,4 +1,4 @@
-# Como Client
+# Como Client (*Project Rune*)
 <p align="center">
     <img src="src/main/resources/assets/como-client/textures/misc/watermark.png" width="500px"/>
     <br>
