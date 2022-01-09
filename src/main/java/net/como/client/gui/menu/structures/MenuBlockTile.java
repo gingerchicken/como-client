@@ -34,7 +34,7 @@ public class MenuBlockTile extends Widget {
     public MenuBlockTile(MenuBlock container, String title, Colour backgroundColour) {
         super(
             new Vec2f(0, MenuBlock.calculateHeight(container.getChildren().size())),
-            new Vec2f(container.getSize().x, (float)MenuBlock.tileSizes)
+            new Vec2f(0, 0)
         );
 
         this.index = container.getChildren().size();
@@ -58,14 +58,14 @@ public class MenuBlockTile extends Widget {
 
     @Override
     public Vec2f getPosition() {
-        return new Vec2f(0, MenuBlock.calculateHeight(this.index));
+        return new Vec2f(0, MenuBlock.calculateHeight(this.index) * this.getScaleFactor());
     }
 
     @Override
     public Vec2f getSize() {
         return new Vec2f(
             this.getParentMenuBlock().getSize().x,
-            MenuBlock.tileSizes
+            MenuBlock.tileSizes * this.getScaleFactor()
         );
     }
     
@@ -97,12 +97,13 @@ public class MenuBlockTile extends Widget {
         // Text offsets
         float offsetX = 2;
         float offsetY = 3;
-        ComoClient.textRenderer.drawWithShadow(
+        Render2DUtils.renderSimpleText(
             matrixStack,
-            Text.of(this.title),
-            pos.x + offsetX,
-            pos.y + offsetY,
-            RenderUtils.RGBA2Int(textColour)
+            this.title,
+            (int)(pos.x + offsetX),
+            (int)(pos.y + offsetY),
+            this.getScaleFactor(),
+            textColour
         );
     }
 }

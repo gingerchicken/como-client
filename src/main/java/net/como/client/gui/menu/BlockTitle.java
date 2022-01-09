@@ -32,12 +32,13 @@ public class BlockTitle extends MenuBlockTile {
         float offsetX = 2;
         float offsetY = 3;
 
-        ComoClient.textRenderer.drawWithShadow(
+        Render2DUtils.renderSimpleText(
             matrixStack,
-            Text.of(this.title),
-            pos.x + offsetX,
-            pos.y + offsetY,
-            RenderUtils.RGBA2Int(textColour)
+            this.title,
+            (int)(pos.x + offsetX),
+            (int)(pos.y + offsetY),
+            this.getScaleFactor(),
+            textColour
         );
     }
 }
