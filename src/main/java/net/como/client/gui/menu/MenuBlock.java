@@ -14,7 +14,11 @@ public class MenuBlock extends Widget {
     public static int tilePadding   = 2;
 
     public static int calculateHeight(int totalMods) {
-        return totalMods * tileSpacing + tileSizes * totalMods;
+        return (int)((float)(totalMods * tileSpacing + tileSizes * totalMods));
+    }
+
+    public static int calculateHeight(int totalMods, float scaleFactor) {
+        return (int)((float)calculateHeight(totalMods));
     }
     
     // TODO add scroll bars
