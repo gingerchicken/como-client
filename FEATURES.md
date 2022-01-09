@@ -158,6 +158,11 @@
 ## InfChat (`.infchat`)
 [(Source Code)](src/main/java/net/como/client/modules/chat/InfChat.java) Allows you to type as much as you want in the chat.
 
+## InstaBowKill (`.instabowkill`)
+[(Source Code)](src/main/java/net/como/client/modules/exploits/InstaBowKill.java) Kill anyone instantly with a bow
+### Default Settings
+ - Multiplier: `100`
+
 ## ItemRenderTweaks (`.itemrendertweaks`)
 [(Source Code)](src/main/java/net/como/client/modules/render/ItemRenderTweaks.java) Allows you to change how held items are rendered.
 ### Default Settings
