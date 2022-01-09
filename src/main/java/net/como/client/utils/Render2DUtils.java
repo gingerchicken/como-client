@@ -14,6 +14,7 @@ import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec2f;
 
@@ -159,5 +160,25 @@ public class Render2DUtils {
         renderBoxShadow(
             matrixStack, x, y, x2, y2, new Colour(0, 0, 0, 5)
         );
+    }
+
+    public static void renderSimpleText(MatrixStack matrixStack, String text, int x, int y, float scale, Colour colour) {
+        begin(matrixStack, new Colour(255, 255, 255, 255));
+        matrixStack.translate(x, y, 0);
+        matrixStack.scale(scale, scale, 1);
+        
+        ComoClient.textRenderer.drawWithShadow(
+            matrixStack,
+            Text.of(text),
+            0,
+            0,
+            RenderUtils.RGBA2Int(colour)
+        );
+
+        finish(matrixStack);
+    }
+
+    public static void renderSimpleText(MatrixStack matrixStack, String text, int x, int y, Colour colour) {
+        renderSimpleText(matrixStack, text, x, y, 1, colour);
     }
 }
