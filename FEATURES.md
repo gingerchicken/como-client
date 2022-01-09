@@ -74,6 +74,10 @@
 
 ## ClickGUI (`.clickgui`)
 [(Source Code)](src/main/java/net/como/client/modules/hud/ClickGUI.java) CURRENTLY JUST A TEST MODULE - ignore this please.
+### Default Settings
+ - BlockWidth: `150`
+ - Scale: `1.0`
+ - Spacing: `15`
 
 ## Criticals (`.criticals`)
 [(Source Code)](src/main/java/net/como/client/modules/combat/Criticals.java) Makes every hit a critical hit.
