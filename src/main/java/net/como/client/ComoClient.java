@@ -214,6 +214,7 @@ public class ComoClient {
         Modules.put("autosprint", new AutoSprint());
         Modules.put("entityspin", new EntitySpin());
         Modules.put("xstorage", new XStorage());
+        Modules.put("instabowkill", new InstaBowKill());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());

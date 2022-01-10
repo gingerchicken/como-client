@@ -13,6 +13,16 @@ public class Widget {
     private Vec2f pos;
     private Vec2f size;
     protected boolean clickable;
+    private float scaleFactor = 1.0f;
+
+    public void setScaleFactor(float factor) {
+        if (this.isChild()) {
+            this.parentWidget.setScaleFactor(factor);
+            return;
+        }
+
+        this.scaleFactor = factor;
+    }
 
     public Widget(Vec2f position, Vec2f size) {
         this.setPosition(position);
@@ -80,7 +90,9 @@ public class Widget {
     }
 
     public Vec2f getSize() {
-        return this.size;
+        float scale = this.getScaleFactor();
+
+        return new Vec2f(this.size.x * scale, this.size.y * scale);
     }
     public void setSize(Vec2f size) {
         this.size = size;
@@ -108,5 +120,11 @@ public class Widget {
                 break;
             }
         }
+    }
+
+    public float getScaleFactor() {
+        if (this.isChild()) return this.parentWidget.getScaleFactor();
+
+        return this.scaleFactor;
     }
 }

@@ -14,14 +14,24 @@ import net.como.client.gui.menu.structures.MenuBlockTile;
 import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
+import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.Render2DUtils;
 import net.minecraft.util.math.Vec2f;
 
 public class ClickGUI extends Module {
+    float scaleFactor = 1.5f;
+
+    // TODO make a screen haha
+
     public ClickGUI() {
         super("ClickGUI");
         this.description = "CURRENTLY JUST A TEST MODULE - ignore this please.";
+
+        // Like this is temp
+        this.addSetting(new Setting("Spacing", 15));
+        this.addSetting(new Setting("Scale", 1d));
+        this.addSetting(new Setting("BlockWidth", 150));
 
         this.setCategory("HUD");
     }
@@ -29,6 +39,8 @@ public class ClickGUI extends Module {
     private List<MenuBlock> menuBlocks = new ArrayList<>();
 
     private void populateMenuBlocks() {
+        this.scaleFactor = (float)(double)this.getDoubleSetting("Scale");
+
         menuBlocks.clear();
 
         // Let's get the categories
@@ -41,14 +53,14 @@ public class ClickGUI extends Module {
             categories.get(cat).add(mod);
         }
 
-        // To start, we will place it 50 pixels into the screen.
-        int x = 50;
+        // To start, we will place it 15 pixels into the screen.
+        int x = 15;
 
         // this will be the default spacing between the blocks (if they don't get moved)
-        int spacing = 15;
+        int spacing = this.getIntSetting("Spacing");
 
         // This will be the width of the menu blocks
-        int boxWidth = 100;
+        int boxWidth = this.getIntSetting("BlockWidth");
 
         // TODO add it so the user can move these around trivially.
 
@@ -58,8 +70,10 @@ public class ClickGUI extends Module {
             // Create a menu block
             MenuBlock block = new MenuBlock(
                 new Vec2f(x, 15),
-                new Vec2f(boxWidth, MenuBlock.calculateHeight(category.size() + 1))
+                new Vec2f(boxWidth, MenuBlock.calculateHeight(category.size() + 1, this.scaleFactor))
             );
+
+            block.setScaleFactor(this.scaleFactor);
 
             // Add a title
             new BlockTitle(block, categoryName);
