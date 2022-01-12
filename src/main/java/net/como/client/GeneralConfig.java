@@ -7,6 +7,7 @@ public class GeneralConfig {
     public Colour entityColour  = new Colour(255, 255, 255, 255);
     public String font = "como-client:como";
     public String commandPrefix = ".";
+    public String alterativeCommandPrefix = ",";
 
     public GeneralConfig() {
 
