@@ -29,7 +29,7 @@ import net.como.client.modules.movement.*;
 import net.como.client.modules.render.*;
 import net.como.client.modules.utilities.*;
 import net.como.client.utils.*;
-
+import net.fabricmc.loader.api.FabricLoader;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.EventEmitter;
 import net.minecraft.client.MinecraftClient;
@@ -239,6 +239,10 @@ public class ComoClient {
 
         // Done!
         ComoClient.log("Como Client loaded!");
+    }
+
+    public static boolean isMeteorLoaded() {
+        return FabricLoader.getInstance().isModLoaded("meteor-client");
     }
 
     ComoClient() { }
