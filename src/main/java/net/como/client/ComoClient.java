@@ -152,7 +152,7 @@ public class ComoClient {
         config = new GeneralConfig();
 
         // Setup the chat command system.
-        commandHandler = new CommandHandler(config.commandPrefix);
+        commandHandler = new CommandHandler(isMeteorLoaded() ? config.alterativeCommandPrefix : config.commandPrefix);
 
         // Load up all the modules
         Modules.put("flight", new Flight());

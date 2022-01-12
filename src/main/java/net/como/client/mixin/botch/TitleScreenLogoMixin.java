@@ -33,7 +33,7 @@ public class TitleScreenLogoMixin extends Screen {
 
         int padding = 2;
         int x = client.getWindow().getScaledWidth() - tr.getWidth(text) - padding;
-        int y = padding;
+        int y = ComoClient.isMeteorLoaded() ? 12 + padding : padding;
 
         tr.drawWithShadow(matrices, Text.of(text), x, y, RenderUtils.RGBA2Int(0, 255, 0, 255));
     }
