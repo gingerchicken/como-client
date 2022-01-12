@@ -17,7 +17,7 @@ public class Watermark extends Module {
     private static final int BACKGROUND_HEIGHT = 646;
 
     public Watermark() {
-        super("Watermark", true);
+        super("Watermark");
         this.description = "Renders the Como Client watermark on the screen.";
 
         this.addSetting(new Setting("Scale", 1.0d));
