@@ -17,7 +17,7 @@ import net.como.client.commands.structures.CommandHandler;
 import net.como.client.components.FriendsManager;
 import net.como.client.interfaces.mixin.IClient;
 import net.como.client.interfaces.mixin.IFontManager;
-
+import net.como.client.modules.Nuker;
 import net.como.client.modules.chat.*;
 import net.como.client.modules.combat.*;
 import net.como.client.modules.exploits.*;
@@ -216,6 +216,7 @@ public class ComoClient {
         Modules.put("xstorage", new XStorage());
         Modules.put("instabowkill", new InstaBowKill());
         Modules.put("signsearch", new SignSearch());
+        Modules.put("nuker", new Nuker());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
