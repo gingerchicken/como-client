@@ -30,6 +30,7 @@
     "render/EntityRendererMixin",
     "render/CameraMixin",
     "render/RenderTickCounterMixin",
+    "render/SignBlockEntityRendererMixin",
 
     "screen/MultiplayerScreenMixin",
     "screen/DeathScreenMixin",
