@@ -253,6 +253,11 @@
 ## NoWeather (`.noweather`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoWeather.java) Hides the rain.
 
+## Nuker (`.nuker`)
+[(Source Code)](src/main/java/net/como/client/modules/Nuker.java) Currently in development so this doesn't do anything yet!
+### Default Settings
+ - Radius: `2`
+
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
 ### Default Settings
