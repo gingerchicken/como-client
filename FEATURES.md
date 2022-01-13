@@ -264,6 +264,14 @@
 ### Default Settings
  - HUDOverlay: `True`
 
+## SignSearch (`.signsearch`)
+[(Source Code)](src/main/java/net/como/client/modules/render/SignSearch.java) Allows you to search for signs and their text.
+### Default Settings
+ - Box: `True`
+ - CaseSensitive: `True`
+ - SearchText: `{ ... }`
+ - Tracer: `True`
+
 ## SpeedHack (`.speedhack`)
 [(Source Code)](src/main/java/net/como/client/modules/movement/SpeedHack.java) Go quicker than normal.
 ### Default Settings
