@@ -2,6 +2,7 @@ package net.como.client.components;
 
 import net.como.client.events.PostMovementPacketEvent;
 import net.como.client.events.PreMovementPacketEvent;
+import net.como.client.interfaces.ModulePlugin;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ClientUtils;
@@ -9,7 +10,7 @@ import net.como.client.utils.RotationUtils;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.util.math.Vec3d;
 
-public class ServerClientRotation {
+public class ServerClientRotation implements ModulePlugin {
     public void handlePreMotion() {
         this.client = ClientUtils.getRotation();
         ClientUtils.applyRotation(this.server);
@@ -20,11 +21,13 @@ public class ServerClientRotation {
         active = false;
     }
 
-    // easier binding for modules.
+    @Override
     public void addListeners(Module parentModule) {
         parentModule.addListen(PreMovementPacketEvent.class);
         parentModule.addListen(PostMovementPacketEvent.class);
     }
+
+    @Override
     public void removeListeners(Module parentModule) {
         parentModule.removeListen(PreMovementPacketEvent.class);
         parentModule.removeListen(PostMovementPacketEvent.class);
