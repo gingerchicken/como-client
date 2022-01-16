@@ -52,6 +52,7 @@ public class ServerClientRotation implements ModulePlugin {
         return this.active ? this.server : ClientUtils.getRotation();
     }
 
+    @Override
     public boolean fireEvent(Event event) {
         if (!active) return false;
 
