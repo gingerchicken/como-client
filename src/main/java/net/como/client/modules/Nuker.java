@@ -7,6 +7,7 @@ import net.como.client.ComoClient;
 import net.como.client.components.BlockBreaker;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.RenderWorldEvent;
+import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
@@ -26,6 +27,11 @@ public class Nuker extends Module {
         this.description = "Currently in development so this doesn't do anything yet!";
 
         this.addSetting(new Setting("Radius", 2));
+
+        this.addSetting(new Setting("SeriesBreak", true));
+        this.addSetting(new Setting("ForceBreak",  false));
+        this.addSetting(new Setting("ForceAngles", false));
+        this.addSetting(new Setting("Silent", true));
     }
     
     private void resetBlocks() {
@@ -116,12 +122,21 @@ public class Nuker extends Module {
         }
     }
 
+    private void syncSettings() {
+        this.breaker.breakInSeries = this.getBoolSetting("SeriesBreak");
+        this.breaker.forceBreak    = this.getBoolSetting("ForceBreak");
+        this.breaker.forceAngles   = this.getBoolSetting("ForceAngles");
+        this.breaker.clientAngles  = !this.getBoolSetting("Silent");
+    }
+
     @Override
     public void fireEvent(Event event) {
         if (this.breaker.fireEvent(event)) return;
 
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
+                this.syncSettings();
+
                 if (!this.hasPositionChanged()) break;
 
                 this.lastScannedPos = ComoClient.me().getBlockPos();
