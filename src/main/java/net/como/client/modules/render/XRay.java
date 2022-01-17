@@ -31,16 +31,17 @@ public class XRay extends Module {
     }
 
     private boolean shouldOverrideFullbright() {
-        return ((boolean)this.getSetting("AutoFullbright").value && !this.fullbrightWasEnabled);
+        return (this.getBoolSetting("AutoFullbright") && this.fullbrightWasEnabled != null && !this.fullbrightWasEnabled);
     }
+    
     private Boolean isDesiredBlock(String blockId) {
-        boolean isDesired = (((HashMap<String, Boolean>)this.getSetting("DesiredBlocks").value).containsKey(blockId));
-        
-        if (!isDesired && (boolean)this.getSetting("NonSpecificSearch").value) {
-            HashMap<String, Boolean> blocksToSearch = (HashMap<String, Boolean>)this.getSetting("BlockSearch").value;
+        boolean isDesired = this.getHashMapSetting("DesiredBlocks").containsKey(blockId);
+
+        if (!isDesired && this.getBoolSetting("NonSpecificSearch")) {
+            HashMap<String, Boolean> blocksToSearch = this.getHashMapSetting("BlockSearch");
             
             for (String phrase : blocksToSearch.keySet()) {
-                if (!blocksToSearch.get(phrase)) continue;
+                if (!blocksToSearch.containsKey(phrase) || !blocksToSearch.get(phrase)) continue;
 
                 if (blockId.contains(phrase)) {
                     isDesired = true;
@@ -80,7 +81,7 @@ public class XRay extends Module {
 
         if (this.shouldOverrideFullbright()) ComoClient.Modules.get("fullbright").disable();
         
-        this.fullbrightWasEnabled = null;
+        this.fullbrightWasEnabled = false;
     }
 
     @Override
