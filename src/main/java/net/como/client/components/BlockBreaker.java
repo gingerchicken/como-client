@@ -77,36 +77,83 @@ public class BlockBreaker implements ModulePlugin {
         started.add(pos);
     }
 
+    private boolean lookAtBlock(BlockPos pos) {
+        if (!this.forceAngles) return false;
+
+        // Get the centre of the block
+        Vec3d centrePos = MathsUtils.blockPosToVec3d(pos);
+
+        // Look at it
+        if (this.clientAngles) this.scr.lookAtPosClient(centrePos);
+        else this.scr.lookAtPosServer(centrePos);
+
+        return true;
+    }
+
+    private boolean isValid(BlockPos pos) {
+        return pos != null && !BlockUtils.getState(pos).isAir();
+    }
+
+    // Sends break packets to all of the surrounding blocks
+    private void fastBreakAll() {
+        for (BlockPos pos : this.blocks) {
+            if (!this.isValid(pos)) continue;
+
+            this.lookAtBlock(pos);
+
+            this.sendStartBreakPacket(pos);
+            this.sendBreakPacket(pos);
+        }
+    }
+
+    private void sendBreakPacket(BlockPos pos) {
+        ComoClient.me().networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, pos, Direction.UP));
+    }
+
+    // Gets the last block in the stack and breaks it.
+    private void breakNext() {
+        // Get the back of the list
+        BlockPos pos = this.getTargetBlock();
+        
+        if (!this.isValid(pos)) {
+            this.stopBreakBlock(pos);
+            return;
+        }
+
+        this.lookAtBlock(pos);
+
+        if (this.forceBreak) {
+            // Break it.
+            this.sendStartBreakPacket(pos);
+            this.sendBreakPacket(pos);
+
+        } else {
+            // Process the block breaking.
+            ComoClient.getClient().interactionManager.updateBlockBreakingProgress(pos, Direction.UP);
+        }
+    }
+
     @Override
     public boolean fireEvent(Event event) {
         if (scr.fireEvent(event)) return true;
 
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
-                // Get the back of the list
-                BlockPos pos = this.getTargetBlock();
-                if (pos == null) return false;
+                if (this.breakInSeries) {
+                    this.breakNext();
 
-                if (BlockUtils.getState(pos).isAir()) this.stopBreakBlock(pos);
-
-                // Get the centre of the block
-                Vec3d centrePos = MathsUtils.blockPosToVec3d(pos);
-
-                // Look at it
-                if (this.forceAngles) this.scr.lookAtPosServer(centrePos);
-                
-                if (this.forceBreak) {
-                    // Break it.
-                    this.sendStartBreakPacket(pos);
-                    ComoClient.me().networkHandler.sendPacket(new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK, pos, Direction.UP));
-                    this.stopBreakBlock(pos);
-
-                } else {
-                    // Process the block breaking.
-                    ComoClient.getClient().interactionManager.updateBlockBreakingProgress(pos, Direction.UP);
+                    return false;
                 }
-            
-                break;
+
+                if (this.forceBreak) {
+                    this.fastBreakAll();
+
+                    return false;
+                }
+
+                // Invalid state
+
+                return false;
             }
         }
 
@@ -116,4 +163,10 @@ public class BlockBreaker implements ModulePlugin {
     
     public boolean forceAngles = false;
     public boolean forceBreak = true;
+    public boolean breakInSeries = false;
+    public boolean clientAngles = false;
+
+    public Boolean isInvalidState() {
+        return (!this.breakInSeries && !this.forceBreak);
+    }
 }
