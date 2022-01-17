@@ -1,6 +1,7 @@
 package net.como.client.modules;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
@@ -28,6 +29,9 @@ public class Nuker extends Module {
         this.description = "Currently in development so this doesn't do anything yet!";
 
         this.addSetting(new Setting("Radius", 2));
+
+        this.addSetting(new Setting("SpecificBlocks", false));
+        this.addSetting(new Setting("Blocks", new HashMap<>()));
 
         this.addSetting(new Setting("SeriesBreak", false));
         this.addSetting(new Setting("ForceBreak",  true));
@@ -67,7 +71,8 @@ public class Nuker extends Module {
                     // Make sure that the block's centre isn't too far away.
                     if (MathsUtils.blockPosToVec3d(pos).distanceTo(playerPos) > radius) continue;
 
-                    // TODO add something a that only selects the wanted blocks by the player.
+                    // Make sure that the user wants to break that block
+                    if (!this.isDesiredBlock(pos)) continue;
 
                     selectBlocks.add(pos);
                 }
@@ -121,6 +126,13 @@ public class Nuker extends Module {
         for (BlockPos pos : this.blocks) {
             breaker.startBreakBlock(pos);
         }
+    }
+
+    private boolean isDesiredBlock(BlockPos pos) {
+        if (!this.getBoolSetting("SpecificBlocks")) return true;
+
+        String name = BlockUtils.getName(pos);
+        return this.getHashMapSetting("Blocks").containsKey(name);
     }
 
     private boolean invalidState = false;
