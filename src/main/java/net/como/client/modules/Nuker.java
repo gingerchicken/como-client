@@ -151,6 +151,8 @@ public class Nuker extends Module {
                 RenderWorldEvent e = (RenderWorldEvent)event;
                 float a = 150;
 
+                if (this.breaker.isInvalidState()) break;
+
                 for (BlockPos pos : this.blocks) {
                     if (BlockUtils.getState(pos).isAir()) continue;
 
