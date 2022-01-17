@@ -26,7 +26,7 @@ public class Nuker extends Module {
 
     public Nuker() {
         super("Nuker");
-        this.description = "Currently in development so this doesn't do anything yet!";
+        this.description = "Breaks the blocks around you in a given radius";
 
         this.addSetting(new Setting("Radius", 2));
 
