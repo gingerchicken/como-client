@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.como.client.ComoClient;
+import net.como.client.components.BlockBreaker;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.RenderWorldEvent;
 import net.como.client.structures.Module;
@@ -18,6 +19,8 @@ import net.minecraft.util.math.Vec3d;
 
 public class Nuker extends Module {
 
+    private BlockBreaker breaker = new BlockBreaker();
+
     public Nuker() {
         super("Nuker");
         this.description = "Currently in development so this doesn't do anything yet!";
@@ -25,6 +28,11 @@ public class Nuker extends Module {
         this.addSetting(new Setting("Radius", 2));
     }
     
+    private void resetBlocks() {
+        this.breaker.stopBreakAll();
+        this.blocks.clear();
+    }
+
     private List<BlockPos> targetBlocks() {
         Integer radius = this.getIntSetting("Radius");
 
@@ -66,6 +74,8 @@ public class Nuker extends Module {
     public void activate() {
         this.addListen(ClientTickEvent.class);
         this.addListen(RenderWorldEvent.class);
+
+        breaker.addListeners(this);
     }
 
     @Override
@@ -73,6 +83,9 @@ public class Nuker extends Module {
         this.removeListen(ClientTickEvent.class);
         this.removeListen(RenderWorldEvent.class);
         
+        breaker.removeListeners(this);
+
+        this.breaker.stopBreakAll();
         this.blocks.clear();
         this.lastScannedPos = BlockPos.ORIGIN;
     }
@@ -93,18 +106,20 @@ public class Nuker extends Module {
     private List<BlockPos> blocks = new ArrayList<>();
 
     private void loadBlocks() {
-        this.blocks.clear();
+        this.resetBlocks();
 
         this.blocks = this.targetBlocks();
-    }
 
-    private void breakBlocks() {
-        // TODO total concurrent block breaks so we don't spam the server with packets.
-        // TODO add legit mode, i.e. manually dig the blocks.
+        // Add all breakers
+        for (BlockPos pos : this.blocks) {
+            breaker.startBreakBlock(pos);
+        }
     }
 
     @Override
     public void fireEvent(Event event) {
+        if (this.breaker.fireEvent(event)) return;
+
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
                 if (!this.hasPositionChanged()) break;
