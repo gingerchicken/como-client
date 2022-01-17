@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Settings {
+    // TODO add a "on change" function
+
     private HashMap<String, Setting> settings = new HashMap<String, Setting>();
 
     public void addSetting(Setting setting) {
