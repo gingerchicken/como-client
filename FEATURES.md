@@ -256,7 +256,11 @@
 ## Nuker (`.nuker`)
 [(Source Code)](src/main/java/net/como/client/modules/Nuker.java) Currently in development so this doesn't do anything yet!
 ### Default Settings
+ - ForceAngles: `True`
+ - ForceBreak: `True`
  - Radius: `2`
+ - SeriesBreak: `True`
+ - Silent: `True`
 
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
