@@ -1015,6 +1015,10 @@ public class RenderUtils {
 		renderBlockBox(mStack, bPos, 255, 255, 255, 255);
 	}
 
+	public static void renderBlockBox(MatrixStack mStack, BlockPos bPos, Colour colour) {
+		renderBlockBox(mStack, bPos, colour.r, colour.g, colour.b, colour.a);
+	}
+
 	public static int RGBA2Int(Colour c) {
 		return RGBA2Int((int)c.r, (int)c.g, (int)c.b, (int)c.a);
 	}
