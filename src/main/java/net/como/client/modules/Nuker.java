@@ -29,9 +29,9 @@ public class Nuker extends Module {
 
         this.addSetting(new Setting("Radius", 2));
 
-        this.addSetting(new Setting("SeriesBreak", true));
-        this.addSetting(new Setting("ForceBreak",  false));
-        this.addSetting(new Setting("ForceAngles", false));
+        this.addSetting(new Setting("SeriesBreak", false));
+        this.addSetting(new Setting("ForceBreak",  true));
+        this.addSetting(new Setting("ForceAngles", true));
         this.addSetting(new Setting("Silent", true));
     }
     
