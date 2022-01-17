@@ -12,6 +12,7 @@ import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.BlockUtils;
+import net.como.client.utils.ChatUtils;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.block.BlockState;
@@ -122,11 +123,24 @@ public class Nuker extends Module {
         }
     }
 
+    private boolean invalidState = false;
     private void syncSettings() {
         this.breaker.breakInSeries = this.getBoolSetting("SeriesBreak");
         this.breaker.forceBreak    = this.getBoolSetting("ForceBreak");
         this.breaker.forceAngles   = this.getBoolSetting("ForceAngles");
         this.breaker.clientAngles  = !this.getBoolSetting("Silent");
+
+        if (this.invalidState == this.breaker.isInvalidState()) return;
+
+        // Invalid state change
+        this.invalidState = this.breaker.isInvalidState();
+
+        // is in invalid state
+        if (!this.invalidState) return;
+
+        this.displayMessage(
+            String.format("%sInvalid configuration, you cannot mine multiple blocks at once (i.e. 'ForceBreak' is false, while 'SeriesBreak' is false)", ChatUtils.RED)
+        );
     }
 
     @Override
