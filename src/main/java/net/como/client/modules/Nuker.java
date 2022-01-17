@@ -149,9 +149,18 @@ public class Nuker extends Module {
 
             case "RenderWorldEvent": {
                 RenderWorldEvent e = (RenderWorldEvent)event;
+                float a = 150;
 
                 for (BlockPos pos : this.blocks) {
-                    RenderUtils.renderBlockBox(e.mStack, pos);
+                    if (BlockUtils.getState(pos).isAir()) continue;
+
+                    Colour colour = (
+                        (this.breaker.breakInSeries && this.breaker.getTargetBlock() == pos) || !this.breaker.breakInSeries
+                        ? new Colour(0, 255, 0, a)
+                        : new Colour(255, 255, 255, a/2)
+                    );
+
+                    RenderUtils.renderBlockBox(e.mStack, pos, colour);
                 }
                 
                 break;
