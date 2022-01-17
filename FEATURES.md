@@ -254,13 +254,16 @@
 [(Source Code)](src/main/java/net/como/client/modules/render/NoWeather.java) Hides the rain.
 
 ## Nuker (`.nuker`)
-[(Source Code)](src/main/java/net/como/client/modules/Nuker.java) Currently in development so this doesn't do anything yet!
+[(Source Code)](src/main/java/net/como/client/modules/Nuker.java) Breaks the blocks around you in a given radius
 ### Default Settings
+ - Blocks: `new HashMap<>()`
  - ForceAngles: `True`
  - ForceBreak: `True`
  - Radius: `2`
+ - RenderTargets: `True`
  - SeriesBreak: `True`
  - Silent: `True`
+ - SpecificBlocks: `True`
 
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
