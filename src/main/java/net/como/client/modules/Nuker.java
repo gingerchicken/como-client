@@ -33,6 +33,8 @@ public class Nuker extends Module {
         this.addSetting(new Setting("SpecificBlocks", false));
         this.addSetting(new Setting("Blocks", new HashMap<>()));
 
+        this.addSetting(new Setting("RenderTargets", true));
+
         this.addSetting(new Setting("SeriesBreak", false));
         this.addSetting(new Setting("ForceBreak",  true));
         this.addSetting(new Setting("ForceAngles", true));
@@ -174,6 +176,8 @@ public class Nuker extends Module {
             }
 
             case "RenderWorldEvent": {
+                if (!this.getBoolSetting("RenderTargets")) break;
+
                 RenderWorldEvent e = (RenderWorldEvent)event;
                 float a = 150;
 
