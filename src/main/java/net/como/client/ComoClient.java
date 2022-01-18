@@ -217,6 +217,7 @@ public class ComoClient {
         Modules.put("instabowkill", new InstaBowKill());
         Modules.put("signsearch", new SignSearch());
         Modules.put("nuker", new Nuker());
+        Modules.put("nocomcrash", new NoComCrash());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
