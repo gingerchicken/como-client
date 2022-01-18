@@ -214,7 +214,7 @@
  - MinDurability: `1`
 
 ## NoComCrash (`.nocomcrash`)
-[(Source Code)](src/main/java/net/como/client/modules/exploits/NoComCrash.java) No description available as of yet.
+[(Source Code)](src/main/java/net/como/client/modules/exploits/NoComCrash.java) Hits lots of blocks in random locations causing chunks to be loaded.
 ### Default Settings
  - Amount: `1000`
 
