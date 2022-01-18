@@ -213,6 +213,11 @@
 ### Default Settings
  - MinDurability: `1`
 
+## NoComCrash (`.nocomcrash`)
+[(Source Code)](src/main/java/net/como/client/modules/exploits/NoComCrash.java) No description available as of yet.
+### Default Settings
+ - Amount: `1000`
+
 ## NoEffect (`.noeffect`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/NoEffect.java) Allows you to disable specific effects.
 ### Default Settings
