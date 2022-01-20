@@ -19,6 +19,7 @@ import net.como.client.interfaces.mixin.IClient;
 import net.como.client.interfaces.mixin.IFontManager;
 import net.como.client.modules.chat.*;
 import net.como.client.modules.combat.*;
+import net.como.client.modules.dupes.*;
 import net.como.client.modules.exploits.*;
 import net.como.client.modules.hud.ArmourDisplay;
 import net.como.client.modules.hud.ClickGUI;

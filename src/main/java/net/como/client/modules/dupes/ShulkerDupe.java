@@ -1,4 +1,4 @@
-package net.como.client.modules.exploits;
+package net.como.client.modules.dupes;
 
 import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
@@ -27,7 +27,7 @@ public class ShulkerDupe extends Module {
         this.addSetting(new Setting("DupeAll", true));
         this.addSetting(new Setting("TargetSlot", 0));
 
-        this.setCategory("Exploit");
+        this.setCategory("Dupe");
     }
 
     @Override
