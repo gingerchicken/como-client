@@ -49,6 +49,8 @@
     "botch/shulkerdupe/ShulkerScreenMixin",
     "botch/shulkerdupe/ClientPlayNetworkHandlerMixin",
 
+    "botch/craftingdupe/InventoryScreenMixin",
+
     "AbstractBlockStateMixin",
     "WorldMixin"
   ],
