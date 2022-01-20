@@ -259,7 +259,7 @@
 [(Source Code)](src/main/java/net/como/client/modules/render/NoWeather.java) Hides the rain.
 
 ## Nuker (`.nuker`)
-[(Source Code)](src/main/java/net/como/client/modules/Nuker.java) Breaks the blocks around you in a given radius
+[(Source Code)](src/main/java/net/como/client/modules/packet/Nuker.java) Breaks the blocks around you in a given radius
 ### Default Settings
  - Blocks: `new HashMap<>()`
  - ForceAngles: `True`
@@ -269,6 +269,13 @@
  - SeriesBreak: `True`
  - Silent: `True`
  - SpecificBlocks: `True`
+
+## PacketLimiter (`.packetlimiter`)
+[(Source Code)](src/main/java/net/como/client/modules/packet/PacketLimiter.java) Delays packets to prevent getting kicked for 'too many packets'.
+### Default Settings
+ - IgnoreMovement: `True`
+ - MaxPackets: `10`
+ - SendDelay: `0.05`
 
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
