@@ -17,6 +17,10 @@ public class SettingsCommand extends Command {
         this.settings = settings;
     }
 
+    public void showChange(String settingName, Object before, Object after) {
+        this.displayChatMessage(String.format("Updated '%s': %s%s%s -> %s%s%s", settingName, ChatUtils.RED, before.toString(), ChatUtils.WHITE, ChatUtils.GREEN, after.toString(), ChatUtils.WHITE));
+    }
+
     @SuppressWarnings("unchecked")
     private boolean changeSetting(String[] args) {
         // Get the setting name.
@@ -40,6 +44,7 @@ public class SettingsCommand extends Command {
         // Update the setting in a horrible way.
         switch (setting.value.getClass().getName()) {
             case "java.lang.String": {
+                this.showChange(settingName, setting.value, value);
                 setting.value = value;
                 
                 return true;
@@ -47,6 +52,7 @@ public class SettingsCommand extends Command {
             case "java.lang.Boolean": {
                 boolean realValue = value.equals("true");
                 
+                this.showChange(settingName, setting.value, realValue);
                 setting.value = realValue;
 
                 return true;
@@ -64,6 +70,7 @@ public class SettingsCommand extends Command {
                     return true;
                 }
                 
+                this.showChange(settingName, setting.value, realValue);
                 setting.value = realValue;
 
                 return true;
@@ -81,6 +88,7 @@ public class SettingsCommand extends Command {
                     return true;
                 }
                 
+                this.showChange(settingName, setting.value, realValue);
                 setting.value = realValue;
 
                 return true;
@@ -97,6 +105,7 @@ public class SettingsCommand extends Command {
                     return true;
                 }
                 
+                this.showChange(settingName, setting.value, realValue);
                 setting.value = realValue;
 
                 return true;
