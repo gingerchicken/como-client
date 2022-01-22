@@ -114,7 +114,7 @@ public class ClientUtils {
         return "Survival";
     }
 
-    public static void entitySpeedControl(Entity ent, Double speed, Boolean allowFlight) {
+    public static Vec3d getControlVelocity(Entity ent, Double speed, Boolean allowFlight) {
         // Initialize as still, or somewhat still.
         Vec3d velocity = new Vec3d(0, allowFlight ? 0 : ent.getVelocity().getY(), 0);
 
@@ -137,7 +137,12 @@ public class ClientUtils {
         }
 
         // Set the velocity
-        ent.setVelocity(velocity);
+        return velocity;
+    }
+
+    public static void entitySpeedControl(Entity ent, Double speed, Boolean allowFlight) {
+        // Set the velocity
+        ent.setVelocity(getControlVelocity(ent, speed, allowFlight));
     }
 
     public static Vec2f getMousePosition() {
