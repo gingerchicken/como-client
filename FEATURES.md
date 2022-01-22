@@ -79,6 +79,11 @@
  - Scale: `1.0`
  - Spacing: `15`
 
+## CraftingDupe (`.craftingdupe`)
+[(Source Code)](src/main/java/net/como/client/modules/dupes/CraftingDupe.java) An old drop dupe for versions 1.17 and earlier
+### Default Settings
+ - ShowTip: `True`
+
 ## Criticals (`.criticals`)
 [(Source Code)](src/main/java/net/como/client/modules/combat/Criticals.java) Makes every hit a critical hit.
 
@@ -278,7 +283,7 @@
  - SendDelay: `0.05`
 
 ## ShulkerDupe (`.shulkerdupe`)
-[(Source Code)](src/main/java/net/como/client/modules/exploits/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
+[(Source Code)](src/main/java/net/como/client/modules/dupes/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
 ### Default Settings
  - DupeAll: `True`
  - TargetSlot: `0`
