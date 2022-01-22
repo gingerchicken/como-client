@@ -26,9 +26,11 @@ public class FreeCam extends Module {
     }
 
     private void revertOrigin() {
-        ComoClient.me().setPos(origin.x, origin.y, origin.z);
-        ComoClient.me().setYaw(this.originYaw);
-        ComoClient.me().setPitch(this.originPitch);
+        if (this.getBoolSetting("PosReset")) {
+            ComoClient.me().setPos(origin.x, origin.y, origin.z);
+            ComoClient.me().setYaw(this.originYaw);
+            ComoClient.me().setPitch(this.originPitch);
+        }
 
         ComoClient.me().noClip = false;
     }
@@ -37,6 +39,7 @@ public class FreeCam extends Module {
         super("FreeCam");
 
         this.addSetting(new Setting("Speed", 1f));
+        this.addSetting(new Setting("PosReset", true));
 
         this.description = "Allows you to fly around the world (but client-side)";
 
