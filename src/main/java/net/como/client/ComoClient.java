@@ -222,6 +222,7 @@ public class ComoClient {
         Modules.put("packetlimiter", new PacketLimiter());
         Modules.put("craftingdupe", new CraftingDupe());
         Modules.put("hclip", new HClip());
+        Modules.put("packetflight", new PacketFlight());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
