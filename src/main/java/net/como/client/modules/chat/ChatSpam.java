@@ -12,6 +12,7 @@ import net.como.client.events.ClientTickEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
+import net.como.client.utils.ChatUtils;
 
 public class ChatSpam extends Module {
 
@@ -55,20 +56,6 @@ public class ChatSpam extends Module {
         return msg;
     }
 
-    private String randomCase(String str) {
-        char[] chars = str.toCharArray();
-
-        for (int i = 0; i < chars.length; i++) {
-            if (this.random.nextInt() % 2 == 0) {
-                chars[i] = Character.toUpperCase(chars[i]);
-            } else {
-                chars[i] = Character.toLowerCase(chars[i]);
-            }
-        }
-
-        return new String(chars);
-    }
-
     private String getRandomPrefix(Boolean hash) {
         String prefix = String.format("%f", ComoClient.getCurrentTime());
         if (!hash) return prefix;
@@ -105,7 +92,7 @@ public class ChatSpam extends Module {
         String msg = this.getMessage();
 
         msg = this.getBoolSetting("RandPrefix") ? String.format("%s [%s]", msg, this.getRandomPrefix(this.getBoolSetting("HashPrefix"))) : msg;
-        msg = this.getBoolSetting("RandomCase") ? this.randomCase(msg) : msg;
+        msg = this.getBoolSetting("RandomCase") ? ChatUtils.randomCase(msg) : msg;
 
         return msg;
     }
