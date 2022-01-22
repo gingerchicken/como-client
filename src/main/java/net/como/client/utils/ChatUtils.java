@@ -1,5 +1,7 @@
 package net.como.client.utils;
 
+import java.util.Random;
+
 import net.como.client.ComoClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
@@ -43,5 +45,20 @@ public class ChatUtils {
 
     public static String chatPrefix(String name) {
         return String.format("%s[%s%s%s] ", ChatUtils.WHITE, ChatUtils.GREEN, name, ChatUtils.WHITE);
+    }
+
+    static Random random = new Random();
+    public static String randomCase(String str) {
+        char[] chars = str.toCharArray();
+
+        for (int i = 0; i < chars.length; i++) {
+            if (random.nextInt() % 2 == 0) {
+                chars[i] = Character.toUpperCase(chars[i]);
+            } else {
+                chars[i] = Character.toLowerCase(chars[i]);
+            }
+        }
+
+        return new String(chars);
     }
 }
