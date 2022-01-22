@@ -148,12 +148,21 @@
 ## FreeCam (`.freecam`)
 [(Source Code)](src/main/java/net/como/client/modules/render/FreeCam.java) Allows you to fly around the world (but client-side)
 ### Default Settings
+ - PosReset: `True`
  - Speed: `1.0`
 
 ## FullBright (`.fullbright`)
 [(Source Code)](src/main/java/net/como/client/modules/render/FullBright.java) Allows you to see anywhere as if it was day.
 ### Default Settings
  - PotionEffect: `True`
+
+## HClip (`.hclip`)
+[(Source Code)](src/main/java/net/como/client/modules/packet/HClip.java) Teleports the player a set amount of blocks away
+### Default Settings
+ - ChatMessage: `True`
+ - X: `0.0`
+ - Y: `0.0`
+ - Z: `0.0`
 
 ## HideTitleMessage (`.hidetitlemessage`)
 [(Source Code)](src/main/java/net/como/client/modules/render/HideTitleMessage.java) Hides the thank you message on the title screen.
@@ -274,6 +283,13 @@
  - SeriesBreak: `True`
  - Silent: `True`
  - SpecificBlocks: `True`
+
+## PacketFlight (`.packetflight`)
+[(Source Code)](src/main/java/net/como/client/modules/packet/PacketFlight.java) Sets your position relative to your controls
+### Default Settings
+ - Elytra: `True`
+ - Step: `0.25`
+ - ZeroVelocity: `True`
 
 ## PacketLimiter (`.packetlimiter`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/PacketLimiter.java) Delays packets to prevent getting kicked for 'too many packets'.
