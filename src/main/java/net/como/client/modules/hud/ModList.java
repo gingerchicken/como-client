@@ -214,6 +214,9 @@ public class ModList extends Module {
 
     @Override
     public void fireEvent(Event event) {
+        // Hide with F3
+        if (ComoClient.getClient().options.debugEnabled) return;
+
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
                 ColouringMode mode = this.getColouringMode();
