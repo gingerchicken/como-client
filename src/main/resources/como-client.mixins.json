@@ -13,6 +13,7 @@
     "client/MinecraftClientMixin",
     "client/KeyboardMixin",
     "client/MouseMixin",
+    "client/ClientBrandRetrieverMixin",
 
     "entity/PlayerEntityMixin",
     "entity/EntityMixin",
