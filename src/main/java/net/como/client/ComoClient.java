@@ -223,6 +223,7 @@ public class ComoClient {
         Modules.put("craftingdupe", new CraftingDupe());
         Modules.put("hclip", new HClip());
         Modules.put("packetflight", new PacketFlight());
+        Modules.put("fakeclient", new FakeClient());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
