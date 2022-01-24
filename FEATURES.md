@@ -159,6 +159,7 @@
 ## HClip (`.hclip`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/HClip.java) Teleports the player a set amount of blocks away
 ### Default Settings
+ - AngleRelative: `True`
  - ChatMessage: `True`
  - X: `0.0`
  - Y: `0.0`
