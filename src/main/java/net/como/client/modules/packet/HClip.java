@@ -4,6 +4,7 @@ import net.como.client.ComoClient;
 import net.como.client.structures.Module;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ChatUtils;
+import net.como.client.utils.MathsUtils;
 import net.minecraft.util.math.Vec3d;
 
 public class HClip extends Module {
@@ -19,6 +20,8 @@ public class HClip extends Module {
         this.addSetting(new Setting("Z", 0d));
 
         this.addSetting(new Setting("ChatMessage", true));
+
+        this.addSetting(new Setting("AngleRelative", false));
     }
 
     @Override
@@ -63,7 +66,26 @@ public class HClip extends Module {
     }
 
     public Vec3d nextPos() {
-        return ComoClient.me().getPos().add(this.getOffset());
+        Vec3d offset = this.getOffset();
+        
+        if (this.getBoolSetting("AngleRelative")) {
+            // Calculate the sides
+            Vec3d forward = MathsUtils.getForwardVelocity(ComoClient.me());
+            Vec3d right   = MathsUtils.getRightVelocity(ComoClient.me());
+
+            // Get the results
+            Vec3d result = Vec3d.ZERO;
+            result = result.add(forward.multiply(offset.getX()));
+            result = result.add(right.multiply(offset.getZ()));
+            
+            // We don't have a vertical component
+            result = result.add(0, offset.getY(), 0);
+
+            // Set the result
+            offset = result;
+        }
+
+        return ComoClient.me().getPos().add(offset);
     }
 
     @Override
