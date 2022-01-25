@@ -1,6 +1,8 @@
 package net.como.client.modules.combat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import net.como.client.ComoClient;
@@ -149,14 +151,21 @@ public class TotemPopCount extends Module {
                 }
 
                 Double duration = this.getDoubleSetting("CountDuration");
+
+                List<UUID> expiredUUIDs = new ArrayList<>();
                 for (UUID uuid : this.entries.keySet()) {
                     PlayerEntry entry = this.entries.get(uuid);
 
                     Double lastValid = entry.getLastValid();
 
                     if (ComoClient.getCurrentTime() - lastValid >= duration) {
-                        this.entries.remove(uuid);
+                        expiredUUIDs.add(uuid);
                     }
+                }
+
+                // Remove them separately
+                for (UUID uuid : expiredUUIDs) {
+                    this.entries.remove(uuid);
                 }
 
                 break;
