@@ -11,7 +11,7 @@ import net.minecraft.client.ClientBrandRetriever;
 
 @Mixin(ClientBrandRetriever.class)
 public class ClientBrandRetrieverMixin {
-    @Inject(at = @At("RETURN"), method="getClientModName()Ljava/lang/String;", cancellable = true)
+    @Inject(at = @At("TAIL"), method="getClientModName()Ljava/lang/String;", cancellable = true, remap = false)
     private static void onGetClientModName(CallbackInfoReturnable<String> cir) {
         ComoClient.emitter.triggerEvent(new GetClientModNameEvent(cir));
     }
