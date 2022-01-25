@@ -140,7 +140,10 @@ public class BindsCommand extends CommandNode {
             if (args.length == 1) {
                 if (!this.getBinds().removeBind(key)) {
                     this.getBinds().displayMessage(String.format("%sFailed to remove key bind for key '%s'.", ChatUtils.RED, this.keyBindString(key)));
+                    return true;
                 }
+
+                this.getBinds().displayMessage(String.format("Removed key bind '%s'.", this.keyBindString(key)));
                 return true;
             }
 
@@ -149,7 +152,11 @@ public class BindsCommand extends CommandNode {
             // Handle key + command
             if (!this.getBinds().removeBind(key, command)) {
                 this.getBinds().displayMessage(String.format("%sFailed to remove key bind for key '%s' with command '%s'.", ChatUtils.RED, this.keyBindString(key), command));
+                return true;
             }
+
+            this.getBinds().displayMessage(String.format("Removed bind '%s' from key '%s'.", command, this.keyBindString(key)));
+
             return true;
 
         }
