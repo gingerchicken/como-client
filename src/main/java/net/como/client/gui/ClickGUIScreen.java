@@ -1,17 +1,70 @@
 package net.como.client.gui;
 
+import java.util.Random;
+
 import io.netty.util.internal.MathUtil;
 import net.como.client.ComoClient;
 import net.como.client.modules.hud.ClickGUI;
+import net.como.client.modules.hud.Watermark;
 import net.como.client.structures.Colour;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.Vec2f;
 
 public class ClickGUIScreen extends Screen {
-
     private ClickGUI clickGUI;
+
+    // Eric's funny
+    private static class BouncyWatermark {
+        Vec2f pos = Vec2f.ZERO;
+        Vec2f velocity = new Vec2f(-1, 1);
+
+        int screenWidth, screenHeight;
+        int width, height;
+
+        public void tick() {
+            // Bouncy Felix!
+            if (this.pos.x <= 0 || this.pos.x >= this.screenWidth || this.pos.x + this.width >= this.screenWidth || this.pos.x + this.width <= 0) {
+                velocity = new Vec2f(-velocity.x, velocity.y);
+            }
+
+            if (this.pos.y <= 0 || this.pos.y >= this.screenHeight || this.pos.y + this.height >= this.screenHeight || this.pos.y + this.height <= 0) {
+                velocity = new Vec2f(velocity.x, -velocity.y);
+            }
+
+            this.pos = this.pos.add(velocity);
+        }
+
+        public void render(MatrixStack matrices, float partialTicks) {
+            Watermark.render(matrices, 1d/6, (int)this.pos.x, (int)this.pos.y);
+        }
+
+        public BouncyWatermark(int screenWidth, int screenHeight) {
+            Random random = new Random();
+
+            this.screenWidth  = screenWidth;
+            this.screenHeight = screenHeight;
+
+            this.width  = Watermark.BACKGROUND_WIDTH / 6;
+            this.height = Watermark.BACKGROUND_HEIGHT / 6;
+
+            this.pos = new Vec2f(
+                random.nextInt(0, this.screenWidth - this.width),
+                random.nextInt(0, this.screenHeight - this.height)
+            );
+        }
+    }
+
+    BouncyWatermark bouncyWatermark;
+
+    @Override
+    protected void init() {
+        super.init();
+
+        this.bouncyWatermark = new BouncyWatermark(this.width, this.height);
+    }
 
     public ClickGUIScreen(ClickGUI clickGUI) {
         super(Text.of("ClickGUI"));
@@ -50,6 +103,8 @@ public class ClickGUIScreen extends Screen {
         if (backgroundFade < 1.0f) {
             this.backgroundFade += fadeStep;
         }
+
+        if (this.clickGUI.getBoolSetting("Bouncy")) this.bouncyWatermark.tick();
     }
 
     private float lerp(float curr, float next, float delta) {
@@ -66,7 +121,9 @@ public class ClickGUIScreen extends Screen {
 
     public void renderBackground(MatrixStack matrices, float partialTicks) {
         float lerpedBackFade = this.getLerpedBackgroundFade(partialTicks);
-        
+
+        if (this.clickGUI.getBoolSetting("Bouncy")) this.bouncyWatermark.render(matrices, partialTicks);
+
         this.fillGradient(matrices, 0, 0, this.width, this.height, RenderUtils.RGBA2Int(new Colour(15, 15, 15, 150f * lerpedBackFade)), RenderUtils.RGBA2Int(new Colour(0, 0, 0, 125f * lerpedBackFade)));
     }
 }

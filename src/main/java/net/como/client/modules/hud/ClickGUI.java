@@ -36,6 +36,7 @@ public class ClickGUI extends Module {
         this.addSetting(new Setting("VerticalSpacing", 5));
         this.addSetting(new Setting("Scale", 1d));
         this.addSetting(new Setting("BlockWidth", 150));
+        this.addSetting(new Setting("Bouncy", false));
 
         this.setCategory("HUD");
     }
