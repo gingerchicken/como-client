@@ -8,6 +8,7 @@ import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public class Watermark extends Module {
@@ -35,24 +36,35 @@ public class Watermark extends Module {
         this.removeListen(InGameHudRenderEvent.class);
     }
 
+    public static void render(MatrixStack matrixStack, Double scale, int x, int y) {
+        RenderSystem.setShaderTexture(0, WATERMARK_TEXTURE);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+
+        // Scaling
+        int width  = (int)(BACKGROUND_WIDTH * scale);
+        int height = (int)(BACKGROUND_HEIGHT * scale);
+
+        DrawableHelper.drawTexture(matrixStack, x, y, 0, 0, width, height, width, height);
+    }
+
+    public static void render(MatrixStack matrixStack, Double scale) {
+        // Scaling
+        int width  = (int)(BACKGROUND_WIDTH * scale);
+        int height = (int)(BACKGROUND_HEIGHT * scale);
+
+        int x = ComoClient.getClient().getWindow().getScaledWidth() - width;
+        int y = ComoClient.getClient().getWindow().getScaledHeight() - height;
+
+        render(matrixStack, scale, x, y);
+    }
+
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "InGameHudRenderEvent": {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
-                RenderSystem.setShaderTexture(0, WATERMARK_TEXTURE);
-                RenderSystem.setShaderColor(1, 1, 1, 1);
-
-                // Scaling
-                double scale = ((double)this.getSetting("Scale").value)/6;
-                int width  = (int)(BACKGROUND_WIDTH * scale);
-                int height = (int)(BACKGROUND_HEIGHT * scale);
-
-                int x = ComoClient.getClient().getWindow().getScaledWidth() - width;
-                int y = ComoClient.getClient().getWindow().getScaledHeight() - height;
-
-                DrawableHelper.drawTexture(e.mStack, x, y, 0, 0, width, height, width, height);
+                render(e.mStack, this.getDoubleSetting("Scale") / 6);
 
                 break;
             }
