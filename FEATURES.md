@@ -239,6 +239,7 @@
 [(Source Code)](src/main/java/net/como/client/modules/exploits/NoComCrash.java) Hits lots of blocks in random locations causing chunks to be loaded.
 ### Default Settings
  - Amount: `1000`
+ - Height: `255`
 
 ## NoEffect (`.noeffect`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/NoEffect.java) Allows you to disable specific effects.
