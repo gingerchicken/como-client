@@ -5,7 +5,10 @@ import net.como.client.events.ClientTickEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
+import net.como.client.utils.BlockUtils;
 import net.como.client.utils.ClientUtils;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 public class PacketFlight extends Module {
@@ -20,6 +23,7 @@ public class PacketFlight extends Module {
         this.addSetting(new Setting("Step", 0.25d));
         this.addSetting(new Setting("ZeroVelocity", true));
         this.addSetting(new Setting("Elytra", false));
+        this.addSetting(new Setting("Noclip", true));
     }
     
     @Override
@@ -61,6 +65,13 @@ public class PacketFlight extends Module {
                 if (this.getBoolSetting("ZeroVelocity")) ComoClient.me().setVelocity(Vec3d.ZERO);
 
                 Vec3d pos = this.nextPos();
+                if (!this.getBoolSetting("Noclip")) {
+                    BlockPos blockPos = new BlockPos(pos);
+
+                    BlockState state = BlockUtils.getState(blockPos);
+                    if (!state.isAir()) break;
+                }
+
                 ComoClient.me().setPos(pos.getX(), pos.getY(), pos.getZ());
 
                 break;
