@@ -28,6 +28,8 @@ public class Nuker extends Module {
         super("Nuker");
         this.description = "Breaks the blocks around you in a given radius";
 
+        this.setCategory("Packet");
+
         this.addSetting(new Setting("Radius", 2));
 
         this.addSetting(new Setting("SpecificBlocks", false));
