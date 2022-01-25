@@ -31,6 +31,8 @@ public class SignSearch extends Module {
         super("SignSearch");
         this.description = "Allows you to search for signs and their text.";
 
+        this.setCategory("Render");
+
         this.addSetting(new Setting("SearchText", new HashMap<String, Boolean>()));
         this.addSetting(new Setting("CaseSensitive", false));
 
