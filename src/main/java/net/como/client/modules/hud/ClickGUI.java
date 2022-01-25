@@ -30,6 +30,7 @@ public class ClickGUI extends Module {
 
         // Like this is temp
         this.addSetting(new Setting("Spacing", 15));
+        this.addSetting(new Setting("VerticalSpacing", 5));
         this.addSetting(new Setting("Scale", 1d));
         this.addSetting(new Setting("BlockWidth", 150));
 
@@ -53,8 +54,10 @@ public class ClickGUI extends Module {
             categories.get(cat).add(mod);
         }
 
+        int sidePadding = 15;
+
         // To start, we will place it 15 pixels into the screen.
-        int x = 15;
+        int x = sidePadding;
 
         // this will be the default spacing between the blocks (if they don't get moved)
         int spacing = this.getIntSetting("Spacing");
@@ -62,17 +65,46 @@ public class ClickGUI extends Module {
         // This will be the width of the menu blocks
         int boxWidth = this.getIntSetting("BlockWidth");
 
-        // TODO add it so the user can move these around trivially.
+        int windowWidth = ComoClient.getClient().getWindow().getScaledWidth();
 
+        int totalRows = (int)((windowWidth - sidePadding) / (spacing + boxWidth));
+
+        List<Integer> heights = new ArrayList<>();
+
+        // TODO add it so the user can move these around trivially.
+        // This should just be the setup!
+
+        int i = 0;
         for (String categoryName : categories.keySet()) {
             List<Module> category = categories.get(categoryName);
 
-            // Create a menu block
-            MenuBlock block = new MenuBlock(
-                new Vec2f(x, 15),
-                new Vec2f(boxWidth, MenuBlock.calculateHeight(category.size() + 1, this.scaleFactor))
-            );
+            // Get the menu block's height
+            Vec2f blockHeight = new Vec2f(boxWidth, MenuBlock.calculateHeight(category.size() + 1, this.scaleFactor));
 
+            // Wrap i around the rows
+            i = i % totalRows;
+
+            // Reset x if needed
+            x = i == 0 ? sidePadding : x;
+
+            // Get the last height or just add the current one.
+            Boolean firstHeight = false;
+            if (heights.size() <= i) {
+                heights.add(sidePadding);
+                firstHeight = true;
+            }
+
+            // Calculate y position
+            int y = heights.get(i);
+            y = firstHeight ? y : y + this.getIntSetting("VerticalSpacing");
+            heights.set(i, y + (int)blockHeight.y);
+
+            Vec2f pos = new Vec2f(x, y);
+
+            // Create a menu block
+            MenuBlock block = new MenuBlock(pos, blockHeight);
+
+            // Set the scale factor
             block.setScaleFactor(this.scaleFactor);
 
             // Add a title
@@ -88,6 +120,9 @@ public class ClickGUI extends Module {
 
             // Calculate where we are going to place the next block
             x += boxWidth + spacing;
+
+            // Increment the column
+            i++;
         }
     }
 
