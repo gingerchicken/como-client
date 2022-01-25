@@ -296,6 +296,7 @@
 [(Source Code)](src/main/java/net/como/client/modules/packet/PacketFlight.java) Sets your position relative to your controls
 ### Default Settings
  - Elytra: `True`
+ - Noclip: `True`
  - Step: `0.25`
  - ZeroVelocity: `True`
 
