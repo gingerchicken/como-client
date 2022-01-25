@@ -135,6 +135,11 @@
  - Speed: `5.0`
  - Yaw: `True`
 
+## FakeClient (`.fakeclient`)
+[(Source Code)](src/main/java/net/como/client/modules/packet/FakeClient.java) Makes the client appear as vanilla to any servers
+### Default Settings
+ - Client: `"vanilla"`
+
 ## FastBreak (`.fastbreak`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/FastBreak.java) Allows you to break blocks a bit quicker.
 ### Default Settings
