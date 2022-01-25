@@ -11,10 +11,10 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.util.Identifier;
 
 public class Watermark extends Module {
-    private static final Identifier WATERMARK_TEXTURE = new Identifier("como-client", "textures/misc/watermark.png");
+    public static final Identifier WATERMARK_TEXTURE = new Identifier("como-client", "textures/misc/watermark.png");
 
-    private static final int BACKGROUND_WIDTH = 1193;
-    private static final int BACKGROUND_HEIGHT = 646;
+    public static final int BACKGROUND_WIDTH = 1193;
+    public static final int BACKGROUND_HEIGHT = 646;
 
     public Watermark() {
         super("Watermark");
