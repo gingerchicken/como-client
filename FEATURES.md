@@ -76,8 +76,10 @@
 [(Source Code)](src/main/java/net/como/client/modules/hud/ClickGUI.java) CURRENTLY JUST A TEST MODULE - ignore this please.
 ### Default Settings
  - BlockWidth: `150`
+ - Bouncy: `True`
  - Scale: `1.0`
  - Spacing: `15`
+ - VerticalSpacing: `5`
 
 ## CraftingDupe (`.craftingdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/dupes/CraftingDupe.java) An old drop dupe for versions 1.17 and earlier
