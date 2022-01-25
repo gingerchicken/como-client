@@ -6,19 +6,13 @@ import java.util.List;
 
 import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
-import net.como.client.events.InGameHudRenderEvent;
-import net.como.client.events.OnMouseButtonEvent;
 import net.como.client.gui.ClickGUIScreen;
 import net.como.client.gui.menu.BlockTitle;
 import net.como.client.gui.menu.MenuBlock;
 import net.como.client.gui.menu.ModBlockTile;
-import net.como.client.gui.menu.structures.MenuBlockTile;
-import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
-import net.como.client.utils.ClientUtils;
-import net.como.client.utils.Render2DUtils;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec2f;
 
@@ -41,8 +35,10 @@ public class ClickGUI extends Module {
         this.setCategory("HUD");
     }
 
+    // TODO move this to the screen
     private List<MenuBlock> menuBlocks = new ArrayList<>();
 
+    // TODO move this also to the screen
     private void populateMenuBlocks() {
         this.scaleFactor = (float)(double)this.getDoubleSetting("Scale");
 
