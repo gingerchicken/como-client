@@ -19,11 +19,9 @@ import net.minecraft.util.math.Vec2f;
 public class ClickGUI extends Module {
     float scaleFactor = 1.5f;
 
-    // TODO make a screen haha
-
     public ClickGUI() {
         super("ClickGUI");
-        this.description = "CURRENTLY JUST A TEST MODULE - ignore this please.";
+        this.description = "A way of toggling your settings with a GUI (Currently WIP)";
 
         // Like this is temp
         this.addSetting(new Setting("Spacing", 15));
