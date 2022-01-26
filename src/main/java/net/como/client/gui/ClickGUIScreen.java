@@ -24,7 +24,20 @@ public class ClickGUIScreen extends Screen {
         int screenWidth, screenHeight;
         int width, height;
 
+        public void syncSettings() {
+            ClickGUI clickGUI = (ClickGUI)ComoClient.Modules.get("clickgui");
+            Double bouncySpeed = Math.abs(clickGUI.getDoubleSetting("BouncySpeed"));
+
+            Double signX = (double) (this.velocity.x >= 0 ? 1 : -1);
+            Double signY = (double) (this.velocity.y >= 0 ? 1 : -1);
+
+            this.velocity = new Vec2f((float)(signX * bouncySpeed), (float)(signY * bouncySpeed));
+        }
+
         public void tick() {
+            // Sync settings
+            this.syncSettings();
+
             // Bouncy Felix!
             if (this.pos.x <= 0 || this.pos.x >= this.screenWidth || this.pos.x + this.width >= this.screenWidth || this.pos.x + this.width <= 0) {
                 velocity = new Vec2f(-velocity.x, velocity.y);
