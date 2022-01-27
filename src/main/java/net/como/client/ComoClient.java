@@ -23,6 +23,7 @@ import net.como.client.modules.dupes.*;
 import net.como.client.modules.exploits.*;
 import net.como.client.modules.hud.ArmourDisplay;
 import net.como.client.modules.hud.ClickGUI;
+import net.como.client.modules.hud.Hitmarker;
 import net.como.client.modules.hud.ModList;
 import net.como.client.modules.hud.Watermark;
 import net.como.client.modules.movement.*;
@@ -224,6 +225,7 @@ public class ComoClient {
         Modules.put("hclip", new HClip());
         Modules.put("packetflight", new PacketFlight());
         Modules.put("fakeclient", new FakeClient());
+        Modules.put("hitmarker", new Hitmarker());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
