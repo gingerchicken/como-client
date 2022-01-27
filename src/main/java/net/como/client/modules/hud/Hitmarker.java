@@ -6,12 +6,14 @@ import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.OnAttackEntityEvent;
+import net.como.client.events.OnGameStateChangeEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
@@ -47,10 +49,12 @@ public class Hitmarker extends Module {
         this.addListen(OnAttackEntityEvent.class);
         this.addListen(ClientTickEvent.class);
         this.addListen(InGameHudRenderEvent.class);
+        this.addListen(OnGameStateChangeEvent.class);
     }
 
     @Override
     public void deactivate() {
+        this.removeListen(OnGameStateChangeEvent.class);
         this.removeListen(OnAttackEntityEvent.class);
         this.removeListen(ClientTickEvent.class);
         this.removeListen(InGameHudRenderEvent.class);
@@ -178,6 +182,7 @@ public class Hitmarker extends Module {
         this.target = null;
     }
 
+    int arrowHits = 0;
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
@@ -192,6 +197,8 @@ public class Hitmarker extends Module {
             }
 
             case "ClientTickEvent": {
+                this.arrowHits = 0;
+
                 if (this.shouldDrawHitmarker) {
                     this.hitmarkerTick();
                 }
@@ -208,6 +215,20 @@ public class Hitmarker extends Module {
                     break;
                 }
                 
+                break;
+            }
+
+            case "OnGameStateChangeEvent": {
+                OnGameStateChangeEvent e = (OnGameStateChangeEvent)event;
+
+                GameStateChangeS2CPacket packet = e.packet;
+                
+                // Make sure that it is a projectile hit event
+                if (packet.getReason() != GameStateChangeS2CPacket.PROJECTILE_HIT_PLAYER) break;
+
+                if (this.arrowHits % 2 == 0) this.doHitmarker();
+                this.arrowHits++;
+
                 break;
             }
 
