@@ -73,10 +73,11 @@
  - RandomCase: `True`
 
 ## ClickGUI (`.clickgui`)
-[(Source Code)](src/main/java/net/como/client/modules/hud/ClickGUI.java) CURRENTLY JUST A TEST MODULE - ignore this please.
+[(Source Code)](src/main/java/net/como/client/modules/hud/ClickGUI.java) A way of toggling your settings with a GUI (Currently WIP)
 ### Default Settings
  - BlockWidth: `150`
  - Bouncy: `True`
+ - BouncySpeed: `1.0`
  - Scale: `1.0`
  - Spacing: `15`
  - VerticalSpacing: `5`
@@ -174,6 +175,17 @@
 
 ## HideTitleMessage (`.hidetitlemessage`)
 [(Source Code)](src/main/java/net/como/client/modules/render/HideTitleMessage.java) Hides the thank you message on the title screen.
+
+## Hitmarker (`.hitmarker`)
+[(Source Code)](src/main/java/net/como/client/modules/hud/Hitmarker.java) Show when you hit someone with a melee weapon
+### Default Settings
+ - AlphaStep: `255.0`
+ - AnimClose: `True`
+ - AnimOpen: `True`
+ - HoldTicks: `0`
+ - MaxDelay: `1.0`
+ - Scale: `0.25`
+ - Sound: `True`
 
 ## HomeGodMode (`.homegodmode`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/HomeGodMode.java) Exploits the /sethome and /home feature on servers
