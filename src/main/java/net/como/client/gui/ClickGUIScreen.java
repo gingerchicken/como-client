@@ -1,5 +1,7 @@
 package net.como.client.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import io.netty.util.internal.MathUtil;
@@ -75,13 +77,16 @@ public class ClickGUIScreen extends Screen {
         }
     }
 
-    BouncyWatermark bouncyWatermark;
+    List<BouncyWatermark> bouncyWatermarks = new ArrayList<>();
 
     @Override
     protected void init() {
         super.init();
 
-        this.bouncyWatermark = new BouncyWatermark(this.width, this.height);
+        bouncyWatermarks.clear();
+        for (int i = 0; i < this.clickGUI.getIntSetting("TotalBouncies"); i++) {
+            bouncyWatermarks.add(new BouncyWatermark(this.width, this.height));
+        }
     }
 
     public ClickGUIScreen(ClickGUI clickGUI) {
@@ -122,7 +127,11 @@ public class ClickGUIScreen extends Screen {
             this.backgroundFade += fadeStep;
         }
 
-        if (this.clickGUI.getBoolSetting("Bouncy")) this.bouncyWatermark.tick();
+        if (this.clickGUI.getBoolSetting("Bouncy")) {
+            for (BouncyWatermark bouncyWatermark : this.bouncyWatermarks) {
+                bouncyWatermark.tick();
+            }
+        }
     }
 
     private float lerp(float curr, float next, float delta) {
@@ -140,7 +149,11 @@ public class ClickGUIScreen extends Screen {
     public void renderBackground(MatrixStack matrices, float partialTicks) {
         float lerpedBackFade = this.getLerpedBackgroundFade(partialTicks);
 
-        if (this.clickGUI.getBoolSetting("Bouncy")) this.bouncyWatermark.render(matrices, partialTicks);
+        if (this.clickGUI.getBoolSetting("Bouncy")) {
+            for (BouncyWatermark bouncyWatermark : this.bouncyWatermarks) {
+                bouncyWatermark.render(matrices, partialTicks);
+            }
+        }
 
         this.fillGradient(matrices, 0, 0, this.width, this.height, RenderUtils.RGBA2Int(new Colour(15, 15, 15, 150f * lerpedBackFade)), RenderUtils.RGBA2Int(new Colour(0, 0, 0, 125f * lerpedBackFade)));
     }
