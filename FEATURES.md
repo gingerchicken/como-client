@@ -80,6 +80,7 @@
  - BouncySpeed: `1.0`
  - Scale: `1.0`
  - Spacing: `15`
+ - TotalBouncies: `1`
  - VerticalSpacing: `5`
 
 ## CraftingDupe (`.craftingdupe`)
@@ -144,7 +145,7 @@
  - Client: `"vanilla"`
 
 ## FastBreak (`.fastbreak`)
-[(Source Code)](src/main/java/net/como/client/modules/exploits/FastBreak.java) Allows you to break blocks a bit quicker.
+[(Source Code)](src/main/java/net/como/client/modules/packet/FastBreak.java) Allows you to break blocks a bit quicker.
 ### Default Settings
  - BreakDelay: `0.0`
  - Potion: `True`
@@ -254,7 +255,7 @@
  - Height: `255`
 
 ## NoEffect (`.noeffect`)
-[(Source Code)](src/main/java/net/como/client/modules/exploits/NoEffect.java) Allows you to disable specific effects.
+[(Source Code)](src/main/java/net/como/client/modules/render/NoEffect.java) Allows you to disable specific effects.
 ### Default Settings
  - Effects: `{ ... }`
 
@@ -262,7 +263,7 @@
 [(Source Code)](src/main/java/net/como/client/modules/render/NoEnchantmentBook.java) Hide the enchantment book on the enchantment table.
 
 ## NoFall (`.nofall`)
-[(Source Code)](src/main/java/net/como/client/modules/exploits/NoFall.java) Take less fall damage.
+[(Source Code)](src/main/java/net/como/client/modules/packet/NoFall.java) Take less fall damage.
 
 ## NoFireCam (`.nofirecam`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoFireCam.java) Disables the annoying fire overlay to allow you to see a bit better.
@@ -396,7 +397,7 @@
 [(Source Code)](src/main/java/net/como/client/modules/utilities/Waypoints.java) Renders where waypoints are in the world.
 
 ## XCarry (`.xcarry`)
-[(Source Code)](src/main/java/net/como/client/modules/exploits/XCarry.java) Allows odd behavior such as storing items in the crafting table slot.
+[(Source Code)](src/main/java/net/como/client/modules/packet/XCarry.java) Allows odd behavior such as storing items in the crafting table slot.
 
 ## XRay (`.xray`)
 [(Source Code)](src/main/java/net/como/client/modules/render/XRay.java) See blocks through the floor.
@@ -407,5 +408,5 @@
  - NonSpecificSearch: `True`
 
 ## XStorage (`.xstorage`)
-[(Source Code)](src/main/java/net/como/client/modules/exploits/XStorage.java) Cancels the close screen packet for everything other than inventory.
+[(Source Code)](src/main/java/net/como/client/modules/packet/XStorage.java) Cancels the close screen packet for everything other than inventory.
 
