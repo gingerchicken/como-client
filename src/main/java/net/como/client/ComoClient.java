@@ -226,6 +226,7 @@ public class ComoClient {
         Modules.put("packetflight", new PacketFlight());
         Modules.put("fakeclient", new FakeClient());
         Modules.put("hitmarker", new Hitmarker());
+        Modules.put("antiresourcepack", new AntiResourcePack());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());

@@ -8,12 +8,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import net.como.client.ComoClient;
 import net.como.client.events.OnEntityStatusEvent;
 import net.como.client.events.OnGameStateChangeEvent;
+import net.como.client.events.OnResourcePackSendEvent;
 import net.como.client.events.OnWorldTimeUpdateEvent;
 import net.como.client.events.SendPacketEvent;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
+import net.minecraft.network.packet.s2c.play.ResourcePackSendS2CPacket;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 
 @Mixin(ClientPlayNetworkHandler.class)
@@ -36,5 +38,10 @@ public class ClientPlayNetworkHandlerMixin {
     @Inject(at = @At("HEAD"), method="onGameStateChange(Lnet/minecraft/network/packet/s2c/play/GameStateChangeS2CPacket;)V", cancellable = true)
     public void onGameStateChange(GameStateChangeS2CPacket packet, CallbackInfo ci) {
         ComoClient.emitter.triggerEvent(new OnGameStateChangeEvent(packet, ci));
+    }
+
+    @Inject(at = @At("HEAD"), method="onResourcePackSend(Lnet/minecraft/network/packet/s2c/play/ResourcePackSendS2CPacket;)V", cancellable = true)
+    public void onResourcePackSend(ResourcePackSendS2CPacket packet, CallbackInfo ci) {
+        ComoClient.emitter.triggerEvent(new OnResourcePackSendEvent(packet, ci));
     }
 }
