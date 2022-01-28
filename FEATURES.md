@@ -5,6 +5,9 @@
 ## AntiItemDrop (`.antiitemdrop`)
 [(Source Code)](src/main/java/net/como/client/modules/render/AntiItemDrop.java) Hide all dropped items so then your friends cannot kill your client repeatedly.
 
+## AntiResourcePack (`.antiresourcepack`)
+[(Source Code)](src/main/java/net/como/client/modules/packet/AntiResourcePack.java) Deny all resource packs but say to the server that they got downloaded.
+
 ## ArmourDisplay (`.armourdisplay`)
 [(Source Code)](src/main/java/net/como/client/modules/hud/ArmourDisplay.java) Renders armour above the hot bar.
 ### Default Settings
