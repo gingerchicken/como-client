@@ -10,7 +10,7 @@ import net.minecraft.client.util.Window;
 public class UnfocusCPU extends Module {
 
     public UnfocusCPU() {
-        super("UnfocusCPU");
+        super("UnfocusCPU", true);
 
         this.description = "Decreases game performance while the window is not focused.";
 
