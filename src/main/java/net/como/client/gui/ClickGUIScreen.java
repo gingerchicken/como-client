@@ -67,6 +67,11 @@ public class ClickGUIScreen extends Screen {
                 random.nextInt(0, this.screenWidth - this.width),
                 random.nextInt(0, this.screenHeight - this.height)
             );
+
+            this.velocity = new Vec2f(
+                random.nextInt(0, 100) > 50 ? 1 : -1,
+                random.nextInt(0, 100) > 50 ? 1 : -1
+            );
         }
     }
 
