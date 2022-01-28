@@ -1,4 +1,4 @@
-package net.como.client.modules.exploits;
+package net.como.client.modules.render;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class NoEffect extends Module {
 
         this.addSetting(new Setting("Effects", new HashMap<String, Boolean>()));
 
-        this.setCategory("Exploit");
+        this.setCategory("HUD");
     }
 
     @Override
