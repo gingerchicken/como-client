@@ -1,4 +1,4 @@
-package net.como.client.modules.exploits;
+package net.como.client.modules.packet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class FastBreak extends Module {
         this.addSetting(new Setting("Potion", true));
         this.addSetting(new Setting("BreakDelay", 0d));
 
-        this.setCategory("Exploit");
+        this.setCategory("Packet");
     }
 
     @Override

@@ -1,4 +1,4 @@
-package net.como.client.modules.exploits;
+package net.como.client.modules.packet;
 
 import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Module;
@@ -10,7 +10,7 @@ public class XStorage extends Module {
         super("XStorage");
 
         this.description = "Cancels the close screen packet for everything other than inventory.";
-        this.setCategory("Exploit");
+        this.setCategory("Packet");
     }
 
     @Override

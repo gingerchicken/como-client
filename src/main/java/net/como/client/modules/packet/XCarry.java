@@ -1,4 +1,4 @@
-package net.como.client.modules.exploits;
+package net.como.client.modules.packet;
 
 import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Module;
@@ -10,7 +10,7 @@ public class XCarry extends Module {
         super("XCarry");
 
         this.description = "Allows odd behavior such as storing items in the crafting table slot.";
-        this.setCategory("Exploit");
+        this.setCategory("Packet");
     }
 
     @Override

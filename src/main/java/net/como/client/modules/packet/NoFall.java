@@ -1,4 +1,4 @@
-package net.como.client.modules.exploits;
+package net.como.client.modules.packet;
 
 import net.como.client.ComoClient;
 import net.como.client.events.PreMovementPacketEvent;
@@ -14,7 +14,7 @@ public class NoFall extends Module {
 
         this.description = "Take less fall damage.";
 
-        this.setCategory("Exploit");
+        this.setCategory("Packet");
     }
 
     @Override
