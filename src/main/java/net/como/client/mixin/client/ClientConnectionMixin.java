@@ -7,12 +7,14 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
 import net.como.client.events.DisconnectEvent;
+import net.como.client.events.HandleDisconnectionEvent;
 import net.minecraft.network.ClientConnection;
 
 @Mixin(ClientConnection.class)
 public class ClientConnectionMixin {
-    @Inject(at = @At("HEAD"), method = "handleDisconnection()V", cancellable = false)
+    @Inject(at = @At("HEAD"), method = "handleDisconnection()V", cancellable = true)
     public void handleDisconnection(CallbackInfo ci) {
         ComoClient.emitter.triggerEvent(new DisconnectEvent(ci));
+        ComoClient.emitter.triggerEvent(new HandleDisconnectionEvent(ci));
     }
 }
