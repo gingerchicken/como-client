@@ -46,7 +46,7 @@ public class NoRespondAlert extends Module {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "InGameHudRenderEvent": {
-                if (!ComoClient.me().isAlive()) break;
+                if (!ComoClient.me().isAlive() || !ComoClient.me().networkHandler.getConnection().isOpen()) break;
 
                 float noRespTime = (float) (ComoClient.getCurrentTime() - lastResp);
                 if (noRespTime < (Double)this.getSetting("WarningTime").value) break;
