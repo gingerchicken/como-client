@@ -1,5 +1,6 @@
 package net.como.client.utils;
 
+import joptsimple.internal.Strings;
 import net.como.client.ComoClient;
 import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.utils.RotationUtils.Rotation;
@@ -15,7 +16,10 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Language;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 
@@ -157,5 +161,17 @@ public class ClientUtils {
         int posY = (int)(mouse.getY()/scaleFactor);
 
         return new Vec2f(posX, posY);
+    }
+
+    public static String getTextString(Text text) {
+        if (text instanceof TranslatableText) {
+            Language language = Language.getInstance();
+
+            TranslatableText transText = (TranslatableText)text;
+
+            return language.get(transText.getKey());
+        }
+
+        return text.asString();
     }
 }
