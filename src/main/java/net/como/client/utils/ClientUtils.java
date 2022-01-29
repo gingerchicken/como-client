@@ -169,7 +169,8 @@ public class ClientUtils {
 
             TranslatableText transText = (TranslatableText)text;
 
-            return language.get(transText.getKey());
+            String str = language.get(transText.getKey());
+            return str.equals("%s") ? transText.asString() : str;
         }
 
         return text.asString();
