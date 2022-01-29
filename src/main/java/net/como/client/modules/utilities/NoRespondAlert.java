@@ -19,6 +19,8 @@ public class NoRespondAlert extends Module {
 
         this.addSetting(new Setting("WarningTime", 1d));
         this.addSetting(new Setting("DisplayHeight", 150));
+
+        this.addSetting(new Setting("ShowWhenClosed", true));
     
         this.description = "Displays an alert when the server has stopped sending data.";
         this.setCategory("Utilities");
@@ -46,7 +48,10 @@ public class NoRespondAlert extends Module {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "InGameHudRenderEvent": {
-                if (!ComoClient.me().isAlive() || !ComoClient.me().networkHandler.getConnection().isOpen()) break;
+                if (!ComoClient.me().isAlive()) break;
+
+                // Handle disconnection (i.e. when you block the ban packet)
+                if (!this.getBoolSetting("ShowWhenClosed") && !ComoClient.me().networkHandler.getConnection().isOpen()) break;
 
                 float noRespTime = (float) (ComoClient.getCurrentTime() - lastResp);
                 if (noRespTime < (Double)this.getSetting("WarningTime").value) break;
