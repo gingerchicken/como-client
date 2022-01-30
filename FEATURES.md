@@ -5,6 +5,9 @@
 ## AntiItemDrop (`.antiitemdrop`)
 [(Source Code)](src/main/java/net/como/client/modules/render/AntiItemDrop.java) Hide all dropped items so then your friends cannot kill your client repeatedly.
 
+## AntiKick (`.antikick`)
+[(Source Code)](src/main/java/net/como/client/modules/packet/AntiKick.java) Blocks packets that cause you to disconnect from the server
+
 ## AntiResourcePack (`.antiresourcepack`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/AntiResourcePack.java) Deny all resource packs but say to the server that they got downloaded.
 
@@ -285,6 +288,7 @@
 [(Source Code)](src/main/java/net/como/client/modules/utilities/NoRespondAlert.java) Displays an alert when the server has stopped sending data.
 ### Default Settings
  - DisplayHeight: `150`
+ - ShowWhenClosed: `True`
  - WarningTime: `1.0`
 
 ## NoSubmerge (`.nosubmerge`)
