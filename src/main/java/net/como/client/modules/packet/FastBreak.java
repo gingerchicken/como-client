@@ -26,6 +26,9 @@ public class FastBreak extends Module {
         this.addSetting(new Setting("Potion", true));
         this.addSetting(new Setting("BreakDelay", 0d));
 
+        // The break multiplier could be used in conjunction with the other modes
+        this.addSetting(new Setting("BreakMultiplier", 2));
+
         this.setCategory("Packet");
     }
 
