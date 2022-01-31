@@ -93,6 +93,37 @@ public class FastBreak extends Module {
         return true;
     }
 
+    private boolean handlePotions() {
+        if (!this.getBoolSetting("Potion")) return false;
+
+        ComoClient.me().addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 3, this.getIntSetting("PotionAmplifier"), true, true));
+        return true;
+    }
+
+    private boolean handlePackets() {
+        if (this.getBoolSetting("Potion")) return false;
+
+        // Remove the potion effect since we are no longer in that mode.
+        this.resetPotionEffect();
+
+        // Positions that we need to remove from the hashmap (we cannot remove during iteration over the hashmap.)
+        List<BlockPos> removedPositions = new ArrayList<BlockPos>();
+
+        // Do all the block breaking
+        for (TimedBreak timedBreak : targetBlocks.values()) {
+            if (timedBreak.doBreak()) {
+                removedPositions.add(timedBreak.getBlockPos());
+            }
+        }
+
+        // Remove the blocks from the array.
+        for (BlockPos pos : removedPositions) {
+            this.removeBlock(pos);
+        }
+
+        return true;
+    }
+
     private HashMap<BlockPos, TimedBreak> targetBlocks = new HashMap<>(); 
 
     @Override
@@ -100,28 +131,11 @@ public class FastBreak extends Module {
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
                 // Handle simple potion effect.
-                if (this.getBoolSetting("Potion")) {
-                    ComoClient.me().addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 3, this.getIntSetting("PotionAmplifier"), true, true));
-
-                    break;
-                }
+                if (this.handlePotions()) break;
                 
-                // Handle packet
-                this.resetPotionEffect();
+                // Handle packets
+                if (this.handlePackets()) break;
 
-                List<BlockPos> removedPositions = new ArrayList<BlockPos>();
-
-                // Do all the block breaking
-                for (TimedBreak timedBreak : targetBlocks.values()) {
-                    if (timedBreak.doBreak()) {
-                        removedPositions.add(timedBreak.getBlockPos());
-                    }
-                }
-
-                // Remove the blocks from the array.
-                for (BlockPos pos : removedPositions) {
-                    this.removeBlock(pos);
-                }
                 break;
             }
 
