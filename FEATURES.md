@@ -154,6 +154,8 @@
 [(Source Code)](src/main/java/net/como/client/modules/packet/FastBreak.java) Allows you to break blocks a bit quicker.
 ### Default Settings
  - BreakDelay: `0.0`
+ - BreakMultiplier: `2`
+ - MultiplierOnly: `True`
  - Potion: `True`
  - PotionAmplifier: `3`
 
