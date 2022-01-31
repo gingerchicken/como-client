@@ -7,6 +7,7 @@ import java.util.List;
 import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.SendPacketEvent;
+import net.como.client.events.UpdateBlockBreakingProgressEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
@@ -24,6 +25,10 @@ public class FastBreak extends Module {
 
         this.addSetting(new Setting("PotionAmplifier", 3));
         this.addSetting(new Setting("Potion", true));
+        // TODO change this when we have enum settings, this is horrible
+
+        this.addSetting(new Setting("MultiplierOnly", false));
+
         this.addSetting(new Setting("BreakDelay", 0d));
 
         // The break multiplier could be used in conjunction with the other modes
@@ -34,6 +39,8 @@ public class FastBreak extends Module {
 
     @Override
     public String listOption() {
+        if (this.getBoolSetting("MultiplierOnly")) return String.format("x%d", this.getIntSetting("BreakMultiplier"));
+
         return this.getBoolSetting("Potion") ? "Potion" : "Packet";
     }
 
@@ -47,12 +54,16 @@ public class FastBreak extends Module {
     public void activate() {
         this.addListen(ClientTickEvent.class);
         this.addListen(SendPacketEvent.class);
+        this.addListen(UpdateBlockBreakingProgressEvent.class);
+
+        this.ignoreRequests = 0;
     }
 
     @Override
     public void deactivate() {
         this.removeListen(ClientTickEvent.class);
         this.removeListen(SendPacketEvent.class);
+        this.removeListen(UpdateBlockBreakingProgressEvent.class);
 
         this.resetPotionEffect();
         this.targetBlocks.clear();
@@ -128,11 +139,18 @@ public class FastBreak extends Module {
     }
 
     private HashMap<BlockPos, TimedBreak> targetBlocks = new HashMap<>(); 
+    private Integer ignoreRequests = 0;
 
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
+                // Stop if we only have multipliers
+                if (this.getBoolSetting("MultiplierOnly")) {
+                    this.resetPotionEffect();
+                    break;
+                }
+
                 // Handle simple potion effect.
                 if (this.handlePotions()) break;
                 
@@ -167,6 +185,34 @@ public class FastBreak extends Module {
                         break;
                     }
                 }
+
+                break;
+            }
+
+            case "UpdateBlockBreakingProgressEvent": {
+                UpdateBlockBreakingProgressEvent e = (UpdateBlockBreakingProgressEvent)event;
+                
+                Integer multiplier = this.getIntSetting("BreakMultiplier");
+                if (multiplier <= 1) break; // Handle if there is no change. 
+
+                // Don't block anything that we spawned.
+                if (ignoreRequests > 0) {
+                    ignoreRequests--;
+                    break;
+                }
+
+                // Cancel the current call.
+                e.cir.cancel();
+
+                // Add the newly called functions
+                this.ignoreRequests += multiplier;
+
+                // Call them
+                for (int i = 0; i < multiplier; i++) {
+                    ComoClient.getClient().interactionManager.updateBlockBreakingProgress(e.pos, e.direction);
+                }
+                
+                break;
             }
         }
     }
