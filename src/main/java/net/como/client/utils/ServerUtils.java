@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;
+import net.minecraft.text.Text;
 
 public class ServerUtils {
     private static ServerInfo lastServer;
@@ -44,8 +45,15 @@ public class ServerUtils {
         return ComoClient.getClient().world.getPlayers().size();
     }
 
-    // This current doesn't work but whatever.
+    // Doesn't always work super well
     public static Integer getTotalPlayerSlots() {
-        return getTotalOnlinePlayers() + 1;
+        Integer fakeTotal = getTotalOnlinePlayers() + 1;
+
+        if (getLastServer() == null) return fakeTotal;
+
+        List<Text> parts = getLastServer().playerCountLabel.getSiblings();
+        if (parts.size() != 2) return fakeTotal;
+
+        return Integer.decode(parts.get(1).asString());
     }
 }
