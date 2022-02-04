@@ -51,7 +51,12 @@ public class ServerUtils {
 
         if (getLastServer() == null) return fakeTotal;
 
-        List<Text> parts = getLastServer().playerCountLabel.getSiblings();
+        // This can occur when you connect from something that doesn't always have a label
+        Text playerCountLabel = getLastServer().playerCountLabel;
+        if (playerCountLabel == null) return fakeTotal;
+
+        // Get the different parts of the player label
+        List<Text> parts = playerCountLabel.getSiblings();
         if (parts.size() != 2) return fakeTotal;
 
         return Integer.decode(parts.get(1).asString());
