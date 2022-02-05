@@ -1,4 +1,4 @@
-name: 'nightly artifacts cleanup'
+name: 'Artifacts Cleanup'
 on:
   push:
     paths:
