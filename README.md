@@ -1,5 +1,5 @@
 # Como Client
-<p align="center">
+<div align="center">
     <img src="src/main/resources/assets/como-client/textures/misc/watermark.png" width="500px"/>
     <br>
     <img src="https://github.com/gingerchicken/como-client/actions/workflows/build.yml/badge.svg" alt="Gradlew Build"/>
@@ -11,7 +11,7 @@
     <br>
     <img src="https://forthebadge.com/images/badges/built-with-love.svg" alt="Built With Love">
     <img src="https://forthebadge.com/images/badges/built-by-codebabes.svg" alt="Built By Code Babes">
-</p>
+</div>
 
 A Minecraft utility mod developed with the aim of giving its users an advantage in most (if not all) situations (*but since I made it it probably won't to be honest...*), while still aiming to be as simplistic as possible.
 
