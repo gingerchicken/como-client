@@ -1,5 +1,8 @@
 name: 'nightly artifacts cleanup'
 on:
+  push:
+    paths:
+     - '.github/workflows/cleanup.yml'
   schedule:
     - cron: '0 9 * * *' # every night at 9 am UTC
 
