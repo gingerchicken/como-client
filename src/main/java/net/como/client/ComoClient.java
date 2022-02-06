@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.como.client.commands.CopyServerIPCommand;
 import net.como.client.commands.FontCommand;
 import net.como.client.commands.FriendsCommand;
 import net.como.client.commands.PanicCommand;
@@ -86,6 +87,10 @@ public class ComoClient {
         // Add Panic command
         commandHandler.registerCommand(new PanicCommand());
 
+        // Add copyip command
+        commandHandler.registerCommand(new CopyServerIPCommand());
+
+        // Waypoints commands
         commandHandler.registerCommand(new WaypointsCommand(
             ((Waypoints)Modules.get("waypoints")).waypoints
         ));
