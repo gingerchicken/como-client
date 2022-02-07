@@ -1,13 +1,10 @@
 package net.como.client.commands;
 
+import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.ServerUtils;
 import net.minecraft.client.network.ServerInfo;
-
-import java.awt.datatransfer.StringSelection;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
 
 public class CopyServerIPCommand extends Command {
     public CopyServerIPCommand() {
@@ -30,12 +27,8 @@ public class CopyServerIPCommand extends Command {
         String ip = lastServer.address;
         this.displayChatMessage(String.format("Copied server address to clipboard: %s%s", ChatUtils.GREEN, ip));
 
-        // TODO restore this
-        System.setProperty("java.awt.headless", "false");
-
-        // Add to clipboard
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(new StringSelection(ip), null);
+        // Set the clipboard
+        ComoClient.getClient().keyboard.setClipboard(ip);
 
         return true;
     }
