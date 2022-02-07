@@ -199,6 +199,8 @@
 ## HomeGodMode (`.homegodmode`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/HomeGodMode.java) Exploits the /sethome and /home feature on servers
 ### Default Settings
+ - CommandDelay: `250.0`
+ - DeleteHome: `True`
  - HomeName: `"Death"`
  - RespawnDelay: `250.0`
 
