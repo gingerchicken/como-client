@@ -12,16 +12,17 @@ public class ModBlockTile extends MenuBlockTile {
 
     @Override
     public Colour getBackgroundColour() {
-        return this.getModule().isEnabled()
-        ?   activatedColour
-        :   deactivatedColour;
+        return new Colour(0, green, 0 , 150);
     }
 
-    private static Colour activatedColour    = new Colour(0, 255, 0, 150);
-    private static Colour deactivatedColour  = new Colour(0, 0, 0, 150);
+    private float green = 0.0f;
+    private float greenStep = 75f;
+    private float greenMax = 255f;
 
     public ModBlockTile(MenuBlock container, Module module) {
-        super(container, module.getName(), activatedColour);
+        super(container, module.getName(), new Colour(0, module.isEnabled() ? 255f : 0, 0, 150));
+
+        this.green = module.isEnabled() ? 255f : 0;
 
         this.module = module;
     }
@@ -29,5 +30,20 @@ public class ModBlockTile extends MenuBlockTile {
     @Override
     public void clicked() {
         this.module.toggle();
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        Boolean e = this.getModule().isEnabled();
+
+        if (!e) {
+            if (green > 0) green -= greenStep;
+            else green = 0f;
+            return;
+        }
+
+        if (green < greenMax) green += greenStep;
+        else green = greenMax;
     }
 }
