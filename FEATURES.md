@@ -50,6 +50,7 @@
 ## Binds (`.binds`)
 [(Source Code)](src/main/java/net/como/client/modules/utilities/Binds.java) Allows you to bind client commands to keys.
 ### Default Settings
+ - GUIKey: `True`
  - HideCommandOutput: `True`
 
 ## Blink (`.blink`)
