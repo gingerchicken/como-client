@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import joptsimple.internal.Strings;
 import net.como.client.gui.Widget;
 import net.como.client.structures.Colour;
 import net.como.client.utils.Render2DUtils;
@@ -17,6 +18,12 @@ public class MenuBlock extends Widget {
     public static int tileSizes     = 14;
     public static int tileSpacing   = 1;
     public static int tilePadding   = 2;
+
+    private String searchPhrase = Strings.EMPTY;
+    public String getSearchPhrase() {return this.searchPhrase;}
+    public void setSearchPhrase(String phrase) {
+        this.searchPhrase = phrase;
+    }
 
     public static int calculateHeight(int totalMods) {
         return (int)((float)(totalMods * tileSpacing + tileSizes * totalMods));
@@ -86,7 +93,14 @@ public class MenuBlock extends Widget {
             outline
         );
 
+        String search = this.getSearchPhrase().toLowerCase().strip();
         for (Widget child : this.getChildren()) {
+            if (!search.isBlank() && child instanceof ModBlockTile) {
+                ModBlockTile modTile = (ModBlockTile)(child);
+                
+                if (!modTile.getModule().getName().toLowerCase().contains(search)) continue;
+            }
+
             child.render(matrixStack);
         }
     }

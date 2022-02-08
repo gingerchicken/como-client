@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.mojang.brigadier.ParseResults;
+
+import joptsimple.internal.Strings;
 import net.como.client.ComoClient;
 import net.como.client.modules.hud.ClickGUI;
 import net.como.client.modules.hud.Watermark;
 import net.como.client.structures.Colour;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec2f;
@@ -77,12 +81,28 @@ public class ClickGUIScreen extends Screen {
     }
 
     List<BouncyWatermark> bouncyWatermarks = new ArrayList<>();
+    private String searchPhrase = Strings.EMPTY;
+
+    public String getSearchPhrase() {
+        return this.searchPhrase;
+    }
+
+    public void setSearchPhrase(String phrase) {
+        clickGUI.applySearchPhrase(phrase); // This is a bit terrible!
+        this.searchPhrase = phrase;
+    }
+
+    TextFieldWidget searchWidget;
 
     @Override
     protected void init() {
         super.init();
 
         this.clickGUI.populateMenuBlocks();
+        
+        this.searchWidget = new TextFieldWidget(ComoClient.textRenderer, this.width / 2 - 60, 5, 120, 10, Text.of(this.getSearchPhrase()));
+        this.searchWidget.setDrawsBackground(false);
+        this.searchWidget.active = true;
 
         bouncyWatermarks.clear();
         for (int i = 0; i < this.clickGUI.getIntSetting("TotalBouncies"); i++) {
@@ -112,10 +132,13 @@ public class ClickGUIScreen extends Screen {
         this.renderBackground(matrices, delta);
         super.render(matrices, mouseX, mouseY, delta);
         this.clickGUI.renderMenuBlocks(matrices, delta);
+
+        this.searchWidget.render(matrices, mouseX, mouseY, delta);
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        this.searchWidget.mouseClicked(mouseX, mouseY, button);
         return this.clickGUI.handleClick(button);
     }
 
@@ -133,6 +156,38 @@ public class ClickGUIScreen extends Screen {
                 bouncyWatermark.tick();
             }
         }
+
+        this.updateSearchWidget();
+    }
+
+    private Float searchWidgetFinishHeight  = 10f;
+    private Float searchWidgetHeightStep    = 5f;
+    private Float searchWidgetHeight        = 0.0f;
+
+    private void updateSearchWidget() {
+        this.searchWidget.y = (int)(float)this.searchWidgetHeight;
+        
+        this.searchWidget.tick();
+        this.setSearchPhrase(this.searchWidget.getText());
+
+        String text = this.searchWidget.getText() + "_";
+        int width = ComoClient.textRenderer.getWidth(text);
+
+        this.searchWidget.setWidth(this.width);
+        this.searchWidget.setX(this.width / 2 - width / 2);
+        
+        if (!this.searchWidget.isFocused() && this.searchWidget.getText().isBlank()) { searchWidgetHeight = -10f; return;}
+        if (this.searchWidgetHeight < this.searchWidgetFinishHeight) {
+            this.searchWidgetHeight += this.searchWidgetHeightStep;
+        }
+    }
+
+    @Override
+    public boolean charTyped(char chr, int modifiers) {
+        this.searchWidget.setTextFieldFocused(true);
+        
+        this.searchWidget.charTyped(chr, modifiers);
+        return super.charTyped(chr, modifiers);
     }
 
     private float lerp(float curr, float next, float delta) {
@@ -157,5 +212,17 @@ public class ClickGUIScreen extends Screen {
         }
 
         this.fillGradient(matrices, 0, 0, this.width, this.height, RenderUtils.RGBA2Int(new Colour(15, 15, 15, 150f * lerpedBackFade)), RenderUtils.RGBA2Int(new Colour(0, 0, 0, 125f * lerpedBackFade)));
+    }
+
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+        return this.searchWidget.keyReleased(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        // TODO Auto-generated method stub
+        this.searchWidget.keyPressed(keyCode, scanCode, modifiers);
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 }
