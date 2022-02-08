@@ -115,7 +115,7 @@ public class SettingsCommand extends Command {
                 HashMap<String, Boolean> map = (HashMap<String, Boolean>)setting.value;
 
                 // Generate a new command and trigger it.
-                // TODO this is now how this is meant to be used but I cannot be bothered to do it another way, please be bothered at some point.
+                // TODO this is not how this is meant to be used but I cannot be bothered to do it another way, please be bothered at some point.
                 HashMapCommand hashCommands = new HashMapCommand(settingName, map);
 
                 // Return the result
