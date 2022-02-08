@@ -20,6 +20,7 @@
 [(Source Code)](src/main/java/net/como/client/modules/utilities/AutoReconnect.java) Automatically reconnects to a server after a given time.
 ### Default Settings
  - Delay: `5`
+ - InGameButton: `True`
  - Manual: `True`
 
 ## AutoRespawn (`.autorespawn`)
@@ -158,6 +159,11 @@
  - MultiplierOnly: `True`
  - Potion: `True`
  - PotionAmplifier: `3`
+
+## FastUse (`.fastuse`)
+[(Source Code)](src/main/java/net/como/client/modules/utilities/FastUse.java) Allows you to use items at light speed
+### Default Settings
+ - TickDelay: `0`
 
 ## Flight (`.flight`)
 [(Source Code)](src/main/java/net/como/client/modules/movement/Flight.java) Basic flight (a bit terrible tbh).
