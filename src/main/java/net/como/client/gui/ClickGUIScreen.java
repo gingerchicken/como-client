@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import io.netty.util.internal.MathUtil;
 import net.como.client.ComoClient;
 import net.como.client.modules.hud.ClickGUI;
 import net.como.client.modules.hud.Watermark;
@@ -82,6 +81,8 @@ public class ClickGUIScreen extends Screen {
     @Override
     protected void init() {
         super.init();
+
+        this.clickGUI.populateMenuBlocks();
 
         bouncyWatermarks.clear();
         for (int i = 0; i < this.clickGUI.getIntSetting("TotalBouncies"); i++) {
