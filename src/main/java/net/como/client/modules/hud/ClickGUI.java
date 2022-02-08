@@ -116,6 +116,9 @@ public class ClickGUI extends Module {
                 new ModBlockTile(block, mod);
             }
 
+            // Sort the list
+            block.sortAlphabetically();
+
             // Add the block
             this.menuBlocks.add(block);
 
