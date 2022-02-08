@@ -68,7 +68,6 @@ public class MenuBlockTile extends Widget {
             MenuBlock.tileSizes * this.getScaleFactor()
         );
     }
-    
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -84,16 +83,6 @@ public class MenuBlockTile extends Widget {
             this.getBackgroundColour(),
             this.getOutlineColour()
         );
-
-        if (!this.isMouseOver()) {
-            Render2DUtils.renderBoxShadow(
-                matrices,
-                (int)pos.x,
-                (int)pos.y,
-                (int)(pos.x + size.x),
-                (int)(pos.y + size.y)
-            );
-        }
 
         // Text offsets
         float offsetX = 2;
