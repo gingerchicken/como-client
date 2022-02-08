@@ -131,7 +131,7 @@ public class ClickGUIScreen extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         this.renderBackground(matrices, delta);
         super.render(matrices, mouseX, mouseY, delta);
-        this.clickGUI.renderMenuBlocks(matrices, delta);
+        this.clickGUI.renderMenuBlocks(matrices, mouseX, mouseY, delta);
 
         this.searchWidget.render(matrices, mouseX, mouseY, delta);
     }

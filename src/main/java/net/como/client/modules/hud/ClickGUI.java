@@ -150,9 +150,12 @@ public class ClickGUI extends Module {
         this.removeListen(ClientTickEvent.class);
     }
 
-    public void renderMenuBlocks(MatrixStack matrixStack, float partialTicks) {
+    public void renderMenuBlocks(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         for (MenuBlock menuBlock : this.menuBlocks) {
-            menuBlock.render(matrixStack);
+            menuBlock.render(matrices, mouseX, mouseY, delta);
+        }
+    }
+
         }
     }
 

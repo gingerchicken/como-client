@@ -3,13 +3,11 @@ package net.como.client.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.como.client.ComoClient;
 import net.como.client.utils.ClientUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.Drawable;
 import net.minecraft.util.math.Vec2f;
 
-public class Widget {
+public abstract class Widget implements Drawable {
     private Vec2f pos;
     private Vec2f size;
     protected boolean clickable;
@@ -117,7 +115,6 @@ public class Widget {
         return this.isInBounds(ClientUtils.getMousePosition());
     }
 
-    public void render(MatrixStack matrixStack) {}
     public void clicked() {
         if (!this.isClickable() || !this.hasChild()) return;
 
