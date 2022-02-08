@@ -79,12 +79,12 @@ public class MenuBlock extends Widget {
     }
 
     @Override
-    public void render(MatrixStack matrixStack) {
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         Vec2f pos = Render2DUtils.relPosition(this.getScreenPosition());
         Vec2f size = Render2DUtils.relPosition(this.getSize());
         
         Render2DUtils.renderBackgroundBox(
-            matrixStack,
+            matrices,
             (int)pos.x,
             (int)pos.y,
             (int)(pos.x + size.x),
@@ -101,7 +101,7 @@ public class MenuBlock extends Widget {
                 if (!modTile.getModule().getName().toLowerCase().contains(search)) continue;
             }
 
-            child.render(matrixStack);
+            child.render(matrices, mouseX, mouseY, delta);
         }
     }
 

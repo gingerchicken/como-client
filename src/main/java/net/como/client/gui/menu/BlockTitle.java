@@ -15,12 +15,12 @@ public class BlockTitle extends MenuBlockTile {
     }
 
     @Override
-    public void render(MatrixStack matrixStack) {
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         Vec2f pos = this.getScreenPosition();
         Vec2f size = this.getSize();
 
         Render2DUtils.renderBackgroundBox(
-            matrixStack,
+            matrices,
             (int)pos.x,
             (int)pos.y,
             (int)(pos.x + size.x),
@@ -33,7 +33,7 @@ public class BlockTitle extends MenuBlockTile {
         float offsetY = 3;
 
         Render2DUtils.renderSimpleText(
-            matrixStack,
+            matrices,
             this.title,
             (int)(pos.x + offsetX),
             (int)(pos.y + offsetY),
