@@ -16,7 +16,7 @@ import net.minecraft.client.font.FontManager;
 import net.minecraft.client.gui.screen.Screen;
 
 @Mixin(MinecraftClient.class)
-public class MinecraftClientMixin implements IClient {
+public abstract class MinecraftClientMixin implements IClient {
     @Inject(at = @At("HEAD"), method = "close()V", cancellable = false)
     private void onClose(CallbackInfo ci) {
         ComoClient.emitter.triggerEvent(new OnClientCloseEvent(ci));
@@ -37,5 +37,11 @@ public class MinecraftClientMixin implements IClient {
     @Inject(at = @At("HEAD"), method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;)V", cancellable = true)
     private void onDisconnect(Screen screen, CallbackInfo ci) {
         ComoClient.emitter.triggerEvent(new DisconnectEvent(ci));
+    }
+
+    @Shadow protected abstract void doItemUse();
+
+    public void performItemUse() {
+        this.doItemUse();
     }
 }
