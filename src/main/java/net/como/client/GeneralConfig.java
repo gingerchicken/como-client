@@ -8,6 +8,7 @@ public class GeneralConfig {
     public String font = "como-client:como";
     public String commandPrefix = ".";
     public String alterativeCommandPrefix = ",";
+    public Integer menuKey = 344;
 
     public GeneralConfig() {
 

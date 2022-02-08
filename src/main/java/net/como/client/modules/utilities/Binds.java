@@ -9,6 +9,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import net.como.client.ComoClient;
+import net.como.client.GeneralConfig;
 import net.como.client.commands.BindsCommand;
 import net.como.client.events.OnKeyEvent;
 import net.como.client.structures.Module;
@@ -152,6 +153,7 @@ public class Binds extends Module {
 
         // TODO make this per bind
         this.addSetting(new Setting("HideCommandOutput", true));
+        this.addSetting(new Setting("GUIKey", true));
 
         ComoClient.commandHandler.registerCommand(new BindsCommand());
         this.setCategory("Utilities");
@@ -201,6 +203,12 @@ public class Binds extends Module {
                 // Open chat if it is our command button.
                 if (this.isChatDelimiter(e.key) && ComoClient.getClient().currentScreen == null) {
                     ClientUtils.openChatScreen();
+                }
+
+                // Open ClickGUI (if we dont have meteor)
+                if (!ComoClient.isMeteorLoaded() && this.getBoolSetting("GUIKey") && e.key == ComoClient.config.menuKey) {
+                    ChatUtils.hideNextChat = true;
+                    ComoClient.Modules.get("clickgui").toggle();
                 }
 
                 break;
