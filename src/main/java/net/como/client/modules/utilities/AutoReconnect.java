@@ -12,6 +12,7 @@ public class AutoReconnect extends Module {
 
         this.addSetting(new Setting("Delay", 5));
         this.addSetting(new Setting("Manual", false));
+        this.addSetting(new Setting("InGameButton", true));
 
         this.description = "Automatically reconnects to a server after a given time.";
         this.setCategory("Utilities");
