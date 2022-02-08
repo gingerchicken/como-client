@@ -166,7 +166,7 @@ public class ClickGUIScreen extends Screen {
 
     private void updateSearchWidget() {
         this.searchWidget.y = (int)(float)this.searchWidgetHeight;
-        
+
         this.searchWidget.tick();
         this.setSearchPhrase(this.searchWidget.getText());
 
@@ -184,6 +184,8 @@ public class ClickGUIScreen extends Screen {
 
     @Override
     public boolean charTyped(char chr, int modifiers) {
+        if (chr == ' ') return false;
+
         this.searchWidget.setTextFieldFocused(true);
         
         this.searchWidget.charTyped(chr, modifiers);
