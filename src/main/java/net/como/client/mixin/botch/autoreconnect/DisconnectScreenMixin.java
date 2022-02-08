@@ -1,4 +1,4 @@
-package net.como.client.mixin.botch;
+package net.como.client.mixin.botch.autoreconnect;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +16,7 @@ import net.minecraft.text.Text;
 import net.minecraft.client.gui.widget.ButtonWidget;
 
 @Mixin(DisconnectedScreen.class)
-public class AutoReconnectMixin extends Screen {
+public class DisconnectScreenMixin extends Screen {
     private AutoReconnect _autoReconnect;
     private ButtonWidget reconnectButton;
 
@@ -38,7 +38,7 @@ public class AutoReconnectMixin extends Screen {
 	@Shadow
 	private int reasonHeight;
 
-    public AutoReconnectMixin(Text title) {
+    public DisconnectScreenMixin(Text title) {
         super(title);
     }
 

@@ -41,11 +41,12 @@
     "botch/EntityMixin",
     "botch/WorldMixin",
     "botch/TimerMixin",
-    "botch/AutoReconnectMixin",
     "botch/ClientInit",
     "botch/FontManagerMixin",
     "botch/TitleScreenLogoMixin",
     "botch/InfChatMixin",
+
+    "botch/autoreconnect/DisconnectScreenMixin",
 
     "botch/shulkerdupe/ShulkerScreenMixin",
     "botch/shulkerdupe/ClientPlayNetworkHandlerMixin",
