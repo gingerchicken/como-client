@@ -55,6 +55,7 @@ public class ClickGUI extends Module {
         }
 
         int sidePadding = 15;
+        int topPadding  = 15;
 
         // To start, we will place it 15 pixels into the screen.
         int x = sidePadding;
@@ -90,7 +91,7 @@ public class ClickGUI extends Module {
             // Get the last height or just add the current one.
             Boolean firstHeight = false;
             if (heights.size() <= i) {
-                heights.add(sidePadding);
+                heights.add(sidePadding + topPadding);
                 firstHeight = true;
             }
 
@@ -165,6 +166,12 @@ public class ClickGUI extends Module {
         }
 
         return false;
+    }
+
+    public void applySearchPhrase(String phrase) {
+        for (MenuBlock block : this.menuBlocks) {
+            block.setSearchPhrase(phrase);
+        }
     }
 
     @Override
