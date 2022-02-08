@@ -134,8 +134,6 @@ public class ClickGUI extends Module {
 
     @Override
     public void activate() {
-        this.displayMessage("This is a test module, it currently serves no purpose.");
-
         this.screen = new ClickGUIScreen(this);
 
         this.addListen(ClientTickEvent.class);
