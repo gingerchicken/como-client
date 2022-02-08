@@ -39,8 +39,7 @@ public class ClickGUI extends Module {
     // TODO move this to the screen
     private List<MenuBlock> menuBlocks = new ArrayList<>();
 
-    // TODO move this also to the screen
-    private void populateMenuBlocks() {
+    public void populateMenuBlocks() {
         this.scaleFactor = (float)(double)this.getDoubleSetting("Scale");
 
         menuBlocks.clear();
@@ -135,8 +134,6 @@ public class ClickGUI extends Module {
     @Override
     public void activate() {
         this.displayMessage("This is a test module, it currently serves no purpose.");
-
-        this.populateMenuBlocks();
 
         this.screen = new ClickGUIScreen(this);
 
