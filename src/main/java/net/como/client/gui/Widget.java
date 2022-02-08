@@ -131,4 +131,10 @@ public abstract class Widget implements Drawable {
 
         return this.scaleFactor;
     }
+
+    public void tick() {
+        for (Widget widget : this.getChildren()) {
+            widget.tick();
+        }
+    }
 }

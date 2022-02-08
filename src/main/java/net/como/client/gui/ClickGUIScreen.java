@@ -158,6 +158,7 @@ public class ClickGUIScreen extends Screen {
         }
 
         this.updateSearchWidget();
+        this.clickGUI.tickMenuBlocks();
     }
 
     private Float searchWidgetFinishHeight  = 10f;

@@ -156,6 +156,9 @@ public class ClickGUI extends Module {
         }
     }
 
+    public void tickMenuBlocks() {
+        for (MenuBlock menuBlock : this.menuBlocks) {
+            menuBlock.tick();
         }
     }
 
