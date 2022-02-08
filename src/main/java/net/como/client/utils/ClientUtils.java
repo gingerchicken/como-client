@@ -8,6 +8,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.util.Window;
@@ -174,5 +176,12 @@ public class ClientUtils {
         }
 
         return text.asString();
+    }
+
+    public static void disconnect(Screen prev) {
+        MinecraftClient client = ComoClient.getClient();
+        
+        client.world.disconnect();
+        client.setScreen(prev);
     }
 }
