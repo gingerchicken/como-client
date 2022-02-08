@@ -15,6 +15,13 @@ public class Widget {
     protected boolean clickable;
     private float scaleFactor = 1.0f;
 
+    public Widget popChild() {
+        Widget widget = this.getChildren().get(0);
+        this.getChildren().remove(0);
+        
+        return widget;
+    }
+
     public void setScaleFactor(float factor) {
         if (this.isChild()) {
             this.parentWidget.setScaleFactor(factor);

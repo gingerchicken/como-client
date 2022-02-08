@@ -1,5 +1,10 @@
 package net.como.client.gui.menu;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import net.como.client.gui.Widget;
 import net.como.client.structures.Colour;
 import net.como.client.utils.Render2DUtils;
@@ -30,6 +35,40 @@ public class MenuBlock extends Widget {
         this.outline  = new Colour(0, 0, 0, 255);
 
         this.clickable = true;
+    }
+
+    public void sortAlphabetically() {
+        // Get title block and remove it
+        BlockTitle title = (BlockTitle)this.popChild();
+
+        // Copy the current widget list
+        List<Widget> tiles = new ArrayList<>(this.getChildren());
+
+        // Clear all from current list
+        this.getChildren().clear();
+
+        // Sort the current widget list
+        Collections.sort(tiles, new Comparator<Widget>() {
+            @Override
+            public int compare(Widget a, Widget b) {
+                ModBlockTile tileA = (ModBlockTile)(a);
+                ModBlockTile tileB = (ModBlockTile)(b);
+
+                return tileA.getModule().getName().charAt(0) - tileB.getModule().getName().charAt(0);
+            }
+        });
+
+        // Add the title first
+        this.addChild(title);
+
+        // Add the mods sorted
+        int i = 1;
+        for (Widget widget : tiles) {
+            ModBlockTile tile = (ModBlockTile)(widget);
+            tile.index = i++;
+
+            this.addChild(tile);
+        }
     }
 
     @Override
