@@ -47,6 +47,7 @@
     "botch/InfChatMixin",
 
     "botch/autoreconnect/DisconnectScreenMixin",
+    "botch/autoreconnect/GameMenuScreenMixin",
 
     "botch/shulkerdupe/ShulkerScreenMixin",
     "botch/shulkerdupe/ClientPlayNetworkHandlerMixin",
