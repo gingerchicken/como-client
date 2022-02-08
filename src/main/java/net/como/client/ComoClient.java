@@ -233,6 +233,7 @@ public class ComoClient {
         Modules.put("hitmarker", new Hitmarker());
         Modules.put("antiresourcepack", new AntiResourcePack());
         Modules.put("antikick", new AntiKick());
+        Modules.put("fastuse", new FastUse());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
