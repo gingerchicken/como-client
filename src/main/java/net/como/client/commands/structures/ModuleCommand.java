@@ -13,6 +13,11 @@ public class ModuleCommand extends CommandNode {
 
         // Register the settings.
         if (module.getSettings().size() > 0) this.addSubCommand(new SettingsCommand(this.module));
+
+        // Add module specific commands
+        for (Command cmd : this.module.getCommands()) {
+            this.addSubCommand(cmd);
+        }
     }
 
     @Override
