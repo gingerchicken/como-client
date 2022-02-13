@@ -54,6 +54,8 @@
 
     "botch/craftingdupe/InventoryScreenMixin",
 
+    "botch/commandautofill/CommandSuggestorMixin",
+
     "AbstractBlockStateMixin",
     "WorldMixin"
   ],
