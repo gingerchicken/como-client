@@ -2,6 +2,7 @@ package net.como.client.commands.structures;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
 
 public class CommandNode extends Command {
     HashMap<String, Command> subCommands = new HashMap<String, Command>();
@@ -16,6 +17,18 @@ public class CommandNode extends Command {
         // subCommands[subCommand.getCommand()] = subCommand;
 
         subCommands.put(subCommand.getCommand(), subCommand);
+    }
+
+    public Command getSubCommand(String command) {
+        return this.subCommands.getOrDefault(command, null);
+    }
+
+    public Set<String> subCommandSet() {
+        return this.subCommands.keySet();
+    }
+
+    public Boolean hasSubCommand(String command) {
+        return this.subCommands.containsKey(command);
     }
 
     // TODO make this look nicer.
