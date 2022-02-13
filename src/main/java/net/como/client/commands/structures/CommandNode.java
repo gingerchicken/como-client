@@ -1,7 +1,9 @@
 package net.como.client.commands.structures;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 public class CommandNode extends Command {
@@ -61,5 +63,16 @@ public class CommandNode extends Command {
         String[] subArguments = Arrays.copyOfRange(args, 1, args.length);
 
         return subCommands.get(command).trigger(subArguments);
+    }
+
+    @Override
+    public List<String> getSuggestions() {
+        List<String> sug = new ArrayList<>();
+        
+        for (String sub : this.subCommands.keySet()) {
+            sug.add(sub);
+        }
+
+        return sug;
     }
 }
