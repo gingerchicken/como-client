@@ -1,5 +1,8 @@
 package net.como.client.commands.structures;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.como.client.utils.ChatUtils;
 
 public class Command {
@@ -21,6 +24,10 @@ public class Command {
 
     public String getCommand() {
         return this.command;
+    }
+
+    public List<String> getSuggestions() {
+        return new ArrayList<>();
     }
 
     public String getDescription() {
