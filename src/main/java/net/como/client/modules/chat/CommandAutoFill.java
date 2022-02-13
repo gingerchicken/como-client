@@ -20,6 +20,7 @@ public class CommandAutoFill extends Module {
         super("ChatSuggestion", true);
     }
 
+    // TODO Unit test this please!
     // This is hear to make debugging a little easier since I cannot place breakpoints inside of mixins (at least in my IDE)
     public List<String> getSuggestions(String text, CommandHandler handler) {        
         // It must be the first part!
