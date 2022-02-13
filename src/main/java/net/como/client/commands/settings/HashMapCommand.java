@@ -1,6 +1,8 @@
 package net.como.client.commands.settings;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
@@ -67,6 +69,17 @@ public class HashMapCommand extends CommandNode {
             this.displayChatMessage(String.format("Removed %s%s%s from %s.", ChatUtils.RED, val, ChatUtils.WHITE, super.getSettingName()));
 
             return true;
+        }
+
+        @Override
+        public List<String> getSuggestions() {
+            List<String> elements = new ArrayList<>();
+
+            for (String element : this.refMap.keySet()) {
+                elements.add(element);
+            }
+            
+            return elements;
         }
     }
     
