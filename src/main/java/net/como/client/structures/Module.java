@@ -1,10 +1,12 @@
 package net.como.client.structures;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
 
 import net.como.client.ComoClient;
+import net.como.client.commands.structures.Command;
 import net.como.client.interfaces.Flatternable;
 import net.como.client.utils.ChatUtils;
 import net.minecraft.client.font.TextRenderer;
@@ -26,6 +28,10 @@ public class Module extends Settings implements EventListener, Flatternable {
 
     protected void setCategory(String category) {
         this.category = category;
+    }
+
+    public Iterable<Command> getCommands() {
+        return new ArrayList<Command>();
     }
 
     public String description;
