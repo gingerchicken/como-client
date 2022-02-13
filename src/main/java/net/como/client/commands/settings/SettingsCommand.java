@@ -1,7 +1,9 @@
 package net.como.client.commands.settings;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
@@ -156,5 +158,19 @@ public class SettingsCommand extends Command {
                 return this.changeSetting(args);
             }
         }
+    }
+
+    @Override
+    public List<String> getSuggestions() {
+        List<String> sug = new ArrayList<>();
+
+        sug.add("list");
+        sug.add("help");
+        
+        for (String setting : this.settings.getSettings()) {
+            sug.add(setting);
+        }
+
+        return sug;
     }
 }
