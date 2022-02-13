@@ -2,6 +2,7 @@ package net.como.client.commands.structures;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
 
 import net.como.client.commands.HelpCommand;
 
@@ -45,5 +46,15 @@ public class CommandHandler {
 
         // Add a help command because we all need help sometimes :3
         this.registerCommand(new HelpCommand(this.commands));
+    }
+
+    public Set<String> getCommandSet() {
+        return this.commands.keySet();
+    }
+
+    public Command getCommand(String command) {
+        if (!this.commands.containsKey(command)) return null;
+
+        return this.commands.get(command);
     }
 }
