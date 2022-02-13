@@ -1,176 +1,212 @@
 package net.como.client.commands.settings;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
+import net.como.client.commands.structures.CommandNode;
 import net.como.client.structures.settings.*;
 import net.como.client.utils.ChatUtils;
 
-public class SettingsCommand extends Command {
+public class SettingsCommand extends CommandNode {
     private Settings settings;
 
-    public SettingsCommand(Settings settings) {
-        super("settings", "settings <list|help|...setting> <...>", "Change settings 'n' stuff.");
-
-        this.settings = settings;
-    }
-
-    public void showChange(String settingName, Object before, Object after) {
-        this.displayChatMessage(String.format("Updated '%s': %s%s%s -> %s%s%s", settingName, ChatUtils.RED, before.toString(), ChatUtils.WHITE, ChatUtils.GREEN, after.toString(), ChatUtils.WHITE));
-    }
-
-    @SuppressWarnings("unchecked")
-    private boolean changeSetting(String[] args) {
-        // Get the setting name.
-        String settingName = args[0];
-
-        // Make sure that it exists.
-        if (!settings.settingExists(settingName)) return false;
-
-        // Get the setting
-        Setting setting = settings.getSetting(settingName);
-
-        // Get the new value (if there is one)
-        String value = (args.length > 1) ? args[1] : null;
-
-        // If they didn't provide a new value, just show them what it is currently.
-        if (value == null) {
-            ComoClient.displayChatMessage(String.format("%sSetting Value: %s", ChatUtils.WHITE, setting.value.toString()));
-            return true;
-        }
-
-        // Update the setting in a horrible way.
-        switch (setting.value.getClass().getName()) {
+    private static Command getSettingCommand(Setting setting) {
+        String type = setting.defaultValue.getClass().getName();
+        switch (type) {
             case "java.lang.String": {
-                this.showChange(settingName, setting.value, value);
-                setting.value = value;
-                
-                return true;
+                return new StringCommand(setting);
             }
             case "java.lang.Boolean": {
-                boolean realValue = value.equals("true");
-                
-                this.showChange(settingName, setting.value, realValue);
-                setting.value = realValue;
-
-                return true;
+                return new BooleanCommand(setting);
             }
             case "java.lang.Float": {
-                // TODO this is legit just a copy of the double thing, make this nicer I swear!
-                Float realValue = null;
-                
-                try {
-                    realValue = Float.valueOf(value);
-                } catch (Exception e) { }
-
-                if (realValue == null) {
-                    ComoClient.displayChatMessage(String.format("%sInvalid Value: recieved NaN as a parameter", ChatUtils.RED));
-                    return true;
-                }
-                
-                this.showChange(settingName, setting.value, realValue);
-                setting.value = realValue;
-
-                return true;
+                return new FloatCommand(setting);
             }
-            // TODO come up with something better, this one is alot like the one underneath.
             case "java.lang.Double": {
-                Double realValue = null;
-                
-                try {
-                    realValue = Double.valueOf(value);
-                } catch (Exception e) { }
-
-                if (realValue == null) {
-                    ComoClient.displayChatMessage(String.format("%sInvalid Value: recieved NaN as a parameter", ChatUtils.RED));
-                    return true;
-                }
-                
-                this.showChange(settingName, setting.value, realValue);
-                setting.value = realValue;
-
-                return true;
+                return new DoubleCommand(setting);
             }
             case "java.lang.Integer": {
-                Integer realValue = null;
-
-                try {
-                    realValue = Integer.valueOf(value);
-                } catch (Exception e) { }
-
-                if (realValue == null) {
-                    ComoClient.displayChatMessage(String.format("%sInvalid Value: recieved NaN as a parameter", ChatUtils.RED));
-                    return true;
-                }
-                
-                this.showChange(settingName, setting.value, realValue);
-                setting.value = realValue;
-
-                return true;
+                return new IntegerCommand(setting);
             }
             case "java.util.HashMap": {
-                // Pretty sure 9/10 times it is this type but like please check in future.
-                HashMap<String, Boolean> map = (HashMap<String, Boolean>)setting.value;
-
-                // Generate a new command and trigger it.
-                // TODO this is not how this is meant to be used but I cannot be bothered to do it another way, please be bothered at some point.
-                HashMapCommand hashCommands = new HashMapCommand(settingName, map);
-
-                // Return the result
-                return hashCommands.trigger(Arrays.copyOfRange(args, 1, args.length));
+                return new HashMapCommand(setting);
+            }
+            default: {
+                System.err.println(String.format("Attempted to generate settings command from type %s", type));
+                return null;
             }
         }
-
-        // Unsupported setting type
-        return false;
-    } 
-
-    private boolean displayList(String[] args) {
-        ComoClient.displayChatMessage("Current Settings:");
-        for (String name : settings.getSettings()) {
-            ComoClient.displayChatMessage(
-                String.format("-> %s - %s", name, settings.getSetting(name).value.toString())
-            );
-        }
-
-        return true;
     }
 
-    @Override
-    public Boolean trigger(String[] args) {
-        if (this.handleHelp(args)) return true;
+    public SettingsCommand(Settings settings) {
+        super("settings", "Change settings 'n' stuff.");
 
-        if (args.length == 0) {
-            ComoClient.displayChatMessage(String.format("%s%s", ChatUtils.WHITE, this.getHelpText()));
+        this.settings = settings;
+
+        this.addSubCommand(new ListCommand(settings));
+        
+        for (String settingName : this.settings.getSettings()) {
+            Setting setting = this.settings.getSetting(settingName);
+
+            this.addSubCommand(getSettingCommand(setting));
+        }
+    }
+
+    private static abstract class GenericSettingCommand extends Command {
+        public Setting setting;
+
+        public GenericSettingCommand(Setting setting) {
+            // TODO Change when setting descriptions are added
+            super(setting.name, "A Modifiable Setting", "A Modifiable Setting");
+            this.setting = setting;
+        }
+
+        public void showChange(Object before) {
+            this.displayChatMessage(String.format("Updated '%s': %s%s%s -> %s%s%s", this.setting.name, ChatUtils.RED, before.toString(), ChatUtils.WHITE, ChatUtils.GREEN, setting.value.toString(), ChatUtils.WHITE));
+        }
+
+        public void showValue() {
+            ComoClient.displayChatMessage(String.format("%sSetting Value: %s", ChatUtils.WHITE, setting.value.toString()));
+        }
+
+        public abstract Boolean setValue(String value);
+
+        @Override
+        public Boolean trigger(String[] args) {
+            if (args.length == 0) {
+                this.showValue();
+                return true;
+            }
+
+            // See what the object's value was originally
+            String before = ((Object)(this.setting.value)).toString();
+
+            // Set the new value
+            String value = String.join(" ", args);
+            if (!this.setValue(value)) {
+                return true;
+            }
+
+            // Show the change
+            this.showChange(before);
+
+            return true;
+        }
+    }
+    private static abstract class NumericalSettingCommand extends GenericSettingCommand {
+
+        public NumericalSettingCommand(Setting setting) {
+            super(setting);
+        }
+
+        public void showNaNMessage() {
+            ComoClient.displayChatMessage(String.format("%sInvalid Value: received NaN as a parameter", ChatUtils.RED));
+        }
+
+        public abstract Object valueOf(String value);
+
+        @Override
+        public Boolean setValue(String value) {
+            Object realValue = null;
+                
+            try {
+                realValue = this.valueOf(value);
+            } catch (Exception e) { }
+
+            if (realValue == null) {
+                this.showNaNMessage();
+                return false;
+            }
+
+            setting.value = realValue;
+
+            return true;
+        }
+    }
+
+    private static class ListCommand extends Command {
+        Settings settings;
+
+        public ListCommand(Settings settings) {
+            super("list", "", "Lists all of the settings");
+
+            this.settings = settings;
+        }
+
+        @Override
+        public Boolean trigger(String[] args) {
+            ComoClient.displayChatMessage("Current Settings:");
+            for (String name : settings.getSettings()) {
+                ComoClient.displayChatMessage(
+                    String.format("-> %s - %s", name, settings.getSetting(name).value.toString())
+                );
+            }
+
+            return true;
+        }
+    }
+
+    private static class StringCommand extends GenericSettingCommand {
+        public StringCommand(Setting setting) {
+            super(setting);
+        }
+
+        @Override
+        public Boolean setValue(String value) {
+            this.setting.value = value;
+            return true;
+        }
+    }
+    private static class BooleanCommand extends GenericSettingCommand {
+
+        public BooleanCommand(Setting setting) {
+            super(setting);
+        }
+
+        @Override
+        public Boolean setValue(String value) {
+            this.setting.value = value.toLowerCase().equals("true");
             return true;
         }
 
-        switch (args[0].toLowerCase()) {
-            case "list": {
-                return this.displayList(args);
-            }
-            // It might be a setting?
-            default: {
-                return this.changeSetting(args);
-            }
-        }
     }
+    
+    private static class FloatCommand extends NumericalSettingCommand {
 
-    @Override
-    public List<String> getSuggestions() {
-        List<String> sug = new ArrayList<>();
-
-        sug.add("list");
-        sug.add("help");
-        
-        for (String setting : this.settings.getSettings()) {
-            sug.add(setting);
+        public FloatCommand(Setting setting) {
+            super(setting);
+            //TODO Auto-generated constructor stub
         }
 
-        return sug;
+        @Override
+        public Object valueOf(String value) {
+            return Float.valueOf(value);
+        }
+
+    }
+    private static class DoubleCommand extends NumericalSettingCommand {
+
+        public DoubleCommand(Setting setting) {
+            super(setting);
+            //TODO Auto-generated constructor stub
+        }
+
+        @Override
+        public Object valueOf(String value) {
+            return Double.valueOf(value);
+        }
+
+    }
+    private static class IntegerCommand extends NumericalSettingCommand {
+
+        public IntegerCommand(Setting setting) {
+            super(setting);
+            //TODO Auto-generated constructor stub
+        }
+
+        @Override
+        public Object valueOf(String value) {
+            return Integer.valueOf(value);
+        }
+
     }
 }

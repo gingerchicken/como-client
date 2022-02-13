@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
+import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ChatUtils;
 
 public class HashMapCommand extends CommandNode {
@@ -15,18 +16,18 @@ public class HashMapCommand extends CommandNode {
             return this.settingName;
         }
 
-        public SubCommand(String command, String helpText, String description, String settingName, HashMap<String, Boolean> refMap) {
+        public SubCommand(String command, String helpText, String description, Setting setting) {
             super(command, helpText, description);
             
-            this.settingName = settingName;
-            this.refMap = refMap;
+            this.settingName = setting.name;
+            this.refMap = (HashMap<String, Boolean>)setting.value;
         }
     }
 
     private static class Add extends SubCommand {
 
-        public Add(String settingName, HashMap<String, Boolean> refMap) {
-            super("add", "remove [key to be added]", "Add an item to the hash map", settingName, refMap);
+        public Add(Setting setting) {
+            super("add", "remove [key to be added]", "Add an item to the hash map", setting);
         }
         
         @Override
@@ -48,8 +49,8 @@ public class HashMapCommand extends CommandNode {
 
     private static class Remove extends SubCommand {
 
-        public Remove(String settingName, HashMap<String, Boolean> refMap) {
-            super("remove", "remove [key to be removed]", "Remove an item from the hash map", settingName, refMap);
+        public Remove(Setting setting) {
+            super("remove", "remove [key to be removed]", "Remove an item from the hash map", setting);
         }
         
         @Override
@@ -70,12 +71,12 @@ public class HashMapCommand extends CommandNode {
     }
     
 
-    public HashMapCommand(String settingName, HashMap<String, Boolean> refMap) {
-        super("command", "Adjust a map");
+    public HashMapCommand(Setting setting) {
+        super(setting.name, "Adjust a map");
 
         // Add sub commands.
-        this.addSubCommand(new Add(settingName, refMap));
-        this.addSubCommand(new Remove(settingName, refMap));
+        this.addSubCommand(new Add(setting));
+        this.addSubCommand(new Remove(setting));
     }
     
 }
