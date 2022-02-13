@@ -177,6 +177,8 @@ public class Binds extends Module {
 
     public boolean logNextKey = false;
 
+    public Integer lastLogKey = null;
+
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
@@ -190,6 +192,7 @@ public class Binds extends Module {
                 // Print the key that the user pressed if they want us to do that.
                 if (logNextKey) {
                     this.displayMessage(String.format("The key you just pressed had code %s%d", ChatUtils.GREEN, e.key));
+                    lastLogKey = e.key;
 
                     logNextKey = false;
                     e.ci.cancel();
@@ -360,6 +363,21 @@ public class Binds extends Module {
 
             this.getBinds().displayMessage(String.format("Bound %s to run \"%s\".", this.keyBindString(key), command));
             return true;
+        }
+
+        @Override
+        public List<String> getSuggestions() {
+            List<String> sugs = new ArrayList<>();
+
+            if (this.getBinds().lastLogKey != null) sugs.add(this.getBinds().lastLogKey.toString());
+
+            // All letters
+            for (int i = (int)'a'; i <= (int)'z'; i++) {
+                Character c = (char)i;
+                sugs.add(c.toString());
+            }
+
+            return sugs;
         }
     }
     private static class LogNext extends BindsSub {
