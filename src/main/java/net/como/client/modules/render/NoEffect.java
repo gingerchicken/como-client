@@ -21,7 +21,7 @@ public class NoEffect extends Module {
 
         this.addSetting(new Setting("Effects", new HashMap<String, Boolean>()));
 
-        this.setCategory("HUD");
+        this.setCategory("Render");
     }
 
     @Override
