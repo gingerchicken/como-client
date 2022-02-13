@@ -1,6 +1,10 @@
 package net.como.client.utils;
 
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.spongepowered.include.com.google.common.base.Strings;
 
 import net.como.client.ComoClient;
 import net.minecraft.client.MinecraftClient;
@@ -60,5 +64,20 @@ public class ChatUtils {
         }
 
         return new String(chars);
+    }
+
+    private static final Pattern WHITESPACE_PATTERN = Pattern.compile("(\\s+)");
+    public static Integer getStartOfCurrentWord(String input) {
+        int i = 0;
+        
+        if (Strings.isNullOrEmpty(input)) return i;
+        
+        Matcher matcher = WHITESPACE_PATTERN.matcher(input);
+        
+        while (matcher.find()) {
+            i = matcher.end();
+        }
+
+        return i;
     }
 }
