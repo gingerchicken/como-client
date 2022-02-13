@@ -237,6 +237,7 @@ public class ComoClient {
         Modules.put("antiresourcepack", new AntiResourcePack());
         Modules.put("antikick", new AntiKick());
         Modules.put("fastuse", new FastUse());
+        Modules.put("commandautofill", new CommandAutoFill());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
