@@ -91,6 +91,11 @@ public class SettingsCommand extends CommandNode {
 
             return true;
         }
+
+        @Override
+        public List<String> getSuggestions() {
+            return List.of(this.setting.value.toString());
+        }
     }
     private static abstract class NumericalSettingCommand extends GenericSettingCommand {
 
@@ -161,7 +166,7 @@ public class SettingsCommand extends CommandNode {
                     String.format("-> %s - %s", name, settings.getSetting(name).value.toString())
                 );
             }
-            
+
             return true;
         }
 
