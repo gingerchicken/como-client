@@ -91,6 +91,9 @@
  - TotalBouncies: `1`
  - VerticalSpacing: `5`
 
+## CommandAutoFill (`.commandautofill`)
+[(Source Code)](src/main/java/net/como/client/modules/chat/CommandAutoFill.java) No description available as of yet.
+
 ## CraftingDupe (`.craftingdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/dupes/CraftingDupe.java) An old drop dupe for versions 1.17 and earlier
 ### Default Settings
