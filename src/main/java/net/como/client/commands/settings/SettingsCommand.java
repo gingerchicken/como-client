@@ -43,8 +43,6 @@ public class SettingsCommand extends CommandNode {
         super("settings", "Change settings 'n' stuff.");
 
         this.settings = settings;
-
-        this.addSubCommand(new ListCommand(settings));
         
         for (String settingName : this.settings.getSettings()) {
             Setting setting = this.settings.getSetting(settingName);
@@ -125,28 +123,6 @@ public class SettingsCommand extends CommandNode {
         }
     }
 
-    private static class ListCommand extends Command {
-        Settings settings;
-
-        public ListCommand(Settings settings) {
-            super("list", "", "Lists all of the settings");
-
-            this.settings = settings;
-        }
-
-        @Override
-        public Boolean trigger(String[] args) {
-            ComoClient.displayChatMessage("Current Settings:");
-            for (String name : settings.getSettings()) {
-                ComoClient.displayChatMessage(
-                    String.format("-> %s - %s", name, settings.getSetting(name).value.toString())
-                );
-            }
-
-            return true;
-        }
-    }
-
     private static class StringCommand extends GenericSettingCommand {
         public StringCommand(Setting setting) {
             super(setting);
@@ -174,6 +150,22 @@ public class SettingsCommand extends CommandNode {
         public List<String> getSuggestions() {
             return List.of("true", "false");
         }
+    }
+
+    @Override
+    public Boolean trigger(String[] args) {
+        if (args.length == 0) {
+            ComoClient.displayChatMessage("Current Settings:");
+            for (String name : settings.getSettings()) {
+                ComoClient.displayChatMessage(
+                    String.format("-> %s - %s", name, settings.getSetting(name).value.toString())
+                );
+            }
+            
+            return true;
+        }
+
+        return super.trigger(args);
     }
     
     private static class FloatCommand extends NumericalSettingCommand {
