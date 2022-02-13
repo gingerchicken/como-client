@@ -1,5 +1,7 @@
 package net.como.client.commands.settings;
 
+import java.util.List;
+
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
@@ -168,6 +170,10 @@ public class SettingsCommand extends CommandNode {
             return true;
         }
 
+        @Override
+        public List<String> getSuggestions() {
+            return List.of("true", "false");
+        }
     }
     
     private static class FloatCommand extends NumericalSettingCommand {
