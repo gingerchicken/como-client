@@ -12,7 +12,7 @@ public class ModuleCommand extends CommandNode {
         this.module = module;
 
         // Register the settings.
-        super.addSubCommand(new SettingsCommand(this.module));
+        if (module.getSettings().size() > 0) this.addSubCommand(new SettingsCommand(this.module));
     }
 
     @Override
