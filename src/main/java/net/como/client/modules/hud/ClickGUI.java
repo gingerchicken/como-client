@@ -24,7 +24,7 @@ public class ClickGUI extends Module {
         this.description = "A way of toggling your settings with a GUI (Currently WIP)";
 
         // Like this is temp
-        this.addSetting(new Setting("Spacing", 15));
+        this.addSetting(new Setting("HorizontalSpacing", 15));
         this.addSetting(new Setting("VerticalSpacing", 5));
         this.addSetting(new Setting("Scale", 1d));
         this.addSetting(new Setting("BlockWidth", 90));
@@ -63,7 +63,7 @@ public class ClickGUI extends Module {
         int verticalSpacing = (int)((float)this.getIntSetting("VerticalSpacing")*scaleFactor);
 
         // this will be the default spacing between the blocks (if they don't get moved)
-        int spacing = this.getIntSetting("Spacing");
+        int spacing = this.getIntSetting("HorizontalSpacing");
 
         // This will be the width of the menu blocks
         int boxWidth = this.getIntSetting("BlockWidth");
