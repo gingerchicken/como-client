@@ -15,8 +15,20 @@ public class ModBlockTile extends MenuBlockTile {
         return new Colour(0, green, 0 , 150);
     }
 
+    @Override
+    public Colour getBackgroundColour(Float delta) {
+        Colour c = this.getBackgroundColour();
+
+        Float k = module.isEnabled() ? 1f : -1f;
+        if ((module.isEnabled() && green >= greenMax) || (!module.isEnabled() && green <= 0)) k = 0f;
+
+        return new Colour(
+            c.r, c.g + greenStep * delta * k, c.b, c.a
+        );
+    }
+
     private float green = 0.0f;
-    private float greenStep = 75f;
+    private float greenStep = 50f;
     private float greenMax = 255f;
 
     public ModBlockTile(MenuBlock container, Module module) {
