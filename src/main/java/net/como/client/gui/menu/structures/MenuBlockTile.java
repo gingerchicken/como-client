@@ -1,14 +1,10 @@
 package net.como.client.gui.menu.structures;
 
-import net.como.client.ComoClient;
 import net.como.client.gui.Widget;
 import net.como.client.gui.menu.MenuBlock;
 import net.como.client.structures.Colour;
-import net.como.client.utils.ClientUtils;
 import net.como.client.utils.Render2DUtils;
-import net.como.client.utils.RenderUtils;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec2f;
 
 public class MenuBlockTile extends Widget {
@@ -25,10 +21,18 @@ public class MenuBlockTile extends Widget {
         return this.bgColour;
     }
 
-    public Colour getOutlineColour() {
-        Colour c = this.getBackgroundColour();
+    public Colour getBackgroundColour(Float delta) {
+        return this.getBackgroundColour();
+    }
+
+    public Colour getOutlineColour(Float delta) {
+        Colour c = this.getBackgroundColour(delta);
 
         return new Colour(c.r, c.g, c.b, c.a - 50);
+    }
+
+    public Colour getOutlineColour() {
+        return this.getOutlineColour(0f);
     }
 
     public MenuBlockTile(MenuBlock container, String title, Colour backgroundColour) {
@@ -80,7 +84,7 @@ public class MenuBlockTile extends Widget {
             (int)pos.y,
             (int)(pos.x + size.x),
             (int)(pos.y + size.y),
-            this.getBackgroundColour(),
+            this.getBackgroundColour(delta),
             this.getOutlineColour()
         );
 
