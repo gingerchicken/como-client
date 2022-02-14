@@ -54,11 +54,13 @@ public class ClickGUI extends Module {
             categories.get(cat).add(mod);
         }
 
-        int sidePadding = 15;
-        int topPadding  = 15;
+        int sidePadding = (int)(15*scaleFactor);
+        int topPadding  = (int)(15*scaleFactor);
 
         // To start, we will place it 15 pixels into the screen.
         int x = sidePadding;
+
+        int verticalSpacing = (int)((float)this.getIntSetting("VerticalSpacing")*scaleFactor);
 
         // this will be the default spacing between the blocks (if they don't get moved)
         int spacing = this.getIntSetting("Spacing");
@@ -97,8 +99,8 @@ public class ClickGUI extends Module {
 
             // Calculate y position
             int y = heights.get(i);
-            y = firstHeight ? y : y + this.getIntSetting("VerticalSpacing");
-            heights.set(i, y + (int)blockHeight.y);
+            y = firstHeight ? y : y + verticalSpacing;
+            heights.set(i, y + (int)(blockHeight.y * scaleFactor));
 
             Vec2f pos = new Vec2f(x, y);
 
@@ -123,7 +125,7 @@ public class ClickGUI extends Module {
             this.menuBlocks.add(block);
 
             // Calculate where we are going to place the next block
-            x += boxWidth + spacing;
+            x += boxWidth * scaleFactor + spacing*scaleFactor;
 
             // Increment the column
             i++;
