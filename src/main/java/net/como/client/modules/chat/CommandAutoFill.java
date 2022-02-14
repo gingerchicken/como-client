@@ -18,6 +18,10 @@ public class CommandAutoFill extends Module {
 
     public CommandAutoFill() {
         super("ChatSuggestion", true);
+
+        this.description = "Allows you to have command auto-fill in chat.";
+
+        this.setCategory("Chat");
     }
 
     // TODO Unit test this please!
