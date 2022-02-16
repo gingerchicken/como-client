@@ -23,9 +23,7 @@ public class MaxEnchant extends Command {
         NbtCompound nbt = new NbtCompound();
         NbtList enchants = new NbtList();
 
-        String[] enchantments = {"minecraft:protection","minecraft:fire_protection","minecraft:feather_falling","minecraft:blast_protection","minecraft:projectile_protection","minecraft:respiration","minecraft:aqua_affinity","minecraft:thorns","minecraft:depth_strider","minecraft:sharpness","minecraft:smite","minecraft:bane_of_arthropods","minecraft:knockback","minecraft:fire_aspect","minecraft:looting","minecraft:efficiency","minecraft:silk_touch","minecraft:unbreaking","minecraft:fortune","minecraft:power","minecraft:punch","minecraft:flame","minecraft:infinity","minecraft:luck_of_the_sea","minecraft:lure"};
-
-        for (String id : enchantments) {
+        for (String id : NbtUtils.ENCHANTMENTS) {
             enchants.add(NbtUtils.enchantment(id, Short.MAX_VALUE));
         }
 
