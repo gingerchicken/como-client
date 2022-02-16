@@ -86,13 +86,13 @@
  - BlockWidth: `90`
  - Bouncy: `True`
  - BouncySpeed: `1.0`
+ - HorizontalSpacing: `15`
  - Scale: `1.0`
- - Spacing: `15`
  - TotalBouncies: `1`
  - VerticalSpacing: `5`
 
 ## CommandAutoFill (`.commandautofill`)
-[(Source Code)](src/main/java/net/como/client/modules/chat/CommandAutoFill.java) No description available as of yet.
+[(Source Code)](src/main/java/net/como/client/modules/chat/CommandAutoFill.java) Allows you to have command auto-fill in chat.
 
 ## CraftingDupe (`.craftingdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/dupes/CraftingDupe.java) An old drop dupe for versions 1.17 and earlier
