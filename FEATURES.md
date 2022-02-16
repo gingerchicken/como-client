@@ -99,6 +99,9 @@
 ### Default Settings
  - ShowTip: `True`
 
+## CreativeMagic (`.creativemagic`)
+[(Source Code)](src/main/java/net/como/client/modules/exploits/CreativeMagic.java) Adds a creative item group with custom NBT items.
+
 ## Criticals (`.criticals`)
 [(Source Code)](src/main/java/net/como/client/modules/combat/Criticals.java) Makes every hit a critical hit.
 
