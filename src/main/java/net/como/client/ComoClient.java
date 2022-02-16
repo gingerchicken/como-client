@@ -238,6 +238,7 @@ public class ComoClient {
         Modules.put("antikick", new AntiKick());
         Modules.put("fastuse", new FastUse());
         Modules.put("commandautofill", new CommandAutoFill());
+        Modules.put("creativemagic", new CreativeMagic());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
