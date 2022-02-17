@@ -296,6 +296,9 @@
 ## NoHurtCam (`.nohurtcam`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoHurtCam.java) Disables the screen rotation when getting damaged.
 
+## NoParticles (`.noparticles`)
+[(Source Code)](src/main/java/net/como/client/modules/render/NoParticles.java) Blocks any particles from being rendered.
+
 ## NoPortal (`.noportal`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoPortal.java) Allows portal effects to be toggled.
 ### Default Settings
