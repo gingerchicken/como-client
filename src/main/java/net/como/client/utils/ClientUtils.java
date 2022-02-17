@@ -9,6 +9,7 @@ import net.minecraft.client.Mouse;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.PlayerListEntry;
@@ -183,5 +184,9 @@ public class ClientUtils {
         
         client.world.disconnect();
         client.setScreen(prev);
+    }
+
+    public static void openInventory() {
+        ComoClient.getClient().setScreen(new InventoryScreen(ComoClient.me()));
     }
 }
