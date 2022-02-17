@@ -4,11 +4,13 @@ import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
 import net.como.client.utils.ChatUtils;
+import net.como.client.utils.ClientUtils;
 import net.como.client.utils.InventoryUtils;
 import net.como.client.utils.NbtUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
 import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
 
 public class NbtCommand extends CommandNode {
@@ -31,8 +33,8 @@ public class NbtCommand extends CommandNode {
         }
 
         public void clickHand(ItemStack stack) {
-            // TODO Open creative inv and close it again
-            ComoClient.me().networkHandler.sendPacket(new CreativeInventoryActionC2SPacket(InventoryUtils.getMainHandSlot(), stack));
+            ClientUtils.openInventory();
+            ComoClient.getClient().currentScreen = null;
         }
 
         public void clickHand() {
