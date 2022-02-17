@@ -31,6 +31,7 @@ public class NbtCommand extends CommandNode {
         }
 
         public void clickHand(ItemStack stack) {
+            // TODO Open creative inv and close it again
             ComoClient.me().networkHandler.sendPacket(new CreativeInventoryActionC2SPacket(InventoryUtils.getMainHandSlot(), stack));
         }
 
@@ -89,8 +90,8 @@ public class NbtCommand extends CommandNode {
 
             ItemStack stack = this.heldItem();
             stack.setCount(s);
-            
-            this.clickHand();
+
+            this.clickHand(stack);
 
             return true;
         }
