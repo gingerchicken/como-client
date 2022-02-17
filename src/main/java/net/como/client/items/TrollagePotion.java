@@ -25,8 +25,6 @@ public class TrollagePotion implements CreativeItem {
         NbtCompound nbt = new NbtCompound();
         nbt.put("CustomPotionEffects", effects);
         stack.setNbt(nbt);
-
-        stack.setCount(64);
         
         return stack;
     }
