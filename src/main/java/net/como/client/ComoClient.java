@@ -239,6 +239,7 @@ public class ComoClient {
         Modules.put("fastuse", new FastUse());
         Modules.put("commandautofill", new CommandAutoFill());
         Modules.put("creativemagic", new CreativeMagic());
+        Modules.put("noparticles", new NoParticles());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
