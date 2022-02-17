@@ -1,8 +1,5 @@
 package net.como.client.commands.nbt;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.utils.NbtUtils;

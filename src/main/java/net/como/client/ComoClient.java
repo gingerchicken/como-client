@@ -96,8 +96,6 @@ public class ComoClient {
             ((Waypoints)Modules.get("waypoints")).waypoints
         ));
 
-        commandHandler.registerCommand(new MaxEnchant());
-
         // Add all of the modules as commands.
         for (Entry<String, Module> entry : Modules.entrySet()) {
             commandHandler.registerCommand(new ModuleCommand(entry.getKey(), entry.getValue()));
