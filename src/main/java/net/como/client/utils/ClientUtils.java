@@ -189,4 +189,9 @@ public class ClientUtils {
     public static void openInventory() {
         ComoClient.getClient().setScreen(new InventoryScreen(ComoClient.me()));
     }
+
+    public static void refreshInventory() {
+        ClientUtils.openInventory();
+        ComoClient.getClient().currentScreen = null;
+    }
 }
