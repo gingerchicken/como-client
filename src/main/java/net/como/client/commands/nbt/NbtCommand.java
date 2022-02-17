@@ -17,6 +17,7 @@ public class NbtCommand extends CommandNode {
         super("nbt", "Manipulate items' NBT data");
 
         this.addSubCommand(new MaxEnchant());
+        this.addSubCommand(new SetStack());
     }
 
     public static abstract class NbtModCommand extends Command {
@@ -58,6 +59,39 @@ public class NbtCommand extends CommandNode {
     
             itemStack.setNbt(nbt);
     
+            return true;
+        }
+    }
+    public static class SetStack extends NbtModCommand {
+
+        public SetStack() {
+            super("setstack", "nbt setstack <amount>", "Allows you to set a current items stack");
+        }
+
+        @Override
+        public boolean shouldShowHelp(String[] args) {
+            if (args.length != 1) return true;
+
+            return false;
+        }
+
+        @Override
+        public Boolean trigger(String[] args) {
+            if (this.handleHelp(args)) return true;
+
+            int s;
+            try {
+                s = Integer.valueOf(args[0]);
+            } catch (Exception e) {
+                this.displayChatMessage(String.format("%sPlease enter a valid number", ChatUtils.RED));
+                return true;
+            }
+
+            ItemStack stack = this.heldItem();
+            stack.setCount(s);
+            
+            this.clickHand();
+
             return true;
         }
     }
