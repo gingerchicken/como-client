@@ -13,7 +13,7 @@ import net.como.client.commands.FontCommand;
 import net.como.client.commands.FriendsCommand;
 import net.como.client.commands.PanicCommand;
 import net.como.client.commands.WaypointsCommand;
-import net.como.client.commands.nbt.MaxEnchant;
+import net.como.client.commands.nbt.NbtCommand;
 import net.como.client.commands.structures.ModuleCommand;
 import net.como.client.commands.structures.CommandHandler;
 import net.como.client.components.FriendsManager;
@@ -90,6 +90,9 @@ public class ComoClient {
 
         // Add copyip command
         commandHandler.registerCommand(new CopyServerIPCommand());
+
+        // Add nbt command
+        commandHandler.registerCommand(new NbtCommand());
 
         // Waypoints commands
         commandHandler.registerCommand(new WaypointsCommand(
