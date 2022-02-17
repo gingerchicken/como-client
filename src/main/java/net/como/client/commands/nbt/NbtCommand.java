@@ -3,10 +3,13 @@ package net.como.client.commands.nbt;
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
+import net.como.client.utils.ChatUtils;
+import net.como.client.utils.InventoryUtils;
 import net.como.client.utils.NbtUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
 
 public class NbtCommand extends CommandNode {
 
@@ -24,6 +27,14 @@ public class NbtCommand extends CommandNode {
 
         protected ItemStack heldItem() {
             return ComoClient.me().getMainHandStack();
+        }
+
+        public void clickHand(ItemStack stack) {
+            ComoClient.me().networkHandler.sendPacket(new CreativeInventoryActionC2SPacket(InventoryUtils.getMainHandSlot(), stack));
+        }
+
+        public void clickHand() {
+            this.clickHand(this.heldItem());
         }
     }
 
