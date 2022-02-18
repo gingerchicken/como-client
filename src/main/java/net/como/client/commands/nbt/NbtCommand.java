@@ -5,13 +5,10 @@ import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.ClientUtils;
-import net.como.client.utils.InventoryUtils;
 import net.como.client.utils.NbtUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
-import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
 
 public class NbtCommand extends CommandNode {
 
@@ -30,15 +27,6 @@ public class NbtCommand extends CommandNode {
 
         protected ItemStack heldItem() {
             return ComoClient.me().getMainHandStack();
-        }
-
-        public void clickHand(ItemStack stack) {
-            ClientUtils.openInventory();
-            ComoClient.getClient().currentScreen = null;
-        }
-
-        public void clickHand() {
-            this.clickHand(this.heldItem());
         }
     }
 
@@ -93,7 +81,7 @@ public class NbtCommand extends CommandNode {
             ItemStack stack = this.heldItem();
             stack.setCount(s);
 
-            this.clickHand(stack);
+            ClientUtils.refreshInventory();
 
             return true;
         }
