@@ -170,7 +170,12 @@ public class Binds extends Module {
     }
 
     private Boolean isChatDelimiter(Integer key) {
-        char keyChar = Character.toChars(key)[0];
+        char keyChar = 0;
+        try {
+            keyChar = Character.toChars(key)[0];
+        } catch (Exception e) {
+
+        }
 
         return (keyChar == ComoClient.commandHandler.delimiter.charAt(0));
     }
