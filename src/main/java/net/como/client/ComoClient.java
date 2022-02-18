@@ -241,6 +241,7 @@ public class ComoClient {
         Modules.put("commandautofill", new CommandAutoFill());
         Modules.put("creativemagic", new CreativeMagic());
         Modules.put("noparticles", new NoParticles());
+        Modules.put("packetsniffer", new PacketSniffer());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
