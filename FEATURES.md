@@ -350,6 +350,11 @@
  - MaxPackets: `10`
  - SendDelay: `0.05`
 
+## PacketSniffer (`.packetsniffer`)
+[(Source Code)](src/main/java/net/como/client/modules/utilities/PacketSniffer.java) Displays captured outbound packets in chat
+### Default Settings
+ - HidePacket: `{ ... }`
+
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/dupes/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
 ### Default Settings
