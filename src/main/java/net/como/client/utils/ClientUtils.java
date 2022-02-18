@@ -191,7 +191,13 @@ public class ClientUtils {
     }
 
     public static void refreshInventory() {
+        MinecraftClient client = ComoClient.getClient();
+
+        Boolean wasMouseLocked = client.mouse.isCursorLocked();
+
         ClientUtils.openInventory();
-        ComoClient.getClient().currentScreen = null;
+        client.currentScreen = null;
+        
+        if (wasMouseLocked) client.mouse.lockCursor();
     }
 }
