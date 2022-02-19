@@ -29,6 +29,16 @@ public class NbtCommand extends CommandNode {
         protected ItemStack heldItem() {
             return ComoClient.me().getMainHandStack();
         }
+
+        public String getItemNbtAsString() {
+            NbtCompound nbt = this.heldItem().getNbt();
+
+            if (nbt == null) {
+                return "{}";
+            }
+
+            return nbt.toString();
+        }
     }
 
     public static class MaxEnchant extends NbtModCommand {
@@ -95,13 +105,7 @@ public class NbtCommand extends CommandNode {
 
         @Override
         public Boolean trigger(String[] args) {
-            NbtCompound nbt = this.heldItem().getNbt();
-            
-            if (nbt == null) {
-                this.displayChatMessage("{}");
-                return true;
-            }
-            this.displayChatMessage(nbt.toString());
+            this.displayChatMessage(this.getItemNbtAsString());
             
             return true;
         }
