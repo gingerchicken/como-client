@@ -17,6 +17,7 @@ public class NbtCommand extends CommandNode {
 
         this.addSubCommand(new MaxEnchant());
         this.addSubCommand(new SetStack());
+        this.addSubCommand(new Show());
     }
 
     public static abstract class NbtModCommand extends Command {
@@ -83,6 +84,25 @@ public class NbtCommand extends CommandNode {
 
             ClientUtils.refreshInventory();
 
+            return true;
+        }
+    }
+    public static class Show extends NbtModCommand {
+
+        public Show() {
+            super("show", "", "Displays the current nbt data");
+        }
+
+        @Override
+        public Boolean trigger(String[] args) {
+            NbtCompound nbt = this.heldItem().getNbt();
+            
+            if (nbt == null) {
+                this.displayChatMessage("{}");
+                return true;
+            }
+            this.displayChatMessage(nbt.toString());
+            
             return true;
         }
     }
