@@ -8,6 +8,7 @@ import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.SendPacketEvent;
 import net.como.client.events.UpdateBlockBreakingProgressEvent;
+import net.como.client.structures.Mode;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
@@ -23,25 +24,16 @@ public class FastBreak extends Module {
 
         this.description = "Allows you to break blocks a bit quicker.";
 
-        this.addSetting(new Setting("PotionAmplifier", 3));
-        this.addSetting(new Setting("Potion", true));
-        // TODO change this when we have enum settings, this is horrible
-
-        this.addSetting(new Setting("MultiplierOnly", false));
-
+        this.addSetting(new Setting("Mode", new Mode("Multiplier", "Packet", "Potion")));
+        this.addSetting(new Setting("Multiplier", 3));
         this.addSetting(new Setting("BreakDelay", 0d));
-
-        // The break multiplier could be used in conjunction with the other modes
-        this.addSetting(new Setting("BreakMultiplier", 2));
 
         this.setCategory("Packet");
     }
 
     @Override
     public String listOption() {
-        if (this.getBoolSetting("MultiplierOnly")) return String.format("x%d", this.getIntSetting("BreakMultiplier"));
-
-        return this.getBoolSetting("Potion") ? "Potion" : "Packet";
+        return String.format("%s x%d", this.getModeSetting("Mode").getStateName(), this.getIntSetting("Multiplier"));
     }
 
     public void resetPotionEffect() {
@@ -108,15 +100,11 @@ public class FastBreak extends Module {
     }
 
     private boolean handlePotions() {
-        if (!this.getBoolSetting("Potion")) return false;
-
-        ComoClient.me().addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 3, this.getIntSetting("PotionAmplifier"), true, true));
+        ComoClient.me().addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 3, this.getIntSetting("Multiplier"), true, true));
         return true;
     }
 
     private boolean handlePackets() {
-        if (this.getBoolSetting("Potion")) return false;
-
         // Remove the potion effect since we are no longer in that mode.
         this.resetPotionEffect();
 
@@ -143,24 +131,32 @@ public class FastBreak extends Module {
 
     @Override
     public void fireEvent(Event event) {
+        Mode mode = this.getModeSetting("Mode");
+        Integer multiplier = this.getIntSetting("Multiplier");
+
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
-                // Stop if we only have multipliers
-                if (this.getBoolSetting("MultiplierOnly")) {
-                    this.resetPotionEffect();
-                    break;
+                switch (mode.getStateName()) {
+                    case "Multiplier": {
+                        this.resetPotionEffect();
+                        break;
+                    }
+                    case "Potion": {
+                        this.handlePotions();
+                        break;
+                    }
+                    case "Packet": {
+                        this.handlePackets();
+                        break;
+                    }
                 }
-
-                // Handle simple potion effect.
-                if (this.handlePotions()) break;
-                
-                // Handle packets
-                if (this.handlePackets()) break;
 
                 break;
             }
 
             case "SendPacketEvent": {
+                if (!mode.is("Packet")) break;
+
                 SendPacketEvent e = (SendPacketEvent)event;
 
                 if (!(e.packet instanceof PlayerActionC2SPacket)) break;
@@ -190,9 +186,10 @@ public class FastBreak extends Module {
             }
 
             case "UpdateBlockBreakingProgressEvent": {
+                if (!mode.is("Multiplier")) break;
+
                 UpdateBlockBreakingProgressEvent e = (UpdateBlockBreakingProgressEvent)event;
                 
-                Integer multiplier = this.getIntSetting("BreakMultiplier");
                 if (multiplier <= 1) break; // Handle if there is no change. 
 
                 // Don't block anything that we spawned.
