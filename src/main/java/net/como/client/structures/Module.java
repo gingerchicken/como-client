@@ -142,8 +142,15 @@ public class Module extends Settings implements EventListener, Flatternable {
         for (String name : this.getSettings()) {
             Setting setting = this.getSetting(name);
 
+            Object val = setting.value;
+            if (setting.value instanceof Mode) {
+                Mode mode = this.getModeSetting(name);
+                
+                val = mode.getStateName();
+            }
+
             // This will mean that their type will be lost in the JSON file however, I cannot think of a nice way around it.
-            data.put(name, gson.toJson(setting.value));
+            data.put(name, gson.toJson(val));
         }
 
         data.put("enabled", this.isEnabled().toString());
@@ -163,6 +170,19 @@ public class Module extends Settings implements EventListener, Flatternable {
             // Make sure that the setting is valid
             if (setting == null) {
                 ComoClient.log(String.format("Unknown setting '%s' in mod '%s.'", name, this.getName()));
+                continue;
+            }
+
+            // Handle Modes
+            if (setting.value instanceof Mode) {
+                Mode mode = this.getModeSetting(name);
+                String val = data.get(name);
+
+                if (!mode.setState(val)) {
+                    ComoClient.log(String.format("Invalid state '%s' for setting '%s' in mod '%s.'", val, name, this.getName()));
+                    continue;
+                }
+
                 continue;
             }
 
