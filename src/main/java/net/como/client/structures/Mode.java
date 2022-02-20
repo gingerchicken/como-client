@@ -163,4 +163,9 @@ public class Mode {
     public Boolean is(Integer id) {
         return id == this.getState();
     }
+
+    public String toString() {
+        // I am currently just toStringing just incase the stateName type changes!
+        return this.getStateName().toString();
+    }
 }
