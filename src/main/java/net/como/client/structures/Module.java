@@ -142,15 +142,16 @@ public class Module extends Settings implements EventListener, Flatternable {
         for (String name : this.getSettings()) {
             Setting setting = this.getSetting(name);
 
-            Object val = setting.value;
+            String val = null;
             if (setting.value instanceof Mode) {
                 Mode mode = this.getModeSetting(name);
                 
                 val = mode.getStateName();
             }
+            val = val == null ? gson.toJson(setting.value) : val;
 
             // This will mean that their type will be lost in the JSON file however, I cannot think of a nice way around it.
-            data.put(name, gson.toJson(val));
+            data.put(name, val);
         }
 
         data.put("enabled", this.isEnabled().toString());
