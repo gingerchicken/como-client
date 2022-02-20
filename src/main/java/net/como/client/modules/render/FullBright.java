@@ -2,6 +2,7 @@ package net.como.client.modules.render;
 
 import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
+import net.como.client.structures.Mode;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
@@ -18,15 +19,14 @@ public class FullBright extends Module {
         
         this.description = "Allows you to see anywhere as if it was day.";
 
-        // TODO change this once you add EnumSettings
-        this.addSetting(new Setting("PotionEffect", false));
+        this.addSetting(new Setting("Mode", new Mode("Gamma", "Potion")));
 
         this.setCategory("Render");
     }
 
     @Override
     public String listOption() {
-        return this.getBoolSetting("PotionEffect") ? "Potion" : "Gamma";
+        return this.getModeSetting("Mode").getStateName();
     }
     
     @Override
@@ -60,25 +60,30 @@ public class FullBright extends Module {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
-                if (this.getBoolSetting("PotionEffect")) {
-                    // Restore other mod's gamma
-                    this.restoreGamma();
+                switch (this.getModeSetting("Mode").getStateName()) {
+                    case "Potion": {
+                        // Restore other mod's gamma
+                        this.restoreGamma();
 
-                    ComoClient.me().addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 3, 1, true, true));
+                        ComoClient.me().addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 3, 1, true, true));
 
-                    break;
+                        break;
+                    }
+
+                    case "Gamma": {
+                        MinecraftClient client = ComoClient.getClient();
+
+                        if (!this.hasSetGamma) {
+                            this.normalGamma = client.options.gamma;
+                            this.hasSetGamma = true;
+        
+                            this.restoreEffect();
+                        }
+        
+                        client.options.gamma = 16d;
+                        break;
+                    }
                 }
-
-                MinecraftClient client = ComoClient.getClient();
-                if (!this.hasSetGamma) {
-                    this.normalGamma = client.options.gamma;
-                    this.hasSetGamma = true;
-
-                    this.restoreEffect();
-                }
-
-                client.options.gamma = 16d;
-                break;
             }
         }
     }

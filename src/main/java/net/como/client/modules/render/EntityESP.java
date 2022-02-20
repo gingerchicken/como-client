@@ -6,6 +6,7 @@ import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderEntityEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.Colour;
+import net.como.client.structures.Mode;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.RenderUtils;
@@ -16,9 +17,6 @@ import net.minecraft.entity.player.PlayerEntity;
 
 
 public class EntityESP extends Module {
-    private final static int MODE_GLOW      = 1;
-    private final static int MODE_MOB_BOX   = 2;
-
     public EntityESP() {
         super("EntityESP");
 
@@ -30,7 +28,7 @@ public class EntityESP extends Module {
         this.addSetting(new Setting("GlowColour", false));
 
         // Drawing Mode setting
-        this.addSetting(new Setting("DrawMode", MODE_GLOW));
+        this.addSetting(new Setting("Mode", new Mode("Glow", "Box")));
 
         this.description = "Know where entities are more easily.";
 
@@ -55,20 +53,6 @@ public class EntityESP extends Module {
         return !(entity instanceof PlayerEntity && (PlayerEntity)entity == ComoClient.me());
     }
 
-    // This is just for normalising the setting till we get a enum setting type.
-    // TODO enum setting type when?
-    private int getDrawMode() {
-        int mode = (int)this.getSetting("DrawMode").value;
-
-        switch (mode) {
-            case MODE_GLOW:
-            case MODE_MOB_BOX: {
-                return mode;
-            }
-            default: return 1;
-        }
-    }
-
     // Just a wrapper for rendering the boxes
     private void renderBoxes(Entity entity, float tickDelta, MatrixStack mStack) {
         RenderUtils.renderBox(entity, tickDelta, mStack, (Boolean)this.getSetting("BlendBoxes").value, (Float)this.getSetting("BoxPadding").value);
@@ -79,7 +63,7 @@ public class EntityESP extends Module {
         switch (event.getClass().getSimpleName()) {
             // For entity glow
             case "IsEntityGlowingEvent": {
-                if (this.getDrawMode() != MODE_GLOW) break;
+                if (!this.getModeSetting("Mode").is("Glow")) break;
 
                 IsEntityGlowingEvent e = (IsEntityGlowingEvent)event;
                 if (!this.shouldRender(e.entity)) break;
@@ -89,7 +73,7 @@ public class EntityESP extends Module {
                 break;
             }
             case "RenderEntityEvent": {
-                if (this.getDrawMode() != MODE_GLOW) break;
+                if (!this.getModeSetting("Mode").is("Glow")) break;
 
                 RenderEntityEvent e = (RenderEntityEvent)event;
 
@@ -112,7 +96,7 @@ public class EntityESP extends Module {
                 break;
             }
             case "OnRenderEvent": {
-                if (this.getDrawMode() != MODE_MOB_BOX) break;
+                if (!this.getModeSetting("Mode").is("Box")) break;
 
                 OnRenderEvent e = (OnRenderEvent)event;
                 Iterable<Entity> ents = ComoClient.getClient().world.getEntities();

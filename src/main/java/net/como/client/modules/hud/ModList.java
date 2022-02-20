@@ -14,6 +14,7 @@ import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.Colour;
 import net.como.client.structures.GUIPos;
+import net.como.client.structures.Mode;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.RenderUtils;
@@ -21,7 +22,7 @@ import net.como.client.utils.RenderUtils;
 public class ModList extends Module {
     private GUIPos getPosition() {
         return GUIPos.fromInt(
-            (int)this.getSetting("Positioning").value,
+            this.getModeSetting("Positioning").getState() + 1,
             GUIPos.Type.TOP_LEFT
         );
     }
@@ -173,33 +174,26 @@ public class ModList extends Module {
         this.description = "Displays all of your enabled mods";
         this.modListDisplay = false;
 
-        this.addSetting(new Setting("ColouringMode", "default"));
+        this.addSetting(new Setting("ColouringMode", new Mode("default", "lgbt", "trans", "rgb")));
         this.addSetting(new Setting("Scale", 1.0f));
         this.addSetting(new Setting("RGBIntensity", 5));
-        this.addSetting(new Setting("Positioning", 1)); // TODO change this after implementing issue #44
+        this.addSetting(new Setting("Positioning", new Mode("TopLeft", "TopRight", "BottomLeft", "BottomRight")));
 
         this.setCategory("HUD");
     }
 
     private ColouringMode getColouringMode() {
-        String mode = (String)this.getSetting("ColouringMode").value;
-        mode = mode.toLowerCase();
-        
-        // If the mode doesn't exist return to default.
-        mode = (this.colouringModes.containsKey(mode)) ? mode : "default";
-
-        // Return the mode.
-        return this.colouringModes.get(mode);
+        return this.colouringModes.get(this.getModeSetting("ColouringMode").getStateName());
     }
 
     @Override
     public void activate() {
         // Setup colouring modes
         colouringModes = new HashMap<String, ColouringMode>() {{
-            put("default", new DefaultColouring());
-            put("trans", new TransColouring());
-            put("rgb", new RGBColouring());
-            put("lgbt", new LGBTColouring());
+            put("default",  new DefaultColouring());
+            put("trans",    new TransColouring());
+            put("rgb",      new RGBColouring());
+            put("lgbt",     new LGBTColouring());
         }};
 
         this.addListen(InGameHudRenderEvent.class);
