@@ -251,7 +251,7 @@
  - MaxDistance: `7.0`
  - MaxFOV: `25.0`
  - SilentAim: `True`
- - TargetClosestAngle: `True`
+ - TargetMode: `new Mode("Angle", "Distance")`
  - TargetTracers: `True`
  - TracerLifeSpan: `0.25`
 
