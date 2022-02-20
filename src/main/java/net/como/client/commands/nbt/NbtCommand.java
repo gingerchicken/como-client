@@ -1,5 +1,7 @@
 package net.como.client.commands.nbt;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
@@ -10,6 +12,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.StringNbtReader;
 
 public class NbtCommand extends CommandNode {
 
@@ -19,7 +22,9 @@ public class NbtCommand extends CommandNode {
         this.addSubCommand(new MaxEnchant());
         this.addSubCommand(new SetStack());
         this.addSubCommand(new Show());
+
         this.addSubCommand(new NbtCopy());
+        this.addSubCommand(new NbtSet());
     }
 
     public static abstract class NbtModCommand extends Command {
@@ -124,6 +129,36 @@ public class NbtCommand extends CommandNode {
             client.keyboard.setClipboard(this.getItemNbtAsString());
             
             this.displayChatMessage("Copied to clipboard!");
+
+            return true;
+        }
+    }
+    public static class NbtSet extends NbtModCommand {
+
+        public NbtSet() {
+            super("set", "", "Sets the active item's nbt");
+        }
+
+        @Override
+        public boolean shouldShowHelp(String[] args) {
+            return args.length == 0;
+        }
+
+        @Override
+        public Boolean trigger(String[] args) {
+            if (this.handleHelp(args)) return true;
+
+            String data = this.combineArgs(args);
+            NbtCompound nbt;
+            try {
+                nbt = StringNbtReader.parse(data);
+            } catch (CommandSyntaxException e) {
+                this.displayChatMessage(String.format("%sERROR: %s", ChatUtils.RED, e.toString()));
+                return true;
+            }
+
+            this.displayChatMessage("Successfully set NBT data!");
+            this.heldItem().setNbt(nbt);
 
             return true;
         }
