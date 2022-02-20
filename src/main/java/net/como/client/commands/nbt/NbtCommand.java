@@ -6,6 +6,7 @@ import net.como.client.commands.structures.CommandNode;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.NbtUtils;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
@@ -18,6 +19,7 @@ public class NbtCommand extends CommandNode {
         this.addSubCommand(new MaxEnchant());
         this.addSubCommand(new SetStack());
         this.addSubCommand(new Show());
+        this.addSubCommand(new NbtCopy());
     }
 
     public static abstract class NbtModCommand extends Command {
@@ -107,6 +109,22 @@ public class NbtCommand extends CommandNode {
         public Boolean trigger(String[] args) {
             this.displayChatMessage(this.getItemNbtAsString());
             
+            return true;
+        }
+    }
+    public static class NbtCopy extends NbtModCommand {
+
+        public NbtCopy() {
+            super("copy", "", "Copies the current NBT to clipboard");
+        }
+
+        @Override
+        public Boolean trigger(String[] args) {
+            MinecraftClient client = ComoClient.getClient();
+            client.keyboard.setClipboard(this.getItemNbtAsString());
+            
+            this.displayChatMessage("Copied to clipboard!");
+
             return true;
         }
     }
