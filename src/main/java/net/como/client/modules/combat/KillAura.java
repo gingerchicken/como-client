@@ -11,6 +11,7 @@ import net.como.client.components.ServerClientRotation;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
+import net.como.client.structures.Mode;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
@@ -18,6 +19,7 @@ import net.como.client.utils.ClientUtils;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
 import net.como.client.utils.RotationUtils;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
@@ -29,14 +31,20 @@ public class KillAura extends Module {
     public KillAura() {
         super("KillAura");
 
-        this.addSetting(new Setting("MaxDistance", 7d));
-        this.addSetting(new Setting("Delay", 0d));
+        // Misc
         this.addSetting(new Setting("SilentAim", true));
 
-        this.addSetting(new Setting("AttackFriends", false));
-        this.addSetting(new Setting("TargetClosestAngle", true));
+        // Constraints
+        this.addSetting(new Setting("MaxDistance", 7d));
         this.addSetting(new Setting("MaxFOV", 25d));
+        this.addSetting(new Setting("Delay", 0d));
 
+        // Friends
+        this.addSetting(new Setting("AttackFriends", false));
+
+        this.addSetting(new Setting("TargetMode", new Mode("Angle", "Distance")));
+
+        // Tracers
         this.addSetting(new Setting("TargetTracers", true));
         this.addSetting(new Setting("TracerLifeSpan", 0.25d));
     
@@ -101,22 +109,35 @@ public class KillAura extends Module {
     }
 
     private Comparator<Entity> getComparator() {
-        // Distance to localplayer
+        switch (this.getModeSetting("TargetMode").getStateName()) {
+            case "Distance": {
+                return new Comparator<Entity>() {
+                    public int compare(Entity e1, Entity e2) {
+                        ClientPlayerEntity me = ComoClient.me();
 
-        if ((boolean)this.getSetting("TargetClosestAngle").value) {
-            return new Comparator<Entity>() {
-                public int compare(Entity e1, Entity e2) {
-                    return Double.compare(getLookDistance(e1), getLookDistance(e2));
-                }
-            };
+                        return Double.compare(
+                            e1.distanceTo(me),
+                            e2.distanceTo(me)
+                        );
+                    }
+                };
+            }
+
+            case "Angle": {
+                return new Comparator<Entity>() {
+                    public int compare(Entity e1, Entity e2) {
+                        return Double.compare(
+                            getLookDistance(e1),
+                            getLookDistance(e2)
+                        );
+                    }
+                };
+            }
         }
 
-        return new Comparator<Entity>() {
-            public int compare(Entity e1, Entity e2) {
-                return Double.compare(e1.distanceTo(ComoClient.me()), e2.distanceTo(ComoClient.me()));
-            }
-        };
+        return null;
     }
+
 
     private HashMap<Entity, Double> prevTargets = new HashMap<Entity, Double>();
 
