@@ -1,10 +1,12 @@
 package net.como.client.commands.settings;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
+import net.como.client.structures.Mode;
 import net.como.client.structures.settings.*;
 import net.como.client.utils.ChatUtils;
 
@@ -31,6 +33,9 @@ public class SettingsCommand extends CommandNode {
             }
             case "java.util.HashMap": {
                 return new HashMapCommand(setting);
+            }
+            case "net.como.client.structures.Mode": {
+                return new ModeCommand(setting);
             }
             default: {
                 System.err.println(String.format("Attempted to generate settings command from type %s", type));
@@ -155,6 +160,34 @@ public class SettingsCommand extends CommandNode {
         public List<String> getSuggestions() {
             return List.of("true", "false");
         }
+    }
+    private static class ModeCommand extends GenericSettingCommand {
+        Mode mode;
+
+        public ModeCommand(Setting setting) {
+            super(setting);
+
+            this.mode = (Mode)setting.value;
+        }
+
+        @Override
+        public Boolean setValue(String value) {
+            if (!this.mode.setState(value)) {
+                this.displayChatMessage(String.format("%sInvalid state '%s,' please check that it exists and try again.", ChatUtils.RED, value));
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        public List<String> getSuggestions() {
+            List<String> items = new ArrayList<>();
+            for (String entry : this.mode.getEntries()) items.add(entry);
+            
+            return items;
+        }
+
     }
 
     @Override
