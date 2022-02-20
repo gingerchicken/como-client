@@ -3,6 +3,8 @@ package net.como.client.structures.settings;
 import java.util.HashMap;
 import java.util.Set;
 
+import net.como.client.structures.Mode;
+
 public class Settings {
     // TODO add a "on change" function
 
@@ -47,6 +49,10 @@ public class Settings {
     @SuppressWarnings("unchecked")
     public HashMap<String, Boolean> getHashMapSetting(String name) {
         return (HashMap<String, Boolean>)(this.getSetting(name).value);
+    }
+
+    public Mode getModeSetting(String name) {
+        return (Mode)this.getSetting(name).value;
     }
 
     public Settings() { }
