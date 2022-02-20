@@ -59,7 +59,7 @@ public class Mode {
      * @return if an id can be mapped to an entry
      */
     private Boolean isValidId(int id) {
-        return !(this.entires.size() >= id || id < 0);
+        return !(this.entires.size() <= id || id < 0);
     }
 
     /**
