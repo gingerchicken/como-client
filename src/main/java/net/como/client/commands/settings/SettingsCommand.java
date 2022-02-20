@@ -99,7 +99,11 @@ public class SettingsCommand extends CommandNode {
 
         @Override
         public List<String> getSuggestions() {
-            return List.of(this.setting.value.toString());
+            List<String> suggestions = new ArrayList<>();
+
+            for (String sug : this.setting.getSuggestions()) suggestions.add(sug);
+
+            return suggestions;
         }
     }
     private static abstract class NumericalSettingCommand extends GenericSettingCommand {
