@@ -129,8 +129,8 @@ public class Mode {
      * Adds all of the entries
      * @param entries
      */
-    private void addEntries(String... entries) {
-        for (String entry : entires) {
+    private void addEntries(String... items) {
+        for (String entry : items) {
             this.addEntry(entry);
         }
     }
