@@ -139,7 +139,9 @@
  - BlendBoxes: `True`
  - BoxPadding: `0.0`
  - GlowColour: `True`
- - Mode: `new Mode("Glow", "Box")`
+ - Mode
+    - Glow
+    - Box
 
 ## EntitySpeed (`.entityspeed`)
 [(Source Code)](src/main/java/net/como/client/modules/movement/EntitySpeed.java) Allows you to set a mounted entity's speed, you can also control entities without saddles.
@@ -164,7 +166,10 @@
 [(Source Code)](src/main/java/net/como/client/modules/packet/FastBreak.java) Allows you to break blocks a bit quicker.
 ### Default Settings
  - BreakDelay: `0.0`
- - Mode: `new Mode("Multiplier", "Packet", "Potion")`
+ - Mode
+    - Multiplier
+    - Packet
+    - Potion
  - Multiplier: `3`
 
 ## FastUse (`.fastuse`)
@@ -184,7 +189,9 @@
 ## FullBright (`.fullbright`)
 [(Source Code)](src/main/java/net/como/client/modules/render/FullBright.java) Allows you to see anywhere as if it was day.
 ### Default Settings
- - Mode: `new Mode("Gamma", "Potion")`
+ - Mode
+    - Gamma
+    - Potion
 
 ## HClip (`.hclip`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/HClip.java) Teleports the player a set amount of blocks away
@@ -251,15 +258,25 @@
  - MaxDistance: `7.0`
  - MaxFOV: `25.0`
  - SilentAim: `True`
- - TargetMode: `new Mode("Angle", "Distance")`
+ - TargetMode
+    - Angle
+    - Distance
  - TargetTracers: `True`
  - TracerLifeSpan: `0.25`
 
 ## ModList (`.modlist`)
 [(Source Code)](src/main/java/net/como/client/modules/hud/ModList.java) Displays all of your enabled mods
 ### Default Settings
- - ColouringMode: `new Mode("default", "lgbt", "trans", "rgb")`
- - Positioning: `new Mode("TopLeft", "TopRight", "BottomLeft", "BottomRight")`
+ - ColouringMode
+    - default
+    - lgbt
+    - trans
+    - rgb
+ - Positioning
+    - TopLeft
+    - TopRight
+    - BottomLeft
+    - BottomRight
  - RGBIntensity: `5`
  - Scale: `1.0`
 
