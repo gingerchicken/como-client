@@ -42,7 +42,7 @@ public class FastUse extends Module {
             case "ClientTickEvent": {
                 MinecraftClient client = ComoClient.getClient(); 
 
-                if (!client.options.keyUse.isPressed()) {
+                if (!client.options.useKey.isPressed()) {
                     this.resetDelay();
                     break;
                 }
