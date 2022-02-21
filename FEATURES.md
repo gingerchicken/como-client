@@ -54,7 +54,10 @@
  - HideCommandOutput: `True`
 
 ## Blink (`.blink`)
-[(Source Code)](src/main/java/net/como/client/modules/movement/Blink.java) Delay your packets being sent.
+[(Source Code)](src/main/java/net/como/client/modules/packet/Blink.java) Delay your packets being sent.
+### Default Settings
+ - SendDelay: `0.0`
+ - Threaded: `True`
 
 ## BlockESP (`.blockesp`)
 [(Source Code)](src/main/java/net/como/client/modules/render/BlockESP.java) Makes specific blocks visible through walls.
