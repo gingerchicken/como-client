@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
+import net.como.client.events.GetVelocityMultiplierEvent;
 import net.como.client.events.ShouldDrawBlockSideEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -25,4 +26,9 @@ public abstract class BlockMixin implements ItemConvertible {
 	private static void onShouldDrawSide(BlockState state, BlockView blockView, BlockPos pos, Direction side, BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
         ComoClient.emitter.triggerEvent(new ShouldDrawBlockSideEvent(state, blockView, pos, side, blockPos, cir));
 	}
+
+    @Inject(at = @At("HEAD"), method = "getVelocityMultiplier()F", cancellable = true)
+    private void onGetVelocityMultiplier(CallbackInfoReturnable<Float> cir) {
+        ComoClient.emitter.triggerEvent(new GetVelocityMultiplierEvent(cir));
+    }
 }
