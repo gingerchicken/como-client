@@ -5,13 +5,15 @@ import net.minecraft.text.Text;
 
 public interface CreativeItem {
     public ItemStack getStack();
-    public String getName();
+    default public String getName() {
+        return this.getClass().getName();
+    }
     default public boolean useName() {
         return true;
     }
     default public ItemStack readyStack() {
         ItemStack stack = this.getStack();
-        stack.setCustomName(Text.of(this.getName()));
+        if (this.useName()) stack.setCustomName(Text.of(this.getName()));
 
         return stack;
     }
