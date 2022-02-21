@@ -57,6 +57,8 @@
 
     "botch/commandautofill/CommandSuggestorMixin",
 
+    "botch/noslow/ClientPlayerEntityMixin",
+
     "AbstractBlockStateMixin",
     "WorldMixin"
   ],

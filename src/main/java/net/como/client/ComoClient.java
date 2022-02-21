@@ -242,6 +242,7 @@ public class ComoClient {
         Modules.put("creativemagic", new CreativeMagic());
         Modules.put("noparticles", new NoParticles());
         Modules.put("packetsniffer", new PacketSniffer());
+        Modules.put("noslow", new NoSlow());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
