@@ -1,6 +1,7 @@
 from enum import Enum
 import os
 import hashlib
+import json
 from pathlib import Path
 
 FEATURES_DIR = "src/main/java/net/como/client/modules"
@@ -17,6 +18,7 @@ class SettingType(Enum):
     BOOLEAN = 4,
     OTHER = 5,
     INTEGER = 6
+    MODE = 7
 
 class Setting:
     def __init__(self, name, default) -> None:
@@ -45,6 +47,9 @@ class Setting:
         if v == "new HashMap<String, Boolean>()":
             return SettingType.STR_BOOL_HASHMAP
         
+        if v.startswith("new Mode("):
+            return SettingType.MODE
+
         return SettingType.OTHER
 
     def get_name(self):
@@ -72,7 +77,21 @@ class Setting:
         if setting_type == SettingType.STRING:
             return str(v)
 
+        if setting_type == SettingType.MODE:
+            return self.get_mode_items(v)
+
         return v
+
+    def get_mode_items(self, value=str()):
+        # Remove new Mode(
+        value = value[len("new Mode("):]
+        
+        # Remove )
+        value = value[:-1]
+
+        # Now for the dodgy bit
+        return json.loads(f"[{value}]") 
+
 
     @staticmethod
     def from_line(line = str()):
@@ -166,7 +185,16 @@ class Feature:
         if len(settings) > 0:
             line += "### Default Settings\n"
             for setting in settings:
-                line += f" - {setting.get_name()}: `{setting.get_parsed_default()}`\n"
+                default = setting.get_parsed_default()
+
+                line += f" - {setting.get_name()}"
+                print(type(default))
+                if type(default) == list:
+                    for item in default:
+                        line += f"\n    - {item}"
+                    line += "\n"
+                else:
+                    line += f": `{default}`\n"
 
         return line
 
