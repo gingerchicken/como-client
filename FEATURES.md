@@ -331,6 +331,9 @@
  - ShowWhenClosed: `True`
  - WarningTime: `1.0`
 
+## NoSlow (`.noslow`)
+[(Source Code)](src/main/java/net/como/client/modules/movement/NoSlow.java) Allows you to never slow down
+
 ## NoSubmerge (`.nosubmerge`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoSubmerge.java) Allows submerge overlays to be toggled.
 ### Default Settings
