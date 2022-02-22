@@ -1,15 +1,25 @@
 package net.como.client.mixin.botch.noslow;
 
+import com.mojang.authlib.GameProfile;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
 import net.como.client.modules.movement.NoSlow;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.util.math.Vec3d;
 
 @Mixin(ClientPlayerEntity.class)
-public class ClientPlayerEntityMixin {
+public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
+    public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
+        super(world, profile);
+    }
+
     private NoSlow getNoSlow() {
         return (NoSlow)(ComoClient.Modules.get("noslow"));
     }
@@ -19,5 +29,15 @@ public class ClientPlayerEntityMixin {
         if (!this.getNoSlow().isEnabled()) return player.isUsingItem();
 
         return false;
+    }
+
+    @Override
+    public void slowMovement(BlockState state, Vec3d multiplier) {
+        if (!this.getNoSlow().isEnabled()) {
+            super.slowMovement(state, multiplier);
+            return;
+        }
+
+        // Do nothing!
     }
 }
