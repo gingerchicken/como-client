@@ -2,9 +2,6 @@
 ## AntiInvisible (`.antiinvisible`)
 [(Source Code)](src/main/java/net/como/client/modules/render/AntiInvisible.java) Makes all invisible entities visible.
 
-## AntiItemDrop (`.antiitemdrop`)
-[(Source Code)](src/main/java/net/como/client/modules/render/AntiItemDrop.java) Hide all dropped items so then your friends cannot kill your client repeatedly.
-
 ## AntiKick (`.antikick`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/AntiKick.java) Blocks packets that cause you to disconnect from the server
 
@@ -313,6 +310,9 @@
 
 ## NoHurtCam (`.nohurtcam`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoHurtCam.java) Disables the screen rotation when getting damaged.
+
+## NoItemRender (`.noitemrender`)
+[(Source Code)](src/main/java/net/como/client/modules/render/NoItemRender.java) Hide all dropped items so then your friends cannot kill your client repeatedly.
 
 ## NoParticles (`.noparticles`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoParticles.java) Blocks any particles from being rendered.
