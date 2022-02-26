@@ -102,6 +102,7 @@
 ## CreativeMagic (`.creativemagic`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/CreativeMagic.java) Adds a creative item group with custom NBT items.
 ### Default Settings
+ - AllowLaggy: `True`
  - AutoRefresh: `True`
 
 ## Criticals (`.criticals`)
