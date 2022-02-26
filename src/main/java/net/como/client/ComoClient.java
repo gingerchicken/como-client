@@ -173,7 +173,7 @@ public class ComoClient {
         Modules.put("entityesp", new EntityESP());
         Modules.put("speed", new SpeedHack());
         Modules.put("superjump", new SuperJump());
-        Modules.put("antiitemdrop", new AntiItemDrop());
+        Modules.put("antiitemdrop", new NoItemRender());
         Modules.put("noweather", new NoWeather());
         Modules.put("nofall", new NoFall());
         Modules.put("camflight", new CamFlight());
