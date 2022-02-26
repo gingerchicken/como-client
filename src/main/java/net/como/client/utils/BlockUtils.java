@@ -3,12 +3,14 @@
 package net.como.client.utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.como.client.ComoClient;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.math.BlockPos;
@@ -21,6 +23,19 @@ import net.minecraft.util.shape.VoxelShapes;
 public class BlockUtils {
 	private static final MinecraftClient client = ComoClient.getClient();
 	
+	private static List<String> ids = new ArrayList<>();
+	public static List<String> getIds() {
+		return ids;
+	}
+	private static void addId(String id) {
+		ids.add(id);
+	}
+	public static void initialiseIdList() {
+		for (Identifier id : Registry.ITEM.getIds()) {
+			addId(id.toString());
+		}
+	}
+
 	public static BlockState getState(BlockPos pos) {
 		return client.world.getBlockState(pos);
 	}
