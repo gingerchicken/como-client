@@ -17,4 +17,7 @@ public interface CreativeItem {
 
         return stack;
     }
+    default public Boolean isLaggy() {
+        return false;
+    }
 }
