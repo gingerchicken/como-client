@@ -31,4 +31,9 @@ public class CrashSack implements CreativeItem {
 
         return stack;
     }
+
+    @Override
+    public Boolean isLaggy() {
+        return true;
+    }
 }
