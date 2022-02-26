@@ -22,6 +22,10 @@ public class Command {
         );
     }
 
+    public void displayChatMessage(String format, Object... items) {
+        this.displayChatMessage(String.format(format, items));
+    }
+
     public String getCommand() {
         return this.command;
     }
