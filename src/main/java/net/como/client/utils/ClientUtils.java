@@ -201,6 +201,10 @@ public class ClientUtils {
         if (wasMouseLocked) client.mouse.lockCursor();
     }
 
+    /**
+     * 
+     * @return the username of the player
+     */
     public static String getUsername() {
         return ComoClient.me().getName().asString();
     }
