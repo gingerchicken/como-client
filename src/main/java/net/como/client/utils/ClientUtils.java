@@ -200,4 +200,8 @@ public class ClientUtils {
         
         if (wasMouseLocked) client.mouse.lockCursor();
     }
+
+    public static String getUsername() {
+        return ComoClient.me().getName().asString();
+    }
 }
