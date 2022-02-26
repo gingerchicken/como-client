@@ -259,6 +259,9 @@ public class ComoClient {
             }
         }
 
+        // Load all of the block ids
+        BlockUtils.initialiseIdList();
+
         // Generate textRenderer
         updateFont(config.font);
 
