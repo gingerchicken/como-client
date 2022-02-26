@@ -13,6 +13,7 @@ import net.como.client.commands.FontCommand;
 import net.como.client.commands.FriendsCommand;
 import net.como.client.commands.PanicCommand;
 import net.como.client.commands.WaypointsCommand;
+import net.como.client.commands.nbt.GiveCommand;
 import net.como.client.commands.nbt.NbtCommand;
 import net.como.client.commands.structures.ModuleCommand;
 import net.como.client.commands.structures.CommandHandler;
@@ -98,6 +99,9 @@ public class ComoClient {
         commandHandler.registerCommand(new WaypointsCommand(
             ((Waypoints)Modules.get("waypoints")).waypoints
         ));
+
+        // Add give command
+        commandHandler.registerCommand(new GiveCommand());
 
         // Add all of the modules as commands.
         for (Entry<String, Module> entry : Modules.entrySet()) {
