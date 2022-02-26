@@ -4,10 +4,12 @@ import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.HandleDisconnectionEvent;
 import net.como.client.events.OnDisconnectedEvent;
+import net.como.client.events.RenderWorldEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.ClientUtils;
+import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
 import net.minecraft.text.Text;
 
 public class AntiKick extends Module {
@@ -29,6 +31,8 @@ public class AntiKick extends Module {
         this.addListen(ClientTickEvent.class);
         this.addListen(OnDisconnectedEvent.class);
         this.addListen(HandleDisconnectionEvent.class);
+
+        this.addListen(RenderWorldEvent.class);
     }
 
     @Override
@@ -36,6 +40,8 @@ public class AntiKick extends Module {
         this.removeListen(OnDisconnectedEvent.class);
         this.removeListen(HandleDisconnectionEvent.class);
         this.removeListen(ClientTickEvent.class);
+
+        this.removeListen(RenderWorldEvent.class);
     }
 
     private void displayReason(String reason) {
@@ -52,10 +58,27 @@ public class AntiKick extends Module {
     }
 
     private Boolean wasKicked = false;
+    private Double lastWorld = 0d;
+
+    private Boolean isInWorld() {
+        // Make sure that the last render time was within the last 500ms
+        Double d = ComoClient.getCurrentTime() - lastWorld;
+
+        // Make sure that we are not "downloading the terrain"
+        return (d < 0.5d && !(ComoClient.getClient().currentScreen instanceof DownloadingTerrainScreen));
+    }
 
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
+            case "RenderWorldEvent": {
+                RenderWorldEvent e = (RenderWorldEvent)event;
+                
+                this.lastWorld = ComoClient.getCurrentTime();
+
+                break;
+            }
+            
             case "ClientTickEvent": {
                 if (ComoClient.me().networkHandler.getConnection().isOpen() && this.wasKicked) {
                     this.wasKicked = false;
@@ -66,6 +89,7 @@ public class AntiKick extends Module {
 
             case "OnDisconnectedEvent": {
                 OnDisconnectedEvent e = (OnDisconnectedEvent)event;
+                if (!this.isInWorld()) return;
 
                 // Stop the disconnect.
                 e.ci.cancel();
@@ -80,6 +104,7 @@ public class AntiKick extends Module {
 
             case "HandleDisconnectionEvent": {
                 HandleDisconnectionEvent e = (HandleDisconnectionEvent)event;
+                if (!this.isInWorld()) return;
 
                 if (ComoClient.me() == null) break;
 
