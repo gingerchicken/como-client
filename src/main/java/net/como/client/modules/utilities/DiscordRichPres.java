@@ -124,12 +124,16 @@ public class DiscordRichPres extends Module {
 
         DiscordRPC.discordInitialize(APPLICATION_ID, handlers, true);
         this.createNewPresence();
+
+        this.displayMessage("Connected to Discord!");
     }
 
     public void closeDiscord() {
         DiscordRPC.discordShutdown();
 
         this.state = this.details = Strings.EMPTY;
+
+        this.displayMessage("Disconnected from Discord!");
     }
 
     @Override
