@@ -8,6 +8,7 @@ import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.como.client.ComoClient;
 import net.como.client.events.BeginRenderTickEvent;
+import net.como.client.events.OnClientCloseEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
@@ -134,6 +135,7 @@ public class DiscordRichPres extends Module {
     @Override
     public void activate() {
         this.addListen(BeginRenderTickEvent.class);
+        this.addListen(OnClientCloseEvent.class);
 
         this.initialiseDiscord();
     }
@@ -141,6 +143,7 @@ public class DiscordRichPres extends Module {
     @Override
     public void deactivate() {
         this.removeListen(BeginRenderTickEvent.class);
+        this.removeListen(OnClientCloseEvent.class);
 
         this.closeDiscord();
     }
@@ -221,6 +224,12 @@ public class DiscordRichPres extends Module {
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
+            case "OnClientCloseEvent": {
+                this.closeDiscord();
+                
+                break;
+            }
+
             case "BeginRenderTickEvent": {
                 // I swear these should be the other way around but I think it looks slightly better this way.
                 this.setState(this.getGameDescription());
