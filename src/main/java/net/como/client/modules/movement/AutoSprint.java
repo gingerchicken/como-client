@@ -30,7 +30,7 @@ public class AutoSprint extends Module {
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
                 MinecraftClient client = ComoClient.getClient();
-                client.options.keySprint.setPressed(true);
+                client.options.sprintKey.setPressed(true);
 
                 break;
             }
