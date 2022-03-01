@@ -99,14 +99,14 @@ public class FreeCam extends Module {
                 GameOptions opt = ComoClient.getClient().options;
 
                 // Controls
-                if (opt.keyForward.isPressed()) v = v.add(ComoClient.me().getRotationVector());
-                if (opt.keyBack.isPressed())    v = v.add(ComoClient.me().getRotationVector().multiply(-1));
+                if (opt.forwardKey.isPressed()) v = v.add(ComoClient.me().getRotationVector());
+                if (opt.backKey.isPressed())    v = v.add(ComoClient.me().getRotationVector().multiply(-1));
 
-                if (opt.keyRight.isPressed())   v = v.add(MathsUtils.getRightVelocity(ComoClient.me()));
-                if (opt.keyLeft.isPressed())    v = v.add(MathsUtils.getRightVelocity(ComoClient.me()).multiply(-1));
+                if (opt.rightKey.isPressed())   v = v.add(MathsUtils.getRightVelocity(ComoClient.me()));
+                if (opt.leftKey.isPressed())    v = v.add(MathsUtils.getRightVelocity(ComoClient.me()).multiply(-1));
 
-                if (opt.keyJump.isPressed())    v = v.add(0,  1, 0);
-                if (opt.keySneak.isPressed())   v = v.add(0, -1, 0);
+                if (opt.jumpKey.isPressed())    v = v.add(0,  1, 0);
+                if (opt.sneakKey.isPressed())   v = v.add(0, -1, 0);
 
                 // Calculate the speed.
                 v   = v.multiply(speed);

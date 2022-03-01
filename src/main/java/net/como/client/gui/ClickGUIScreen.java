@@ -122,9 +122,9 @@ public class ClickGUIScreen extends Screen {
     }
 
     @Override
-    public void onClose() {
+    public void close() {
         this.clickGUI.disable();
-        super.onClose();
+        super.close();
     }
 
     @Override

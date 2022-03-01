@@ -25,7 +25,7 @@ public class AutoWalk extends Module {
     KeyBinding getForwardKey() {
         MinecraftClient client = ComoClient.getClient();
 
-        return client.options.keyForward;
+        return client.options.forwardKey;
     }
 
     private void go() {
