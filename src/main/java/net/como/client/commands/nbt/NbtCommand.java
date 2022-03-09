@@ -20,7 +20,7 @@ public class NbtCommand extends CommandNode {
         super("nbt", "Manipulate items' NBT data");
 
         this.addSubCommand(new MaxEnchant());
-        this.addSubCommand(new SetStack());
+        this.addSubCommand(new SetCount());
         this.addSubCommand(new Show());
 
         this.addSubCommand(new NbtCopy());
@@ -71,10 +71,10 @@ public class NbtCommand extends CommandNode {
             return true;
         }
     }
-    public static class SetStack extends NbtModCommand {
+    public static class SetCount extends NbtModCommand {
 
-        public SetStack() {
-            super("setstack", "nbt setstack <amount>", "Allows you to set a current items stack");
+        public SetCount() {
+            super("setcount", "nbt setcount <amount>", "Allows you to set a current stack's item count");
         }
 
         @Override
