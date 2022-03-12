@@ -247,6 +247,7 @@ public class ComoClient {
         Modules.put("noparticles", new NoParticles());
         Modules.put("packetsniffer", new PacketSniffer());
         Modules.put("noslow", new NoSlow());
+        Modules.put("fastattack", new FastAttack());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
