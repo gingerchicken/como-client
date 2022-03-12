@@ -51,4 +51,11 @@ public abstract class MinecraftClientMixin implements IClient {
     public boolean performAttack() {
         return this.doAttack();
     }
+
+
+    @Shadow protected int attackCooldown;
+    @Override
+    public void setAttackCooldown(int cooldown) {
+        this.attackCooldown = cooldown;
+    }
 }
