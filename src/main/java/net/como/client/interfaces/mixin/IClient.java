@@ -6,4 +6,5 @@ public interface IClient {
     public FontManager getFontManager();
     public void performItemUse();
     public boolean performAttack();
+    public void setAttackCooldown(int cooldown);
 }
