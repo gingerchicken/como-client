@@ -44,4 +44,11 @@ public abstract class MinecraftClientMixin implements IClient {
     public void performItemUse() {
         this.doItemUse();
     }
+
+    @Shadow protected abstract boolean doAttack();
+
+    @Override
+    public boolean performAttack() {
+        return this.doAttack();
+    }
 }
