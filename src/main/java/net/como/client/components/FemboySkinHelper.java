@@ -22,9 +22,20 @@ public class FemboySkinHelper extends DefaultSkinHelper {
     }
 
     private static final FemboySkin[] FEMBOY_SKINS = {
+        // Felix
+        new FemboySkin(new Identifier("como-client:textures/entity/femboy/felix_1.png")),
+        new FemboySkin(new Identifier("como-client:textures/entity/femboy/felix_2.png")),
+        new FemboySkin(new Identifier("como-client:textures/entity/femboy/felix_3.png")),
+        new FemboySkin(new Identifier("como-client:textures/entity/femboy/felix_4.png"))
     };
 
     private static final FemboySkin[] SLIM_FEMBOY_SKINS = {
+        // Astolfo
+        new FemboySkin(new Identifier("como-client:textures/entity/femboy/slim/astolfo_1.png"), true),
+        new FemboySkin(new Identifier("como-client:textures/entity/femboy/slim/astolfo_2.png"), true),
+
+        // My Fav Polish Gent <3
+        new FemboySkin(new Identifier("como-client:textures/entity/femboy/slim/shm11.png"), true)
     };
 
     /**
