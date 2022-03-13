@@ -5,9 +5,11 @@ import java.util.UUID;
 
 import net.como.client.ComoClient;
 import net.como.client.components.FemboySkinHelper;
+import net.como.client.events.GetModelEvent;
 import net.como.client.events.GetSkinTextureEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
+import net.minecraft.util.Identifier;
 
 public class FemboyMod extends Module {
 
@@ -28,10 +30,12 @@ public class FemboyMod extends Module {
     @Override
     public void activate() {
         this.addListen(GetSkinTextureEvent.class);
+        this.addListen(GetModelEvent.class);
     }
 
     @Override
     public void deactivate() {
+        this.removeListen(GetModelEvent.class);
         this.removeListen(GetSkinTextureEvent.class);
     }
 
@@ -44,8 +48,28 @@ public class FemboyMod extends Module {
                 // Get the player's UUID
                 UUID uuid = e.player.getUuid();
 
+                // Get a random
+                Random random = FemboySkinHelper.randomFromUuid(uuid);
+
+                // Get the skin id
+                Identifier id = FemboySkinHelper.getTexture(uuid, random, FemboySkinHelper.randomModel(random).equals("slim"));
+
                 // Set the skin
-                e.cir.setReturnValue(FemboySkinHelper.getTexture(uuid, FemboySkinHelper.randomFromUuid(uuid)));
+                e.cir.setReturnValue(id);
+
+                break;
+            }
+
+            case "GetModelEvent": {
+                GetModelEvent e = (GetModelEvent)event;
+
+                // Get the player's UUID
+                UUID uuid = e.player.getUuid();
+
+                // Get a random
+                Random random = FemboySkinHelper.randomFromUuid(uuid);
+
+                e.cir.setReturnValue(FemboySkinHelper.randomModel(random));
 
                 break;
             }
