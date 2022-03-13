@@ -73,20 +73,21 @@ public class FemboySkinHelper extends DefaultSkinHelper {
      * Get a random texture with a specific random object
      * @param uuid
      * @param random
+     * @param isSlim if the player uses the slim model
+     * @return random id
+     */
+    public static Identifier getTexture(UUID uuid, Random random, boolean isSlim) {
+        FemboySkin skin = isSlim ? randomSlimSkin(random) : randomDefaultSkin(random);
+        return skin.id;
+    }
+
+    /**
+     * Get a random texture with a specific random object
+     * @param uuid
+     * @param random
      * @return random id
      */
     public static Identifier getTexture(UUID uuid, Random random) {
-        FemboySkin skin;
-        
-        switch (DefaultSkinHelper.getModel(uuid)) {
-            case "slim": {
-                skin = randomSlimSkin(random);
-            }
-            default: {
-                skin = randomDefaultSkin(random);
-            }
-        }
-
-        return skin.id;
+        return getTexture(uuid, random, DefaultSkinHelper.getModel(uuid).equals("slim"));
     }
 }
