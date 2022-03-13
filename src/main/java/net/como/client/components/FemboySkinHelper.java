@@ -49,6 +49,14 @@ public class FemboySkinHelper extends DefaultSkinHelper {
 
 
     /**
+     * A random skin model
+     * @return either "slim" or "default"
+     */
+    public static String randomModel(Random random) {
+        return random.nextBoolean() ? "slim" : "default";
+    }
+
+    /**
      * A random default femboy skin
      * @param random
      * @return random femboy skin from the 'default' set
