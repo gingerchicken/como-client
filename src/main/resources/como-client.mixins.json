@@ -15,6 +15,7 @@
     "client/MouseMixin",
     "client/ClientBrandRetrieverMixin",
     "client/ParticleManagerMixin",
+    "client/AbstractClientPlayerEntityMixin",
 
     "entity/PlayerEntityMixin",
     "entity/EntityMixin",
