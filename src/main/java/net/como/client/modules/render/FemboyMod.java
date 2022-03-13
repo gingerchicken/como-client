@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import net.como.client.ComoClient;
 import net.como.client.components.FemboySkinHelper;
+import net.como.client.events.ClientTickEvent;
 import net.como.client.events.GetModelEvent;
 import net.como.client.events.GetSkinTextureEvent;
 import net.como.client.structures.Module;
@@ -20,28 +21,39 @@ public class FemboyMod extends Module {
 
         this.setCategory("Render");
     }
+
+    private String funnyFace = "OwO";
     
     @Override
     public String listOption() {
-        long time = (long)ComoClient.getCurrentTime();
-        return time % 5 == 0 ? "UwU" : "OwO";
+        return funnyFace;
     }
 
     @Override
     public void activate() {
         this.addListen(GetSkinTextureEvent.class);
         this.addListen(GetModelEvent.class);
+        this.addListen(ClientTickEvent.class);
     }
 
     @Override
     public void deactivate() {
         this.removeListen(GetModelEvent.class);
         this.removeListen(GetSkinTextureEvent.class);
+        this.removeListen(ClientTickEvent.class);
     }
 
+    private Long ticks = 0l;
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
+            case "ClientTickEvent": {
+                ticks = ticks % 200;
+                funnyFace = (ticks < 2) ? "UwU" : "OwO";
+
+                ticks++;
+                break;
+            }
             case "GetSkinTextureEvent": {
                 GetSkinTextureEvent e = (GetSkinTextureEvent)(event);
 
