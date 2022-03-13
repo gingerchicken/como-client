@@ -65,6 +65,11 @@ public class FemboySkinHelper extends DefaultSkinHelper {
         return randomDefaultSkin(new Random()).id;
     }
     
+    /**
+     * Instantiates a random with the UUID as the seed
+     * @param uuid A player's UUID
+     * @return Random
+     */
     public static Random randomFromUuid(UUID uuid) {
         return new Random(uuid.getLeastSignificantBits());
     }
