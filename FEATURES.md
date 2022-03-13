@@ -163,6 +163,13 @@
 ### Default Settings
  - Client: `"vanilla"`
 
+## FastAttack (`.fastattack`)
+[(Source Code)](src/main/java/net/como/client/modules/combat/FastAttack.java) Quickly swings your fist when you attack something.
+### Default Settings
+ - CPS: `10`
+ - MaxDelay: `0.1`
+ - RandomDelay: `True`
+
 ## FastBreak (`.fastbreak`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/FastBreak.java) Allows you to break blocks a bit quicker.
 ### Default Settings
