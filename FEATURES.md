@@ -185,6 +185,9 @@
 ### Default Settings
  - TickDelay: `0`
 
+## FemboyMod (`.femboymod`)
+[(Source Code)](src/main/java/net/como/client/modules/render/FemboyMod.java) Makes everyone's skin a femboy.
+
 ## Flight (`.flight`)
 [(Source Code)](src/main/java/net/como/client/modules/movement/Flight.java) Basic flight (a bit terrible tbh).
 
