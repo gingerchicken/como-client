@@ -249,6 +249,7 @@ public class ComoClient {
         Modules.put("noslow", new NoSlow());
         Modules.put("fastattack", new FastAttack());
         Modules.put("femboymod", new FemboyMod());
+        Modules.put("offhandcrash", new OffHandCrash());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
