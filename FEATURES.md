@@ -367,6 +367,11 @@
  - Silent: `True`
  - SpecificBlocks: `True`
 
+## OffHandCrash (`.offhandcrash`)
+[(Source Code)](src/main/java/net/como/client/modules/exploits/OffHandCrash.java) No description available as of yet.
+### Default Settings
+ - Amount: `500`
+
 ## PacketFlight (`.packetflight`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/PacketFlight.java) Sets your position relative to your controls
 ### Default Settings
