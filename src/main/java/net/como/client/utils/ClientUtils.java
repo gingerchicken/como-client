@@ -78,7 +78,7 @@ public class ClientUtils {
     }
 
     public static Boolean inGame() {
-        return ComoClient.me() != null;
+        return ComoClient.me() != null && ComoClient.getClient().getNetworkHandler() != null;
     }
 
     public static Boolean isInNetherPortal() {
