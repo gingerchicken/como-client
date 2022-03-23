@@ -4,42 +4,26 @@ import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.PlayerMoveEvent;
 import net.como.client.events.SendPacketEvent;
+import net.como.client.events.UpdateCameraEvent;
+import net.como.client.interfaces.mixin.ICamera;
+import net.como.client.interfaces.mixin.IGameRenderer;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.MathsUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.render.Camera;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
 
 public class FreeCam extends Module {
-    private Vec3d origin = new Vec3d(0, 0, 0);
-    private float originPitch = 0, originYaw = 0;
-
-    private void setOrigin() {
-        this.origin = ComoClient.me().getPos();
-        this.originYaw = ComoClient.me().getYaw();
-        this.originPitch = ComoClient.me().getPitch();
-        
-    }
-
-    private void revertOrigin() {
-        if (this.getBoolSetting("PosReset")) {
-            ComoClient.me().setPos(origin.x, origin.y, origin.z);
-            ComoClient.me().setYaw(this.originYaw);
-            ComoClient.me().setPitch(this.originPitch);
-        }
-
-        ComoClient.me().noClip = false;
-    }
-
     public FreeCam() {
         super("FreeCam");
 
         this.addSetting(new Setting("Speed", 1f));
-        this.addSetting(new Setting("PosReset", true));
 
         this.description = "Allows you to fly around the world (but client-side)";
 
@@ -48,24 +32,14 @@ public class FreeCam extends Module {
     
     @Override
     public void activate() {
-        this.setOrigin();
-
         this.addListen(ClientTickEvent.class);
-        this.addListen(SendPacketEvent.class);
-        this.addListen(PlayerMoveEvent.class);
-
-        this.revertOrigin();
+        this.addListen(UpdateCameraEvent.class);
     }
 
     @Override
     public void deactivate() {
-        this.revertOrigin();
-
+        this.removeListen(UpdateCameraEvent.class);
         this.removeListen(ClientTickEvent.class);
-        this.removeListen(SendPacketEvent.class);
-        this.removeListen(PlayerMoveEvent.class);
-
-        this.revertOrigin();
     }
 
     @Override
@@ -73,27 +47,31 @@ public class FreeCam extends Module {
         ClientPlayerEntity me = ComoClient.me();
 
         switch (event.getClass().getSimpleName()) {
-            case "PlayerMoveEvent": {
-                me.noClip = true;
-                break;
-            }
-            case "SendPacketEvent": {
-                SendPacketEvent e = (SendPacketEvent)event;
-                if (e.packet instanceof PlayerMoveC2SPacket || e.packet instanceof ClientCommandC2SPacket) e.ci.cancel();
+            case "UpdateCameraEvent": {
+                UpdateCameraEvent e = (UpdateCameraEvent)event;
+                e.ci.cancel();
 
                 break;
             }
             case "ClientTickEvent": {
                 // Vals
                 Vec3d v = Vec3d.ZERO;
-                Vec3d pos = me.getPos();
+
+                // Game Renderer
+                GameRenderer gameRenderer   = ComoClient.getClient().gameRenderer;
+                IGameRenderer iGameRenderer =  (IGameRenderer)(gameRenderer);
+
+                // Camera
+                Camera cam = iGameRenderer.getCamera();
+                ICamera iCam = (ICamera)cam;
+
+                // Camera position
+                Vec3d pos = cam.getPos();
+
+                // Speed
                 float speed = (float)this.getSetting("Speed").value;
 
                 if (me.isSprinting()) speed *= 2;
-
-                // Client settings
-                me.setOnGround(true);
-                me.setVelocity(0, 0, 0);
 
                 // Game options
                 GameOptions opt = ComoClient.getClient().options;
@@ -109,11 +87,16 @@ public class FreeCam extends Module {
                 if (opt.sneakKey.isPressed())   v = v.add(0, -1, 0);
 
                 // Calculate the speed.
-                v   = v.multiply(speed);
+                v = v.multiply(speed);
+
+                // Calculate next position
                 pos = pos.add(v);
 
-                // Set the velocity
-                me.setPos(pos.x, pos.y, pos.z);
+                // Set the camera position
+                iCam.forceSetPos(pos);
+
+                iCam.setPitch(ComoClient.me().getPitch());
+                iCam.setYaw(ComoClient.me().getYaw());
 
                 break;
             }
