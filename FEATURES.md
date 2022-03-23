@@ -194,7 +194,6 @@
 ## FreeCam (`.freecam`)
 [(Source Code)](src/main/java/net/como/client/modules/render/FreeCam.java) Allows you to fly around the world (but client-side)
 ### Default Settings
- - PosReset: `True`
  - Speed: `1.0`
 
 ## FullBright (`.fullbright`)
