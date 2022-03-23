@@ -12,11 +12,13 @@ import net.como.client.ComoClient;
 import net.como.client.events.BobViewWhenHurtEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.RenderWorldViewBobbingEvent;
+import net.como.client.interfaces.mixin.IGameRenderer;
+import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 
 @Mixin(GameRenderer.class)
-public class GameRendererMixin {
+public class GameRendererMixin implements IGameRenderer {
     @Inject(at = @At("HEAD"), method="bobViewWhenHurt(Lnet/minecraft/client/util/math/MatrixStack;F)V", cancellable = true)
     void onBobViewWhenHurt(MatrixStack mStack, float f, CallbackInfo ci) {
         ComoClient.emitter.triggerEvent(new BobViewWhenHurtEvent(mStack, f, ci));
@@ -59,4 +61,11 @@ public class GameRendererMixin {
 	private void bobView(MatrixStack matrixStack, float partalTicks) {
 		
 	}
+
+    @Shadow private Camera camera;
+
+    @Override
+    public Camera getCamera() {
+        return this.camera;
+    }
 }
