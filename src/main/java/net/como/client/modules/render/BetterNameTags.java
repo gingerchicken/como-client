@@ -114,6 +114,7 @@ public class BetterNameTags extends Module {
 
         this.addSetting(new Setting("Scale", 0.5f));
         this.addSetting(new Setting("OutlineAlpha", 125));
+        this.addSetting(new Setting("EntityOwner", false));
     
         this.description = "Renders a different kind of name-tag above nearby players.";
 

@@ -1,5 +1,20 @@
 package net.como.client.utils;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.Builder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.mojang.authlib.minecraft.client.ObjectMapper;
+
 import joptsimple.internal.Strings;
 import net.como.client.ComoClient;
 import net.como.client.interfaces.mixin.IEntity;
@@ -16,6 +31,7 @@ import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.util.Window;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
@@ -207,5 +223,39 @@ public class ClientUtils {
      */
     public static String getUsername() {
         return ComoClient.me().getName().asString();
+    }
+
+    private static HashMap<UUID, String> usernames = new HashMap<>();
+    private static class UsernameResponse {
+        String name;
+    }
+    public static String getPlayerUsername(UUID uuid) {
+        if (usernames.containsKey(uuid)) return usernames.get(uuid);
+
+        PlayerEntity player = ComoClient.getClient().world.getPlayerByUuid(uuid);
+        if (player != null) {
+            String name = player.getEntityName();
+
+            usernames.put(uuid, name);
+            return name;
+        }
+
+        usernames.put(uuid, "N/A");
+
+        // Pain.
+        Thread thread = new Thread(() -> {
+            String data = WebUtils.getJSON("https://api.mojang.com/user/profiles/" + uuid.toString().replace("-", "") + "/names", 60000);
+
+            Gson gson = new Gson();
+            ArrayList<UsernameResponse> d = gson.fromJson(data, new TypeToken<ArrayList<UsernameResponse>>() {}.getType());
+
+            for (UsernameResponse u : d) {
+                usernames.put(uuid, u.name);
+                return;
+            }
+        });
+        thread.start();
+
+        return usernames.get(uuid);
     }
 }

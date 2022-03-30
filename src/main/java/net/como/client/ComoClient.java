@@ -250,6 +250,7 @@ public class ComoClient {
         Modules.put("fastattack", new FastAttack());
         Modules.put("femboymod", new FemboyMod());
         Modules.put("offhandcrash", new OffHandCrash());
+        Modules.put("entityowner", new EntityOwner());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
