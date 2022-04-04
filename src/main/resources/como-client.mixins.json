@@ -47,6 +47,7 @@
     "botch/FontManagerMixin",
     "botch/TitleScreenLogoMixin",
     "botch/InfChatMixin",
+    "botch/lecterncrash/LecternScreenMixin",
 
     "botch/autoreconnect/DisconnectScreenMixin",
     "botch/autoreconnect/GameMenuScreenMixin",
