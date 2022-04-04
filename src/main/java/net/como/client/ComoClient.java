@@ -251,6 +251,7 @@ public class ComoClient {
         Modules.put("femboymod", new FemboyMod());
         Modules.put("offhandcrash", new OffHandCrash());
         Modules.put("entityowner", new EntityOwner());
+        Modules.put("lecterncrash", new LecternCrash());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
