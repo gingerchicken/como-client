@@ -281,6 +281,9 @@
  - TargetTracers: `True`
  - TracerLifeSpan: `0.25`
 
+## LecternCrash (`.lecterncrash`)
+[(Source Code)](src/main/java/net/como/client/modules/exploits/LecternCrash.java) Crashes the server using a lectern with a book in it
+
 ## ModList (`.modlist`)
 [(Source Code)](src/main/java/net/como/client/modules/hud/ModList.java) Displays all of your enabled mods
 ### Default Settings
