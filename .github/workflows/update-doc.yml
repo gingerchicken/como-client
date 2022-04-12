@@ -15,7 +15,7 @@ jobs:
           python3 scripts/populate_features.py
         
       - name: Update mod version
-      - run: |
+        run: |
           python3 scripts/populate_version.py
 
       - name: Configure Git
