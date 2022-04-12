@@ -7,6 +7,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Pull git
+        run: git pull
+
       - name: Install Python
         uses: actions/setup-python@v2
 
