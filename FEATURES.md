@@ -284,6 +284,9 @@
 ## LecternCrash (`.lecterncrash`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/LecternCrash.java) Crashes the server using a lectern with a book in it
 
+## MinifiedHealth (`.minifiedhealth`)
+[(Source Code)](src/main/java/net/como/client/modules/hud/MinifiedHealth.java) Makes the health bar turn into a number
+
 ## ModList (`.modlist`)
 [(Source Code)](src/main/java/net/como/client/modules/hud/ModList.java) Displays all of your enabled mods
 ### Default Settings
