@@ -27,6 +27,7 @@ import net.como.client.modules.exploits.*;
 import net.como.client.modules.hud.ArmourDisplay;
 import net.como.client.modules.hud.ClickGUI;
 import net.como.client.modules.hud.Hitmarker;
+import net.como.client.modules.hud.MinifiedHealth;
 import net.como.client.modules.hud.ModList;
 import net.como.client.modules.hud.Watermark;
 import net.como.client.modules.movement.*;
@@ -252,6 +253,7 @@ public class ComoClient {
         Modules.put("offhandcrash", new OffHandCrash());
         Modules.put("entityowner", new EntityOwner());
         Modules.put("lecterncrash", new LecternCrash());
+        Modules.put("minifiedhealth", new MinifiedHealth());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
