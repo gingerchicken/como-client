@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.como.client.ComoClient;
 import net.como.client.structures.Colour;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.GameRenderer;
@@ -180,5 +181,12 @@ public class Render2DUtils {
 
     public static void renderSimpleText(MatrixStack matrixStack, String text, int x, int y, Colour colour) {
         renderSimpleText(matrixStack, text, x, y, 1, colour);
+    }
+
+    public static void renderHeart(MatrixStack matrixStack, int x, int y) {
+        int u = 16 + (2 * 2 + 0) * 9;
+
+        DrawableHelper.drawTexture(matrixStack, x, y, u, 9, 9, 9, 256, 256);
+        DrawableHelper.drawTexture(matrixStack, x, y, u, 0, 9, 9, 256, 256);
     }
 }
