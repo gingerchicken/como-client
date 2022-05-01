@@ -54,7 +54,7 @@ public class ProjectionUtils {
 
         if (Double.isInfinite(x) || Double.isInfinite(y)) return false;
 
-        pos.set(x / windowScale, mc.getWindow().getFramebufferHeight() - y / windowScale, pmMat4.z);
+        pos.set(x / windowScale / scale, (mc.getWindow().getFramebufferHeight() - y / windowScale) / scale, pmMat4.z);
         return true;
     }
 
