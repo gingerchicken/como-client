@@ -7,6 +7,7 @@ import net.como.client.events.SendPacketEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
+import net.como.client.utils.ClientUtils;
 import net.como.client.utils.MathsUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.GameOptions;
@@ -19,8 +20,8 @@ public class FreeCam extends Module {
     private float originPitch = 0, originYaw = 0;
 
     private void setOrigin() {
-        this.origin = ComoClient.me().getPos();
-        this.originYaw = ComoClient.me().getYaw();
+        this.origin      = ComoClient.me().getPos();
+        this.originYaw   = ComoClient.me().getYaw();
         this.originPitch = ComoClient.me().getPitch();
         
     }
@@ -48,6 +49,11 @@ public class FreeCam extends Module {
     
     @Override
     public void activate() {
+        if (!ClientUtils.inGame()) {
+            this.disable();
+            return;
+        }
+
         this.setOrigin();
 
         this.addListen(ClientTickEvent.class);
@@ -59,6 +65,10 @@ public class FreeCam extends Module {
 
     @Override
     public void deactivate() {
+        if (!ClientUtils.inGame()) {
+            return;
+        }
+
         this.revertOrigin();
 
         this.removeListen(ClientTickEvent.class);

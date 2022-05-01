@@ -1,4 +1,4 @@
-name: Update features list
+name: Update docs
 on: push
 jobs:
   update:
@@ -7,12 +7,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Pull git
+        run: git pull
+
       - name: Install Python
         uses: actions/setup-python@v2
 
-      - name: Generate FEATURES.md
+      - name: Generate features list
         run: |
           python3 scripts/populate_features.py
+        
+      - name: Update mod version
+        run: |
+          python3 scripts/populate_version.py
 
       - name: Configure Git
         run: |
@@ -21,9 +28,16 @@ jobs:
 
       - name: Commit FEATURES.md
         run: |
-          # Stage the file, commit and push
-          # Hopefully this shouldn't cause another one to trigger since if there are no changes, there shouldn't be a commit.
           git add FEATURES.md
           git commit -m "Auto-generate FEATURES.md"
-          git push
+        continue-on-error: true
+      
+      - name: Commit gradle.properties
+        run: |
+          git add gradle.properties
+          git commit -m "Auto-update mod version"
+        continue-on-error: true
+
+      - name: Push changes
+        run: git push
         continue-on-error: true

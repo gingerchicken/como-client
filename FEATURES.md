@@ -41,6 +41,7 @@
 ## BetterNameTags (`.betternametags`)
 [(Source Code)](src/main/java/net/como/client/modules/render/BetterNameTags.java) Renders a different kind of name-tag above nearby players.
 ### Default Settings
+ - EntityOwner: `True`
  - OutlineAlpha: `125`
  - Scale: `0.5`
 
@@ -143,6 +144,11 @@
  - Mode
     - Glow
     - Box
+
+## EntityOwner (`.entityowner`)
+[(Source Code)](src/main/java/net/como/client/modules/render/EntityOwner.java) Shows who owns a given pet
+### Default Settings
+ - Scale: `1.0`
 
 ## EntitySpeed (`.entityspeed`)
 [(Source Code)](src/main/java/net/como/client/modules/movement/EntitySpeed.java) Allows you to set a mounted entity's speed, you can also control entities without saddles.
@@ -274,6 +280,12 @@
     - Distance
  - TargetTracers: `True`
  - TracerLifeSpan: `0.25`
+
+## LecternCrash (`.lecterncrash`)
+[(Source Code)](src/main/java/net/como/client/modules/exploits/LecternCrash.java) Crashes the server using a lectern with a book in it
+
+## MinifiedHealth (`.minifiedhealth`)
+[(Source Code)](src/main/java/net/como/client/modules/hud/MinifiedHealth.java) Makes the health bar turn into a number
 
 ## ModList (`.modlist`)
 [(Source Code)](src/main/java/net/como/client/modules/hud/ModList.java) Displays all of your enabled mods

@@ -49,6 +49,7 @@
     "botch/TitleScreenLogoMixin",
     "botch/InfChatMixin",
     "botch/ProjectionUtilsMixin",
+    "botch/lecterncrash/LecternScreenMixin",
 
     "botch/autoreconnect/DisconnectScreenMixin",
     "botch/autoreconnect/GameMenuScreenMixin",
