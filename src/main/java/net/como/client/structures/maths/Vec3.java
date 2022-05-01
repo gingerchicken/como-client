@@ -18,6 +18,10 @@ public class Vec3 {
 
     public Vec3() {}
 
+    public Vec3(Vec3d vec) {
+        this(vec.x, vec.y, vec.z);
+    }
+
     public Vec3(double x, double y, double z) {
         this.x = x;
         this.y = y;

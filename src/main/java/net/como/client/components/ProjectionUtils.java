@@ -6,6 +6,7 @@ import net.como.client.ComoClient;
 import net.como.client.interfaces.mixin.IMatrix4f;
 import net.como.client.structures.maths.Vec3;
 import net.como.client.structures.maths.Vec4;
+import net.como.client.utils.MathsUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
@@ -59,7 +60,13 @@ public class ProjectionUtils {
     }
 
     public static double getScale(Vec3d pos, float tickDelta) {
-        return Math.sqrt(ComoClient.getClient().cameraEntity.getLerpedPos(tickDelta).distanceTo(pos));
+        double dist = ComoClient.getClient().cameraEntity.getLerpedPos(tickDelta).distanceTo(pos);
+
+        return MathsUtils.clamp(
+            1 - dist / 100,
+            0.5,
+            Double.MAX_VALUE
+        );
     }
 
     public static double getScale(Vec3 pos, float tickDelta) {
@@ -72,7 +79,13 @@ public class ProjectionUtils {
         RenderSystem.setProjectionMatrix(Matrix4f.projectionMatrix(0, mc.getWindow().getFramebufferWidth(), 0, mc.getWindow().getFramebufferHeight(), 1000, 3000));
     }
 
-    public static void scaledProjection() {
+    public static void scaleProjection(float scale) {
+        MinecraftClient mc = ComoClient.getClient();
+
+        RenderSystem.setProjectionMatrix(Matrix4f.projectionMatrix(0, mc.getWindow().getFramebufferWidth() / scale, 0, mc.getWindow().getFramebufferHeight() / scale, 1000, 3000));
+    }
+
+    public static void resetProjection() {
         MinecraftClient mc = ComoClient.getClient();
         
         RenderSystem.setProjectionMatrix(Matrix4f.projectionMatrix(0, (float) (mc.getWindow().getFramebufferWidth() / mc.getWindow().getScaleFactor()), 0, (float) (mc.getWindow().getFramebufferHeight() / mc.getWindow().getScaleFactor()), 1000, 3000));
