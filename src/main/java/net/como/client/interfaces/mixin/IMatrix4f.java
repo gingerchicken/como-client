@@ -1,9 +1,9 @@
 package net.como.client.interfaces.mixin;
 
+import net.como.client.structures.maths.Vec4;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vector4f;
 
 public interface IMatrix4f {
-    public Vector4f multiplyMatrix(Vector4f v);
-    public Vec3d multiply3dMatrix(Vec3d v);
+    public void multiplyMatrix(Vec4 vec4, Vec4 mmmat4);
+    public Vec3d mul(Vec3d vec);
 }

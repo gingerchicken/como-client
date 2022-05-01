@@ -4,9 +4,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import net.como.client.interfaces.mixin.IMatrix4f;
+import net.como.client.structures.maths.Vec4;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vector4f;
 
 @Mixin(Matrix4f.class)
 public class Matrix4fMixin implements IMatrix4f {
@@ -31,21 +31,21 @@ public class Matrix4fMixin implements IMatrix4f {
     @Shadow protected float a33;
 
     @Override
-    public Vector4f multiplyMatrix(Vector4f v) {
-        return new Vector4f(
-            a00 * v.getX() + a01 * v.getY() + a02 * v.getZ() + a03 * v.getW(),
-            a10 * v.getX() + a11 * v.getY() + a12 * v.getZ() + a13 * v.getW(),
-            a20 * v.getX() + a21 * v.getY() + a22 * v.getZ() + a23 * v.getW(),
-            a30 * v.getX() + a31 * v.getY() + a32 * v.getZ() + a33 * v.getW()
+    public void multiplyMatrix(Vec4 v, Vec4 out) {
+        out.set(
+                a00 * v.x + a01 * v.y + a02 * v.z + a03 * v.w,
+                a10 * v.x + a11 * v.y + a12 * v.z + a13 * v.w,
+                a20 * v.x + a21 * v.y + a22 * v.z + a23 * v.w,
+                a30 * v.x + a31 * v.y + a32 * v.z + a33 * v.w
         );
     }
 
     @Override
-    public Vec3d multiply3dMatrix(Vec3d v) {
+    public Vec3d mul(Vec3d vec) {
         return new Vec3d(
-            v.x * a00 + v.y * a01 + v.z * a02 + a03,
-            v.x * a10 + v.y * a11 + v.z * a12 + a13,
-            v.x * a20 + v.y * a21 + v.z * a22 + a23
+            vec.x * a00 + vec.y * a01 + vec.z * a02 + a03,
+            vec.x * a10 + vec.y * a11 + vec.z * a12 + a13,
+            vec.x * a20 + vec.y * a21 + vec.z * a22 + a23
         );
     }
     
