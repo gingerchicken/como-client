@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.ComoClient;
+import net.como.client.components.ProjectionUtils;
 import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.RenderPortalOverlayEvent;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -15,7 +16,11 @@ import net.minecraft.client.util.math.MatrixStack;
 public class InGameHudMixin {
     @Inject(method = {"render(Lnet/minecraft/client/util/math/MatrixStack;F)V"}, at = {@At("HEAD")})
     public void render(MatrixStack mStack, float tickDelta, CallbackInfo ci) {
+        ComoClient.getClient().getProfiler().push("como-client_render_2d");
+
         ComoClient.emitter.triggerEvent(new InGameHudRenderEvent(mStack, tickDelta, ci));
+        
+        ComoClient.getClient().getProfiler().pop();
     }
 
     @Inject(at = @At("HEAD"), method = {"renderPortalOverlay(F)V"}, cancellable = true)
