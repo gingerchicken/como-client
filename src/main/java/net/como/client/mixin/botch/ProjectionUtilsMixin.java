@@ -1,5 +1,7 @@
 package net.como.client.mixin.botch;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -22,9 +24,10 @@ public abstract class ProjectionUtilsMixin {
         if ((client == null || client.world == null || ComoClient.me() == null)) return;
 
         client.getProfiler().push("como-client_render");
+        
+        ProjectionUtils.update(matrices, matrix4f);
 
-        ProjectionUtils.update(matrixStack, matrix4f);
-
+        RenderSystem.applyModelViewMatrix();
         client.getProfiler().pop();
     }
 }

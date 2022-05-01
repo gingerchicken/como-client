@@ -1,89 +1,76 @@
 package net.como.client.components;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.como.client.ComoClient;
 import net.como.client.interfaces.mixin.IMatrix4f;
+import net.como.client.structures.maths.Vec3;
+import net.como.client.structures.maths.Vec4;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vector4f;
 
 public class ProjectionUtils {
-    private static Vector4f vec4 = new Vector4f();
-    private static Vector4f mmMat4 = new Vector4f();
-    private static Vector4f pmMat4 = new Vector4f();
+    private static final Vec4 vec4 = new Vec4();
+    private static final Vec4 mmMat4 = new Vec4();
+    private static final Vec4 pmMat4 = new Vec4();
+    private static final Vec3 camera = new Vec3();
 
-    private static Vec3d camera = Vec3d.ZERO;
-    private static Vec3d cameraNegated = Vec3d.ZERO;
+    private static final Vec3 cameraNegated = new Vec3();
 
     private static Matrix4f model;
     private static Matrix4f projection;
+
     private static double windowScale;
+    public static double scale;
 
-    public static void update(MatrixStack matrixStack, Matrix4f matrix4f) {
-        model = matrixStack.peek().getPositionMatrix().copy();
-        projection = matrix4f;
+    public static void update(MatrixStack matrices, Matrix4f projection) {
+        MinecraftClient mc = ComoClient.getClient();
 
-        MinecraftClient client = ComoClient.getClient();
+        model = matrices.peek().getPositionMatrix().copy();
+        ProjectionUtils.projection = projection;
 
-        camera = client.gameRenderer.getCamera().getPos();
-        cameraNegated = camera.negate();
+        camera.set(mc.gameRenderer.getCamera().getPos());
+        cameraNegated.set(camera);
+        cameraNegated.negate();
 
-        windowScale = client.getWindow().calculateScaleFactor(1, client.forcesUnicodeFont());
+        windowScale = mc.getWindow().calculateScaleFactor(1, mc.forcesUnicodeFont());
     }
 
-    public double getScale(Vec3d pos, float partialTicks) {
-        return Math.sqrt(ComoClient.getClient().cameraEntity.getLerpedPos(partialTicks).distanceTo(pos));
+    public static boolean to2D(Vec3 pos, double scale) {
+        MinecraftClient mc = ComoClient.getClient();
+        ProjectionUtils.scale = getScale(pos) * scale;
+
+        vec4.set(cameraNegated.x + pos.x, cameraNegated.y + pos.y, cameraNegated.z + pos.z, 1);
+
+        ((IMatrix4f) (Object) model).multiplyMatrix(vec4, mmMat4);
+        ((IMatrix4f) (Object) projection).multiplyMatrix(mmMat4, pmMat4);
+
+        if (pmMat4.w <= 0.0f) return false;
+
+        pmMat4.toScreen();
+        double x = pmMat4.x * mc.getWindow().getFramebufferWidth();
+        double y = pmMat4.y * mc.getWindow().getFramebufferHeight();
+
+        if (Double.isInfinite(x) || Double.isInfinite(y)) return false;
+
+        pos.set(x / windowScale, mc.getWindow().getFramebufferHeight() - y / windowScale, pmMat4.z);
+        return true;
     }
 
-    public static final class Projection2D {
-        public Vec3d pos;
-        public final boolean shouldRender;
-
-        public Projection2D(Vec3d pos, boolean shouldRender) {
-            this.pos = pos;
-            this.shouldRender = shouldRender;
-        }
-
-        public static final Projection2D NO_RENDER = new Projection2D(Vec3d.ZERO, false);
+    private static double getScale(Vec3 pos) {
+        return Math.sqrt(camera.distanceTo(pos));
     }
 
-    public static Projection2D to2D(Vec3d pos, double scale) {
-        vec4.set((float)(cameraNegated.x + pos.x), (float)(cameraNegated.y + pos.y), (float)(cameraNegated.z + pos.z), 1);
+    public static void unscaledProjection() {
+        MinecraftClient mc = ComoClient.getClient();
 
-        mmMat4 = ((IMatrix4f)(Object)(model)).multiplyMatrix(vec4);
-        pmMat4 = ((IMatrix4f)(Object)(projection)).multiplyMatrix(vec4);
-
-        if (pmMat4.getW() <= 0.0f) return Projection2D.NO_RENDER;
-
-        pmMat4 = toScreen(pmMat4);
-
-        MinecraftClient client = ComoClient.getClient();
-        Window window = client.getWindow();
-
-        float x = pmMat4.getX() * window.getFramebufferWidth();
-        float y = pmMat4.getY() * window.getFramebufferHeight();
-
-        if (Float.isInfinite(x) || Double.isInfinite(y)) return Projection2D.NO_RENDER;
-
-        return new Projection2D(
-            new Vec3d(
-                x / windowScale,
-                window.getFramebufferHeight() - (y / windowScale), // Minecraft moment
-                pmMat4.getZ()
-            ), true
-        );
+        RenderSystem.setProjectionMatrix(Matrix4f.projectionMatrix(0, mc.getWindow().getFramebufferWidth(), 0, mc.getWindow().getFramebufferHeight(), 1000, 3000));
     }
 
-    private static Vector4f toScreen(Vector4f v) {
-        float newW = 1.0f / v.getW() * 0.5f;
-
-        return new Vector4f(
-            v.getX() * newW + 0.5f,
-            v.getY() * newW + 0.5f,
-            v.getZ() * newW + 0.5f,
-            newW
-        );
+    public static void scaledProjection() {
+        MinecraftClient mc = ComoClient.getClient();
+        
+        RenderSystem.setProjectionMatrix(Matrix4f.projectionMatrix(0, (float) (mc.getWindow().getFramebufferWidth() / mc.getWindow().getScaleFactor()), 0, (float) (mc.getWindow().getFramebufferHeight() / mc.getWindow().getScaleFactor()), 1000, 3000));
     }
 }
