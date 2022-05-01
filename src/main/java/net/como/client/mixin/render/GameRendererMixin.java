@@ -38,11 +38,16 @@ public abstract class GameRendererMixin {
         ));
     }
 
-    @Redirect(at = @At(value = "INVOKE",
-		target = "Lnet/minecraft/client/render/GameRenderer;bobView(Lnet/minecraft/client/util/math/MatrixStack;F)V",
-		ordinal = 0),
+    @Redirect(
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/render/GameRenderer;bobView(Lnet/minecraft/client/util/math/MatrixStack;F)V",
+            ordinal = 0
+        ),
 		method = {
-			"renderWorld(FJLnet/minecraft/client/util/math/MatrixStack;)V"})
+			"renderWorld(FJLnet/minecraft/client/util/math/MatrixStack;)V"
+        }
+    )
 	private void onRenderWorldViewBobbing(GameRenderer gameRenderer, MatrixStack matrixStack, float partalTicks) {
         RenderWorldViewBobbingEvent event = new RenderWorldViewBobbingEvent(gameRenderer, matrixStack, partalTicks);
 
