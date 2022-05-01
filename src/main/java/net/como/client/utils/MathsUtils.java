@@ -49,4 +49,8 @@ public class MathsUtils {
     public static Vec3d Vec3dDiff(Vec3d v1, Vec3d v2) {
         return v1.add( v2.multiply(-1) );
     }
+
+    public static double clamp(double value, double min, double max) {
+        return (value < min) ? min : ((value > max) ? max : value);
+    }
 }
