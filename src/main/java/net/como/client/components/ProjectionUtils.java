@@ -22,7 +22,6 @@ public class ProjectionUtils {
     private static Matrix4f projection;
 
     private static double windowScale;
-    public static double scale;
 
     public static void update(MatrixStack matrices, Matrix4f projection) {
         MinecraftClient mc = ComoClient.getClient();
@@ -39,7 +38,6 @@ public class ProjectionUtils {
 
     public static boolean to2D(Vec3 pos, double scale) {
         MinecraftClient mc = ComoClient.getClient();
-        ProjectionUtils.scale = getScale(pos) * scale;
 
         vec4.set(cameraNegated.x + pos.x, cameraNegated.y + pos.y, cameraNegated.z + pos.z, 1);
 
