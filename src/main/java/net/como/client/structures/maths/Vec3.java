@@ -143,4 +143,8 @@ public class Vec3 {
     public String toString() {
         return String.format("[%.3f, %.3f, %.3f]", x, y, z);
     }
+
+    public Vec3d to3d() {
+        return new Vec3d(x, y, z);
+    }
 }

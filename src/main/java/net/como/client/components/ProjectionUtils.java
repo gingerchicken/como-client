@@ -7,8 +7,10 @@ import net.como.client.interfaces.mixin.IMatrix4f;
 import net.como.client.structures.maths.Vec3;
 import net.como.client.structures.maths.Vec4;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Vec3d;
 
 public class ProjectionUtils {
     private static final Vec4 vec4 = new Vec4();
@@ -56,8 +58,12 @@ public class ProjectionUtils {
         return true;
     }
 
-    private static double getScale(Vec3 pos) {
-        return Math.sqrt(camera.distanceTo(pos));
+    public static double getScale(Vec3d pos, float tickDelta) {
+        return Math.sqrt(ComoClient.getClient().cameraEntity.getLerpedPos(tickDelta).distanceTo(pos));
+    }
+
+    public static double getScale(Vec3 pos, float tickDelta) {
+        return getScale(pos.to3d(), tickDelta);
     }
 
     public static void unscaledProjection() {
