@@ -1,5 +1,10 @@
 package net.como.client.gui;
 
+/**
+ * Shout out to 0x150 for help with the ImGuiScreen class.
+ * A lot of the code is from his ImGuiProxyScreen class in Atomic Client, though I've made some changes to it, of course.
+ */
+
 import imgui.ImGui;
 import net.como.client.ComoClient;
 import net.como.client.utils.ImGuiUtils;

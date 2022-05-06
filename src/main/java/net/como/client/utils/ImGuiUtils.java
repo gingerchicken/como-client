@@ -1,5 +1,10 @@
 package net.como.client.utils;
 
+/**
+ * Shout out to 0x150 for help with the ImGuiUtils class.
+ * A lot of the code is from his ImGuiManager class in Atomic Client!
+ */
+
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.gl3.ImGuiImplGl3;
@@ -66,6 +71,8 @@ public class ImGuiUtils {
      * Sets up the ImGui style
      */
     private static void initStyle() {
+        // TODO this style was taken from Atomic client, please customise it to make it look even better!
+
         ImGui.getStyle().setWindowPadding(8, 8);
         ImGui.getStyle().setFramePadding(4, 4);
         ImGui.getStyle().setCellPadding(4, 2);
