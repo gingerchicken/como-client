@@ -8,8 +8,8 @@ public class ClickGUIScreen extends ImGuiScreen {
         ImGui.begin("ClickGUI");
 
         ImGui.text("Hello World!");
-        ImGui.button("Hey there!", ImGui.getWindowWidth() - 16, 16);
-        
+        ImGui.button("Hey there!", ImGui.getWindowWidth() - 16, 32);
+
         ImGui.end();
     }
 }
