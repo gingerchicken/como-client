@@ -59,8 +59,16 @@ I am yet to setup a code of conduct for this project, however this will be done 
 Most of the features you will get in this client aren't too different to any other client, however, if you're *that* interested you may wish to [read the features list](/FEATURES.md).
 
 ## Thanks
+### 0x150
+I would like to thank [0x150](https://gitlab.com/0x151) for many different reasons; firstly, they were the discover of some really powerful exploits and I would like to thank them for their work.
+
+Secondly, I used some of their code to make this mod, and I would like to thank them for their work, more specifically, their code in [Atomic Client](https://gitlab.com/0x151/atomic/)
+
 ### The Wurst Project
 While developing this I was aided by the source code of the [Wurst Project](https://github.com/Wurst-Imperium/Wurst7), since this is my first ever mod for Minecraft, I was quite unfamiliar with the way Minecraft and its APIs work etc. therefore, by looking some parts of Wurst's source code, I could quickly understand the API and start making this mod.
+
+### Meteor Client
+I would also like to thank [Meteor Client](https://github.com/MeteorDevelopment/meteor-client) as I used their world-to-screen conversion code within Como Client, this made rendering information about entities and blocks much easier due to Minecraft's janky world rendering system.
 
 ## Reviews
 ### Happy Customer #1
