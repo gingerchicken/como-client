@@ -1,10 +1,15 @@
 package net.como.client.modules.hud;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.como.client.ComoClient;
+import net.como.client.commands.structures.Command;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.gui.ClickGUIScreen;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
+import net.como.client.utils.ImGuiUtils;
 
 public class ClickGUI extends Module {
     float scaleFactor = 1.5f;
@@ -40,6 +45,31 @@ public class ClickGUI extends Module {
         // Basically, make it so that activate triggers after the chatscreen is closed.
         if (ComoClient.getClient().currentScreen == null) {
             ComoClient.getClient().setScreen(screen);
+            
+            ImGuiUtils.refreshStyle();
+        }
+    }
+
+    @Override
+    public Iterable<Command> getCommands() {
+        List<Command> commands = new ArrayList<>();
+
+        commands.add(new RefreshStyleCommand());
+
+        return commands;
+    }
+
+    public class RefreshStyleCommand extends Command {
+
+        public RefreshStyleCommand() {
+            super("refresh", "", "Refreshes the GUI style");
+        }
+
+        @Override
+        public Boolean trigger(String[] args) {
+            ImGuiUtils.refreshStyle();
+
+            return true;
         }
     }
 }

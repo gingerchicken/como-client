@@ -6,6 +6,7 @@ package net.como.client.utils;
  */
 
 import imgui.ImGui;
+import imgui.ImGuiStyle;
 import imgui.flag.ImGuiCol;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
@@ -70,83 +71,119 @@ public class ImGuiUtils {
     /**
      * Sets up the ImGui style
      */
-    private static void initStyle() {
+    public static void refreshStyle() {
         // TODO this style was taken from Atomic client, please customise it to make it look even better!
 
-        ImGui.getStyle().setWindowPadding(8, 8);
-        ImGui.getStyle().setFramePadding(4, 4);
-        ImGui.getStyle().setCellPadding(4, 2);
-        ImGui.getStyle().setItemSpacing(8, 4);
-        ImGui.getStyle().setItemInnerSpacing(4, 4);
-        ImGui.getStyle().setTouchExtraPadding(0, 0);
-        ImGui.getStyle().setIndentSpacing(21);
-        ImGui.getStyle().setScrollbarSize(10);
-        ImGui.getStyle().setGrabMinSize(4);
+        ImGuiStyle style = ImGui.getStyle();
 
-        ImGui.getStyle().setWindowRounding(6);
-        ImGui.getStyle().setChildRounding(6);
-        ImGui.getStyle().setFrameRounding(6);
-        ImGui.getStyle().setPopupRounding(6);
-        ImGui.getStyle().setScrollbarRounding(6);
-        ImGui.getStyle().setGrabRounding(6);
-        ImGui.getStyle().setLogSliderDeadzone(4);
-        ImGui.getStyle().setTabRounding(4);
+        // Window style
+        style.setWindowPadding(4, 4);
 
-        ImGui.getStyle().setColor(ImGuiCol.Text, 1.00f, 1.00f, 1.00f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.TextDisabled, 0.50f, 0.50f, 0.50f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.WindowBg, 0.07f, 0.10f, 0.10f, 0.94f);
-        ImGui.getStyle().setColor(ImGuiCol.ChildBg, 0.09f, 0.11f, 0.12f, 0.94f);
-        ImGui.getStyle().setColor(ImGuiCol.PopupBg, 0.05f, 0.07f, 0.08f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.Border, 0.20f, 0.50f, 0.35f, 0.50f);
-        ImGui.getStyle().setColor(ImGuiCol.BorderShadow, 0.00f, 0.00f, 0.00f, 0.00f);
-        ImGui.getStyle().setColor(ImGuiCol.FrameBg, 0.09f, 0.13f, 0.15f, 0.94f);
-        ImGui.getStyle().setColor(ImGuiCol.FrameBgHovered, 0.12f, 0.18f, 0.20f, 0.94f);
-        ImGui.getStyle().setColor(ImGuiCol.FrameBgActive, 0.17f, 0.23f, 0.26f, 0.94f);
-        ImGui.getStyle().setColor(ImGuiCol.TitleBg, 0.06f, 0.10f, 0.12f, 0.94f);
-        ImGui.getStyle().setColor(ImGuiCol.TitleBgActive, 0.09f, 0.15f, 0.16f, 0.94f);
-        ImGui.getStyle().setColor(ImGuiCol.TitleBgCollapsed, 0.03f, 0.05f, 0.06f, 0.94f);
-        ImGui.getStyle().setColor(ImGuiCol.MenuBarBg, 0.14f, 0.14f, 0.14f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.ScrollbarBg, 0.07f, 0.12f, 0.13f, 0.94f);
-        ImGui.getStyle().setColor(ImGuiCol.ScrollbarGrab, 0.20f, 0.50f, 0.35f, 0.50f);
-        ImGui.getStyle().setColor(ImGuiCol.ScrollbarGrabHovered, 0.28f, 0.54f, 0.41f, 0.50f);
-        ImGui.getStyle().setColor(ImGuiCol.ScrollbarGrabActive, 0.20f, 0.50f, 0.28f, 0.50f);
-        ImGui.getStyle().setColor(ImGuiCol.CheckMark, 0.26f, 0.59f, 0.98f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.SliderGrab, 0.24f, 0.52f, 0.88f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.SliderGrabActive, 0.26f, 0.59f, 0.98f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.Button, 0.10f, 0.23f, 0.24f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.ButtonHovered, 0.12f, 0.30f, 0.31f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.ButtonActive, 0.13f, 0.27f, 0.24f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.Header, 0.15f, 0.22f, 0.31f, 0.31f);
-        ImGui.getStyle().setColor(ImGuiCol.HeaderHovered, 0.16f, 0.28f, 0.41f, 0.31f);
-        ImGui.getStyle().setColor(ImGuiCol.HeaderActive, 0.25f, 0.35f, 0.47f, 0.31f);
-        ImGui.getStyle().setColor(ImGuiCol.Separator, 0.43f, 0.43f, 0.50f, 0.50f);
-        ImGui.getStyle().setColor(ImGuiCol.SeparatorHovered, 0.10f, 0.40f, 0.75f, 0.78f);
-        ImGui.getStyle().setColor(ImGuiCol.SeparatorActive, 0.10f, 0.40f, 0.75f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.ResizeGrip, 0.16f, 0.32f, 0.35f, 0.20f);
-        ImGui.getStyle().setColor(ImGuiCol.ResizeGripHovered, 0.13f, 0.34f, 0.39f, 0.20f);
-        ImGui.getStyle().setColor(ImGuiCol.ResizeGripActive, 0.16f, 0.35f, 0.33f, 0.20f);
-        ImGui.getStyle().setColor(ImGuiCol.Tab, 0.10f, 0.19f, 0.20f, 0.86f);
-        ImGui.getStyle().setColor(ImGuiCol.TabHovered, 0.12f, 0.25f, 0.26f, 0.86f);
-        ImGui.getStyle().setColor(ImGuiCol.TabActive, 0.12f, 0.26f, 0.24f, 0.86f);
-        ImGui.getStyle().setColor(ImGuiCol.TabUnfocused, 0.07f, 0.10f, 0.15f, 0.97f);
-        ImGui.getStyle().setColor(ImGuiCol.TabUnfocusedActive, 0.14f, 0.26f, 0.42f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.DockingPreview, 0.26f, 0.59f, 0.98f, 0.70f);
-        ImGui.getStyle().setColor(ImGuiCol.DockingEmptyBg, 0.15f, 0.18f, 0.19f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.PlotLines, 0.61f, 0.85f, 0.80f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.PlotLinesHovered, 1.00f, 0.43f, 0.35f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.PlotHistogram, 0.90f, 0.70f, 0.00f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.PlotHistogramHovered, 1.00f, 0.60f, 0.00f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.TableHeaderBg, 0.19f, 0.19f, 0.20f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.TableBorderStrong, 0.31f, 0.31f, 0.35f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.TableBorderLight, 0.23f, 0.23f, 0.25f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.TableRowBg, 0.00f, 0.00f, 0.00f, 0.00f);
-        ImGui.getStyle().setColor(ImGuiCol.TableRowBgAlt, 1.00f, 1.00f, 1.00f, 0.06f);
-        ImGui.getStyle().setColor(ImGuiCol.TextSelectedBg, 0.26f, 0.98f, 0.61f, 0.35f);
-        ImGui.getStyle().setColor(ImGuiCol.DragDropTarget, 1.00f, 1.00f, 0.00f, 0.90f);
-        ImGui.getStyle().setColor(ImGuiCol.NavHighlight, 0.26f, 0.59f, 0.98f, 1.00f);
-        ImGui.getStyle().setColor(ImGuiCol.NavWindowingHighlight, 1.00f, 1.00f, 1.00f, 0.70f);
-        ImGui.getStyle().setColor(ImGuiCol.NavWindowingDimBg, 0.80f, 0.80f, 0.80f, 0.20f);
-        ImGui.getStyle().setColor(ImGuiCol.ModalWindowDimBg, 0.80f, 0.80f, 0.80f, 0.35f);
+        style.setFramePadding(4, 4);
+        style.setCellPadding(4, 2);
+        style.setItemSpacing(8, 4);
+        style.setItemInnerSpacing(4, 4);
+        style.setTouchExtraPadding(0, 0);
+        style.setIndentSpacing(21);
+        style.setScrollbarSize(15);
+        style.setGrabMinSize(4);
+
+        style.setWindowRounding(8);
+        style.setChildRounding(1);
+        style.setFrameRounding(1);
+        style.setPopupRounding(1);
+        style.setScrollbarRounding(1);
+        style.setGrabRounding(1);
+        style.setLogSliderDeadzone(4);
+        style.setTabRounding(4);
+
+        // Text
+        style.setColor(ImGuiCol.Text, 1.00f, 1.00f, 1.00f, 1.00f);
+        style.setColor(ImGuiCol.TextDisabled, 0.50f, 0.50f, 0.50f, 1.00f);
+
+        // Backgrounds
+        style.setColor(ImGuiCol.WindowBg, 0.10f, 0.10f, 0.10f, 0.94f);
+        style.setColor(ImGuiCol.ChildBg, 0.10f, 0.10f, 0.10f, 0.94f);
+        style.setColor(ImGuiCol.PopupBg, 0.10f, 0.10f, 0.10f, 1.00f);
+        style.setColor(ImGuiCol.Border, 0f, 0f, 0f, 0.15f);
+
+        // Window Title
+        float k = 0.50f;
+        style.setColor(ImGuiCol.TitleBg, k, k, k, 0.7f);
+        style.setColor(ImGuiCol.TitleBgActive, k + 0.05f, k + 0.05f, k + 0.05f, 0.80f);
+        style.setColor(ImGuiCol.TitleBgCollapsed, k, k, k, 0.80f);
+
+        // Scrollbar
+        style.setColor(ImGuiCol.ScrollbarBg, 0.07f, 0.12f, 0.13f, 0.94f);
+        style.setColor(ImGuiCol.ScrollbarGrab, 0.20f, 0.50f, 0.35f, 0.50f);
+        style.setColor(ImGuiCol.ScrollbarGrabHovered, 0.28f, 0.54f, 0.41f, 0.50f);
+        style.setColor(ImGuiCol.ScrollbarGrabActive, 0.20f, 0.50f, 0.28f, 0.50f);
+
+        style.setColor(ImGuiCol.BorderShadow, 0.00f, 0.00f, 0.00f, 1.00f);
+        style.setColor(ImGuiCol.FrameBg, 0.09f, 0.13f, 0.15f, 0.94f);
+        style.setColor(ImGuiCol.FrameBgHovered, 0.12f, 0.18f, 0.20f, 0.94f);
+        style.setColor(ImGuiCol.FrameBgActive, 0.17f, 0.23f, 0.26f, 0.94f);
+        
+        style.setColor(ImGuiCol.MenuBarBg, 0.14f, 0.14f, 0.14f, 1.00f);
+        style.setColor(ImGuiCol.CheckMark, 0.26f, 0.59f, 0.98f, 1.00f);
+        
+        // Slider
+        style.setColor(ImGuiCol.SliderGrab, 0.24f, 0.52f, 0.88f, 1.00f);
+        style.setColor(ImGuiCol.SliderGrabActive, 0.26f, 0.59f, 0.98f, 1.00f);
+        
+        // Button
+        style.setColor(ImGuiCol.Button, 0.10f, 0.23f, 0.24f, 1.00f);
+        style.setColor(ImGuiCol.ButtonHovered, 0.12f, 0.30f, 0.31f, 1.00f);
+        style.setColor(ImGuiCol.ButtonActive, 0.13f, 1f, 0.24f, 1.00f);
+        
+        // Header
+        style.setColor(ImGuiCol.Header, 0.15f, 0.22f, 0.31f, 0.31f);
+        style.setColor(ImGuiCol.HeaderHovered, 0.16f, 0.28f, 0.41f, 0.31f);
+        style.setColor(ImGuiCol.HeaderActive, 0.25f, 0.35f, 0.47f, 0.31f);
+        
+        // Seperator
+        style.setColor(ImGuiCol.Separator, 0.43f, 0.43f, 0.50f, 0.50f);
+        style.setColor(ImGuiCol.SeparatorHovered, 0.10f, 0.40f, 0.75f, 0.78f);
+        style.setColor(ImGuiCol.SeparatorActive, 0.10f, 0.40f, 0.75f, 1.00f);
+        
+        // Resize Grip
+        style.setColor(ImGuiCol.ResizeGrip, 0.16f, 0.16f, 0.16f, 0.25f);
+        style.setColor(ImGuiCol.ResizeGripHovered, 0.16f, 0.16f, 0.16f, 0.25f);
+        style.setColor(ImGuiCol.ResizeGripActive, 0.16f, 0.16f, 0.16f, 0.25f);
+        
+        // Tabs
+        style.setColor(ImGuiCol.Tab, 0.10f, 0.19f, 0.20f, 0.86f);
+        style.setColor(ImGuiCol.TabHovered, 0.12f, 0.25f, 0.26f, 0.86f);
+        style.setColor(ImGuiCol.TabActive, 0.12f, 0.26f, 0.24f, 0.86f);
+        style.setColor(ImGuiCol.TabUnfocused, 0.07f, 0.10f, 0.15f, 0.97f);
+        style.setColor(ImGuiCol.TabUnfocusedActive, 0.14f, 0.26f, 0.42f, 1.00f);
+        
+        // Docking
+        style.setColor(ImGuiCol.DockingPreview, 0.26f, 0.59f, 0.98f, 0.70f);
+        style.setColor(ImGuiCol.DockingEmptyBg, 0.15f, 0.18f, 0.19f, 1.00f);
+        
+        // Lines
+        style.setColor(ImGuiCol.PlotLines, 0.61f, 0.85f, 0.80f, 1.00f);
+        style.setColor(ImGuiCol.PlotLinesHovered, 1.00f, 0.43f, 0.35f, 1.00f);
+        style.setColor(ImGuiCol.PlotHistogram, 0.90f, 0.70f, 0.00f, 1.00f);
+        style.setColor(ImGuiCol.PlotHistogramHovered, 1.00f, 0.60f, 0.00f, 1.00f);
+        
+        // Tables
+        style.setColor(ImGuiCol.TableHeaderBg, 0.19f, 0.19f, 0.20f, 1.00f);
+        style.setColor(ImGuiCol.TableBorderStrong, 0.31f, 0.31f, 0.35f, 1.00f);
+        style.setColor(ImGuiCol.TableBorderLight, 0.23f, 0.23f, 0.25f, 1.00f);
+        style.setColor(ImGuiCol.TableRowBg, 0.00f, 0.00f, 0.00f, 0.00f);
+        style.setColor(ImGuiCol.TableRowBgAlt, 1.00f, 1.00f, 1.00f, 0.06f);
+        
+        // Text Selection
+        style.setColor(ImGuiCol.TextSelectedBg, 0.26f, 0.98f, 0.61f, 0.35f);
+        style.setColor(ImGuiCol.DragDropTarget, 1.00f, 1.00f, 0.00f, 0.90f);
+        
+        // Navigation
+        style.setColor(ImGuiCol.NavHighlight, 0.26f, 0.59f, 0.98f, 1.00f);
+        style.setColor(ImGuiCol.NavWindowingHighlight, 1.00f, 1.00f, 1.00f, 0.70f);
+        style.setColor(ImGuiCol.NavWindowingDimBg, 0.80f, 0.80f, 0.80f, 0.20f);
+        style.setColor(ImGuiCol.ModalWindowDimBg, 0.80f, 0.80f, 0.80f, 0.35f);
     }
 
     /**
@@ -168,7 +205,7 @@ public class ImGuiUtils {
 
         // Set the style/font
         initFonts();
-        initStyle();
+        refreshStyle();
 
         // Initialise GL
         implGlfw.init(handle, true);
