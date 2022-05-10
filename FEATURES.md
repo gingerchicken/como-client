@@ -404,6 +404,22 @@
 ### Default Settings
  - HidePacket: `{ ... }`
 
+## QuakeAimbot (`.quakeaimbot`)
+[(Source Code)](src/main/java/net/como/client/modules/combat/QuakeAimbot.java) No description available as of yet.
+### Default Settings
+ - AutoShoot: `True`
+ - FOV: `3.0`
+ - Headshot: `True`
+ - Predict: `True`
+ - PredictStep: `1.0`
+ - Randomise: `True`
+ - RandomiseAmount: `0.125`
+ - Range: `50.0`
+ - ShootAngle: `1.0`
+ - ShootDelay: `0.1`
+ - Smoothing: `True`
+ - SmoothingStep: `5.0`
+
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/dupes/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
 ### Default Settings
