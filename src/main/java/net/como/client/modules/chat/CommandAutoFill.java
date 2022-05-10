@@ -45,6 +45,9 @@ public class CommandAutoFill extends Module {
         // Get the different parts
         String[] parts = text.substring(0, workingStart).split(" ");
 
+        // Make sure we have at least one part
+        if (parts.length == 0) return new ArrayList<String>();
+
         // This will be used to start of the CommandNode search
         Command currentCmd = handler.getCommand(parts[0]);
         int i; // This will be later used to see if we checked all nodes
