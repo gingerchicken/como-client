@@ -41,6 +41,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Language;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
+import net.minecraft.util.hit.HitResult;
 
 public class ClientUtils {
     public static boolean isInStorage() {
@@ -193,6 +195,38 @@ public class ClientUtils {
         }
 
         return text.asString();
+    }
+
+    /**
+     * Checks to see if an entity can see a given position
+     * @param entity
+     */
+    public static boolean canSee(Entity ent, Vec3d pos, float tickDelta) {
+        return ent.world.raycast(
+            new RaycastContext(
+                ent.getCameraPosVec(tickDelta), // My position
+                pos, // The position to check
+                RaycastContext.ShapeType.COLLIDER, // The shape type
+                RaycastContext.FluidHandling.NONE, // The fluid handling
+                ent // The entity that is doing the checking
+            )
+        ).getType() == HitResult.Type.MISS;
+    }
+
+    /**
+     * Checks to see if an entity can see a given position
+     * @param entity
+     */
+    public static boolean canSee(Entity ent, Vec3d pos) {
+        return canSee(ent, pos, 1);
+    }
+
+    /**
+     * Checks to see if an entity can see a given position
+     * @param entity
+     */
+    public static boolean canSee(Vec3d pos) {
+        return canSee(ComoClient.me(), pos, 1);
     }
 
     public static void disconnect(Screen prev) {
