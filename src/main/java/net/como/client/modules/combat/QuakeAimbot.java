@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import ca.weblite.objc.Client;
 import net.como.client.ComoClient;
 import net.como.client.events.RenderWorldEvent;
 import net.como.client.interfaces.mixin.IClient;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
+import net.como.client.utils.ClientUtils;
 import net.como.client.utils.RotationUtils;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.MinecraftClient;
@@ -38,8 +40,11 @@ public class QuakeAimbot extends Module {
         this.addSetting(new Setting("Range", 50d));
         this.addSetting(new Setting("FOV", 3d));
         this.addSetting(new Setting("Headshot", true));
+
+        // Prediction
         this.addSetting(new Setting("Predict", true));
         this.addSetting(new Setting("PredictStep", 1d));
+        this.addSetting(new Setting("Preaim", true));
 
         // Smoothing
         this.addSetting(new Setting("Smoothing", true));
@@ -113,7 +118,10 @@ public class QuakeAimbot extends Module {
             if (localPos.distanceTo(pos) > this.getDoubleSetting("Range")) continue;
 
             // Make sure the player is visible
-            if (!ComoClient.me().canSee(player)) continue;
+            if (!ClientUtils.canSee(pos)) continue;
+
+            // Ensure we don't pre-fire if we don't want to
+            if (!this.getBoolSetting("Preaim") && !ComoClient.me().canSee(player)) continue;
 
             // Make sure the player is in the FOV
             Rotation current = new Rotation(ComoClient.me().getYaw(), ComoClient.me().getPitch());
