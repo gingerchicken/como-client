@@ -405,7 +405,7 @@
  - HidePacket: `{ ... }`
 
 ## QuakeAimbot (`.quakeaimbot`)
-[(Source Code)](src/main/java/net/como/client/modules/combat/QuakeAimbot.java) No description available as of yet.
+[(Source Code)](src/main/java/net/como/client/modules/combat/QuakeAimbot.java) A Basic Hypixel Quakecraft Aimbot
 ### Default Settings
  - AutoShoot: `True`
  - FOV: `3.0`
