@@ -5,24 +5,17 @@ import java.util.List;
 import java.util.Random;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ClientTickEvent;
 import net.como.client.events.RenderWorldEvent;
 import net.como.client.interfaces.mixin.IClient;
-import net.como.client.modules.exploits.OffHandCrash;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
-import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RotationUtils;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.RaycastContext;
 
 public class QuakeAimbot extends Module {
     Random random = new Random();
@@ -36,6 +29,10 @@ public class QuakeAimbot extends Module {
 
     public QuakeAimbot() {
         super("QuakeAimbot");
+
+        this.description = "A Basic Hypixel Quakecraft Aimbot";
+
+        this.setCategory("Combat");
 
         // Targetting
         this.addSetting(new Setting("Range", 50d));
