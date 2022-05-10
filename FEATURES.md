@@ -418,6 +418,7 @@
  - ShootAngle: `1.0`
  - ShootDelay: `0.1`
  - Smoothing: `True`
+ - SmoothingIgnoreFOV: `1.0`
  - SmoothingStep: `5.0`
 
 ## ShulkerDupe (`.shulkerdupe`)
