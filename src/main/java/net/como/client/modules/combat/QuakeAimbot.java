@@ -44,6 +44,7 @@ public class QuakeAimbot extends Module {
         // Smoothing
         this.addSetting(new Setting("Smoothing", true));
         this.addSetting(new Setting("SmoothingStep", 5d));
+        this.addSetting(new Setting("SmoothingIgnoreFOV", 1d));
         
         // Legit
         this.addSetting(new Setting("Randomise", true));
@@ -73,9 +74,11 @@ public class QuakeAimbot extends Module {
         offset = offset.subtract(target.getPos());
         
         // Doesn't really work lol
-        Vec3d predictOffset = this.getBoolSetting("Predict") ? target.getVelocity().multiply(this.getDoubleSetting("PredictStep")) : Vec3d.ZERO;
+        if (this.getBoolSetting("Predict")) {
+            tickDelta = 1 * (float)(double)(Double)this.getDoubleSetting("PredictStep");
+        }
         
-        return target.getLerpedPos(tickDelta).add(offset).add(predictOffset);
+        return target.getLerpedPos(tickDelta).add(offset);
     }
 
     private Vec3d getTargetPos(Entity target) {
@@ -182,7 +185,7 @@ public class QuakeAimbot extends Module {
                 targetPos = targetPos.add(offset);
 
                 // Get the target's rotation
-                Rotation targetRotation = RotationUtils.getRequiredRotation(targetPos);
+                Rotation targetRotation = RotationUtils.getRequiredRotation(targetPos, tickDelta);
                 Rotation current = new Rotation(ComoClient.me().getYaw(), ComoClient.me().getPitch());
                 Rotation diff = targetRotation.difference(current);
 
@@ -193,9 +196,12 @@ public class QuakeAimbot extends Module {
                 // Apply the step
                 if (this.getBoolSetting("Smoothing")) {
                     double step = this.getDoubleSetting("SmoothingStep");
+                    double antiSmoothingFOV = this.getDoubleSetting("SmoothingIgnoreFOV");
 
-                    pitch = (float)(current.pitch + diff.pitch / step);
-                    yaw   = (float)(current.yaw   + diff.yaw   / step);
+                    if (diff.magnitude() > antiSmoothingFOV) {
+                        pitch = (float)(current.pitch + diff.pitch / step);
+                        yaw   = (float)(current.yaw   + diff.yaw   / step);
+                    }
                 }
 
                 // Set the pitch and yaw
