@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
-import ca.weblite.objc.Client;
 import net.como.client.ComoClient;
 import net.como.client.events.ClientTickEvent;
 import net.como.client.events.RenderWorldEvent;
@@ -27,8 +26,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.scoreboard.AbstractTeam;
-import net.minecraft.scoreboard.Team;
 import net.minecraft.util.math.Vec3d;
 
 public class QuakeAimbot extends Module {
@@ -61,7 +58,6 @@ public class QuakeAimbot extends Module {
 
         this.addSetting(new Setting("LocalBacktrack", true));
         this.addSetting(new Setting("BacktrackStep", 1));
-        this.addSetting(new Setting("BacktrackRange", 10d));
         this.addSetting(new Setting("BacktrackRenderSteps", true));
 
         // Smoothing
