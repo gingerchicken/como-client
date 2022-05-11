@@ -409,22 +409,22 @@
 ### Default Settings
  - AutoShoot: `True`
  - BacktrackRenderSteps: `True`
- - BacktrackStep: `1`
- - FOV: `3.0`
+ - BacktrackStep: `5`
+ - FOV: `180.0`
  - Headshot: `True`
  - IgnoreTeamMates: `True`
  - LocalBacktrack: `True`
  - Preaim: `True`
  - Predict: `True`
- - PredictStep: `1.0`
+ - PredictStep: `4.0`
  - Randomise: `True`
  - RandomiseAmount: `0.125`
- - Range: `50.0`
+ - Range: `128.0`
  - ShootAngle: `1.0`
- - ShootDelay: `0.1`
+ - ShootDelay: `0.0`
  - Smoothing: `True`
  - SmoothingIgnoreFOV: `1.0`
- - SmoothingStep: `5.0`
+ - SmoothingStep: `50.0`
 
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/dupes/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
