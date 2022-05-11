@@ -163,18 +163,28 @@ public class QuakeAimbot extends Module {
     private Entity getTarget() {
         List<Entity> players = this.getTargets();
 
+        // Get current rotation
+        Rotation current = new Rotation(ComoClient.me().getYaw(), ComoClient.me().getPitch());
+
         // Make sure there are players
         if (players.isEmpty()) return null;
 
         // Sort the list by the closest to the player's angle
-        players.sort((a, b) -> {
-            Vec3d aPos = a.getPos();
-            Vec3d bPos = b.getPos();
+        players.sort(new Comparator<Entity>() {
+            @Override
+            public int compare(Entity a, Entity b) {
+                Vec3d aPos = getTargetPos(a);
+                Vec3d bPos = getTargetPos(b);
+    
+                Rotation aRotation = RotationUtils.getRequiredRotation(aPos);
+                Rotation bRotation = RotationUtils.getRequiredRotation(bPos);
+    
+                // Calculate the distances
+                double aDist = aRotation.difference(current).magnitude();
+                double bDist = bRotation.difference(current).magnitude();
 
-            Rotation aRotation = RotationUtils.getRequiredRotation(aPos);
-            Rotation bRotation = RotationUtils.getRequiredRotation(bPos);
-
-            return (int)(aRotation.magnitude() - bRotation.magnitude());
+                return (int)(aDist - bDist);
+            }
         });
 
         // Return the closest player
