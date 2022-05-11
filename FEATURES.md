@@ -408,7 +408,6 @@
 [(Source Code)](src/main/java/net/como/client/modules/combat/QuakeAimbot.java) A Basic Hypixel Quakecraft Aimbot
 ### Default Settings
  - AutoShoot: `True`
- - BacktrackRange: `10.0`
  - BacktrackRenderSteps: `True`
  - BacktrackStep: `1`
  - FOV: `3.0`
