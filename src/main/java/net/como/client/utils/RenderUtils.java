@@ -991,7 +991,7 @@ public class RenderUtils {
         );
         
         // Update the size of the box.
-        mStack.scale(0.5f, 0.5f, 0.5f);
+        mStack.scale(1f, 1f, 1f);
 
 		// Make it yellow
         RenderSystem.setShaderColor(r/255, g/255, b/255, a/255);
