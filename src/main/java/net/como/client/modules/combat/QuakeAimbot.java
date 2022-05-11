@@ -1,20 +1,27 @@
 package net.como.client.modules.combat;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 import ca.weblite.objc.Client;
 import net.como.client.ComoClient;
+import net.como.client.events.ClientTickEvent;
 import net.como.client.events.RenderWorldEvent;
 import net.como.client.interfaces.mixin.IClient;
+import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ClientUtils;
+import net.como.client.utils.RenderUtils;
 import net.como.client.utils.RotationUtils;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
@@ -46,6 +53,11 @@ public class QuakeAimbot extends Module {
         this.addSetting(new Setting("PredictStep", 1d));
         this.addSetting(new Setting("Preaim", true));
 
+        this.addSetting(new Setting("LocalBacktrack", true));
+        this.addSetting(new Setting("BacktrackStep", 1));
+        this.addSetting(new Setting("BacktrackRange", 10d));
+        this.addSetting(new Setting("BacktrackRenderSteps", true));
+
         // Smoothing
         this.addSetting(new Setting("Smoothing", true));
         this.addSetting(new Setting("SmoothingStep", 5d));
@@ -64,13 +76,21 @@ public class QuakeAimbot extends Module {
     @Override
     public void activate() {
         this.addListen(RenderWorldEvent.class);
+        this.addListen(ClientTickEvent.class);
     }
 
     @Override
     public void deactivate() {
         this.removeListen(RenderWorldEvent.class);
+        this.removeListen(ClientTickEvent.class);
     }
 
+    /**
+     * Gets a lerped position of the target
+     * @param target the target
+     * @param tickDelta the tick delta
+     * @return lerped position
+     */
     private Vec3d getTargetPos(Entity target, float tickDelta) {
         Vec3d offset = this.getBoolSetting("Headshot") 
             ? target.getEyePos()
@@ -86,6 +106,11 @@ public class QuakeAimbot extends Module {
         return target.getLerpedPos(tickDelta).add(offset);
     }
 
+    /**
+     * Gets a non-lerped position of the target
+     * @param target The target
+     * @return position
+     */
     private Vec3d getTargetPos(Entity target) {
         return this.getTargetPos(target, 0);
     }
@@ -118,10 +143,8 @@ public class QuakeAimbot extends Module {
             if (localPos.distanceTo(pos) > this.getDoubleSetting("Range")) continue;
 
             // Make sure the player is visible
-            if (!ClientUtils.canSee(pos)) continue;
-
-            // Ensure we don't pre-fire if we don't want to
-            if (!this.getBoolSetting("Preaim") && !ComoClient.me().canSee(player)) continue;
+            boolean canSee = this.getBoolSetting("Preaim") ? ClientUtils.canSee(pos) : ComoClient.me().canSee(player);
+            if (!canSee) continue;
 
             // Make sure the player is in the FOV
             Rotation current = new Rotation(ComoClient.me().getYaw(), ComoClient.me().getPitch());
@@ -158,82 +181,181 @@ public class QuakeAimbot extends Module {
         return players.get(0);
     }
 
+    /**
+     * Checks if the aimbot's triggerbot is firing
+     */
     private boolean shooting = false;
-    
+
+    /**
+     * Backtrack position queue
+     */
+    private Queue<Vec3d> previousPositions = new LinkedList<>();
+
+    /**
+     * Adds the 
+     * @param pos
+     * @return
+     */
+    private void addNewBacktrackPos(Vec3d pos) {
+        int backtrackLength = this.getIntSetting("BacktrackStep");
+        
+        while (this.previousPositions.size() > backtrackLength) {
+            this.previousPositions.remove();
+        }
+
+        previousPositions.add(pos);
+    }
+
+    /**
+     * Get the last backtrack position
+     * @return the last backtrack position
+     */
+    private Vec3d getBacktrackPos() {
+        if (this.previousPositions.isEmpty()) return this.getLocalPos();
+
+        return this.previousPositions.peek();
+    }
+
+    /**
+     * Add the current position to the backtrack list
+     */
+    private void addCurrentBacktrackPos() {
+        this.addNewBacktrackPos(RotationUtils.getEyePos());
+    }
+
+    /**
+     * Gets the local position alongside the backtracked position
+     * @param tickDelta the tick delta
+     * @return the local position
+     */
+    private Vec3d getLocalPos(float tickDelta) {
+        // Get the player's position
+        Vec3d pos = this.getLocalPos();
+
+        // Check for backtrack
+        if (this.getBoolSetting("LocalBacktrack")) {
+            // Get the backtracked position
+            pos = this.getBacktrackPos();
+        }
+
+        return pos;
+    }
+
+    /**
+     * Gets a standard position without backtrack
+     * @return the standard position
+     */
+    public Vec3d getLocalPos() {
+        return RotationUtils.getEyePos();
+    }
+
+    private void aimbotThink(float tickDelta) {
+        Entity target = this.getTarget();
+
+        // Make sure we have a target
+        if (target == null) {
+            this.shooting = false;
+            return;
+        }
+
+        // Calculate random offset
+        Vec3d offset = Vec3d.ZERO;
+        if (this.getBoolSetting("Randomise")) {
+            double max = this.getDoubleSetting("RandomiseAmount");
+
+            double x = this.random.nextDouble() * max;
+            double y = this.random.nextDouble() * max;
+            double z = this.random.nextDouble() * max;
+
+            offset = offset.add(x, y, z);
+        }
+
+        // Get the target's position
+        Vec3d targetPos = this.getTargetPos(target, tickDelta);
+
+        // Apply random offset
+        targetPos = targetPos.add(offset);
+
+        // Get the local position
+        Vec3d localPos = this.getLocalPos(tickDelta);
+
+        // Get the target's rotation
+        Rotation targetRotation = RotationUtils.getRequiredRotation(localPos, targetPos, tickDelta);
+        Rotation current = new Rotation(ComoClient.me().getYaw(), ComoClient.me().getPitch());
+        Rotation diff = targetRotation.difference(current);
+
+        // Get the pitch and yaw
+        float pitch = (float)targetRotation.pitch;
+        float yaw   = (float)targetRotation.yaw;
+
+        // Apply the step
+        if (this.getBoolSetting("Smoothing")) {
+            double step = this.getDoubleSetting("SmoothingStep");
+            double antiSmoothingFOV = this.getDoubleSetting("SmoothingIgnoreFOV");
+
+            if (diff.magnitude() > antiSmoothingFOV) {
+                pitch = (float)(current.pitch + diff.pitch / step);
+                yaw   = (float)(current.yaw   + diff.yaw   / step);
+            }
+        }
+
+        // Set the pitch and yaw
+        ComoClient.me().setPitch(pitch);
+        ComoClient.me().setYaw(yaw);
+
+        // Shoot
+        this.shooting = false;
+        if (this.getBoolSetting("AutoShoot")) {
+            if (diff.magnitude() > this.getDoubleSetting("ShootAngle")) return;
+
+            this.shooting = true;                    
+
+            // Shooting delay
+            double curr = ComoClient.getCurrentTime();
+
+            if (this.lastShootTime + this.getDoubleSetting("ShootDelay") > curr) return;
+            this.lastShootTime = curr;
+
+            // Shoot (i.e. right click)
+            MinecraftClient client = ComoClient.getClient();
+            IClient clientAccessor = (IClient)client;
+            clientAccessor.performItemUse();
+        }
+    }
+
     @Override
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
+            case "ClientTickEvent": {
+                // Update the backtrack position
+                this.addCurrentBacktrackPos();
+
+                break;
+            }
             case "RenderWorldEvent": {
-                Entity target = this.getTarget();
-
-                // Make sure we have a target
-                if (target == null) {
-                    this.shooting = false;
-                    return;
-                }
-
+                // Get tick delta
                 float tickDelta = ((RenderWorldEvent)event).tickDelta;
 
-                // Calculate random offset
-                Vec3d offset = Vec3d.ZERO;
-                if (this.getBoolSetting("Randomise")) {
-                    double max = this.getDoubleSetting("RandomiseAmount");
+                // Get mStack
+                MatrixStack mStack = ((RenderWorldEvent)event).mStack;
 
-                    double x = this.random.nextDouble() * max;
-                    double y = this.random.nextDouble() * max;
-                    double z = this.random.nextDouble() * max;
+                // Render backtrack
+                if (this.getBoolSetting("LocalBacktrack") && this.getBoolSetting("BacktrackRenderSteps")) {
+                    Colour chosen = new Colour(255, 0, 0, 255);
+                    Colour normal = new Colour(255, 255, 255, 255);
+                    for (Vec3d pos : this.previousPositions) {
+                        boolean isChosenPosition = pos.equals(this.getBacktrackPos());
 
-                    offset = offset.add(x, y, z);
-                }
+                        // Get the colour
+                        Colour c = isChosenPosition ? chosen : normal;
 
-                // Get the target's position
-                Vec3d targetPos = this.getTargetPos(target, tickDelta);
-
-                // Apply random offset
-                targetPos = targetPos.add(offset);
-
-                // Get the target's rotation
-                Rotation targetRotation = RotationUtils.getRequiredRotation(targetPos, tickDelta);
-                Rotation current = new Rotation(ComoClient.me().getYaw(), ComoClient.me().getPitch());
-                Rotation diff = targetRotation.difference(current);
-
-                // Get the pitch and yaw
-                float pitch = (float)targetRotation.pitch;
-                float yaw   = (float)targetRotation.yaw;
-
-                // Apply the step
-                if (this.getBoolSetting("Smoothing")) {
-                    double step = this.getDoubleSetting("SmoothingStep");
-                    double antiSmoothingFOV = this.getDoubleSetting("SmoothingIgnoreFOV");
-
-                    if (diff.magnitude() > antiSmoothingFOV) {
-                        pitch = (float)(current.pitch + diff.pitch / step);
-                        yaw   = (float)(current.yaw   + diff.yaw   / step);
+                        // Render the position
+                        RenderUtils.renderBlockBox(mStack, pos, c);
                     }
                 }
 
-                // Set the pitch and yaw
-                ComoClient.me().setPitch(pitch);
-                ComoClient.me().setYaw(yaw);
-
-                // Shoot
-                this.shooting = false;
-                if (this.getBoolSetting("AutoShoot")) {
-                    if (diff.magnitude() > this.getDoubleSetting("ShootAngle")) break;
-
-                    this.shooting = true;                    
-
-                    // Shooting delay
-                    double curr = ComoClient.getCurrentTime();
-
-                    if (this.lastShootTime + this.getDoubleSetting("ShootDelay") > curr) break;
-                    this.lastShootTime = curr;
-
-                    // Shoot (i.e. right click)
-                    MinecraftClient client = ComoClient.getClient();
-                    IClient clientAccessor = (IClient)client;
-                    clientAccessor.performItemUse();
-                }
+                // Do the aimbot (this SHOULD not be done inside of a render thread)
+                this.aimbotThink(tickDelta);
 
                 break;
             }

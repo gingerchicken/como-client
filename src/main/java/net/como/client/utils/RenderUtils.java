@@ -969,7 +969,7 @@ public class RenderUtils {
 		bufferBuilder.vertex(matrix, 0, 2, 1).next();
 	}
 
-	public static void renderBlockBox(MatrixStack mStack, BlockPos bPos, float r, float g, float b, float a) {
+	public static void renderBlockBox(MatrixStack mStack, Vec3d bPos, float r, float g, float b, float a) {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glEnable(GL11.GL_LINE_SMOOTH);
@@ -985,13 +985,13 @@ public class RenderUtils {
 
         // Translate the point of rendering
         mStack.translate(
-            (bPos.getX() + 0.5) - RenderUtils.getRegion().getX(),
+            (bPos.getX()) - RenderUtils.getRegion().getX(),
             bPos.getY(),
-            (bPos.getZ() + 0.5) - RenderUtils.getRegion().getZ()
+            (bPos.getZ()) - RenderUtils.getRegion().getZ()
         );
         
         // Update the size of the box.
-        mStack.scale(1, 1, 1);
+        mStack.scale(0.5f, 0.5f, 0.5f);
 
 		// Make it yellow
         RenderSystem.setShaderColor(r/255, g/255, b/255, a/255);
@@ -1011,12 +1011,24 @@ public class RenderUtils {
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
 	}
 
+	public static void renderBlockBox(MatrixStack mStack, BlockPos bPos, float r, float g, float b, float a) {
+		renderBlockBox(mStack, new Vec3d(
+			bPos.getX() + 0.5,
+			bPos.getY(),
+			bPos.getZ() + 0.5
+		), r, g, b, a);
+	}
+
 	public static void renderBlockBox(MatrixStack mStack, BlockPos bPos) {
 		renderBlockBox(mStack, bPos, 255, 255, 255, 255);
 	}
 
 	public static void renderBlockBox(MatrixStack mStack, BlockPos bPos, Colour colour) {
 		renderBlockBox(mStack, bPos, colour.r, colour.g, colour.b, colour.a);
+	}
+
+	public static void renderBlockBox(MatrixStack mStack, Vec3d pos, Colour colour) {
+		renderBlockBox(mStack, pos, colour.r, colour.g, colour.b, colour.a);
 	}
 
 	public static int RGBA2Int(Colour c) {
