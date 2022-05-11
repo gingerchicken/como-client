@@ -46,32 +46,32 @@ public class QuakeAimbot extends Module {
         this.setCategory("Combat");
 
         // Targetting
-        this.addSetting(new Setting("Range", 50d));
-        this.addSetting(new Setting("FOV", 3d));
+        this.addSetting(new Setting("Range", 128d));
+        this.addSetting(new Setting("FOV", 180d));
         this.addSetting(new Setting("Headshot", true));
         this.addSetting(new Setting("IgnoreTeamMates", true));
 
         // Prediction
         this.addSetting(new Setting("Predict", true));
-        this.addSetting(new Setting("PredictStep", 1d));
+        this.addSetting(new Setting("PredictStep", 4d));
         this.addSetting(new Setting("Preaim", true));
 
-        this.addSetting(new Setting("LocalBacktrack", true));
-        this.addSetting(new Setting("BacktrackStep", 1));
-        this.addSetting(new Setting("BacktrackRenderSteps", true));
+        this.addSetting(new Setting("LocalBacktrack", false));
+        this.addSetting(new Setting("BacktrackStep", 5));
+        this.addSetting(new Setting("BacktrackRenderSteps", false));
 
         // Smoothing
         this.addSetting(new Setting("Smoothing", true));
-        this.addSetting(new Setting("SmoothingStep", 5d));
+        this.addSetting(new Setting("SmoothingStep", 50d));
         this.addSetting(new Setting("SmoothingIgnoreFOV", 1d));
         
         // Legit
-        this.addSetting(new Setting("Randomise", true));
+        this.addSetting(new Setting("Randomise", false));
         this.addSetting(new Setting("RandomiseAmount", 0.125d));
 
         // Auto shoot
         this.addSetting(new Setting("AutoShoot", true));
-        this.addSetting(new Setting("ShootDelay", 0.1d));
+        this.addSetting(new Setting("ShootDelay", 0d));
         this.addSetting(new Setting("ShootAngle", 1d));
     }
     
