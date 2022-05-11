@@ -34,11 +34,8 @@ public class RotationUtils {
         return new Vec3d(f2 * f3, f4, f1 * f3);
     }
 
-    public static Rotation getRequiredRotation(Vec3d vec, float tickDelta) {
-        Vec3d offset = getEyePos().subtract(ComoClient.me().getPos());
-        Vec3d eyesPos = ComoClient.me().getLerpedPos(tickDelta).add(offset);
-		
-        Vec3d delta = MathsUtils.Vec3dDiff(vec, eyesPos);
+    public static Rotation getRequiredRotation(Vec3d origin, Vec3d vec, float tickDelta) {
+        Vec3d delta = MathsUtils.Vec3dDiff(vec, origin);
 		
 		double diffXZ = Math.sqrt(delta.x * delta.x + delta.z * delta.z);
 		
@@ -47,6 +44,13 @@ public class RotationUtils {
 		
 		return new Rotation(yaw, pitch);
 	}
+
+    public static Rotation getRequiredRotation(Vec3d vec, float tickDelta) {
+        Vec3d offset = getEyePos().subtract(ComoClient.me().getPos());
+        Vec3d eyesPos = ComoClient.me().getLerpedPos(tickDelta).add(offset);
+
+        return getRequiredRotation(eyesPos, vec, tickDelta);
+    }
 
     public static Rotation getRequiredRotation(Vec3d vec) {
         return getRequiredRotation(vec, 0);
