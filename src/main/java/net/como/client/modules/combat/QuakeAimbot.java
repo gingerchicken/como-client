@@ -24,6 +24,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.DyeableArmorItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.scoreboard.AbstractTeam;
+import net.minecraft.scoreboard.Team;
 import net.minecraft.util.math.Vec3d;
 
 public class QuakeAimbot extends Module {
@@ -47,6 +52,7 @@ public class QuakeAimbot extends Module {
         this.addSetting(new Setting("Range", 50d));
         this.addSetting(new Setting("FOV", 3d));
         this.addSetting(new Setting("Headshot", true));
+        this.addSetting(new Setting("IgnoreTeamMates", true));
 
         // Prediction
         this.addSetting(new Setting("Predict", true));
@@ -77,12 +83,14 @@ public class QuakeAimbot extends Module {
     public void activate() {
         this.addListen(RenderWorldEvent.class);
         this.addListen(ClientTickEvent.class);
+        this.addListen(RenderWorldEvent.class);
     }
 
     @Override
     public void deactivate() {
         this.removeListen(RenderWorldEvent.class);
         this.removeListen(ClientTickEvent.class);
+        this.removeListen(RenderWorldEvent.class);
     }
 
     /**
@@ -115,11 +123,33 @@ public class QuakeAimbot extends Module {
         return this.getTargetPos(target, 0);
     }
 
+    /**
+     * Gets a player's armour colour
+     * @param player the player
+     * @return colour, -1 if no armour was found
+     */
+    private int getTeamColour(Entity player) {
+        // Get player armour
+        for (ItemStack itemStack : player.getArmorItems()) {
+            Item item = itemStack.getItem();
+
+            // Make sure it is a dyeable armour
+            if (!(item instanceof DyeableArmorItem)) continue;
+
+            // Get the colour
+            return ((DyeableArmorItem)item).getColor(itemStack);
+        }
+
+        // Return if no colour was found
+        return -1;
+    }
+
     private List<Entity> getTargets() {
         List<Entity> players = new ArrayList<>();
 
         Vec3d localPos = ComoClient.me().getPos();
         double fov = this.getDoubleSetting("FOV");
+        int localTeamColour = this.getTeamColour(ComoClient.me());
 
         // Get all of the players
         for (Entity ent : ComoClient.getClient().world.getEntities()) {
@@ -150,6 +180,9 @@ public class QuakeAimbot extends Module {
             Rotation current = new Rotation(ComoClient.me().getYaw(), ComoClient.me().getPitch());
             Rotation rotation = RotationUtils.getRequiredRotation(pos).difference(current);
             if (rotation.magnitude() > fov) continue;
+
+            // Checks if they are in the same team
+            if (localTeamColour != -1 && this.getBoolSetting("IgnoreTeamMates") && this.getTeamColour(player) == localTeamColour) continue;
 
             // Add the player to the list
             players.add(player);
