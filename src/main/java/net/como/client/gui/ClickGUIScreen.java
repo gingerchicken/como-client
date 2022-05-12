@@ -5,9 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import imgui.ImGui;
+import imgui.flag.ImGuiCol;
+import imgui.flag.ImGuiStyleVar;
+import imgui.flag.ImGuiWindowFlags;
+
 import net.como.client.ComoClient;
 import net.como.client.structures.Module;
 import net.como.client.structures.settings.Setting;
+import net.como.client.utils.ChatUtils;
 
 public class ClickGUIScreen extends ImGuiScreen {
     private HashMap<String, List<Module>> categories = new HashMap<>();
@@ -28,30 +33,36 @@ public class ClickGUIScreen extends ImGuiScreen {
     @Override
     protected void renderImGui() {
         for (String cat : categories.keySet()) {
+            // Show collapse button
             ImGui.begin(cat);
 
             for (Module mod : categories.get(cat)) {
-                boolean show = ImGui.collapsingHeader(mod.getName());
+                // Render the button
 
-                if (!show) continue;
+                ImGui.pushStyleVar(ImGuiStyleVar.ButtonTextAlign, 0.0f, 0.5f);
 
-                // Display the mod description
-                ImGui.text(mod.description);
-
-                boolean t = mod.isEnabled();
-                ImGui.checkbox("enable", t);
-
-                if (t != mod.isEnabled()) {
-                    mod.toggle();
+                // Push enabled style
+                if (mod.isEnabled()) {
+                    ImGui.pushStyleColor(ImGuiCol.Button, 0.10f, 0.60f, 0.10f, 0.75f);
+                    ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.10f, 0.50f, 0.10f, 0.75f);
+                    ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.30f, 0.70f, 0.30f, 0.75f);
                 }
 
-                ImGui.separator();
+                boolean shouldToggle = ImGui.button(mod.getName(), ImGui.getWindowWidth() - ImGui.getStyle().getWindowPaddingX()*2, 0);
 
-                // Display the mod's settings
-                for (String settingName : mod.getSettings()) {
-                    Setting setting = mod.getSetting(settingName);
+                // Pop enabled style
+                if (mod.isEnabled()) {
+                    ImGui.popStyleColor(3);
+                }
 
-                    Object obj = setting.value;
+                ImGui.popStyleVar(1);
+
+                // Handle outputs
+
+                // Draw button that toggles the module
+                if (shouldToggle) {
+                    ChatUtils.hideNextChat = true;
+                    mod.toggle();
                 }
             }
 

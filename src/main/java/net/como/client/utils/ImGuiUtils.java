@@ -88,7 +88,7 @@ public class ImGuiUtils {
         style.setScrollbarSize(15);
         style.setGrabMinSize(4);
 
-        style.setWindowRounding(8);
+        style.setWindowRounding(5);
         style.setChildRounding(1);
         style.setFrameRounding(1);
         style.setPopupRounding(1);
@@ -105,7 +105,7 @@ public class ImGuiUtils {
         style.setColor(ImGuiCol.WindowBg, 0.10f, 0.10f, 0.10f, 0.94f);
         style.setColor(ImGuiCol.ChildBg, 0.10f, 0.10f, 0.10f, 0.94f);
         style.setColor(ImGuiCol.PopupBg, 0.10f, 0.10f, 0.10f, 1.00f);
-        style.setColor(ImGuiCol.Border, 0f, 0f, 0f, 0.15f);
+        style.setColor(ImGuiCol.Border, 0.10f, 0.10f, 0.10f, 0.94f);
 
         // Window Title
         float k = 0.50f;
@@ -132,9 +132,9 @@ public class ImGuiUtils {
         style.setColor(ImGuiCol.SliderGrabActive, 0.26f, 0.59f, 0.98f, 1.00f);
         
         // Button
-        style.setColor(ImGuiCol.Button, 0.10f, 0.23f, 0.24f, 1.00f);
-        style.setColor(ImGuiCol.ButtonHovered, 0.12f, 0.30f, 0.31f, 1.00f);
-        style.setColor(ImGuiCol.ButtonActive, 0.13f, 1f, 0.24f, 1.00f);
+        style.setColor(ImGuiCol.Button, 0.00f, 0.00f, 0.00f, 0.50f);
+        style.setColor(ImGuiCol.ButtonHovered, 0.00f, 0.00f, 0.00f, 0.76f);
+        style.setColor(ImGuiCol.ButtonActive, 0.10f, 0.10f, 0.10f, 0.76f);
         
         // Header
         style.setColor(ImGuiCol.Header, 0.15f, 0.22f, 0.31f, 0.31f);
@@ -184,6 +184,10 @@ public class ImGuiUtils {
         style.setColor(ImGuiCol.NavWindowingHighlight, 1.00f, 1.00f, 1.00f, 0.70f);
         style.setColor(ImGuiCol.NavWindowingDimBg, 0.80f, 0.80f, 0.80f, 0.20f);
         style.setColor(ImGuiCol.ModalWindowDimBg, 0.80f, 0.80f, 0.80f, 0.35f);
+
+        // Other configurations
+        ImGui.getIO().setConfigWindowsMoveFromTitleBarOnly(true);
+        style.setWindowMenuButtonPosition(1);
     }
 
     /**
@@ -210,11 +214,6 @@ public class ImGuiUtils {
         // Initialise GL
         implGlfw.init(handle, true);
         implGl3.init();
-
-        // Misc ImGui settings
-        ImGui.getIO().setConfigWindowsMoveFromTitleBarOnly(true);
-        //        ImGui.getIO().addConfigFlags(ImGuiConfigFlags.ViewportsEnable);
-        ImGui.getStyle().setWindowMenuButtonPosition(-1);
     }
 
     /**
