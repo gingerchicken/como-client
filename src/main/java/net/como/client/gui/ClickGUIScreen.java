@@ -57,7 +57,7 @@ public class ClickGUIScreen extends ImGuiScreen {
         openedSettings.put(module, true);
     }
 
-    private HashMap<Class, Boolean> renderableSettingTypes = new HashMap<>() {{
+    private static HashMap<Class<?>, Boolean> renderableSettingTypes = new HashMap<>() {{
         put(Boolean.class, true);
         put(String.class, true);
         // put(Integer.class, true);
@@ -76,6 +76,7 @@ public class ClickGUIScreen extends ImGuiScreen {
     private boolean renderSetting(Setting setting) {
         if (!this.canSettingBeRender(setting)) return false;
     
+        // Handle different types of settings
         switch (setting.value.getClass().getSimpleName()) {
             // Handle Booleans
             case "Boolean": {
@@ -103,6 +104,7 @@ public class ClickGUIScreen extends ImGuiScreen {
         if (ImGui.isItemHovered()) {
             ImGui.setTooltip(setting.getToolTip());
         }
+
         return true;
     }
 
