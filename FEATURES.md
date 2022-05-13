@@ -416,6 +416,7 @@
  - LocalBacktrack: `True`
  - Preaim: `True`
  - Predict: `True`
+ - PredictBlockWall: `True`
  - PredictStep: `4.0`
  - Randomise: `True`
  - RandomiseAmount: `0.125`
