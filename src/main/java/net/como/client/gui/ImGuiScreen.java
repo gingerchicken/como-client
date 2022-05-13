@@ -24,8 +24,9 @@ public abstract class ImGuiScreen extends Screen {
 
     /**
      * Draw ImGui items
+     * @param tickDelta The time since the last tick
      */
-    protected abstract void renderImGui();
+    protected abstract void renderImGui(float tickDelta);
 
     @Override
     protected void init() {
@@ -58,7 +59,7 @@ public abstract class ImGuiScreen extends Screen {
             if (imguiDebugWindow) ImGui.showMetricsWindow();
 
             // Render the subclass' content
-            this.renderImGui();
+            this.renderImGui(delta);
         } else {
             // Render an empty frame when closed
             closedAck = true;

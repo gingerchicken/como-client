@@ -6,13 +6,19 @@ import java.util.List;
 
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
+import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
+import joptsimple.internal.Strings;
 import net.como.client.ComoClient;
+import net.como.client.modules.hud.ClickGUI;
+import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ChatUtils;
+import net.como.client.utils.RenderUtils;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class ClickGUIScreen extends ImGuiScreen {
     private HashMap<String, List<Module>> categories = new HashMap<>();
@@ -81,14 +87,15 @@ public class ClickGUIScreen extends ImGuiScreen {
             // Handle Booleans
             case "Boolean": {
                 if (ImGui.checkbox(setting.name, (Boolean)setting.value)) {
-                    setting.value = !(Boolean)setting.value;
+                    setting.value = !(Boolean)setting.value; // It was toggled
                 }
+
                 break;
             }
 
-            // Handle strings
+            // Handle Strings
             case "String": {
-                ImString str = new ImString((String) setting.value);
+                ImString str = new ImString((String)setting.value, 128);
                 ImGui.inputText(setting.name, str);
                 setting.value = str.toString();
 
@@ -125,13 +132,104 @@ public class ClickGUIScreen extends ImGuiScreen {
         return true;
     }
 
+    public void renderBackground(MatrixStack matrices, float tickDelta) {
+        // Current background darkness
+        float current = this.backgroundDarkness;
+
+        float next = this.getNext(current, BACKGROUND_DARKNESS_SPEED, BACKGROUND_DARKNESS_MIN, 1.0f);
+
+        // Get lerped background darkness
+        float backgroundDarkness = this.lerpValue(current, next, tickDelta);
+
+        // Actual background darkness
+        float d = 1 - backgroundDarkness;
+
+        // Get the start and end colours
+        Colour s = new Colour(0, 0, 0, 100*d);
+        Colour e = new Colour(0, 0, 0, 150*d);
+
+        this.fillGradient(matrices, 0, 0, this.width, this.height, RenderUtils.RGBA2Int(s), RenderUtils.RGBA2Int(e));
+    }
+
     @Override
-    protected void renderImGui() {
+    public boolean shouldPause() {
+        return false;
+    }
+
+    private float backgroundDarkness = 1.0f;
+    private final static float BACKGROUND_DARKNESS_SPEED = -0.10f;
+    private final static float BACKGROUND_DARKNESS_MIN = 0f;
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        // Background darkness
+        if (this.backgroundDarkness > BACKGROUND_DARKNESS_MIN) {
+            this.backgroundDarkness += BACKGROUND_DARKNESS_SPEED;
+        }
+
+        // Category tones
+        if (this.emptyBgTone > EMPTY_BG_TONE_MIN) {
+            this.emptyBgTone += EMPTY_BG_TONE_SPEED;
+        }
+    }
+
+    // Search category tones
+    private float emptyBgTone = 1f;
+    private final static float EMPTY_BG_TONE_SPEED = -0.05f;
+    private final static float EMPTY_BG_TONE_MIN = 0.5f;
+
+    /**
+     * Gets the next value for a given value, speed and min
+     * @param curr the current value
+     * @param speed the speed to change the value by
+     * @param min the minimum value
+     * @param max the maximum value
+     * @return a clamped next value
+     */
+    private float getNext(float curr, float speed, float min, float max) {
+        return Math.max(min, Math.min(max, curr + speed));
+    }
+
+    private float lerpValue(float current, float next, float tickDelta) {
+        return current + (next - current) * tickDelta;
+    }
+
+    /**
+     * Creates windows for all the categories and populates them with modules
+     */
+    private void renderModules(float tickDelta) {
+        float emptyBgTone = this.emptyBgTone;
+
+        // Get next empty background tone
+        float next = this.getNext(emptyBgTone, EMPTY_BG_TONE_SPEED, EMPTY_BG_TONE_MIN, 1.0f);
+
+        // Lerp empty background tone
+        emptyBgTone = this.lerpValue(this.emptyBgTone, next, tickDelta);
+
         for (String cat : categories.keySet()) {
+            // Get the list of modules for the category as a copy
+            List<Module> modules = new ArrayList<>(categories.get(cat));
+
+            // Remove all of the modules from the list that don't contain the search phrase
+            if (searchPhrase != null && !searchPhrase.isEmpty()) {
+                modules.removeIf(mod -> !mod.getName().toLowerCase().contains(searchPhrase.toLowerCase()));
+            }
+
+            // Sort the list alphabetically
+            modules.sort((a, b) -> a.getName().compareTo(b.getName()));
+
+            // Check the category is not empty
+            if (modules.isEmpty()) {
+                // Change the background darkness to make it obvious that the category is empty
+                ImGui.setNextWindowBgAlpha(emptyBgTone);
+            }
+
             // Show collapse button
             ImGui.begin(cat);
 
-            for (Module mod : categories.get(cat)) {
+            for (Module mod : modules) {
                 // Render the button
 
                 // Push style variable
@@ -187,5 +285,68 @@ public class ClickGUIScreen extends ImGuiScreen {
 
             ImGui.end();
         }
+    }
+
+    /**
+     * The current search phrase
+    */
+    private static String searchPhrase = "";
+
+    private String renderSearch(float tickDelta) {
+        // Set the window size
+        ImGui.setNextWindowSize(200f, 61f);
+
+        // Begin the window
+        ImGui.begin("Search", ImGuiWindowFlags.NoResize);
+        // Hover the search button
+        if (ImGui.isItemHovered()) {
+            ImGui.setTooltip("Search for a module");
+        }
+
+        ImGui.pushItemWidth(-1);
+        // Render the search input
+        ImString str = new ImString(searchPhrase, 64);
+        ImGui.inputText(Strings.EMPTY, str);
+
+        // Check for changes in the search phrase
+        if (!str.toString().equals(searchPhrase)) {
+            // Update the background tone
+            this.emptyBgTone = 1f;
+        }
+
+        searchPhrase = str.toString();
+
+        ImGui.popItemWidth();
+
+        ImGui.end();
+
+        return searchPhrase;
+    }
+
+    @Override
+    protected void renderImGui(float tickDelta) {
+        this.renderModules(tickDelta);
+        this.renderSearch(tickDelta);
+    }
+
+    private ClickGUI getClickGUI() {
+        return (ClickGUI)ComoClient.Modules.get("clickgui");
+    }
+
+    @Override
+    public void close() {
+        // Hide the chat output
+        ChatUtils.hideNextChat = true;
+
+        // Disable the module
+        this.getClickGUI().disable();
+
+        super.close();
+    }
+
+    @Override
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        this.renderBackground(matrices, delta);
+        super.render(matrices, mouseX, mouseY, delta);
     }
 }
