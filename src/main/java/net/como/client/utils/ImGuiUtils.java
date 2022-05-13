@@ -90,7 +90,7 @@ public class ImGuiUtils {
 
         style.setWindowRounding(5);
         style.setChildRounding(1);
-        style.setFrameRounding(1);
+        style.setFrameRounding(4);
         style.setPopupRounding(1);
         style.setScrollbarRounding(1);
         style.setGrabRounding(1);
@@ -120,12 +120,14 @@ public class ImGuiUtils {
         style.setColor(ImGuiCol.ScrollbarGrabActive, 0.20f, 0.50f, 0.28f, 0.50f);
 
         style.setColor(ImGuiCol.BorderShadow, 0.00f, 0.00f, 0.00f, 1.00f);
-        style.setColor(ImGuiCol.FrameBg, 0.09f, 0.13f, 0.15f, 0.94f);
-        style.setColor(ImGuiCol.FrameBgHovered, 0.12f, 0.18f, 0.20f, 0.94f);
-        style.setColor(ImGuiCol.FrameBgActive, 0.17f, 0.23f, 0.26f, 0.94f);
+
+        // Frames (i.e. text box, checkbox, etc)
+        style.setColor(ImGuiCol.FrameBg, 0.5f, 0.5f, 0.5f, 0.25f);
+        style.setColor(ImGuiCol.FrameBgHovered, 0.5f, 0.5f, 0.5f, 0.25f);
+        style.setColor(ImGuiCol.FrameBgActive, 0.5f, 0.5f, 0.5f, 0.25f);
         
-        style.setColor(ImGuiCol.MenuBarBg, 0.14f, 0.14f, 0.14f, 1.00f);
-        style.setColor(ImGuiCol.CheckMark, 0.26f, 0.59f, 0.98f, 1.00f);
+        style.setColor(ImGuiCol.MenuBarBg, 0.14f, 0.14f, 0.14f, 0.00f);
+        style.setColor(ImGuiCol.CheckMark, 0.10f, 0.60f, 0.10f, 1f);
         
         // Slider
         style.setColor(ImGuiCol.SliderGrab, 0.24f, 0.52f, 0.88f, 1.00f);
@@ -141,8 +143,8 @@ public class ImGuiUtils {
         style.setColor(ImGuiCol.HeaderHovered, 0.16f, 0.28f, 0.41f, 0.31f);
         style.setColor(ImGuiCol.HeaderActive, 0.25f, 0.35f, 0.47f, 0.31f);
         
-        // Seperator
-        style.setColor(ImGuiCol.Separator, 0.43f, 0.43f, 0.50f, 0.50f);
+        // Separator
+        style.setColor(ImGuiCol.Separator, 0.5f, 0.5f, 0.5f, 0.25f);
         style.setColor(ImGuiCol.SeparatorHovered, 0.10f, 0.40f, 0.75f, 0.78f);
         style.setColor(ImGuiCol.SeparatorActive, 0.10f, 0.40f, 0.75f, 1.00f);
         
@@ -176,7 +178,7 @@ public class ImGuiUtils {
         style.setColor(ImGuiCol.TableRowBgAlt, 1.00f, 1.00f, 1.00f, 0.06f);
         
         // Text Selection
-        style.setColor(ImGuiCol.TextSelectedBg, 0.26f, 0.98f, 0.61f, 0.35f);
+        style.setColor(ImGuiCol.TextSelectedBg, 0.26f, 0.98f, 0.61f, 0.05f);
         style.setColor(ImGuiCol.DragDropTarget, 1.00f, 1.00f, 0.00f, 0.90f);
         
         // Navigation

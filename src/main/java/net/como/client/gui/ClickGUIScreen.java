@@ -82,6 +82,11 @@ public class ClickGUIScreen extends ImGuiScreen {
     private boolean renderSetting(Setting setting) {
         if (!this.canSettingBeRender(setting)) return false;
     
+        // "Padding"
+        // TODO please change this to be a style or something
+        ImGui.spacing();
+        ImGui.sameLine();
+
         // Handle different types of settings
         switch (setting.value.getClass().getSimpleName()) {
             // Handle Booleans
@@ -89,6 +94,7 @@ public class ClickGUIScreen extends ImGuiScreen {
                 if (ImGui.checkbox(setting.name, (Boolean)setting.value)) {
                     setting.value = !(Boolean)setting.value; // It was toggled
                 }
+
 
                 break;
             }
@@ -107,7 +113,7 @@ public class ClickGUIScreen extends ImGuiScreen {
             }
         }
 
-
+        // Show setting tool tip
         if (ImGui.isItemHovered()) {
             ImGui.setTooltip(setting.getToolTip());
         }
@@ -263,6 +269,7 @@ public class ClickGUIScreen extends ImGuiScreen {
 
                         this.renderSetting(setting);
                     }
+
                     ImGui.separator();
                 }
 
