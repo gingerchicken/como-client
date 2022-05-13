@@ -26,7 +26,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult.Type;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 
 public class QuakeAimbot extends Module {
     Random random = new Random();
@@ -55,6 +59,7 @@ public class QuakeAimbot extends Module {
         this.addSetting(new Setting("Predict", true));
         this.addSetting(new Setting("PredictStep", 4d));
         this.addSetting(new Setting("Preaim", true));
+        this.addSetting(new Setting("PredictBlockWall", true));
 
         this.addSetting(new Setting("LocalBacktrack", false));
         this.addSetting(new Setting("BacktrackStep", 5));
@@ -89,6 +94,14 @@ public class QuakeAimbot extends Module {
         this.removeListen(RenderWorldEvent.class);
     }
 
+    private Vec3d getTargetOffset(Entity target) {
+        Vec3d offset = this.getBoolSetting("Headshot") 
+            ? target.getEyePos()
+            : target.getBoundingBox().getCenter();
+        
+        return offset.subtract(target.getPos());
+    }
+
     /**
      * Gets a lerped position of the target
      * @param target the target
@@ -96,18 +109,49 @@ public class QuakeAimbot extends Module {
      * @return lerped position
      */
     private Vec3d getTargetPos(Entity target, float tickDelta) {
-        Vec3d offset = this.getBoolSetting("Headshot") 
-            ? target.getEyePos()
-            : target.getBoundingBox().getCenter();
-        
-        offset = offset.subtract(target.getPos());
-        
-        // Doesn't really work lol
-        if (this.getBoolSetting("Predict")) {
-            tickDelta = 1 * (float)(double)(Double)this.getDoubleSetting("PredictStep");
-        }
-        
+        if (this.getBoolSetting("Predict")) return this.getPredictPos(target, tickDelta);
+
+        // Get the target's position
+        Vec3d offset = this.getTargetOffset(target);
+
+        // Lerp it
         return target.getLerpedPos(tickDelta).add(offset);
+    }
+
+    private Vec3d getPredictPos(Entity target, float tickDelta) {
+        Vec3d offset = this.getTargetOffset(target);
+
+        // Get the target's position
+        Vec3d targetPos = target.getLerpedPos(tickDelta).add(offset);
+
+        // Calculate how much extrapolation we need
+        float extrapolationAmount = 1 * (float)(double)(Double)this.getDoubleSetting("PredictStep");
+
+        // Add the offset and extrapolate
+        Vec3d predictedPos = target.getLerpedPos(extrapolationAmount).add(offset);
+
+        // Check that the player wants to account for walls
+        if (!this.getBoolSetting("PredictBlockWall")) return predictedPos;
+
+        // Check if there is anything in the way of this position
+        BlockHitResult hitResult = target.world.raycast(
+            new RaycastContext(
+                targetPos,
+                predictedPos,
+                RaycastContext.ShapeType.COLLIDER,
+                RaycastContext.FluidHandling.NONE,
+                target
+            )
+        );
+
+        // If they can see it then return the predicted position
+        if (hitResult.getType() == Type.MISS) return predictedPos;
+
+        // If they can't then we need to find the closet location to that where they can
+        Vec3d pos = hitResult.getPos();
+
+        // Return this position
+        return pos;
     }
 
     /**
@@ -140,6 +184,10 @@ public class QuakeAimbot extends Module {
         return -1;
     }
 
+    /**
+     * Gets an array of targets
+     * @return array of targets
+    */
     private List<Entity> getTargets() {
         List<Entity> players = new ArrayList<>();
 
@@ -187,8 +235,12 @@ public class QuakeAimbot extends Module {
         return players;
     }
 
-    double lastShootTime = 0;
+    private double lastShootTime = 0;
 
+    /**
+     * Gets the target
+     * @return target
+     */
     private Entity getTarget() {
         List<Entity> players = this.getTargets();
 
@@ -231,9 +283,8 @@ public class QuakeAimbot extends Module {
     private Queue<Vec3d> previousPositions = new LinkedList<>();
 
     /**
-     * Adds the 
-     * @param pos
-     * @return
+     * Adds a new position to the backtrack queue
+     * @param pos the position
      */
     private void addNewBacktrackPos(Vec3d pos) {
         int backtrackLength = this.getIntSetting("BacktrackStep");
@@ -288,6 +339,10 @@ public class QuakeAimbot extends Module {
         return RotationUtils.getEyePos();
     }
 
+    /**
+     * Aimbot logic
+     * @param tickDelta the tick delta
+     */
     private void aimbotThink(float tickDelta) {
         Entity target = this.getTarget();
 
