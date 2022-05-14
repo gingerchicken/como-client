@@ -25,6 +25,40 @@ public class ClickGUIScreen extends ImGuiScreen {
     private HashMap<String, List<Module>> categories = new HashMap<>();
     private List<BouncyWidget> bouncyWidgets = new ArrayList<>();
     
+    private double getBouncySpeed() {
+        return this.getClickGUI().getDoubleSetting("BouncySpeed");
+    }
+
+    private void syncBouncySettings() {
+        // Check if the bouncies are enabled.
+        if (!this.getClickGUI().getBoolSetting("Bouncy")) {
+            this.bouncyWidgets.clear();
+            return;
+        }
+
+        // Check the total amount of felixes.
+        int totalFelixes = this.getClickGUI().getIntSetting("TotalBouncies");
+
+        // Get the bouncy speed.
+        double bouncySpeed = this.getBouncySpeed();
+
+        // Make sure that they're the same amount.
+        while (this.bouncyWidgets.size() < totalFelixes) {
+            // Add a new felix.
+            this.bouncyWidgets.add(new BouncyWidget(this.width, this.height, 1d/6, bouncySpeed));
+        }
+
+        while (this.bouncyWidgets.size() > totalFelixes) {
+            // Remove a felix.
+            this.bouncyWidgets.remove(this.bouncyWidgets.size() - 1);
+        }
+
+        // Sync the felixes.
+        for (BouncyWidget felix : this.bouncyWidgets) {
+            felix.setSpeed(bouncySpeed);
+        }
+    }
+
     @Override
     protected void init() {
         super.init();
@@ -41,16 +75,7 @@ public class ClickGUIScreen extends ImGuiScreen {
             categories.get(cat).add(mod);
         }
 
-        // Generate the widgets
-        if (this.getClickGUI().getBoolSetting("Bouncy")) {
-            // Get how many felixes to generate
-            int totalBouncies = this.getClickGUI().getIntSetting("TotalBouncies");
-
-            // Generate the felixes
-            for (int i = 0; i < totalBouncies; i++) {
-                bouncyWidgets.add(new BouncyWidget(this.width, this.height, 1d/6));
-            }
-        }
+        this.syncBouncySettings();
     }
 
     private static HashMap<Module, Boolean> openedSettings = new HashMap<>();
@@ -196,6 +221,9 @@ public class ClickGUIScreen extends ImGuiScreen {
         if (this.emptyBgTone > EMPTY_BG_TONE_MIN) {
             this.emptyBgTone += EMPTY_BG_TONE_SPEED;
         }
+
+        // Sync the felixes
+        this.syncBouncySettings();
 
         // Bouncy ticks
         for (BouncyWidget widget : this.bouncyWidgets) {

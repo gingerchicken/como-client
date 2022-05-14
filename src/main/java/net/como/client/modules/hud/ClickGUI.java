@@ -19,9 +19,16 @@ public class ClickGUI extends Module {
         super("ClickGUI");
         this.description = "A way of toggling your settings with a GUI (Currently WIP)";
 
-        this.addSetting(new Setting("Bouncy", true));
+        this.addSetting(new Setting("Bouncy", true) {{
+            this.setDescription("Toggles the rendering of the bouncy felixes");
+        }});
+        
         this.addSetting(new Setting("TotalBouncies", 1) {{
             this.setDescription("The total amount of felixes bouncing around in the background!");
+        }});
+
+        this.addSetting(new Setting("BouncySpeed", 1.0d) {{
+            this.setDescription("The speed of the felixes");
         }});
 
         this.setCategory("HUD");

@@ -18,7 +18,12 @@ public class BouncyWidget implements Widget {
     private final int screenWidth, screenHeight;
     private int width, height;
 
-    private Vec3d velocity;
+    private Vec3d baseVelocity;
+    private double speed = 1d;
+
+    public Vec3d getVelocity() {
+        return this.baseVelocity.multiply(this.speed);
+    }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -34,8 +39,8 @@ public class BouncyWidget implements Widget {
      * Calculates the next velocity according to the current velocity and the current position, using hit detection
      * @return The next velocity
      */
-    private Vec3d getNextVelocity() {
-        Vec3d velocity = this.velocity;
+    private Vec3d getNextBaseVelocity() {
+        Vec3d velocity = this.baseVelocity;
 
         // Bouncy!
         if (this.pos.x <= 0 || this.pos.x >= this.screenWidth || this.pos.x + this.width >= this.screenWidth || this.pos.x + this.width <= 0) {
@@ -59,7 +64,7 @@ public class BouncyWidget implements Widget {
      * @return The next position of the bouncy
      */
     private Vec3d getNextPosition() {
-        return this.getNextPosition(this.getNextVelocity());
+        return this.getNextPosition(this.getNextBaseVelocity().multiply(this.speed));
     }
 
     /**
@@ -74,10 +79,10 @@ public class BouncyWidget implements Widget {
     @Override
     public void tick() {
         // Update the velocity
-        this.velocity = this.getNextVelocity();
+        this.baseVelocity = this.getNextBaseVelocity();
 
         // Update the position
-        this.pos = this.getNextPosition(this.velocity);
+        this.pos = this.getNextPosition(this.getVelocity());
     }
 
     @Override
@@ -94,7 +99,7 @@ public class BouncyWidget implements Widget {
         this.screenWidth = parentWidth;
         this.screenHeight = parentHeight;
         this.pos = pos;
-        this.velocity = velocity;
+        this.baseVelocity = velocity;
     }
 
     /**
@@ -103,7 +108,7 @@ public class BouncyWidget implements Widget {
      * @param parentHeight The height of the parent
      * @param scale The scale of the bouncy
      */
-    public BouncyWidget(int parentWidth, int parentHeight, double scale) {
+    public BouncyWidget(int parentWidth, int parentHeight, double scale, double speed) {
         this.screenWidth  = parentWidth;
         this.screenHeight = parentHeight;
 
@@ -121,12 +126,14 @@ public class BouncyWidget implements Widget {
         // Set the velocity as a random velocity
         //  - with a random direction
         //  - round each component to the nearest integer (-1 and 1)
-        this.velocity = new Vec3d(
-                (int)(Math.random() * 3) - 1,
-                (int)(Math.random() * 3) - 1,
+        this.baseVelocity = new Vec3d(
+                Math.random() > 0.5 ? 1 : -1,
+                Math.random() > 0.5 ? 1 : -1,
                 0
-        ).multiply(1);
+        );
 
+        // Set the speed
+        this.speed = speed;
     }
 
     /**
@@ -135,5 +142,13 @@ public class BouncyWidget implements Widget {
      */
     public double getScale() {
         return this.pos.z;
+    }
+
+    /**
+     * Set the speed of the bouncy
+     * @param speed The new speed
+     */
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 }
