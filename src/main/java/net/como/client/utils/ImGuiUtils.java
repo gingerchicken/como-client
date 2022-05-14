@@ -13,6 +13,9 @@ import imgui.glfw.ImGuiImplGlfw;
 import net.como.client.ComoClient;
 import net.como.client.gui.ImGuiScreen;
 
+import imgui.type.ImDouble;
+import imgui.type.ImString;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -223,5 +226,30 @@ public class ImGuiUtils {
      */
     public static void initFonts() {
         ImGui.getIO().getFonts().addFontFromMemoryTTF(getMainFont(), 18);
+    }
+
+    public static boolean accurateDoubleInput(String label, ImDouble value, String numericalFormat) {
+        // Render the input
+        ImString str = new ImString(String.format(numericalFormat, value.get()), 128);
+        boolean changed = ImGui.inputText(label, str);
+
+        if (changed) {
+            // Replace all , with . (as some parts of the world use , as a decimal separator)
+            str.set(str.get().replace(',', '.'));
+
+            // Replace duplicate decimal points
+            str.set(str.get().replaceAll("\\.{2,}", "."));
+
+            // Replace all non-numerical characters with nothing
+            str.set(str.get().replaceAll("[^0-9.]", ""));
+
+            try {
+                value.set(Double.parseDouble(str.get()));
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+
+        return changed;
     }
 }
