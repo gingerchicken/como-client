@@ -6,6 +6,7 @@ import java.util.List;
 
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
+import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
@@ -24,6 +25,7 @@ import net.minecraft.client.util.math.MatrixStack;
 public class ClickGUIScreen extends ImGuiScreen {
     private HashMap<String, List<Module>> categories = new HashMap<>();
     private List<BouncyWidget> bouncyWidgets = new ArrayList<>();
+    private String searchExample;
     
     private double getBouncySpeed() {
         return this.getClickGUI().getDoubleSetting("BouncySpeed");
@@ -75,7 +77,27 @@ public class ClickGUIScreen extends ImGuiScreen {
             categories.get(cat).add(mod);
         }
 
+        // Sync the bouncy settings
         this.syncBouncySettings();
+
+        // Set the search example as random module name
+        this.updateSearchExample();
+    }
+
+    private void updateSearchExample() {
+        // Get a random index
+        int i = (int)(Math.random() * ComoClient.Modules.size());
+
+        // Iterate and get the module
+        for (Module mod : ComoClient.Modules.values()) {
+            if (i-- == 0) {
+                this.searchExample = mod.getName();
+                return;
+            }
+        }
+
+        // Just return an empty string
+        this.searchExample = Strings.EMPTY;
     }
 
     private static HashMap<Module, Boolean> openedSettings = new HashMap<>();
@@ -414,7 +436,7 @@ public class ClickGUIScreen extends ImGuiScreen {
         ImGui.pushItemWidth(-1);
         // Render the search input
         ImString str = new ImString(searchPhrase, 64);
-        ImGui.inputText(Strings.EMPTY, str);
+        ImGui.inputTextWithHint(Strings.EMPTY, "e.g. " + this.searchExample, str);
 
         // Check for changes in the search phrase
         if (!str.toString().equals(searchPhrase)) {
