@@ -148,10 +148,12 @@ public class ClickGUIScreen extends ImGuiScreen {
         return renderableSettingTypes.containsKey(setting.value.getClass());
     }
 
-    private boolean renderSetting(Setting setting) {
+    private boolean renderSetting(Module mod, Setting setting) {
         if (!this.canSettingBeRender(setting)) return false;
 
         final String numericalFormat = "%.3f";
+
+        ImGui.pushID(setting.name);
 
         // "Padding"
         ImGui.spacing();
@@ -193,7 +195,6 @@ public class ClickGUIScreen extends ImGuiScreen {
                     // Render the slider
                     changed = ImGui.sliderScalar(setting.name, ImGuiDataType.Double, value, min, max, numericalFormat);
                 } else {
-                    // Render the input
                     changed = ImGuiUtils.accurateDoubleInput(setting.name, value, numericalFormat);
                 }
 
@@ -209,6 +210,7 @@ public class ClickGUIScreen extends ImGuiScreen {
             }
 
             default: {
+                ImGui.popID();
                 return false;
             }
         }
@@ -218,6 +220,7 @@ public class ClickGUIScreen extends ImGuiScreen {
             ImGui.setTooltip(setting.getToolTip());
         }
 
+        ImGui.popID();
         return true;
     }
 
@@ -387,7 +390,8 @@ public class ClickGUIScreen extends ImGuiScreen {
             ImGui.begin(cat);
 
             for (Module mod : modules) {
-                // Render the button
+                // Push a new id
+                ImGui.pushID(mod.getName());
 
                 // Push style variable
                 ImGui.pushStyleVar(ImGuiStyleVar.ButtonTextAlign, 0.0f, 0.5f);
@@ -418,7 +422,7 @@ public class ClickGUIScreen extends ImGuiScreen {
                     for (String settingName : mod.getSettings()) {
                         Setting setting = mod.getSetting(settingName);
 
-                        this.renderSetting(setting);
+                        this.renderSetting(mod, setting);
                     }
 
                     ImGui.separator();
@@ -439,9 +443,15 @@ public class ClickGUIScreen extends ImGuiScreen {
                     ChatUtils.hideNextChat = true;
                     mod.toggle();
                 }
+
+                // Pop the id
+                ImGui.popID();
             }
 
             ImGui.end();
+
+            // Reset the mouse count
+            ImGui.resetMouseDragDelta();
         }
     }
 
