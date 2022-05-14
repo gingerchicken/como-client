@@ -8,6 +8,7 @@ package net.como.client.utils;
 import imgui.ImGui;
 import imgui.ImGuiStyle;
 import imgui.flag.ImGuiCol;
+import imgui.flag.ImGuiInputTextFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import net.como.client.ComoClient;
@@ -229,27 +230,38 @@ public class ImGuiUtils {
     }
 
     public static boolean accurateDoubleInput(String label, ImDouble value, String numericalFormat) {
-        // Render the input
-        ImString str = new ImString(String.format(numericalFormat, value.get()), 128);
-        boolean changed = ImGui.inputText(label, str);
+        String formatted = String.format(numericalFormat, value.get());
 
-        if (changed) {
+        // Render the input
+        ImString str = new ImString(formatted, 128);
+
+        // Check if it changed
+        if (ImGui.inputText(label, str)) {
+            String entered = str.toString();
+
             // Replace all , with . (as some parts of the world use , as a decimal separator)
-            str.set(str.get().replace(',', '.'));
+            entered = entered.replace(',', '.');
 
             // Replace duplicate decimal points
-            str.set(str.get().replaceAll("\\.{2,}", "."));
+            entered = entered.replaceAll("\\.+", ".");
 
-            // Replace all non-numerical characters with nothing
-            str.set(str.get().replaceAll("[^0-9.]", ""));
+            // Replace all non-numerical characters with nothing (except for the decimal point and minus sign)
+            entered = entered.replaceAll("[^\\d\\.\\-]", "");
 
+            double d;
             try {
-                value.set(Double.parseDouble(str.get()));
+                d = Double.parseDouble(entered);
+                System.out.println(entered);
             } catch (NumberFormatException e) {
+                e.printStackTrace();
                 return false;
             }
+
+            value.set(d);
+
+            return true;
         }
 
-        return changed;
+        return false;
     }
 }
