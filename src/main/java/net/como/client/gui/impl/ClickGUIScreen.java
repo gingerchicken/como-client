@@ -255,7 +255,22 @@ public class ClickGUIScreen extends ImGuiScreen {
     /**
      * Creates windows for all the categories and populates them with modules
      */
-    private void renderModules(float tickDelta) {
+    private void renderModules(float tickDelta) {        
+        // Default padding
+        final float xPadding = 15;
+        final float yPadding = 15;
+        final float yOffset  = 80;
+
+        // For default positioning
+        float nextXPos = xPadding;
+
+        // For default width/height
+        final float defaultWidth = 175f;
+
+        // Store previous heights
+        List<Float> prevHeights = new ArrayList<>();
+        int heightPtr = 0;
+
         float emptyBgTone = this.emptyBgTone;
 
         // Get next empty background tone
@@ -280,6 +295,34 @@ public class ClickGUIScreen extends ImGuiScreen {
             if (modules.isEmpty()) {
                 // Change the background darkness to make it obvious that the category is empty
                 ImGui.setNextWindowBgAlpha(emptyBgTone);
+            }
+
+            // First ever positioning
+            float yPos = prevHeights.size() < heightPtr + 1 ? yPadding + yOffset : prevHeights.get(heightPtr) + yPadding;
+
+            float currentHeight = (modules.size() + 1) * 30;
+
+            // Set first ever position
+            ImGui.setNextWindowSize(defaultWidth, currentHeight, ImGuiCond.FirstUseEver);
+            ImGui.setNextWindowPos(nextXPos, yPos, ImGuiCond.FirstUseEver);
+
+            // Calculate next positions
+            nextXPos += defaultWidth + xPadding;
+
+            // Add the height if the length is less than current pointer
+            if (prevHeights.size() < heightPtr + 1) {
+                prevHeights.add(yPos + currentHeight);
+            } else {
+                prevHeights.set(heightPtr, yPos + currentHeight);
+            }
+
+            // Increment height pointer
+            heightPtr++;
+
+            // Wrap them in case they're off the screen
+            if (nextXPos + defaultWidth + xPadding > this.width * 2) {
+                nextXPos = xPadding;
+                heightPtr = 0;
             }
 
             // Show collapse button
@@ -355,6 +398,9 @@ public class ClickGUIScreen extends ImGuiScreen {
      * @return the search phrase
      */
     private String renderSearch(float tickDelta) {
+        // Set the default position
+        ImGui.setNextWindowPos(this.width - 100f, 16, ImGuiCond.FirstUseEver);
+
         // Set the window size
         ImGui.setNextWindowSize(200f, 61f);
 
