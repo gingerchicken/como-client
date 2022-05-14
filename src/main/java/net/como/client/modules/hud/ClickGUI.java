@@ -29,6 +29,9 @@ public class ClickGUI extends Module {
 
         this.addSetting(new Setting("BouncySpeed", 1.0d) {{
             this.setDescription("The speed of the felixes");
+
+            this.setMax(50d);
+            this.setMin(0d);
         }});
 
         this.setCategory("HUD");
