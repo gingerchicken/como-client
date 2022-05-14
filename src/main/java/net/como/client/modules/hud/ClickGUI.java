@@ -6,9 +6,10 @@ import java.util.List;
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.events.ClientTickEvent;
-import net.como.client.gui.ClickGUIScreen;
+import net.como.client.gui.impl.ClickGUIScreen;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
+import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ImGuiUtils;
 
 public class ClickGUI extends Module {
@@ -17,6 +18,11 @@ public class ClickGUI extends Module {
     public ClickGUI() {
         super("ClickGUI");
         this.description = "A way of toggling your settings with a GUI (Currently WIP)";
+
+        this.addSetting(new Setting("Bouncy", true));
+        this.addSetting(new Setting("TotalBouncies", 1) {{
+            this.setDescription("The total amount of felixes bouncing around in the background!");
+        }});
 
         this.setCategory("HUD");
     }
