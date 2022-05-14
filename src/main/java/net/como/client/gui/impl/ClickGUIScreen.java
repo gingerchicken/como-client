@@ -13,6 +13,7 @@ import imgui.flag.ImGuiDataType;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImDouble;
+import imgui.type.ImInt;
 import imgui.type.ImString;
 import joptsimple.internal.Strings;
 import net.como.client.ComoClient;
@@ -135,7 +136,7 @@ public class ClickGUIScreen extends ImGuiScreen {
     private static HashMap<Class<?>, Boolean> renderableSettingTypes = new HashMap<>() {{
         put(Boolean.class, true);
         put(String.class, true);
-        // put(Integer.class, true);
+        put(Integer.class, true);
         put(Double.class, true);
     }};
 
@@ -204,6 +205,31 @@ public class ClickGUIScreen extends ImGuiScreen {
                 }
 
                 // Pop the width
+                ImGui.popItemWidth();
+
+                break;
+            }
+
+            case "Integer": {
+                ImInt value = new ImInt((Integer)setting.value);
+
+                boolean changed = false;
+
+                ImGui.pushItemWidth(ImGui.getFontSize() * 6);
+
+                if (setting.hasRange()) {
+                    int min = (int) setting.getMin();
+                    int max = (int) setting.getMax();
+
+                    changed = ImGui.sliderScalar(setting.name, ImGuiDataType.S32, value, min, max);
+                } else {
+                    changed = ImGui.inputInt(setting.name, value, 0, 0);
+                }
+                
+                if (changed) {
+                    setting.value = value.get();
+                }
+
                 ImGui.popItemWidth();
 
                 break;
