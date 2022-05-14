@@ -36,7 +36,10 @@ public class Watermark extends Module {
         this.removeListen(InGameHudRenderEvent.class);
     }
 
-    public static void render(MatrixStack matrixStack, Double scale, int x, int y) {
+    public static void render(MatrixStack matrixStack, Double scale, double x, double y) {
+        matrixStack.push();
+        matrixStack.translate(x, y, 0);
+
         RenderSystem.setShaderTexture(0, WATERMARK_TEXTURE);
         RenderSystem.setShaderColor(1, 1, 1, 1);
 
@@ -44,7 +47,9 @@ public class Watermark extends Module {
         int width  = (int)(BACKGROUND_WIDTH * scale);
         int height = (int)(BACKGROUND_HEIGHT * scale);
 
-        DrawableHelper.drawTexture(matrixStack, x, y, 0, 0, width, height, width, height);
+        DrawableHelper.drawTexture(matrixStack, 0, 0, 0, 0, width, height, width, height);
+
+        matrixStack.pop();
     }
 
     public static void render(MatrixStack matrixStack, Double scale) {
