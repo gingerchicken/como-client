@@ -21,6 +21,7 @@ import net.como.client.gui.ImGuiScreen;
 import net.como.client.gui.impl.widgets.BouncyWidget;
 import net.como.client.modules.hud.ClickGUI;
 import net.como.client.structures.Colour;
+import net.como.client.structures.Mode;
 import net.como.client.structures.Module;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ChatUtils;
@@ -138,6 +139,7 @@ public class ClickGUIScreen extends ImGuiScreen {
         put(String.class, true);
         put(Integer.class, true);
         put(Double.class, true);
+        put(Mode.class, true);
     }};
 
     /**
@@ -180,6 +182,7 @@ public class ClickGUIScreen extends ImGuiScreen {
                 break;
             }
 
+            // Handle Double
             case "Double": {
                 // Get the current value
                 ImDouble value = new ImDouble((Double)setting.value);
@@ -210,6 +213,7 @@ public class ClickGUIScreen extends ImGuiScreen {
                 break;
             }
 
+            // Handle integers
             case "Integer": {
                 ImInt value = new ImInt((Integer)setting.value);
 
@@ -231,6 +235,34 @@ public class ClickGUIScreen extends ImGuiScreen {
                 }
 
                 ImGui.popItemWidth();
+
+                break;
+            }
+
+            case "Mode": {
+                // Get the current mode
+                Mode mode = (Mode) setting.value;
+
+                int currentIndex = 0;
+
+                List<String> modes = new ArrayList<>();
+                for (String m : mode.getEntries()) {
+                    modes.add(m);
+                }
+
+                // Find the current index
+                currentIndex = mode.getState();
+
+                // Setup ImInt
+                ImInt imInt = new ImInt(currentIndex);
+
+                // Get the string array
+                String[] modeStrings = modes.toArray(new String[modes.size()]);
+
+                // Render the combo box
+                if (ImGui.combo(setting.name, imInt, modeStrings)) {
+                    mode.setState(imInt.get());
+                }
 
                 break;
             }
@@ -430,6 +462,12 @@ public class ClickGUIScreen extends ImGuiScreen {
                 }
 
                 boolean shouldToggle = ImGui.button(mod.getName(), ImGui.getWindowWidth() - ImGui.getStyle().getWindowPaddingX()*2, 0);
+
+                // Pop enabled style
+                if (mod.isEnabled()) {
+                    ImGui.popStyleColor(3);
+                }
+
                 boolean hasSettings = !mod.getSettings().isEmpty();
 
                 // Handle if the mouse is being hovered
@@ -452,11 +490,6 @@ public class ClickGUIScreen extends ImGuiScreen {
                     }
 
                     ImGui.separator();
-                }
-
-                // Pop enabled style
-                if (mod.isEnabled()) {
-                    ImGui.popStyleColor(3);
                 }
 
                 // Pop the style variable
