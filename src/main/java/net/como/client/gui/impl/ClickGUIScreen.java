@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.lwjgl.system.CallbackI.F;
+
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiCond;
+import imgui.flag.ImGuiDataType;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
+import imgui.type.ImDouble;
 import imgui.type.ImString;
 import joptsimple.internal.Strings;
 import net.como.client.ComoClient;
@@ -19,6 +23,7 @@ import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
 import net.como.client.structures.settings.Setting;
 import net.como.client.utils.ChatUtils;
+import net.como.client.utils.ImGuiUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -131,7 +136,7 @@ public class ClickGUIScreen extends ImGuiScreen {
         put(Boolean.class, true);
         put(String.class, true);
         // put(Integer.class, true);
-        // put(Double.class, true);
+        put(Double.class, true);
     }};
 
     /**
@@ -145,9 +150,10 @@ public class ClickGUIScreen extends ImGuiScreen {
 
     private boolean renderSetting(Setting setting) {
         if (!this.canSettingBeRender(setting)) return false;
-    
+
+        final String numericalFormat = "%.3f";
+
         // "Padding"
-        // TODO please change this to be a style or something
         ImGui.spacing();
         ImGui.sameLine();
 
@@ -159,7 +165,6 @@ public class ClickGUIScreen extends ImGuiScreen {
                     setting.value = !(Boolean)setting.value; // It was toggled
                 }
 
-
                 break;
             }
 
@@ -168,6 +173,37 @@ public class ClickGUIScreen extends ImGuiScreen {
                 ImString str = new ImString((String)setting.value, 128);
                 ImGui.inputText(setting.name, str);
                 setting.value = str.toString();
+
+                break;
+            }
+
+            case "Double": {
+                // Get the current value
+                ImDouble value = new ImDouble((Double)setting.value);
+
+                // Set the width for the bar
+                ImGui.pushItemWidth(ImGui.getFontSize() * 6);
+
+                boolean changed = false;
+                // Check to see if we have a range
+                if (setting.hasRange()) {
+                    double min = (double) setting.getMin();
+                    double max = (double) setting.getMax();
+
+                    // Render the slider
+                    changed = ImGui.sliderScalar(setting.name, ImGuiDataType.Double, value, min, max, numericalFormat);
+                } else {
+                    // Render the input
+                    changed = ImGuiUtils.accurateDoubleInput(setting.name, value, numericalFormat);
+                }
+
+                // Update the value
+                if (changed) {
+                    setting.value = value.get();
+                }
+
+                // Pop the width
+                ImGui.popItemWidth();
 
                 break;
             }
