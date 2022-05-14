@@ -14,7 +14,7 @@ public class Setting {
      * @return true if the value is a numerical value
      */
     public boolean isNumerical() {
-        return !(this.value instanceof Number);
+        return (this.value instanceof Number);
     }
 
     /**
@@ -23,7 +23,7 @@ public class Setting {
      */
     public boolean hasRange() {
         // Check the value is numerical
-        if (this.isNumerical()) return false;
+        if (!this.isNumerical()) return false;
 
         // Check we have a max and min
         return max != null && min != null;
