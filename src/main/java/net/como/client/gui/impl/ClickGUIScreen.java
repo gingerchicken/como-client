@@ -1,4 +1,4 @@
-package net.como.client.gui;
+package net.como.client.gui.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,12 +6,13 @@ import java.util.List;
 
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
-import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
 import joptsimple.internal.Strings;
 import net.como.client.ComoClient;
+import net.como.client.gui.ImGuiScreen;
+import net.como.client.gui.impl.widgets.BouncyWidget;
 import net.como.client.modules.hud.ClickGUI;
 import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
@@ -22,17 +23,33 @@ import net.minecraft.client.util.math.MatrixStack;
 
 public class ClickGUIScreen extends ImGuiScreen {
     private HashMap<String, List<Module>> categories = new HashMap<>();
+    private List<BouncyWidget> bouncyWidgets = new ArrayList<>();
     
     @Override
     protected void init() {
         super.init();
-        categories.clear();
 
+        // Clear the current components
+        categories.clear();
+        bouncyWidgets.clear();
+
+        // Add all modules to the categories
         for (Module mod : ComoClient.Modules.values()) {
             String cat = mod.getCategory();
 
             categories.putIfAbsent(cat, new ArrayList<Module>());
             categories.get(cat).add(mod);
+        }
+
+        // Generate the widgets
+        if (this.getClickGUI().getBoolSetting("Bouncy")) {
+            // Get how many felixes to generate
+            int totalBouncies = this.getClickGUI().getIntSetting("TotalBouncies");
+
+            // Generate the felixes
+            for (int i = 0; i < totalBouncies; i++) {
+                bouncyWidgets.add(new BouncyWidget(this.width, this.height, 1d/6));
+            }
         }
     }
 
@@ -179,6 +196,11 @@ public class ClickGUIScreen extends ImGuiScreen {
         if (this.emptyBgTone > EMPTY_BG_TONE_MIN) {
             this.emptyBgTone += EMPTY_BG_TONE_SPEED;
         }
+
+        // Bouncy ticks
+        for (BouncyWidget widget : this.bouncyWidgets) {
+            widget.tick();
+        }
     }
 
     // Search category tones
@@ -299,6 +321,11 @@ public class ClickGUIScreen extends ImGuiScreen {
     */
     private static String searchPhrase = "";
 
+    /**
+     * Render the search window
+     * @param tickDelta tick delta
+     * @return the search phrase
+     */
     private String renderSearch(float tickDelta) {
         // Set the window size
         ImGui.setNextWindowSize(200f, 61f);
@@ -353,7 +380,15 @@ public class ClickGUIScreen extends ImGuiScreen {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        // Render background
         this.renderBackground(matrices, delta);
+
+        // Render Bouncy widgets
+        for (BouncyWidget widget : this.bouncyWidgets) {
+            widget.render(matrices, mouseX, mouseY, delta);
+        }
+
+        // Render everything else
         super.render(matrices, mouseX, mouseY, delta);
     }
 }

@@ -88,7 +88,6 @@ public class BouncyWidget implements Widget {
     @Override
     public void close() {
         // TODO Auto-generated method stub
-        
     }
 
     public BouncyWidget(int parentWidth, int parentHeight, Vec3d pos, Vec3d velocity) {
