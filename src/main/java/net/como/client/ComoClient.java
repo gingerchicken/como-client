@@ -255,6 +255,7 @@ public class ComoClient {
         Modules.put("lecterncrash", new LecternCrash());
         Modules.put("minifiedhealth", new MinifiedHealth());
         Modules.put("quakeaimbot", new QuakeAimbot());
+        Modules.put("x88esp", new x88ESP());
 
         // TESTING DON'T GET EXCITED!
         Modules.put("clickgui", new ClickGUI());
