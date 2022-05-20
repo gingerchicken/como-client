@@ -513,7 +513,7 @@
 [(Source Code)](src/main/java/net/como/client/modules/packet/XStorage.java) Cancels the close screen packet for everything other than inventory.
 
 ## x88ESP (`.x88esp`)
-[(Source Code)](src/main/java/net/como/client/modules/render/x88ESP.java) See players with a x88 box.
+[(Source Code)](src/main/java/net/como/client/modules/render/x88ESP.java) See players with a x88 lookalike box.
 ### Default Settings
  - LookLength: `3.0`
 
