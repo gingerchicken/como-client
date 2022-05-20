@@ -84,13 +84,9 @@
 ## ClickGUI (`.clickgui`)
 [(Source Code)](src/main/java/net/como/client/modules/hud/ClickGUI.java) A way of toggling your settings with a GUI (Currently WIP)
 ### Default Settings
- - BlockWidth: `90`
  - Bouncy: `True`
  - BouncySpeed: `1.0`
- - HorizontalSpacing: `15`
- - Scale: `1.0`
  - TotalBouncies: `1`
- - VerticalSpacing: `5`
 
 ## CommandAutoFill (`.commandautofill`)
 [(Source Code)](src/main/java/net/como/client/modules/chat/CommandAutoFill.java) Allows you to have command auto-fill in chat.

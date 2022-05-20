@@ -107,6 +107,11 @@ class Setting:
         # Parse the value
         default = line[len("\"\",") + len(name):].strip()
 
+        # Handle description setting
+        # TODO get this and display it
+        # ... but for now I will just remove it
+        default = default.split(') {{')[0]
+
         return Setting(name, default)
 
 class Feature:
@@ -188,7 +193,6 @@ class Feature:
                 default = setting.get_parsed_default()
 
                 line += f" - {setting.get_name()}"
-                print(type(default))
                 if type(default) == list:
                     for item in default:
                         line += f"\n    - {item}"
