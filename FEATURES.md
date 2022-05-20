@@ -144,6 +144,8 @@
  - Mode
     - Glow
     - Box
+    - x88
+ - x88LookLength: `5.0`
 
 ## EntityOwner (`.entityowner`)
 [(Source Code)](src/main/java/net/como/client/modules/render/EntityOwner.java) Shows who owns a given pet
