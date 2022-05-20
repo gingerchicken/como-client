@@ -144,8 +144,6 @@
  - Mode
     - Glow
     - Box
-    - x88
- - x88LookLength: `5.0`
 
 ## EntityOwner (`.entityowner`)
 [(Source Code)](src/main/java/net/como/client/modules/render/EntityOwner.java) Shows who owns a given pet
@@ -517,4 +515,9 @@
 
 ## XStorage (`.xstorage`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/XStorage.java) Cancels the close screen packet for everything other than inventory.
+
+## x88ESP (`.x88esp`)
+[(Source Code)](src/main/java/net/como/client/modules/render/x88ESP.java) See players with a x88 box.
+### Default Settings
+ - LookLength: `3.0`
 
