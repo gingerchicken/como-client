@@ -39,6 +39,14 @@ public class ServerClientRotation implements ModulePlugin {
     private boolean active = false;
 
 
+    public void setServer(Rotation rotation) {
+        this.server = rotation;
+    }
+
+    public void setClient(Rotation rotation) {
+        this.client = rotation;
+    }
+
     public void lookAtPosServer(Vec3d pos) {
         this.active = true;
 

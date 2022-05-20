@@ -400,6 +400,29 @@
 ### Default Settings
  - HidePacket: `{ ... }`
 
+## QuakeAimbot (`.quakeaimbot`)
+[(Source Code)](src/main/java/net/como/client/modules/combat/QuakeAimbot.java) A Basic Hypixel Quakecraft Aimbot
+### Default Settings
+ - AutoShoot: `True`
+ - BacktrackRenderSteps: `True`
+ - BacktrackStep: `5`
+ - FOV: `180.0`
+ - Headshot: `True`
+ - IgnoreTeamMates: `True`
+ - LocalBacktrack: `True`
+ - Preaim: `True`
+ - Predict: `True`
+ - PredictBlockWall: `True`
+ - PredictStep: `4.0`
+ - Randomise: `True`
+ - RandomiseAmount: `0.125`
+ - Range: `128.0`
+ - ShootAngle: `1.0`
+ - ShootDelay: `0.0`
+ - Smoothing: `True`
+ - SmoothingIgnoreFOV: `1.0`
+ - SmoothingStep: `50.0`
+
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/dupes/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
 ### Default Settings
@@ -488,4 +511,9 @@
 
 ## XStorage (`.xstorage`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/XStorage.java) Cancels the close screen packet for everything other than inventory.
+
+## x88ESP (`.x88esp`)
+[(Source Code)](src/main/java/net/como/client/modules/render/x88ESP.java) See players with a x88 box.
+### Default Settings
+ - LookLength: `3.0`
 
