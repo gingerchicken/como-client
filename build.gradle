@@ -31,6 +31,15 @@ dependencies {
 	// Discord RPC @ https://github.com/Vatuu/discord-rpc
 	include(implementation("com.github.Vatuu:discord-rpc:${project.discord_rpc_version}"))
 
+    // Imgui @ https://github.com/SpaiR/imgui-java
+    include(implementation("io.github.spair:imgui-java-binding:${project.imgui_version}"))
+    include(implementation("io.github.spair:imgui-java-lwjgl3:${project.imgui_version}")) {
+        exclude group: "org.lwjgl"
+    }
+    ["linux", "linux-x86", "macos", "windows", "windows-x86"].each {
+        include(implementation("io.github.spair:imgui-java-natives-$it:${project.imgui_version}"))
+    }
+
 }
 
 processResources {
