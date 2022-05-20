@@ -31,9 +31,16 @@ public class x88ESP extends Module {
     public x88ESP() {
         super("x88ESP");
 
-        this.description = "See players with a x88 box.";
+        this.description = "See players with a x88 lookalike box.";
 
-        this.addSetting(new Setting("LookLength", 3d));
+        this.setCategory("Render");
+
+        this.addSetting(new Setting("LookLength", 3d) {{
+            this.setMin(0d);
+            this.setMax(10d);
+
+            this.setDescription("The length of the angle tracer.");
+        }});
     }
     
     @Override
