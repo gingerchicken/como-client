@@ -10,6 +10,10 @@ import net.como.client.events.InGameHudRenderEvent;
 import net.como.client.events.OnRenderEvent;
 import net.como.client.events.renderLabelIfPresentEvent;
 import net.como.client.structures.Module;
+import net.como.client.structures.EntityAttributes.Attribute;
+import net.como.client.structures.EntityAttributes.entity.HealthAttribute;
+import net.como.client.structures.EntityAttributes.entity.NameAttribute;
+import net.como.client.structures.EntityAttributes.player.PingAttribute;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.maths.Vec3;
 import net.como.client.structures.settings.Setting;
@@ -29,89 +33,6 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
 public class BetterNameTags extends Module {
-    private static class Attribute {
-        public final PlayerEntity player;
-
-        public int getColour() {
-            return 0xFFFFFFFF;
-        }
-
-        public Text getText() {
-            return Text.of("");
-        }
-
-        public Attribute(PlayerEntity player) {
-            this.player = player;
-        }
-    }
-
-    private static class NameAttribute extends Attribute {
-        NameAttribute(PlayerEntity player) {
-            super(player);
-        }
-
-        @Override
-        public Text getText() {
-            return this.player.getName();
-        }
-    }
-
-    private static class PingAttribute extends Attribute {
-        PingAttribute(PlayerEntity player) {
-            super(player);
-        }
-
-        private Integer getPing() {
-            ClientPlayNetworkHandler lv = ComoClient.me().networkHandler;
-
-            // Get the player entry
-            PlayerListEntry entry = lv.getPlayerListEntry(player.getUuid());
-            
-            // We don't know em so they must be apart of the server right?
-            if (entry == null) return 0;
-
-            return entry.getLatency();
-        }
-
-        @Override
-        public Text getText() {
-            return Text.of(String.format("%dms", this.getPing()));
-        }
-
-        @Override
-        public int getColour() {
-            Integer ping = this.getPing(); 
-
-            int badPing = 500;
-            float f = (float)ping/(float)badPing * 255;
-            if (f > 255) f = 255;
-
-            return RenderUtils.RGBA2Int((int)(2*f), (int)(255 - f), 0, 255);
-        }
-    }
-
-    private static class HealthAttribute extends Attribute {
-        public HealthAttribute(PlayerEntity player) {
-            super(player);
-        }
-
-        private Integer getHealth() {
-            return (int)player.getHealth();
-        }
-
-        @Override
-        public Text getText() {
-            return Text.of(this.getHealth().toString());
-        }
-
-        @Override
-        public int getColour() {
-            float f = (this.getHealth() / player.getMaxHealth()) * 255*2;
-
-            return RenderUtils.RGBA2Int((int)(255*2 - f), (int)(f), 0, 255);
-        }
-    }
-
     public BetterNameTags() {
         super("BetterNameTags");
 
