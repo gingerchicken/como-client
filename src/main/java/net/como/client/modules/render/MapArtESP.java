@@ -21,9 +21,18 @@ public class MapArtESP extends Module {
         
         this.description = "Outlines the edges of a map.";
 
-        this.addSetting(new Setting("ShowSides", true));
-        this.addSetting(new Setting("FollowHeight", true));
-        this.addSetting(new Setting("LabelHeight", 32d));
+        this.addSetting(new Setting("ShowSides", true) {{
+            this.setDescription("Shows the sides of the map (e.g. bottom, top, left, right.)");
+        }});
+
+        this.addSetting(new Setting("FollowHeight", true) {{
+            this.setDescription("Side labels will follow the player's height.");
+        }});
+
+        this.addSetting(new Setting("LabelHeight", 32d) {{
+            this.setDescription("The offset height of the side labels.");
+        }});
+
 
         this.setCategory("Render");
     }
