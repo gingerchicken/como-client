@@ -280,6 +280,14 @@
 ## LecternCrash (`.lecterncrash`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/LecternCrash.java) Crashes the server using a lectern with a book in it
 
+## MapArtESP (`.mapartesp`)
+[(Source Code)](src/main/java/net/como/client/modules/render/MapArtESP.java) Outlines the edges of a map.
+### Default Settings
+ - FollowHeight: `True`
+ - LabelHeight: `32.0`
+ - LabelScale: `15.0`
+ - ShowSides: `True`
+
 ## MinifiedHealth (`.minifiedhealth`)
 [(Source Code)](src/main/java/net/como/client/modules/hud/MinifiedHealth.java) Makes the health bar turn into a number
 
