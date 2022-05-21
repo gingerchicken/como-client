@@ -33,6 +33,12 @@ public class MapArtESP extends Module {
             this.setDescription("The offset height of the side labels.");
         }});
 
+        this.addSetting(new Setting("LabelScale", 15d) {{
+            this.setDescription("The scale of the side labels.");
+
+            this.setMin(0d);
+            this.setMax(64d);
+        }});
 
         this.setCategory("Render");
     }
@@ -155,7 +161,7 @@ public class MapArtESP extends Module {
     }
 
     private void renderSides(MatrixStack matrixStack) {
-        float scale = 64;
+        float scale = (float)(double)this.getDoubleSetting("LabelScale");
 
         TextRenderer textRenderer = ComoClient.getClient().textRenderer;
         
