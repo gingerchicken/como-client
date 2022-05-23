@@ -34,6 +34,10 @@ public class ClickGUI extends Module {
             this.setMin(0d);
         }});
 
+        this.addSetting(new Setting("Scale", 1.0d) {{
+            this.setDescription("The scale of the GUI");
+        }});
+
         this.setCategory("HUD");
     }
 
@@ -71,6 +75,7 @@ public class ClickGUI extends Module {
         List<Command> commands = new ArrayList<>();
 
         commands.add(new RefreshStyleCommand());
+        commands.add(new ResetCommand());
 
         return commands;
     }
@@ -84,6 +89,20 @@ public class ClickGUI extends Module {
         @Override
         public Boolean trigger(String[] args) {
             ImGuiUtils.refreshStyle();
+
+            return true;
+        }
+    }
+
+    public class ResetCommand extends Command {
+
+        public ResetCommand() {
+            super("reset", "", "Resets the GUI window position");
+        }
+
+        @Override
+        public Boolean trigger(String[] args) {
+            ClickGUIScreen.resetNext = true;
 
             return true;
         }

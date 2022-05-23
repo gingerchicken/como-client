@@ -86,6 +86,7 @@
 ### Default Settings
  - Bouncy: `True`
  - BouncySpeed: `1.0`
+ - Scale: `1.0`
  - TotalBouncies: `1`
 
 ## CommandAutoFill (`.commandautofill`)
