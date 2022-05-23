@@ -327,9 +327,18 @@ public class ClickGUIScreen extends ImGuiScreen {
     private final static float BACKGROUND_DARKNESS_SPEED = -0.10f;
     private final static float BACKGROUND_DARKNESS_MIN = 0f;
 
+    private float getScale() {
+        double scale = this.getClickGUI().getDoubleSetting("Scale");
+
+        return (float) scale;
+    }
+
     @Override
     public void tick() {
         super.tick();
+
+        // Update the global ImGUI scale
+        ImGui.getIO().setFontGlobalScale(this.getScale());
 
         // Background darkness
         if (this.backgroundDarkness > BACKGROUND_DARKNESS_MIN) {
@@ -529,7 +538,11 @@ public class ClickGUIScreen extends ImGuiScreen {
         ImGui.setNextWindowPos(this.width - 100f, 16, ImGuiCond.FirstUseEver);
 
         // Set the window size
-        ImGui.setNextWindowSize(200f, 61f);
+        // Set the scaled window size
+        ImGui.setNextWindowSize(200f * this.getScale(), 0);
+
+        // Make it so that the window is just enough to fit a textbox in
+        ImGui.setNextWindowContentSize(0, 0f);
 
         // Begin the window
         ImGui.begin("Search", ImGuiWindowFlags.NoResize);

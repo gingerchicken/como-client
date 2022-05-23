@@ -34,6 +34,10 @@ public class ClickGUI extends Module {
             this.setMin(0d);
         }});
 
+        this.addSetting(new Setting("Scale", 1.0d) {{
+            this.setDescription("The scale of the GUI");
+        }});
+
         this.setCategory("HUD");
     }
 
