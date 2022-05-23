@@ -337,6 +337,14 @@ public class ClickGUIScreen extends ImGuiScreen {
     public void tick() {
         super.tick();
 
+        // Handle reset next
+        if (resetNext) {
+            resetNext = false;
+            
+            // Clear the opened settings
+            openedSettings.clear();
+        }
+
         // Update the global ImGUI scale
         ImGui.getIO().setFontGlobalScale(this.getScale());
 
@@ -437,6 +445,9 @@ public class ClickGUIScreen extends ImGuiScreen {
             // Set first ever position
             ImGui.setNextWindowSize(defaultWidth, currentHeight, getSaveCondition());
             ImGui.setNextWindowPos(nextXPos, yPos, getSaveCondition());
+            
+            // Set the window as expanded
+            ImGui.setNextWindowCollapsed(false, getSaveCondition());
 
             // Calculate next positions
             nextXPos += defaultWidth + xPadding;
@@ -493,9 +504,30 @@ public class ClickGUIScreen extends ImGuiScreen {
                     }
                 }
 
-                // Render the settings if they are to be rendered
-                if (this.shouldShowSettings(mod) && hasSettings) {
+                // Render the module options
+                if (
+                    (this.shouldShowSettings(mod) && hasSettings)
+                ) {
+
                     ImGui.separator();
+
+                    // Handle the stupid reset button case
+                    if (mod instanceof ClickGUI) {
+                        // Render the reset button
+
+                        // Center the button text
+                        ImGui.pushStyleVar(ImGuiStyleVar.ButtonTextAlign, 0.5f, 0.5f);
+
+                        ImGui.spacing();
+                        ImGui.sameLine();
+
+                        if (ImGui.button("Reset All", ImGui.getWindowWidth() - ImGui.getStyle().getWindowPaddingX()*2 - ImGui.getStyle().getItemSpacingX()*2, 0)) {
+                            resetNext = true;
+                        }
+
+                        ImGui.popStyleVar(1);
+                    }
+
                     for (String settingName : mod.getSettings()) {
                         Setting setting = mod.getSetting(settingName);
 
@@ -581,8 +613,6 @@ public class ClickGUIScreen extends ImGuiScreen {
     protected void renderImGui(float tickDelta) {
         this.renderModules(tickDelta);
         this.renderSearch(tickDelta);
-
-        resetNext = false;
     }
 
     private ClickGUI getClickGUI() {
