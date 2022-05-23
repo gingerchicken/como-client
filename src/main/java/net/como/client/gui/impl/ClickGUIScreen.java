@@ -327,9 +327,26 @@ public class ClickGUIScreen extends ImGuiScreen {
     private final static float BACKGROUND_DARKNESS_SPEED = -0.10f;
     private final static float BACKGROUND_DARKNESS_MIN = 0f;
 
+    private float getScale() {
+        double scale = this.getClickGUI().getDoubleSetting("Scale");
+
+        return (float) scale;
+    }
+
     @Override
     public void tick() {
         super.tick();
+
+        // Handle reset next
+        if (resetNext) {
+            resetNext = false;
+            
+            // Clear the opened settings
+            openedSettings.clear();
+        }
+
+        // Update the global ImGUI scale
+        ImGui.getIO().setFontGlobalScale(this.getScale());
 
         // Background darkness
         if (this.backgroundDarkness > BACKGROUND_DARKNESS_MIN) {
@@ -371,20 +388,24 @@ public class ClickGUIScreen extends ImGuiScreen {
         return current + (next - current) * tickDelta;
     }
 
+    private static int getSaveCondition() {
+        return !resetNext ? ImGuiCond.FirstUseEver : ImGuiCond.Always; 
+    }
+
     /**
      * Creates windows for all the categories and populates them with modules
      */
     private void renderModules(float tickDelta) {        
         // Default padding
-        final float xPadding = 15;
-        final float yPadding = 15;
-        final float yOffset  = 80;
+        final float xPadding = 15 * this.getScale();
+        final float yPadding = 15 * this.getScale();
+        final float yOffset  = 80 * this.getScale();
 
         // For default positioning
         float nextXPos = xPadding;
 
         // For default width/height
-        final float defaultWidth = 175f;
+        final float defaultWidth = 175f * this.getScale();
 
         // Store previous heights
         List<Float> prevHeights = new ArrayList<>();
@@ -422,8 +443,11 @@ public class ClickGUIScreen extends ImGuiScreen {
             float currentHeight = (modules.size() + 1) * 30;
 
             // Set first ever position
-            ImGui.setNextWindowSize(defaultWidth, currentHeight, ImGuiCond.FirstUseEver);
-            ImGui.setNextWindowPos(nextXPos, yPos, ImGuiCond.FirstUseEver);
+            ImGui.setNextWindowSize(defaultWidth, currentHeight, getSaveCondition());
+            ImGui.setNextWindowPos(nextXPos, yPos, getSaveCondition());
+            
+            // Set the window as expanded
+            ImGui.setNextWindowCollapsed(false, getSaveCondition());
 
             // Calculate next positions
             nextXPos += defaultWidth + xPadding;
@@ -439,7 +463,7 @@ public class ClickGUIScreen extends ImGuiScreen {
             heightPtr++;
 
             // Wrap them in case they're off the screen
-            if (nextXPos + defaultWidth + xPadding > this.width * 2) {
+            if (nextXPos + defaultWidth + xPadding > ComoClient.getClient().getWindow().getWidth()) {
                 nextXPos = xPadding;
                 heightPtr = 0;
             }
@@ -480,9 +504,30 @@ public class ClickGUIScreen extends ImGuiScreen {
                     }
                 }
 
-                // Render the settings if they are to be rendered
-                if (this.shouldShowSettings(mod) && hasSettings) {
+                // Render the module options
+                if (
+                    (this.shouldShowSettings(mod) && hasSettings)
+                ) {
+
                     ImGui.separator();
+
+                    // Handle the stupid reset button case
+                    if (mod instanceof ClickGUI) {
+                        // Render the reset button
+
+                        // Center the button text
+                        ImGui.pushStyleVar(ImGuiStyleVar.ButtonTextAlign, 0.5f, 0.5f);
+
+                        ImGui.spacing();
+                        ImGui.sameLine();
+
+                        if (ImGui.button("Reset All", ImGui.getWindowWidth() - ImGui.getStyle().getWindowPaddingX()*2 - ImGui.getStyle().getItemSpacingX()*2, 0)) {
+                            resetNext = true;
+                        }
+
+                        ImGui.popStyleVar(1);
+                    }
+
                     for (String settingName : mod.getSettings()) {
                         Setting setting = mod.getSetting(settingName);
 
@@ -519,6 +564,8 @@ public class ClickGUIScreen extends ImGuiScreen {
     */
     private static String searchPhrase = "";
 
+    public static boolean resetNext = false;
+
     /**
      * Render the search window
      * @param tickDelta tick delta
@@ -526,10 +573,14 @@ public class ClickGUIScreen extends ImGuiScreen {
      */
     private String renderSearch(float tickDelta) {
         // Set the default position
-        ImGui.setNextWindowPos(this.width - 100f, 16, ImGuiCond.FirstUseEver);
+        ImGui.setNextWindowPos(this.width - 100f*getScale(), 16* this.getScale(), getSaveCondition());
 
         // Set the window size
-        ImGui.setNextWindowSize(200f, 61f);
+        // Set the scaled window size
+        ImGui.setNextWindowSize(200f * this.getScale(), 0);
+
+        // Make it so that the window is just enough to fit a textbox in
+        ImGui.setNextWindowContentSize(0, 0f);
 
         // Begin the window
         ImGui.begin("Search", ImGuiWindowFlags.NoResize);
