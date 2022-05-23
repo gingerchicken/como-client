@@ -380,20 +380,24 @@ public class ClickGUIScreen extends ImGuiScreen {
         return current + (next - current) * tickDelta;
     }
 
+    private static int getSaveCondition() {
+        return !resetNext ? ImGuiCond.FirstUseEver : ImGuiCond.Always; 
+    }
+
     /**
      * Creates windows for all the categories and populates them with modules
      */
     private void renderModules(float tickDelta) {        
         // Default padding
-        final float xPadding = 15;
-        final float yPadding = 15;
-        final float yOffset  = 80;
+        final float xPadding = 15 * this.getScale();
+        final float yPadding = 15 * this.getScale();
+        final float yOffset  = 80 * this.getScale();
 
         // For default positioning
         float nextXPos = xPadding;
 
         // For default width/height
-        final float defaultWidth = 175f;
+        final float defaultWidth = 175f * this.getScale();
 
         // Store previous heights
         List<Float> prevHeights = new ArrayList<>();
@@ -431,8 +435,8 @@ public class ClickGUIScreen extends ImGuiScreen {
             float currentHeight = (modules.size() + 1) * 30;
 
             // Set first ever position
-            ImGui.setNextWindowSize(defaultWidth, currentHeight, ImGuiCond.FirstUseEver);
-            ImGui.setNextWindowPos(nextXPos, yPos, ImGuiCond.FirstUseEver);
+            ImGui.setNextWindowSize(defaultWidth, currentHeight, getSaveCondition());
+            ImGui.setNextWindowPos(nextXPos, yPos, getSaveCondition());
 
             // Calculate next positions
             nextXPos += defaultWidth + xPadding;
@@ -528,6 +532,8 @@ public class ClickGUIScreen extends ImGuiScreen {
     */
     private static String searchPhrase = "";
 
+    public static boolean resetNext = false;
+
     /**
      * Render the search window
      * @param tickDelta tick delta
@@ -535,7 +541,7 @@ public class ClickGUIScreen extends ImGuiScreen {
      */
     private String renderSearch(float tickDelta) {
         // Set the default position
-        ImGui.setNextWindowPos(this.width - 100f, 16, ImGuiCond.FirstUseEver);
+        ImGui.setNextWindowPos(this.width - 100f*getScale(), 16* this.getScale(), getSaveCondition());
 
         // Set the window size
         // Set the scaled window size
@@ -575,6 +581,8 @@ public class ClickGUIScreen extends ImGuiScreen {
     protected void renderImGui(float tickDelta) {
         this.renderModules(tickDelta);
         this.renderSearch(tickDelta);
+
+        resetNext = false;
     }
 
     private ClickGUI getClickGUI() {
