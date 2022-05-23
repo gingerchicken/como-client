@@ -463,7 +463,7 @@ public class ClickGUIScreen extends ImGuiScreen {
             heightPtr++;
 
             // Wrap them in case they're off the screen
-            if (nextXPos + defaultWidth + xPadding > this.width * 2) {
+            if (nextXPos + defaultWidth + xPadding > ComoClient.getClient().getWindow().getWidth()) {
                 nextXPos = xPadding;
                 heightPtr = 0;
             }
