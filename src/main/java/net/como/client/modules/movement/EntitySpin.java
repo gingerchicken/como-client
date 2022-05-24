@@ -11,7 +11,7 @@ public class EntitySpin extends Module {
     public EntitySpin() {
         super("EntitySpin");
 
-        this.description = "Rotates the ridden entity at varying speed.";
+        this.setDescription("Rotates the ridden entity at varying speed.");
 
         this.addSetting(new Setting("Speed", 5d));
         

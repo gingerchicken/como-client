@@ -15,7 +15,7 @@ public class FastAttack extends Module {
     public FastAttack() {
         super("FastAttack");
         
-        this.description = "Quickly swings your fist when you attack something.";
+        this.setDescription("Quickly swings your fist when you attack something.");
 
         this.addSetting(new Setting("CPS", 10));
         this.addSetting(new Setting("RandomDelay", true));

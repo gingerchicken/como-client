@@ -171,7 +171,7 @@ public class ModList extends Module {
     public ModList() {
         super("ModList", true);
         
-        this.description = "Displays all of your enabled mods";
+        this.setDescription("Displays all of your enabled mods");
         this.modListDisplay = false;
 
         this.addSetting(new Setting("ColouringMode", new Mode("default", "lgbt", "trans", "rgb")));

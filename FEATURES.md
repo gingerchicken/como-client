@@ -3,7 +3,7 @@
 [(Source Code)](src/main/java/net/como/client/modules/render/AntiInvisible.java) Makes all invisible entities visible.
 
 ## AntiKick (`.antikick`)
-[(Source Code)](src/main/java/net/como/client/modules/packet/AntiKick.java) Blocks packets that cause you to disconnect from the server
+[(Source Code)](src/main/java/net/como/client/modules/packet/AntiKick.java) Blocks packets that cause you to disconnect from the server.
 
 ## AntiResourcePack (`.antiresourcepack`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/AntiResourcePack.java) Deny all resource packs but say to the server that they got downloaded.
@@ -143,7 +143,7 @@
     - Box
 
 ## EntityOwner (`.entityowner`)
-[(Source Code)](src/main/java/net/como/client/modules/render/EntityOwner.java) Shows who owns a given pet
+[(Source Code)](src/main/java/net/como/client/modules/render/EntityOwner.java) Shows who owns a given pet.
 ### Default Settings
  - Scale: `1.0`
 
@@ -162,7 +162,7 @@
  - Yaw: `True`
 
 ## FakeClient (`.fakeclient`)
-[(Source Code)](src/main/java/net/como/client/modules/packet/FakeClient.java) Makes the client appear as vanilla to any servers
+[(Source Code)](src/main/java/net/como/client/modules/packet/FakeClient.java) Makes the client appear as vanilla to any servers.
 ### Default Settings
  - Client: `"vanilla"`
 
@@ -184,7 +184,7 @@
  - Multiplier: `3`
 
 ## FastUse (`.fastuse`)
-[(Source Code)](src/main/java/net/como/client/modules/utilities/FastUse.java) Allows you to use items at light speed
+[(Source Code)](src/main/java/net/como/client/modules/utilities/FastUse.java) Allows you to use items at light speed.
 ### Default Settings
  - TickDelay: `0`
 
@@ -360,7 +360,7 @@
  - WarningTime: `1.0`
 
 ## NoSlow (`.noslow`)
-[(Source Code)](src/main/java/net/como/client/modules/movement/NoSlow.java) Allows you to never slow down
+[(Source Code)](src/main/java/net/como/client/modules/movement/NoSlow.java) Allows you to never slow down.
 
 ## NoSubmerge (`.nosubmerge`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoSubmerge.java) Allows submerge overlays to be toggled.
@@ -390,7 +390,7 @@
  - Amount: `500`
 
 ## PacketFlight (`.packetflight`)
-[(Source Code)](src/main/java/net/como/client/modules/packet/PacketFlight.java) Sets your position relative to your controls
+[(Source Code)](src/main/java/net/como/client/modules/packet/PacketFlight.java) Sets your position relative to your controls.
 ### Default Settings
  - Elytra: `True`
  - Noclip: `True`
@@ -405,7 +405,7 @@
  - SendDelay: `0.05`
 
 ## PacketSniffer (`.packetsniffer`)
-[(Source Code)](src/main/java/net/como/client/modules/utilities/PacketSniffer.java) Displays captured outbound packets in chat
+[(Source Code)](src/main/java/net/como/client/modules/utilities/PacketSniffer.java) Displays captured outbound packets in chat.
 ### Default Settings
  - HidePacket: `{ ... }`
 

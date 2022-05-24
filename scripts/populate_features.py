@@ -116,7 +116,7 @@ class Setting:
 
 class Feature:
     # Just incase we want to easily change it in the future.
-    __desc_selector = "this.description = \""
+    __desc_selector = "this.setDescription(\""
 
     def __init__(self, path):
         if not path.endswith(".java"):
@@ -160,12 +160,12 @@ class Feature:
 
         # This might cause issues since I might do something weird rather than ";\n at the end of a string.
         # So just be warned
-        while not c.endswith("\";\n"):
+        while not c.endswith("\");\n"):
             c += code[start + i]
             i += 1
 
         # Remove ";
-        c = c[:-3]
+        c = c[:-4]
 
         # Add a fullstop
         c + "." if not c.endswith(".") else c

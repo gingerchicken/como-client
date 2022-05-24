@@ -30,7 +30,7 @@ public class EntityOwner extends Module {
 
         this.addSetting(new Setting("Scale", 1d));
 
-        this.description = "Shows who owns a given pet";
+        this.setDescription("Shows who owns a given pet.");
     }
     
     private void renderName(String name, Vec3d pos, float tickDelta, MatrixStack mStack) {

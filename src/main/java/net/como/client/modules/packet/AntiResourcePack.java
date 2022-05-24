@@ -15,7 +15,7 @@ public class AntiResourcePack extends Module {
 
         this.setCategory("Packet");
 
-        this.description = "Deny all resource packs but say to the server that they got downloaded.";
+        this.setDescription("Deny all resource packs but say to the server that they got downloaded.");
     }
 
     @Override

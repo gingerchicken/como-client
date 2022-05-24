@@ -19,7 +19,7 @@ public class MapArtESP extends Module {
     public MapArtESP() {
         super("MapArtESP");
         
-        this.description = "Outlines the edges of a map.";
+        this.setDescription("Outlines the edges of a map.");
 
         this.addSetting(new Setting("ShowSides", true) {{
             this.setDescription("Shows the sides of the map (e.g. bottom, top, left, right.)");

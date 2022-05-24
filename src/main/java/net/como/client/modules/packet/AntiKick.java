@@ -16,7 +16,7 @@ public class AntiKick extends Module {
     public AntiKick() {
         super("AntiKick");
 
-        this.description = "Blocks packets that cause you to disconnect from the server";
+        this.setDescription("Blocks packets that cause you to disconnect from the server.");
 
         this.setCategory("Packet");
     }

@@ -7,7 +7,7 @@ public class CraftingDupe extends Module {
 
     public CraftingDupe() {
         super("CraftingDupe");
-        this.description = "An old drop dupe for versions 1.17 and earlier";
+        this.setDescription("An old drop dupe for versions 1.17 and earlier");
 
         this.setCategory("Dupe");
         this.addSetting(new Setting("ShowTip", true));

@@ -18,7 +18,7 @@ public class PacketFlight extends Module {
 
         this.setCategory("Packet");
 
-        this.description = "Sets your position relative to your controls";
+        this.setDescription("Sets your position relative to your controls.");
 
         this.addSetting(new Setting("Step", 0.25d));
         this.addSetting(new Setting("ZeroVelocity", true));

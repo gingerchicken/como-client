@@ -150,7 +150,7 @@ public class Binds extends Module {
     public Binds() {
         super("Binds", true);
 
-        this.description = "Allows you to bind client commands to keys.";
+        this.setDescription("Allows you to bind client commands to keys.");
 
         // TODO make this per bind
         this.addSetting(new Setting("HideCommandOutput", true));

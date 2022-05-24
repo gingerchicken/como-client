@@ -20,7 +20,7 @@ public class TotemPopCount extends Module {
     public TotemPopCount() {
         super("TotemPopCount");
 
-        this.description = "This counts the total number of totems used by a player before death.";
+        this.setDescription("This counts the total number of totems used by a player before death.");
 
         // Default One min
         this.addSetting(new Setting("CountDuration", 60d));

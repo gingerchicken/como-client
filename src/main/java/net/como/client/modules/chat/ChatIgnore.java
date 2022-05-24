@@ -14,7 +14,7 @@ public class ChatIgnore extends Module {
     public ChatIgnore() {
         super("ChatIgnore");
 
-        this.description = "A client-side ignore command";
+        this.setDescription("A client-side ignore command");
 
         this.addSetting(new Setting("Phrases", new HashMap<String, Boolean>()));
 

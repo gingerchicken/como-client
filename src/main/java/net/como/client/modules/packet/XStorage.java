@@ -9,7 +9,7 @@ public class XStorage extends Module {
     public XStorage() {
         super("XStorage");
 
-        this.description = "Cancels the close screen packet for everything other than inventory.";
+        this.setDescription("Cancels the close screen packet for everything other than inventory.");
         this.setCategory("Packet");
     }
 

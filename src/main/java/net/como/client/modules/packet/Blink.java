@@ -17,7 +17,7 @@ public class Blink extends Module {
     public Blink() {
         super("Blink");
 
-        this.description = "Delay your packets being sent.";
+        this.setDescription("Delay your packets being sent.");
 
         this.addSetting(new Setting("SendDelay", 0.0d));
         this.addSetting(new Setting("Threaded", true));

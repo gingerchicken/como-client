@@ -10,7 +10,7 @@ public class TotemHide extends Module {
     public TotemHide() {
         super("TotemHide");
 
-        this.description = "Hide the totem item.";
+        this.setDescription("Hide the totem item.");
         this.setCategory("Render");
     }
     

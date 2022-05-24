@@ -7,7 +7,7 @@ public class ModuleCommand extends CommandNode {
     public Module module;
 
     public ModuleCommand(String command, Module module) {
-        super(command, module.description);
+        super(command, module.getDescription());
         
         this.module = module;
 

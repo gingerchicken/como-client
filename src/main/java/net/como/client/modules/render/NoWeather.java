@@ -8,7 +8,7 @@ public class NoWeather extends Module {
     public NoWeather() {
         super("AntiBritish");
 
-        this.description = "Hides the rain.";
+        this.setDescription("Hides the rain.");
         this.setCategory("Render");
     }
 

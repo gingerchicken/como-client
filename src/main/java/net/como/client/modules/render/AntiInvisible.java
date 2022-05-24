@@ -8,7 +8,7 @@ public class AntiInvisible extends Module {
     public AntiInvisible() {
         super("AntiInvisible");
 
-        this.description = "Makes all invisible entities visible.";
+        this.setDescription("Makes all invisible entities visible.");
         this.setCategory("Render");
     }
 

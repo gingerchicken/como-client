@@ -9,7 +9,7 @@ public class XCarry extends Module {
     public XCarry() {
         super("XCarry");
 
-        this.description = "Allows odd behavior such as storing items in the crafting table slot.";
+        this.setDescription("Allows odd behavior such as storing items in the crafting table slot.");
         this.setCategory("Packet");
     }
 

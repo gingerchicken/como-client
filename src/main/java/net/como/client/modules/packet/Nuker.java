@@ -26,7 +26,7 @@ public class Nuker extends Module {
 
     public Nuker() {
         super("Nuker");
-        this.description = "Breaks the blocks around you in a given radius";
+        this.setDescription("Breaks the blocks around you in a given radius");
 
         this.setCategory("Packet");
 
