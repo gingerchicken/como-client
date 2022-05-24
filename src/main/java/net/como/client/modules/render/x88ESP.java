@@ -31,7 +31,7 @@ public class x88ESP extends Module {
     public x88ESP() {
         super("x88ESP");
 
-        this.description = "See players with a x88 lookalike box.";
+        this.setDescription("See players with a x88 lookalike box.");
 
         this.setCategory("Render");
 

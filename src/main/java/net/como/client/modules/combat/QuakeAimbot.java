@@ -45,7 +45,7 @@ public class QuakeAimbot extends Module {
     public QuakeAimbot() {
         super("QuakeAimbot");
 
-        this.description = "A Basic Hypixel Quakecraft Aimbot";
+        this.setDescription("A Basic Hypixel Quakecraft Aimbot");
 
         this.setCategory("Combat");
 

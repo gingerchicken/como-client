@@ -9,7 +9,7 @@ public class NoSlow extends Module {
     public NoSlow() {
         super("NoSlow");
 
-        this.description = "Allows you to never slow down";
+        this.setDescription("Allows you to never slow down.");
 
         this.setCategory("Movement");
     }

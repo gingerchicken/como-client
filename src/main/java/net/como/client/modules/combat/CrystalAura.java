@@ -59,7 +59,7 @@ public class CrystalAura extends Module {
         this.addSetting(new Setting("Player", true));
         this.addSetting(new Setting("Mob", false));
 
-        this.description = "Automatically places/destroys nearby crystals.";
+        this.setDescription("Automatically places/destroys nearby crystals.");
         this.setCategory("Combat");
     }
 

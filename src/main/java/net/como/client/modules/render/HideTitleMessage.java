@@ -7,7 +7,7 @@ public class HideTitleMessage extends Module {
     public HideTitleMessage() {
         super("HideTitleMessage");
 
-        this.description = "Hides the thank you message on the title screen.";
+        this.setDescription("Hides the thank you message on the title screen.");
 
         this.setCategory("Render");
     }

@@ -34,7 +34,16 @@ public class Module extends Settings implements EventListener, Flatternable {
         return new ArrayList<Command>();
     }
 
-    public String description;
+    private String description;
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    protected void setDescription(String description) {
+        this.description = description;
+    }
+
     public boolean modListDisplay = true;
     
     public void displayMessage(String msg) {

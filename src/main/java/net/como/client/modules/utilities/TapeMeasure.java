@@ -27,7 +27,8 @@ public class TapeMeasure extends Module {
         this.addSetting(new Setting("PyDistance", true));
         this.addSetting(new Setting("DisableRenderCap", false));
 
-        this.description = "Measure the distance between two points.";
+        this.setDescription("Measure the distance between two points.");
+        
         this.setCategory("Utilities");
     }
 

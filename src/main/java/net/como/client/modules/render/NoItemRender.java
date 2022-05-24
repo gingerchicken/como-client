@@ -15,7 +15,7 @@ public class NoItemRender extends Module {
     public NoItemRender() {
         super("NoItemRender");
 
-        this.description = "Hide all dropped items so then your friends cannot kill your client repeatedly.";
+        this.setDescription("Hide all dropped items so then your friends cannot kill your client repeatedly.");
         this.setCategory("Render");
     }
 

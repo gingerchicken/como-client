@@ -17,7 +17,8 @@ public class NoBreak extends Module {
         // TODO maybe add mending only setting?
         this.addSetting(new Setting("MinDurability", 1));
 
-        this.description = "Prevent your pickaxes from accidentally breaking.";
+        this.setDescription("Prevent your pickaxes from accidentally breaking.");
+        
         this.setCategory("Utilities");
     }
 

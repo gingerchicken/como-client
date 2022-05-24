@@ -10,7 +10,7 @@ import net.minecraft.client.option.KeyBinding;
 public class AutoWalk extends Module {
     public AutoWalk() {
         super("AutoWalk");
-        this.description = "A simple module that just walks forward without you having to press anything.";
+        this.setDescription("A simple module that just walks forward without you having to press anything.");
 
         // TODO make it stop when there is a hole ahead and add a setting for it.
 

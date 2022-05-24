@@ -17,7 +17,7 @@ public class FastUse extends Module {
 
         this.addSetting(new Setting("TickDelay", 0));
 
-        this.description = "Allows you to use items at light speed";
+        this.setDescription("Allows you to use items at light speed.");
     }
     
     @Override

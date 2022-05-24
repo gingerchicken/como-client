@@ -36,7 +36,7 @@ public class ShulkerPeak extends Module {
 
         this.addSetting(new Setting("HUDOverlay", true));
         
-        this.description = "Displays the contents of shulkers without opening them.";
+        this.setDescription("Displays the contents of shulkers without opening them.");
         this.setCategory("Utilities");
     }
 

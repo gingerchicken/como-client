@@ -18,7 +18,7 @@ public class ElytraFlight extends Module {
         this.addSetting(new Setting("Acceleration", 1.1d));
         this.addSetting(new Setting("LegitMode", false));
 
-        this.description = "Fly with the elytra but without needing fireworks etc.";
+        this.setDescription("Fly with the elytra but without needing fireworks etc.");
 
         this.setCategory("Movement");
     }

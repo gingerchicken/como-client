@@ -9,7 +9,7 @@ public class NoBoss extends Module {
     public NoBoss() {
         super("NoBoss");
 
-        this.description = "Hide annoying boss bars and their effects.";
+        this.setDescription("Hide annoying boss bars and their effects.");
         this.setCategory("Render");
     }
   

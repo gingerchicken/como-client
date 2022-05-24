@@ -19,7 +19,7 @@ public class AutoShear extends Module {
         this.addSetting(new Setting("MaxDistance", 3d));
         this.addSetting(new Setting("DesiredColours", new HashMap<String, Boolean>()));
 
-        this.description = "Shear sheep with a specific colour of wool automatically.";
+        this.setDescription("Shear sheep with a specific colour of wool automatically.");
         this.setCategory("Utilities");
     }
 

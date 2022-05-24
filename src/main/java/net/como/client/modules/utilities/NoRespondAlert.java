@@ -22,7 +22,8 @@ public class NoRespondAlert extends Module {
 
         this.addSetting(new Setting("ShowWhenClosed", true));
     
-        this.description = "Displays an alert when the server has stopped sending data.";
+        this.setDescription("Displays an alert when the server has stopped sending data.");
+        
         this.setCategory("Utilities");
     }
 

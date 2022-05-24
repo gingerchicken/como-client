@@ -19,7 +19,7 @@ public class ChatSpam extends Module {
     public ChatSpam() {
         super("ChatSpam");
 
-        this.description = "Spams the chat with different messages";
+        this.setDescription("Spams the chat with different messages");
 
         this.addSetting(new Setting("Delay", 0.5d));
 

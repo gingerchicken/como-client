@@ -18,7 +18,7 @@ public class PacketSniffer extends Module {
         super("PacketSniffer");
         
         // TODO add inbound packets
-        this.description = "Displays captured outbound packets in chat";
+        this.setDescription("Displays captured outbound packets in chat.");
 
         this.addSetting(new Setting("HidePacket", new HashMap<String, Boolean>()));
 
