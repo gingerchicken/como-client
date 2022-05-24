@@ -6,15 +6,15 @@ import net.como.client.events.RenderHealthBarEvent;
 import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
-import net.como.client.utils.MathsUtils;
+import net.como.client.utils.ClientUtils;
 import net.como.client.utils.Render2DUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.world.GameMode;
 
 public class MinifiedHealth extends Module {
     private final TextRenderer textRenderer = ComoClient.getClient().textRenderer;
@@ -60,6 +60,11 @@ public class MinifiedHealth extends Module {
 
     @Override
     public void fireEvent(Event event) {
+        // Ignore if we're not in survival or adventure mode
+        GameMode mode = ClientUtils.getGameMode();
+        if (mode != GameMode.SURVIVAL || mode != GameMode.ADVENTURE) return;
+
+        // Handle the events
         switch (event.getClass().getSimpleName()) {
             case "InGameHudRenderEvent": {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
