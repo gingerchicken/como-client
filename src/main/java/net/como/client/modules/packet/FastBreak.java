@@ -22,7 +22,7 @@ public class FastBreak extends Module {
     public FastBreak() {
         super("FastBreak");
 
-        this.description = "Allows you to break blocks a bit quicker.";
+        this.setDescription("Allows you to break blocks a bit quicker.");
 
         this.addSetting(new Setting("Mode", new Mode("Multiplier", "Packet", "Potion")));
         this.addSetting(new Setting("Multiplier", 3));

@@ -16,7 +16,7 @@ public class SpeedHack extends Module {
         this.addSetting(new Setting("Acceleration", 2.2d));
         this.addSetting(new Setting("MaxSpeed", 2d));
 
-        this.description = "Go quicker than normal.";
+        this.setDescription("Go quicker than normal.");
 
         this.setCategory("Movement");
     }

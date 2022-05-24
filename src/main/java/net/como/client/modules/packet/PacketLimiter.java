@@ -64,7 +64,7 @@ public class PacketLimiter extends Module {
 
     public PacketLimiter() {
         super("PacketLimiter");
-        this.description = "Delays packets to prevent getting kicked for 'too many packets'.";
+        this.setDescription("Delays packets to prevent getting kicked for 'too many packets'.");
 
         this.setCategory("Packet");
 

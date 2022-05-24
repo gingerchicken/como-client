@@ -12,7 +12,7 @@ public class NoFall extends Module {
     public NoFall() {
         super("NoFall");
 
-        this.description = "Take less fall damage.";
+        this.setDescription("Take less fall damage.");
 
         this.setCategory("Packet");
     }

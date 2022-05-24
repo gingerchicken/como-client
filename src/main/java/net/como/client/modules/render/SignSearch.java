@@ -29,7 +29,7 @@ public class SignSearch extends Module {
 
     public SignSearch() {
         super("SignSearch");
-        this.description = "Allows you to search for signs and their text.";
+        this.setDescription("Allows you to search for signs and their text.");
 
         this.setCategory("Render");
 

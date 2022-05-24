@@ -14,7 +14,8 @@ public class Waypoints extends Module {
     public Waypoints() {
         super("Waypoints");
 
-        this.description = "Renders where waypoints are in the world.";
+        this.setDescription("Renders where waypoints are in the world.");
+        
         this.setCategory("Utilities");
     }
 

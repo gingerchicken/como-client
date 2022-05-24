@@ -22,7 +22,7 @@ public class MinifiedHealth extends Module {
     public MinifiedHealth() {
         super("MinifiedHealth");
 
-        this.description = "Makes the health bar turn into a number";
+        this.setDescription("Makes the health bar turn into a number");
 
         this.setCategory("HUD");
     }

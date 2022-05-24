@@ -11,7 +11,7 @@ public class Flight extends Module {
     public Flight() {
         super("Flight");
 
-        this.description = "Basic flight (a bit terrible tbh).";
+        this.setDescription("Basic flight (a bit terrible tbh).");
 
         this.setCategory("Movement");
     }

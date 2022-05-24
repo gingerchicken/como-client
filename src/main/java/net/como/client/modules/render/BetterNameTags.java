@@ -40,7 +40,7 @@ public class BetterNameTags extends Module {
         this.addSetting(new Setting("OutlineAlpha", 125));
         this.addSetting(new Setting("EntityOwner", false));
     
-        this.description = "Renders a different kind of name-tag above nearby players.";
+        this.setDescription("Renders a different kind of name-tag above nearby players.");
 
         this.setCategory("Render");
     }

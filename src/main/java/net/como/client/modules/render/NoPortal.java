@@ -16,7 +16,8 @@ public class NoPortal extends Module {
         this.addSetting(new Setting("NoNausea", true));
         this.addSetting(new Setting("AllowTyping", true));
     
-        this.description = "Allows portal effects to be toggled.";
+        this.setDescription("Allows portal effects to be toggled.");
+        
         this.setCategory("Render");
     }
 

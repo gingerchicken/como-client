@@ -20,7 +20,7 @@ public class ArmourDisplay extends Module {
         super("ArmourDisplay");
 
         this.addSetting(new Setting("RenderEmpty", false));
-        this.description = "Renders armour above the hot bar.";
+        this.setDescription("Renders armour above the hot bar.");
 
         this.setCategory("HUD");
     }

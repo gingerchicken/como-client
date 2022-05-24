@@ -17,7 +17,7 @@ public class FullBright extends Module {
     public FullBright() {
         super("FullBright");
         
-        this.description = "Allows you to see anywhere as if it was day.";
+        this.setDescription("Allows you to see anywhere as if it was day.");
 
         this.addSetting(new Setting("Mode", new Mode("Gamma", "Potion")));
 

@@ -13,7 +13,7 @@ public class CamFlight extends Module {
 
         this.addSetting(new Setting("Speed", 5d));
 
-        this.description = "Fly quickly where ever your camera is looking.";
+        this.setDescription("Fly quickly where ever your camera is looking.");
         
         this.setCategory("Movement");
     }

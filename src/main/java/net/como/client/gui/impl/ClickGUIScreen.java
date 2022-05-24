@@ -496,7 +496,7 @@ public class ClickGUIScreen extends ImGuiScreen {
 
                 // Handle if the mouse is being hovered
                 if (ImGui.isItemHovered()) {
-                    ImGui.setTooltip(mod.description == null ? "No description, sorry :(" : mod.description);
+                    ImGui.setTooltip(mod.getDescription() == null ? "No description, sorry :(" : mod.getDescription());
 
                     // Handle right clicks
                     if (ImGui.isMouseClicked(1) && hasSettings) {

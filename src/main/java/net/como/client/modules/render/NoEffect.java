@@ -17,7 +17,7 @@ public class NoEffect extends Module {
     public NoEffect() {
         super("NoEffect");
 
-        this.description = "Allows you to disable specific effects.";
+        this.setDescription("Allows you to disable specific effects.");
 
         this.addSetting(new Setting("Effects", new HashMap<String, Boolean>()));
 

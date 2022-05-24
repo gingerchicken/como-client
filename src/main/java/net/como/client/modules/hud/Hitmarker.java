@@ -29,7 +29,7 @@ public class Hitmarker extends Module {
     public Hitmarker() {
         super("Hitmarker");
 
-        this.description = "Show when you hit someone with a melee weapon";
+        this.setDescription("Show when you hit someone with a melee weapon");
 
         this.setCategory("HUD");
 

@@ -11,7 +11,7 @@ public class HClip extends Module {
 
     public HClip() {
         super("HClip");
-        this.description = "Teleports the player a set amount of blocks away";
+        this.setDescription("Teleports the player a set amount of blocks away");
 
         this.setCategory("Packet");
 

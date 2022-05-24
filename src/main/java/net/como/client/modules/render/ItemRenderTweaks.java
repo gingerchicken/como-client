@@ -37,7 +37,7 @@ public class ItemRenderTweaks extends Module {
         this.addSetting(new Setting("LScaleY", 1.0d));
         this.addSetting(new Setting("LScaleZ", 1.0d));
 
-        this.description = "Allows you to change how held items are rendered.";
+        this.setDescription("Allows you to change how held items are rendered.");
         this.setCategory("Render");
     }
 

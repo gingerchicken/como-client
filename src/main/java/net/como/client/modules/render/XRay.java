@@ -19,7 +19,7 @@ public class XRay extends Module {
 
     public XRay() {
         super("XRay");
-        this.description = "See blocks through the floor.";
+        this.setDescription("See blocks through the floor.");
 
         this.addSetting(new Setting("AutoFullbright", true));
         this.addSetting(new Setting("DesiredBlocks", new HashMap<String, Boolean>()));

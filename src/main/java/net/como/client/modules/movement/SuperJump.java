@@ -9,7 +9,7 @@ import net.como.client.structures.settings.Setting;
 public class SuperJump extends Module {
     public SuperJump() {
         super("SuperJump");
-        this.description = "Jump higher than you should.";
+        this.setDescription("Jump higher than you should.");
 
         this.addSetting(new Setting("UpwardSpeed", 2d));
 

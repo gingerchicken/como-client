@@ -17,7 +17,7 @@ public class FemboyMod extends Module {
     public FemboyMod() {
         super("FemboyMod");
     
-        this.description = "Makes everyone's skin a femboy.";
+        this.setDescription("Makes everyone's skin a femboy.");
 
         this.setCategory("Render");
     }

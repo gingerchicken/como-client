@@ -42,7 +42,7 @@ public class FreeCam extends Module {
         this.addSetting(new Setting("Speed", 1f));
         this.addSetting(new Setting("PosReset", true));
 
-        this.description = "Allows you to fly around the world (but client-side)";
+        this.setDescription("Allows you to fly around the world (but client-side)");
 
         this.setCategory("Render");
     }

@@ -8,7 +8,7 @@ public class NoFireCam extends Module {
     public NoFireCam() {
         super("NoFireCam");
 
-        this.description = "Disables the annoying fire overlay to allow you to see a bit better.";
+        this.setDescription("Disables the annoying fire overlay to allow you to see a bit better.");
         this.setCategory("Render");
     }
 

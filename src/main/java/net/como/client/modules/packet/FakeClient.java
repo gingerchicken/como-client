@@ -19,7 +19,7 @@ public class FakeClient extends Module {
     public FakeClient() {
         super("FakeClient", true);
 
-        this.description = "Makes the client appear as vanilla to any servers";
+        this.setDescription("Makes the client appear as vanilla to any servers.");
         this.setCategory("Packet");
 
         this.addSetting(new Setting("Client", "vanilla"));

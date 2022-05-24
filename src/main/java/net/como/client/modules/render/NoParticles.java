@@ -14,7 +14,7 @@ public class NoParticles extends Module {
     public NoParticles() {
         super("NoParticles");
 
-        this.description = "Blocks any particles from being rendered.";
+        this.setDescription("Blocks any particles from being rendered.");
 
         this.setCategory("Render");
     }

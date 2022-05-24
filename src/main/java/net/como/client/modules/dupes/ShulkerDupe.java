@@ -22,7 +22,7 @@ import net.minecraft.util.math.Direction;
 public class ShulkerDupe extends Module {
     public ShulkerDupe() {
         super("ShulkerDupe");
-        this.description = "Allows the user to duplicate shulker boxes (Vanilla Only.)";
+        this.setDescription("Allows the user to duplicate shulker boxes (Vanilla Only.)");
 
         this.addSetting(new Setting("DupeAll", true));
         this.addSetting(new Setting("TargetSlot", 0));
