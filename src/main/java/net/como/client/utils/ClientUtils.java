@@ -43,6 +43,7 @@ import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.world.GameMode;
 
 public class ClientUtils {
     public static boolean isInStorage() {
@@ -132,7 +133,7 @@ public class ClientUtils {
         return entry.getLatency();
     }
 
-    public static String getGamemode() {
+    public static String getGameModeName() {
         if (ComoClient.me().isSpectator()) return "Spectator";
         if (ComoClient.me().isCreative()) return "Creative";
 
@@ -291,5 +292,12 @@ public class ClientUtils {
         thread.start();
 
         return usernames.get(uuid);
+    }
+
+    public static GameMode getGameMode() {
+        // Get the localplayer in the tab list
+        PlayerListEntry playerListEntry = ComoClient.getClient().getNetworkHandler().getPlayerListEntry(ComoClient.me().getGameProfile().getId());
+
+        return playerListEntry.getGameMode();
     }
 }
