@@ -213,7 +213,7 @@ public class DiscordRichPres extends Module {
     public String getGameDescription() {
         if (!ClientUtils.inGame()) return Strings.EMPTY;
 
-        String state = ClientUtils.getGamemode();
+        String state = ClientUtils.getGameModeName();
         ServerInfo server = ServerUtils.getLastServer();
         if (server != null && !ComoClient.getClient().isInSingleplayer()) {
             if (!this.getBoolSetting("ShowServer")) return state;
@@ -222,7 +222,7 @@ public class DiscordRichPres extends Module {
         }
 
 
-        return String.format("%s", ClientUtils.getGamemode());
+        return String.format("%s", ClientUtils.getGameModeName());
     }
 
     @Override
