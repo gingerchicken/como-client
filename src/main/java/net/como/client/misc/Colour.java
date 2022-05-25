@@ -1,4 +1,4 @@
-package net.como.client.structures;
+package net.como.client.misc;
 
 import net.como.client.ComoClient;
 import net.minecraft.entity.Entity;

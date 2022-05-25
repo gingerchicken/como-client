@@ -1,4 +1,4 @@
-package net.como.client.structures.maths;
+package net.como.client.misc.maths;
 
 import net.como.client.components.ProjectionUtils;
 import net.minecraft.entity.Entity;

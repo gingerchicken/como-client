@@ -1,4 +1,4 @@
-package net.como.client.structures;
+package net.como.client.misc;
 
 public class EntityFlags {
     public static final int ON_FIRE_FLAG_INDEX      = 0;

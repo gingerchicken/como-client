@@ -13,9 +13,9 @@ import net.como.client.ComoClient;
 import net.como.client.GeneralConfig;
 import net.como.client.commands.structures.Command;
 import net.como.client.events.io.OnKeyEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Module;
+import net.como.client.misc.events.Event;
+import net.como.client.misc.settings.Setting;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.ClientUtils;
 

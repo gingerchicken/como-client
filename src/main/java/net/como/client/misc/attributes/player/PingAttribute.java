@@ -1,7 +1,7 @@
-package net.como.client.structures.attributes.player;
+package net.como.client.misc.attributes.player;
 
 import net.como.client.ComoClient;
-import net.como.client.structures.attributes.PlayerAttribute;
+import net.como.client.misc.attributes.PlayerAttribute;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.PlayerListEntry;

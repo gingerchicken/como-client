@@ -2,7 +2,7 @@ package net.como.client.events.screen;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.como.client.structures.events.Event;
+import net.como.client.misc.events.Event;
 
 public class DeathEvent extends Event {
     public CallbackInfo ci;

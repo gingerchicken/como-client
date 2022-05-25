@@ -5,7 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.ComoClient;
-import net.como.client.structures.Colour;
+import net.como.client.misc.Colour;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BufferRenderer;

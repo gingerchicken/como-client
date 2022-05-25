@@ -1,6 +1,6 @@
 package net.como.client.items;
 
-import net.como.client.structures.CreativeItem;
+import net.como.client.misc.CreativeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;

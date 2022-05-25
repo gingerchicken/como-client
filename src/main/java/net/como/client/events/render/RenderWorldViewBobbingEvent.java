@@ -1,6 +1,6 @@
 package net.como.client.events.render;
 
-import net.como.client.structures.events.Event;
+import net.como.client.misc.events.Event;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 

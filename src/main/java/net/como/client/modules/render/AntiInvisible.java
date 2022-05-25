@@ -1,8 +1,8 @@
 package net.como.client.modules.render;
 
 import net.como.client.events.render.IsEntityInvisibleEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
+import net.como.client.misc.Module;
+import net.como.client.misc.events.Event;
 
 public class AntiInvisible extends Module {
     public AntiInvisible() {

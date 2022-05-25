@@ -1,4 +1,4 @@
-package net.como.client.structures;
+package net.como.client.misc;
 
 public class GUIPos {
     public static enum Type {

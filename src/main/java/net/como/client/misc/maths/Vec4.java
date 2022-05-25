@@ -2,7 +2,7 @@
  * Based from the Meteor Client 3D vector, thank you!
  */
 
-package net.como.client.structures.maths;
+package net.como.client.misc.maths;
 
 public class Vec4 {
     public double x, y, z, w;

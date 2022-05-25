@@ -11,12 +11,12 @@ import net.minecraft.client.util.Window;
 import net.como.client.ComoClient;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.render.InGameHudRenderEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.Colour;
-import net.como.client.structures.GUIPos;
-import net.como.client.structures.Mode;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Colour;
+import net.como.client.misc.GUIPos;
+import net.como.client.misc.Mode;
+import net.como.client.misc.Module;
+import net.como.client.misc.events.Event;
+import net.como.client.misc.settings.Setting;
 import net.como.client.utils.RenderUtils;
 
 public class ModList extends Module {

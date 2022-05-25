@@ -1,4 +1,4 @@
-package net.como.client.structures;
+package net.como.client.misc;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;

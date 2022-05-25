@@ -1,6 +1,6 @@
-package net.como.client.structures.attributes.entity;
+package net.como.client.misc.attributes.entity;
 
-import net.como.client.structures.attributes.Attribute;
+import net.como.client.misc.attributes.Attribute;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.entity.LivingEntity;

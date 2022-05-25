@@ -1,7 +1,7 @@
 package net.como.client.items.string;
 
 import net.como.client.ComoClient;
-import net.como.client.structures.StringCreativeItem;
+import net.como.client.misc.StringCreativeItem;
 import net.como.client.utils.ClientUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;

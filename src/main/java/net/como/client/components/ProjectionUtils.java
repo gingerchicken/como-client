@@ -4,8 +4,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.como.client.ComoClient;
 import net.como.client.interfaces.mixin.IMatrix4f;
-import net.como.client.structures.maths.Vec3;
-import net.como.client.structures.maths.Vec4;
+import net.como.client.misc.maths.Vec3;
+import net.como.client.misc.maths.Vec4;
 import net.como.client.utils.MathsUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;

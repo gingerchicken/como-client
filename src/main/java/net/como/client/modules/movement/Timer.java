@@ -1,7 +1,7 @@
 package net.como.client.modules.movement;
 
-import net.como.client.structures.Module;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Module;
+import net.como.client.misc.settings.Setting;
 
 public class Timer extends Module {
     public Timer() {

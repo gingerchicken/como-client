@@ -2,8 +2,8 @@ package net.como.client.modules.render;
 
 import net.como.client.events.render.BossBarHudRenderEvent;
 import net.como.client.events.render.BossBarHudSkyEffectsEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
+import net.como.client.misc.Module;
+import net.como.client.misc.events.Event;
 
 public class NoBoss extends Module {
     public NoBoss() {

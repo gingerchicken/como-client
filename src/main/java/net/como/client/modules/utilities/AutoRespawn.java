@@ -2,8 +2,8 @@ package net.como.client.modules.utilities;
 
 import net.como.client.ComoClient;
 import net.como.client.events.screen.DeathEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
+import net.como.client.misc.Module;
+import net.como.client.misc.events.Event;
 
 public class AutoRespawn extends Module {
     public AutoRespawn() {

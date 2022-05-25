@@ -7,9 +7,9 @@ import net.como.client.events.render.BlockCracksRenderEvent;
 import net.como.client.events.render.BlockEntityRenderEvent;
 import net.como.client.events.render.GetAmbientOcclusionLightLevelEvent;
 import net.como.client.events.render.ShouldDrawBlockSideEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Module;
+import net.como.client.misc.events.Event;
+import net.como.client.misc.settings.Setting;
 import net.minecraft.client.MinecraftClient;
 import net.como.client.utils.BlockUtils;
 

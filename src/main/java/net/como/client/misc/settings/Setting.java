@@ -1,4 +1,4 @@
-package net.como.client.structures.settings;
+package net.como.client.misc.settings;
 
 import java.util.ArrayList;
 import java.util.List;
