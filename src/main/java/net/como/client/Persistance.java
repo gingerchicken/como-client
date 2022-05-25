@@ -42,7 +42,7 @@ public class Persistance {
         writer.close();
     }
 
-    public static Boolean loadConfig() {
+    public static boolean loadConfig() {
         String data;
         try {
             data = readConfig(CONFIG_PATH);
