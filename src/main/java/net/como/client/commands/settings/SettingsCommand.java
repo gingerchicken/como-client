@@ -34,7 +34,7 @@ public class SettingsCommand extends CommandNode {
             case "java.util.HashMap": {
                 return new HashMapCommand(setting);
             }
-            case "net.como.client.structures.Mode": {
+            case "net.como.client.misc.Mode": {
                 return new ModeCommand(setting);
             }
             default: {
