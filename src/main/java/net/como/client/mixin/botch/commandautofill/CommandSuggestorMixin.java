@@ -15,9 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
-import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandHandler;
-import net.como.client.commands.structures.CommandNode;
 import net.como.client.modules.chat.CommandAutoFill;
 import net.como.client.utils.ChatUtils;
 import net.minecraft.client.gui.screen.CommandSuggestor;
@@ -30,7 +28,7 @@ public abstract class CommandSuggestorMixin {
     @Shadow CompletableFuture<Suggestions> pendingSuggestions;
 
     private CommandAutoFill getCommandAutoFill() {
-        return (CommandAutoFill)ComoClient.getInstance().getModules().get("commandautofill");
+        return (CommandAutoFill)ComoClient.getInstance().getModules().get("chatsuggestion");
     }
 
     @Shadow abstract void showSuggestions(boolean narrateFirstSuggestion);

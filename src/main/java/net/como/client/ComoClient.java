@@ -104,41 +104,53 @@ public class ComoClient {
     // Commands
 
     /**
-     * Register all of the module's commands
+     * Register commands
      */
-    private void registerModuleCommands() {
+    private void registerCommands() {
         // Add the font command
-        commandHandler.registerCommand(new FontCommand());
+        this.commandHandler.registerCommand(new FontCommand());
 
         // Add the friends command
-        commandHandler.registerCommand(new FriendsCommand(friendsManager));
+        this.commandHandler.registerCommand(new FriendsCommand(this.friendsManager));
 
         // Add Panic command
-        commandHandler.registerCommand(new PanicCommand());
+        this.commandHandler.registerCommand(new PanicCommand());
 
         // Add copyip command
-        commandHandler.registerCommand(new CopyServerIPCommand());
+        this.commandHandler.registerCommand(new CopyServerIPCommand());
 
         // Add nbt command
-        commandHandler.registerCommand(new NbtCommand());
+        this.commandHandler.registerCommand(new NbtCommand());
 
+        // Add give command
+        this.commandHandler.registerCommand(new GiveCommand());
+
+        // TODO replace this with just a Module sub command
         // Waypoints commands
         commandHandler.registerCommand(new WaypointsCommand(
             ((Waypoints)modules.get("waypoints")).waypoints
         ));
+    }
 
-        // Add give command
-        commandHandler.registerCommand(new GiveCommand());
-
+    /**
+     * Register all of the module's commands
+     */
+    private void registerModuleCommands() {
         // Add all of the modules as commands.
         for (Entry<String, Module> entry : modules.entrySet()) {
             commandHandler.registerCommand(new ModuleCommand(entry.getKey(), entry.getValue()));
         }
     }
 
-    // modules
+    /**
+     * Module storage
+     */
     private HashMap<String, Module> modules = new HashMap<String, Module>();
 
+    /**
+     * Gets the modules storage
+     * @return The modules storage
+     */
     public HashMap<String, Module> getModules() {
         return modules;
     }
@@ -154,7 +166,7 @@ public class ComoClient {
             
             case 0: {
                 // TODO have it display the command's help text.
-                this.displayChatMessage(String.format("%sUnknown Command: Use 'help' for a list of commands.", ChatUtils.RED));
+                displayChatMessage(String.format("%sUnknown Command: Use 'help' for a list of commands.", ChatUtils.RED));
             }
 
             default: {
@@ -203,132 +215,168 @@ public class ComoClient {
         log("It has been fun, remember to stay hydrated and that you matter <3");
     }
 
+    /**
+     * Registers all of the given modules
+     */
+    private void registerModules() {
+        // Load up all the modules
+        this.registerModule(new Flight());
+        this.registerModule(new Blink());
+        this.registerModule(new ChatIgnore());
+        this.registerModule(new TotemHide());
+        this.registerModule(new EntityESP());
+        this.registerModule(new SpeedHack());
+        this.registerModule(new SuperJump());
+        this.registerModule(new NoItemRender());
+        this.registerModule(new NoWeather());
+        this.registerModule(new NoFall());
+        this.registerModule(new CamFlight());
+        this.registerModule(new NoBoss());
+        this.registerModule(new ElytraFlight());
+        this.registerModule(new XRay());
+        this.registerModule(new NoEnchantmentBook());
+        this.registerModule(new NoBreak());
+        this.registerModule(new AutoShear());
+        this.registerModule(new TapeMeasure());
+        this.registerModule(new ModList());
+        this.registerModule(new NoHurtCam());
+        this.registerModule(new FullBright());
+        this.registerModule(new AutoReconnect());
+        this.registerModule(new AutoRespawn());
+        this.registerModule(new NoFireCam());
+        this.registerModule(new KillAura());
+        this.registerModule(new Timer());
+        this.registerModule(new Criticals());
+        this.registerModule(new Waypoints());
+        this.registerModule(new HomeGodMode());
+        this.registerModule(new ItemRenderTweaks());
+        this.registerModule(new Tracers());
+        this.registerModule(new BlockESP());
+        this.registerModule(new BetterNameTags());
+        this.registerModule(new NoPortal());
+        this.registerModule(new ShulkerPeak());
+        this.registerModule(new NoSubmerge());
+        this.registerModule(new Watermark());
+        this.registerModule(new FreeCam());
+        this.registerModule(new AutoTotem());
+        this.registerModule(new AntiInvisible());
+        this.registerModule(new NoRespondAlert());
+        this.registerModule(new ArmourDisplay());
+        this.registerModule(new CrystalAura());
+        this.registerModule(new XCarry());
+        this.registerModule(new Binds());
+        this.registerModule(new UnfocusCPU());
+        this.registerModule(new TotemPopCount());
+        this.registerModule(new ShulkerDupe());
+        this.registerModule(new DiscordRichPres());
+        this.registerModule(new HideTitleMessage());
+        this.registerModule(new FastBreak());
+        this.registerModule(new EntitySpeed());
+        this.registerModule(new NoEffect());
+        this.registerModule(new ChatSpam());
+        this.registerModule(new InfChat());
+        this.registerModule(new AutoWalk());
+        this.registerModule(new AutoSprint());
+        this.registerModule(new EntitySpin());
+        this.registerModule(new XStorage());
+        this.registerModule(new InstaBowKill());
+        this.registerModule(new SignSearch());
+        this.registerModule(new Nuker());
+        this.registerModule(new NoComCrash());
+        this.registerModule(new PacketLimiter());
+        this.registerModule(new CraftingDupe());
+        this.registerModule(new HClip());
+        this.registerModule(new PacketFlight());
+        this.registerModule(new FakeClient());
+        this.registerModule(new Hitmarker());
+        this.registerModule(new AntiResourcePack());
+        this.registerModule(new AntiKick());
+        this.registerModule(new FastUse());
+        this.registerModule(new CommandAutoFill());
+        this.registerModule(new CreativeMagic());
+        this.registerModule(new NoParticles());
+        this.registerModule(new PacketSniffer());
+        this.registerModule(new NoSlow());
+        this.registerModule(new FastAttack());
+        this.registerModule(new FemboyMod());
+        this.registerModule(new OffHandCrash());
+        this.registerModule(new EntityOwner());
+        this.registerModule(new LecternCrash());
+        this.registerModule(new MinifiedHealth());
+        this.registerModule(new QuakeAimbot());
+        this.registerModule(new x88ESP());
+        this.registerModule(new MapArtESP());
+
+        // TESTING DON'T GET EXCITED!
+        this.registerModule(new ClickGUI());
+    }
+
+    private void loadPersistance() {
+        if (Persistance.loadConfig()) return;
+
+        // It must be a new config.
+
+        // Auto enable those that should be auto-enabled.
+        for (String key : modules.keySet()) {
+            Module module = modules.get(key);
+            
+            if (module.shouldAutoEnable()) module.enable();
+        }
+    }
+
     public void initialise() {
         log("Loading Como Client...");
 
         // TODO add persistance for the general config.
         // General config
-        config = new GeneralConfig();
+        this.config = new GeneralConfig();
 
-        // Setup the chat command system.
-        commandHandler = new CommandHandler(isMeteorLoaded() ? config.alterativeCommandPrefix : config.commandPrefix);
+        // Setup the chat command system
+        this.commandHandler = new CommandHandler(isMeteorLoaded() ? config.alterativeCommandPrefix : config.commandPrefix);
 
-        // Load up all the modules
-        modules.put("flight", new Flight());
-        modules.put("blink", new Blink());
-        modules.put("chatignore", new ChatIgnore());
-        modules.put("totemhide", new TotemHide());
-        modules.put("entityesp", new EntityESP());
-        modules.put("speed", new SpeedHack());
-        modules.put("superjump", new SuperJump());
-        modules.put("antiitemdrop", new NoItemRender());
-        modules.put("noweather", new NoWeather());
-        modules.put("nofall", new NoFall());
-        modules.put("camflight", new CamFlight());
-        modules.put("noboss", new NoBoss());
-        modules.put("elytraflight", new ElytraFlight());
-        modules.put("xray", new XRay());
-        modules.put("noenchantbook", new NoEnchantmentBook());
-        modules.put("nobreak", new NoBreak());
-        modules.put("autoshear", new AutoShear());
-        modules.put("tapemeasure", new TapeMeasure());
-        modules.put("modlist", new ModList());
-        modules.put("nohurtcam", new NoHurtCam());
-        modules.put("fullbright", new FullBright());
-        modules.put("autoreconnect", new AutoReconnect());
-        modules.put("autorespawn", new AutoRespawn());
-        modules.put("nofirecam", new NoFireCam());
-        modules.put("killaura", new KillAura());
-        modules.put("timer", new Timer());
-        modules.put("criticals", new Criticals());
-        modules.put("waypoints", new Waypoints());
-        modules.put("homegodmode", new HomeGodMode());
-        modules.put("itemrendertweaks", new ItemRenderTweaks());
-        modules.put("tracers", new Tracers());
-        modules.put("blockesp", new BlockESP());
-        modules.put("betternametags", new BetterNameTags());
-        modules.put("noportal", new NoPortal());
-        modules.put("shulkerpeak", new ShulkerPeak());
-        modules.put("nosubmerge", new NoSubmerge());
-        modules.put("watermark", new Watermark());
-        modules.put("freecam", new FreeCam());
-        modules.put("autototem", new AutoTotem());
-        modules.put("antiinvisible", new AntiInvisible());
-        modules.put("norespond", new NoRespondAlert());
-        modules.put("armourdisplay", new ArmourDisplay());
-        modules.put("crystalaura", new CrystalAura());
-        modules.put("xcarry", new XCarry());
-        modules.put("binds", new Binds());
-        modules.put("unfocuscpu", new UnfocusCPU());
-        modules.put("totempopcount", new TotemPopCount());
-        modules.put("shulkerdupe", new ShulkerDupe());
-        modules.put("discordrpc", new DiscordRichPres());
-        modules.put("hidetitlemessage", new HideTitleMessage());
-        modules.put("fastbreak", new FastBreak());
-        modules.put("entityspeed", new EntitySpeed());
-        modules.put("noeffect", new NoEffect());
-        modules.put("chatspam", new ChatSpam());
-        modules.put("infchat", new InfChat());
-        modules.put("autowalk", new AutoWalk());
-        modules.put("autosprint", new AutoSprint());
-        modules.put("entityspin", new EntitySpin());
-        modules.put("xstorage", new XStorage());
-        modules.put("instabowkill", new InstaBowKill());
-        modules.put("signsearch", new SignSearch());
-        modules.put("nuker", new Nuker());
-        modules.put("nocomcrash", new NoComCrash());
-        modules.put("packetlimiter", new PacketLimiter());
-        modules.put("craftingdupe", new CraftingDupe());
-        modules.put("hclip", new HClip());
-        modules.put("packetflight", new PacketFlight());
-        modules.put("fakeclient", new FakeClient());
-        modules.put("hitmarker", new Hitmarker());
-        modules.put("antiresourcepack", new AntiResourcePack());
-        modules.put("antikick", new AntiKick());
-        modules.put("fastuse", new FastUse());
-        modules.put("commandautofill", new CommandAutoFill());
-        modules.put("creativemagic", new CreativeMagic());
-        modules.put("noparticles", new NoParticles());
-        modules.put("packetsniffer", new PacketSniffer());
-        modules.put("noslow", new NoSlow());
-        modules.put("fastattack", new FastAttack());
-        modules.put("femboymod", new FemboyMod());
-        modules.put("offhandcrash", new OffHandCrash());
-        modules.put("entityowner", new EntityOwner());
-        modules.put("lecterncrash", new LecternCrash());
-        modules.put("minifiedhealth", new MinifiedHealth());
-        modules.put("quakeaimbot", new QuakeAimbot());
-        modules.put("x88esp", new x88ESP());
-        modules.put("mapartesp", new MapArtESP());
+        this.registerModules();
 
-        // TESTING DON'T GET EXCITED!
-        modules.put("clickgui", new ClickGUI());
+        // Register commands
+        this.registerCommands();
+        this.registerModuleCommands();
 
-        // Load the config (more module related stuff.)
-        if (!Persistance.loadConfig()) {
-            // It must be a new config.
-
-            // Auto enable those that should be auto-enabled.
-            for (String key : modules.keySet()) {
-                Module module = modules.get(key);
-                
-                if (module.shouldAutoEnable()) module.enable();
-            }
-        }
+        // Load the persistance
+        this.loadPersistance();
 
         // Load all of the block ids
         BlockUtils.initialiseIdList();
 
         // Generate textRenderer
-        updateFont(config.font);
-
-        // Ready up all the commands
-        registerModuleCommands();
+        this.updateFont(config.font);
 
         // Done!
         log("Como Client loaded!");
     }
 
+    /**
+     * Registers a given module
+     * @param module The module to register
+     * @return if the module was registered
+     */
+    public boolean registerModule(Module module) {
+        String key = module.getName().toLowerCase();
+
+        // Check if the module is already registered.
+        if (modules.containsKey(key)) {
+            log("Module " + key + " is already registered!");
+            return false;
+        }
+
+        // Add the module
+        this.modules.put(key, module);
+
+        return true;
+    }
+
+    /**
+     * Checks if meteor client is loaded
+     * @return if meteor client is loaded
+     */
     public static boolean isMeteorLoaded() {
         return FabricLoader.getInstance().isModLoaded("meteor-client");
     }
