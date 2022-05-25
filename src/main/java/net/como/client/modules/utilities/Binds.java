@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import net.como.client.ComoClient;
 import net.como.client.GeneralConfig;
 import net.como.client.commands.structures.Command;
-import net.como.client.events.OnKeyEvent;
+import net.como.client.events.io.OnKeyEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

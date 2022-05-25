@@ -1,6 +1,6 @@
 package net.como.client.modules.render;
 
-import net.como.client.events.BlockEntityRenderEvent;
+import net.como.client.events.render.BlockEntityRenderEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 

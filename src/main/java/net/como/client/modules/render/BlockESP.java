@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
-import net.como.client.events.RenderWorldEvent;
+import net.como.client.events.render.RenderWorldEvent;
 import net.como.client.interfaces.mixin.IWorld;
 import net.como.client.structures.Module;
 import net.como.client.structures.Colour;

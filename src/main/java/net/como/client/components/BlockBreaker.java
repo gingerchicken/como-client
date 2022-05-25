@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ClientTickEvent;
-import net.como.client.events.SendPacketEvent;
+import net.como.client.events.client.ClientTickEvent;
+import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.interfaces.ModulePlugin;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;

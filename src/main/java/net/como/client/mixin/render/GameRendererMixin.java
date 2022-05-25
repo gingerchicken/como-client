@@ -9,9 +9,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
-import net.como.client.events.BobViewWhenHurtEvent;
-import net.como.client.events.OnRenderEvent;
-import net.como.client.events.RenderWorldViewBobbingEvent;
+import net.como.client.events.render.BobViewWhenHurtEvent;
+import net.como.client.events.render.OnRenderEvent;
+import net.como.client.events.render.RenderWorldViewBobbingEvent;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 

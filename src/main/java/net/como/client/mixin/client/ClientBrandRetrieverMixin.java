@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
-import net.como.client.events.GetClientModNameEvent;
+import net.como.client.events.client.GetClientModNameEvent;
 import net.minecraft.client.ClientBrandRetriever;
 
 @Mixin(ClientBrandRetriever.class)

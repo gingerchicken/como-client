@@ -1,10 +1,10 @@
 package net.como.client.modules.utilities;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ClientTickEvent;
-import net.como.client.events.InGameHudRenderEvent;
-import net.como.client.events.OnWorldTimeUpdateEvent;
-import net.como.client.events.SendPacketEvent;
+import net.como.client.events.client.ClientTickEvent;
+import net.como.client.events.packet.OnWorldTimeUpdateEvent;
+import net.como.client.events.packet.SendPacketEvent;
+import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.Colour;
 import net.como.client.structures.events.Event;

@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.ComoClient;
-import net.como.client.events.AddMessageEvent;
+import net.como.client.events.client.AddMessageEvent;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.text.Text;
 

@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
-import net.como.client.events.OnKeyEvent;
+import net.como.client.events.io.OnKeyEvent;
 import net.minecraft.client.Keyboard;
 
 @Mixin(Keyboard.class)

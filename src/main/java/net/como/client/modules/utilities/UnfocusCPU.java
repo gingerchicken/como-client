@@ -1,7 +1,7 @@
 package net.como.client.modules.utilities;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ClientTickEvent;
+import net.como.client.events.client.ClientTickEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

@@ -2,7 +2,7 @@ package net.como.client.modules.movement;
 
 import net.como.client.structures.events.*;
 import net.como.client.ComoClient;
-import net.como.client.events.JumpEvent;
+import net.como.client.events.client.JumpEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.settings.Setting;
 

@@ -1,7 +1,7 @@
 package net.como.client.components;
 
-import net.como.client.events.PostMovementPacketEvent;
-import net.como.client.events.PreMovementPacketEvent;
+import net.como.client.events.packet.PostMovementPacketEvent;
+import net.como.client.events.packet.PreMovementPacketEvent;
 import net.como.client.interfaces.ModulePlugin;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;

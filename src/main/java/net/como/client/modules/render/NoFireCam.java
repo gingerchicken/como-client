@@ -1,6 +1,6 @@
 package net.como.client.modules.render;
 
-import net.como.client.events.RenderFireOverlayEvent;
+import net.como.client.events.render.RenderFireOverlayEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 

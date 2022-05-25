@@ -1,8 +1,8 @@
 package net.como.client.modules.utilities;
 
 import net.como.client.ComoClient;
-import net.como.client.events.SendPacketEvent;
-import net.como.client.events.UpdateBlockBreakingProgressEvent;
+import net.como.client.events.client.UpdateBlockBreakingProgressEvent;
+import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

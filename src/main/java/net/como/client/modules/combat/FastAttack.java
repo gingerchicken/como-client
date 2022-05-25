@@ -3,7 +3,7 @@ package net.como.client.modules.combat;
 import java.util.Random;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ClientTickEvent;
+import net.como.client.events.client.ClientTickEvent;
 import net.como.client.interfaces.mixin.IClient;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
