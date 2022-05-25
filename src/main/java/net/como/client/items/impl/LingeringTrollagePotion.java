@@ -1,4 +1,4 @@
-package net.como.client.items;
+package net.como.client.items.impl;
 
 import net.minecraft.item.Items;
 

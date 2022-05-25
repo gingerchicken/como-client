@@ -1,8 +1,8 @@
-package net.como.client.items.string;
+package net.como.client.items.impl.string;
 
 import org.apache.commons.lang3.StringUtils;
 
-import net.como.client.misc.StringCreativeItem;
+import net.como.client.items.StringCreativeItem;
 import net.como.client.utils.ClientUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;

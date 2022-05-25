@@ -1,6 +1,6 @@
-package net.como.client.items;
+package net.como.client.items.impl;
 
-import net.como.client.misc.CreativeItem;
+import net.como.client.items.CreativeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

@@ -1,4 +1,4 @@
-package net.como.client.misc;
+package net.como.client.items;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
