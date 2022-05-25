@@ -52,10 +52,6 @@ public class ClickGUI extends Module {
 
     @Override
     public void deactivate() {
-        if (ComoClient.getClient().currentScreen instanceof ClickGUIScreen) {
-            ComoClient.getClient().setScreen(null);
-        }
-
         this.removeListen(ClientTickEvent.class);
     }
 
