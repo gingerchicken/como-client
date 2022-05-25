@@ -241,7 +241,7 @@ public class ModList extends Module {
                     return c2.getTextWidth(textRenderer) - c1.getTextWidth(textRenderer);
                 });
 
-                Float scale = (Float)this.getSetting("Scale").value;
+                float scale = (float)this.getSetting("Scale").value;
 
                 e.mStack.push();
                 e.mStack.scale(scale, scale, 0);

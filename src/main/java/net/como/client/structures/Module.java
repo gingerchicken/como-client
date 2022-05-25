@@ -57,7 +57,7 @@ public class Module extends Settings implements EventListener, Flatternable {
         return null;
     }
 
-    public Boolean hasListOption() {
+    public boolean hasListOption() {
         return this.listOption() != null;
     }
 
@@ -66,7 +66,7 @@ public class Module extends Settings implements EventListener, Flatternable {
         return name;
     }
 
-    public Boolean isEnabled() {
+    public boolean isEnabled() {
         return this.enabled;
     }
 
@@ -115,13 +115,13 @@ public class Module extends Settings implements EventListener, Flatternable {
         this.name = name;
     }
 
-    private Boolean autoEnable = false;
-    protected Module(String name, Boolean autoEnable) {
+    private boolean autoEnable = false;
+    protected Module(String name, boolean autoEnable) {
         this.name = name;
         this.autoEnable = autoEnable;
     }
 
-    public Boolean shouldAutoEnable() {
+    public boolean shouldAutoEnable() {
         return this.autoEnable;
     }
 
@@ -163,7 +163,7 @@ public class Module extends Settings implements EventListener, Flatternable {
             data.put(name, val);
         }
 
-        data.put("enabled", this.isEnabled().toString());
+        data.put("enabled", String.valueOf(this.isEnabled()));
 
         return data;
     }

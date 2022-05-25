@@ -6,8 +6,8 @@ import java.util.List;
 public class Mode {
     private List<String> entires = new ArrayList<>();
 
-    private Integer state;
-    public final Integer defaultState ;
+    private int state;
+    public final int defaultState;
 
     /**
      * Sets the current state to the default state
@@ -20,7 +20,7 @@ public class Mode {
         * Getter for the current state
         * @return active state
     */
-    public Integer getState() {
+    public int getState() {
         return this.state;
     }
 
@@ -28,7 +28,7 @@ public class Mode {
         * Getter for the default state
         * @return default state
     */
-    public Integer getDefaultState() {
+    public int getDefaultState() {
         return this.defaultState;
     }
 
@@ -58,7 +58,7 @@ public class Mode {
      * @param id
      * @return if an id can be mapped to an entry
      */
-    private Boolean isValidId(int id) {
+    private boolean isValidId(int id) {
         return !(this.entires.size() <= id || id < 0);
     }
 
@@ -67,7 +67,7 @@ public class Mode {
      * @param id
      * @return if the state could be found
      */
-    public Boolean setState(int id) {
+    public boolean setState(int id) {
         if (!this.isValidId(id)) return false;
 
         state = id;
@@ -79,7 +79,7 @@ public class Mode {
      * @param state the name of a state
      * @return if the state could be found
      */
-    public Boolean setState(String state) {
+    public boolean setState(String state) {
         return this.setState(this.getId(state));
     }
 
@@ -88,7 +88,7 @@ public class Mode {
      * @param entry state/entry name
      * @return the id or -1 if it wasn't found
      */
-    private Integer getId(String entry) {
+    private int getId(String entry) {
         for (int i = 0; i < entires.size(); i++) {
             if (entires.get(i).equals(entry)) return i;
         }
@@ -101,7 +101,7 @@ public class Mode {
      * @param entry the entry to be added
      * @return true when it was added, false if it wasn't
      */
-    private Boolean addEntry(String entry) {
+    private boolean addEntry(String entry) {
         if (this.getId(entry) != -1) return false;
 
         this.entires.add(entry);
@@ -117,7 +117,7 @@ public class Mode {
      * @param state the id of the default state
      * @param entires
      */
-    public Mode(Integer state, String... entires) {
+    public Mode(int state, String... entires) {
         for (String entry : entires) {
             this.addEntry(entry);
         }
@@ -160,7 +160,7 @@ public class Mode {
      * @param id the id of the state
      * @return if the current state has the id
      */
-    public Boolean is(Integer id) {
+    public boolean is(int id) {
         return id == this.getState();
     }
 

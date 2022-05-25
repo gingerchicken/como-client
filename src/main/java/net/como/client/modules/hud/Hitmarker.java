@@ -65,7 +65,7 @@ public class Hitmarker extends Module {
         float k = 0.75f;
         RenderSystem.setShaderColor(k, k, k, k);
 
-        Double scale = this.getDoubleSetting("Scale") + alpha/(255d*8d);
+        double scale = this.getDoubleSetting("Scale") + alpha/(255d*8d);
 
         // Scaling
         int width  = (int)(HITMARKER_WIDTH * scale);
@@ -116,12 +116,12 @@ public class Hitmarker extends Module {
     private int heldTicks = 0;
 
     private void incAlpha() {
-        Float next = alpha + (float)(double)this.getDoubleSetting("AlphaStep");
+        float next = alpha + (float)(double)this.getDoubleSetting("AlphaStep");
         alpha = next > 255f ? 255f : next;
     }
 
     private void decAlpha() {
-        Float next = alpha - (float)(double)this.getDoubleSetting("AlphaStep");
+        float next = alpha - (float)(double)this.getDoubleSetting("AlphaStep");
         alpha = next < 0 ? 0 : next;
     }
 
@@ -170,8 +170,8 @@ public class Hitmarker extends Module {
 
 
     private LivingEntity target;
-    private Float beforeHealth;
-    private Double hitTime;
+    private float beforeHealth;
+    private double hitTime;
     private void registerHit(LivingEntity entity) {
         this.target = entity;
         this.beforeHealth = entity.getHealth();
