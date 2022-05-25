@@ -22,7 +22,7 @@ public class PanicCommand extends Command {
         }
 
         // Disable all
-        for (Module module : ComoClient.Modules.values()) {
+        for (Module module : ComoClient.getInstance().getModules().values()) {
             if (module.isEnabled()) module.disable();
         }
         this.displayChatMessage("All mods have been disabled.");

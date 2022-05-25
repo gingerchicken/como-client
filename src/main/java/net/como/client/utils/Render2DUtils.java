@@ -168,7 +168,7 @@ public class Render2DUtils {
         matrixStack.translate(x, y, 0);
         matrixStack.scale(scale, scale, 1);
         
-        ComoClient.textRenderer.drawWithShadow(
+        ComoClient.getInstance().textRenderer.drawWithShadow(
             matrixStack,
             Text.of(text),
             0,

@@ -14,7 +14,7 @@ import net.minecraft.network.ClientConnection;
 public class ClientConnectionMixin {
     @Inject(at = @At("HEAD"), method = "handleDisconnection()V", cancellable = true)
     public void handleDisconnection(CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new DisconnectEvent(ci));
-        ComoClient.emitter.triggerEvent(new HandleDisconnectionEvent(ci));
+        ComoClient.getInstance().emitter.triggerEvent(new DisconnectEvent(ci));
+        ComoClient.getInstance().emitter.triggerEvent(new HandleDisconnectionEvent(ci));
     }
 }

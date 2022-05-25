@@ -115,7 +115,7 @@ public class Tracers extends Module {
                     }
 
                     // TODO add different colours for different entities
-                    Colour c = ComoClient.config.entityColour;
+                    Colour c = ComoClient.getInstance().config.entityColour;
 
                     // Render tracers
                     RenderUtils.drawTracer(e.mStack, MathsUtils.getLerpedCentre(entity, e.tickDelta), e.tickDelta, c.r, c.g, c.b, c.a*transparency);
@@ -129,7 +129,7 @@ public class Tracers extends Module {
 
                         // This is only storage colouring for now but whatever.
                         // TODO what if it isn't storage!?
-                        Colour c = ComoClient.config.storageColour;
+                        Colour c = ComoClient.getInstance().config.storageColour;
 
                         RenderUtils.drawTracer(e.mStack, BlockUtils.blockPos(ticker.getPos()).add(0.5, 0.5, 0.5), e.tickDelta, c.r, c.g, c.b, c.a * transparency);
                     }

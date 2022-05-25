@@ -15,6 +15,6 @@ import net.minecraft.client.util.math.MatrixStack;
 public class InGameOverlayRenderMixin {
     @Inject(at = @At("HEAD"), method = "renderFireOverlay(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/util/math/MatrixStack;)V", cancellable = true)
     private static void renderFireOverlay(MinecraftClient client, MatrixStack matrices, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new RenderFireOverlayEvent(client, matrices, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new RenderFireOverlayEvent(client, matrices, ci));
     }
 }

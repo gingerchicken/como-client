@@ -16,7 +16,7 @@ public class CommandChatIgnore extends Command {
     @SuppressWarnings("unchecked")
     @Override
     public Boolean trigger(String[] args) {
-        Module chatIgnore = ComoClient.Modules.get("chatignore");
+        Module chatIgnore = ComoClient.getInstance().getModules().get("chatignore");
         if (!chatIgnore.isEnabled()) {
             chatIgnore.displayMessage(String.format("%sChatIgnore is currently not enabled, enable it and try again.", ChatUtils.RED));
             return true;

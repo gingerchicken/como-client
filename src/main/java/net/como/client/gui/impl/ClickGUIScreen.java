@@ -77,7 +77,7 @@ public class ClickGUIScreen extends ImGuiScreen {
         bouncyWidgets.clear();
 
         // Add all modules to the categories
-        for (Module mod : ComoClient.Modules.values()) {
+        for (Module mod : ComoClient.getInstance().getModules().values()) {
             String cat = mod.getCategory();
 
             categories.putIfAbsent(cat, new ArrayList<Module>());
@@ -93,10 +93,10 @@ public class ClickGUIScreen extends ImGuiScreen {
 
     private void updateSearchExample() {
         // Get a random index
-        int i = (int)(Math.random() * ComoClient.Modules.size());
+        int i = (int)(Math.random() * ComoClient.getInstance().getModules().size());
 
         // Iterate and get the module
-        for (Module mod : ComoClient.Modules.values()) {
+        for (Module mod : ComoClient.getInstance().getModules().values()) {
             if (i-- == 0) {
                 this.searchExample = mod.getName();
                 return;
@@ -618,7 +618,7 @@ public class ClickGUIScreen extends ImGuiScreen {
     }
 
     private ClickGUI getClickGUI() {
-        return (ClickGUI)ComoClient.Modules.get("clickgui");
+        return (ClickGUI)ComoClient.getInstance().getModules().get("clickgui");
     }
 
     @Override

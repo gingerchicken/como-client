@@ -20,19 +20,19 @@ public abstract class InGameHudMixin {
     public void render(MatrixStack mStack, float tickDelta, CallbackInfo ci) {
         ComoClient.getClient().getProfiler().push("como-client_render_2d");
 
-        ComoClient.emitter.triggerEvent(new InGameHudRenderEvent(mStack, tickDelta, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new InGameHudRenderEvent(mStack, tickDelta, ci));
         
         ComoClient.getClient().getProfiler().pop();
     }
 
     @Inject(at = @At("HEAD"), method = {"renderPortalOverlay(F)V"}, cancellable = true)
     public void onRenderPortalOverlay(float nauseaStrength, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new RenderPortalOverlayEvent(nauseaStrength, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new RenderPortalOverlayEvent(nauseaStrength, ci));
     }
 
     @Inject(at = @At("HEAD"), method = "renderHealthBar(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/entity/player/PlayerEntity;IIIIFIIIZ)V", cancellable = true)
     public void onRenderHealthBar(MatrixStack matrices, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(
+        ComoClient.getInstance().emitter.triggerEvent(
             new RenderHealthBarEvent(matrices, player, x, y, lines, regeneratingHeartIndex, maxHealth, lastHealth, health, absorption, blinking, ci)
         );
     }

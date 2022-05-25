@@ -59,7 +59,7 @@ public class NoRespondAlert extends Module {
 
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
-                TextRenderer t = ComoClient.textRenderer;
+                TextRenderer t = ComoClient.getInstance().textRenderer;
                 Text message = Text.of("Server not responded for ");
                 Text timer = Text.of(String.format("%.2f", noRespTime));
 

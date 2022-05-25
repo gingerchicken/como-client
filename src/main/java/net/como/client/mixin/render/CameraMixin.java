@@ -14,6 +14,6 @@ import net.minecraft.client.render.CameraSubmersionType;
 public class CameraMixin {    
     @Inject(at = @At("RETURN"), method="getSubmersionType()Lnet/minecraft/client/render/CameraSubmersionType;", cancellable = true)
     public void onGetSubmersionType(CallbackInfoReturnable<CameraSubmersionType> cir) {
-        ComoClient.emitter.triggerEvent(new OnSubmersionTypeEvent(cir));
+        ComoClient.getInstance().emitter.triggerEvent(new OnSubmersionTypeEvent(cir));
     }
 }

@@ -62,7 +62,7 @@ public class BetterNameTags extends Module {
         Vec3d pos = player.getLerpedPos(tickDelta).add(0, player.getBoundingBox().maxY - player.getPos().y + 0.25, 0);
         
         // Text renderer
-        TextRenderer r = ComoClient.textRenderer;
+        TextRenderer r = ComoClient.getInstance().textRenderer;
 
         // Get the different attributes
         float textOffsets = r.getWidth(" ")/2;

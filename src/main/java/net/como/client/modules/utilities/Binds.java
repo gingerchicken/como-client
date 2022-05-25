@@ -52,7 +52,7 @@ public class Binds extends Module {
         }
 
         private String getTriggerCommand() {
-            return String.format("%s%s", ComoClient.commandHandler.delimiter, this.getCommand());
+            return String.format("%s%s", ComoClient.getInstance().commandHandler.delimiter, this.getCommand());
         }
 
         public Bind(int key, String command) {
@@ -61,7 +61,7 @@ public class Binds extends Module {
         }
 
         public void executeCommand() {
-            ComoClient.commandHandler.handle(this.getTriggerCommand());
+            ComoClient.getInstance().commandHandler.handle(this.getTriggerCommand());
         }
     }
 
@@ -177,7 +177,7 @@ public class Binds extends Module {
 
         }
 
-        return (keyChar == ComoClient.commandHandler.delimiter.charAt(0));
+        return (keyChar == ComoClient.getInstance().commandHandler.delimiter.charAt(0));
     }
 
     public boolean logNextKey = false;
@@ -214,9 +214,9 @@ public class Binds extends Module {
                 }
 
                 // Open ClickGUI (if we dont have meteor)
-                if (!ComoClient.isMeteorLoaded() && this.getBoolSetting("GUIKey") && e.key == ComoClient.config.menuKey) {
+                if (!ComoClient.isMeteorLoaded() && this.getBoolSetting("GUIKey") && e.key == ComoClient.getInstance().config.menuKey) {
                     ChatUtils.hideNextChat = true;
-                    ComoClient.Modules.get("clickgui").toggle();
+                    ComoClient.getInstance().getModules().get("clickgui").toggle();
                 }
 
                 break;
@@ -293,7 +293,7 @@ public class Binds extends Module {
         }
 
         public Binds getBinds() {
-            return (Binds)ComoClient.Modules.get("binds");
+            return (Binds)ComoClient.getInstance().getModules().get("binds");
         }
 
         public boolean shouldDisplayKey(Integer keyCode) {

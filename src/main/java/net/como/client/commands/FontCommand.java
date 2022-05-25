@@ -22,10 +22,10 @@ public class FontCommand extends Command {
 
         // TODO make the font have persistance.
         String fontName = this.combineArgs(args);
-        ComoClient.updateFont(fontName);
+        ComoClient.getInstance().updateFont(fontName);
 
         // TODO update this somewhere else but like add persistance first.
-        ComoClient.config.font = fontName;
+        ComoClient.getInstance().config.font = fontName;
 
         this.displayChatMessage(String.format("Changed font to '%s'", fontName));
 

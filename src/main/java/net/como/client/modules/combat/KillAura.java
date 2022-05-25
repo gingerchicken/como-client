@@ -102,7 +102,7 @@ public class KillAura extends Module {
             .filter(e -> e.isAlive())
 
             // Make sure that we are not attacking friends where needed
-            .filter(e -> !(e instanceof PlayerEntity) || !(ComoClient.friendsManager.onFriendList((PlayerEntity)e)) || (boolean)this.getSetting("AttackFriends").value )
+            .filter(e -> !(e instanceof PlayerEntity) || !(ComoClient.getInstance().friendsManager.onFriendList((PlayerEntity)e)) || (boolean)this.getSetting("AttackFriends").value )
             
             // Make sure it ain't us
             .filter(e -> e != ComoClient.me());

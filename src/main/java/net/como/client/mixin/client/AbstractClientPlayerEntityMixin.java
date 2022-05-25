@@ -15,11 +15,11 @@ import net.minecraft.util.Identifier;
 public class AbstractClientPlayerEntityMixin {
     @Inject(at = @At("RETURN"), method = "getSkinTexture()Lnet/minecraft/util/Identifier;", cancellable = true)
     private void onGetSkinTexture(CallbackInfoReturnable<Identifier> cir) {
-        ComoClient.emitter.triggerEvent(new GetSkinTextureEvent((AbstractClientPlayerEntity)(Object)(this), cir));
+        ComoClient.getInstance().emitter.triggerEvent(new GetSkinTextureEvent((AbstractClientPlayerEntity)(Object)(this), cir));
     }
 
     @Inject(at = @At("RETURN"), method = "getModel()Ljava/lang/String;", cancellable = true)
     private void onGetModel(CallbackInfoReturnable<String> cir) {
-        ComoClient.emitter.triggerEvent(new GetModelEvent((AbstractClientPlayerEntity)(Object)(this), cir));
+        ComoClient.getInstance().emitter.triggerEvent(new GetModelEvent((AbstractClientPlayerEntity)(Object)(this), cir));
     }
 }

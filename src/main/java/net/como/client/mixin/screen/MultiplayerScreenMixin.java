@@ -21,7 +21,7 @@ public class MultiplayerScreenMixin {
         ServerUtils.setLastServer(entry);
 
         // For the event
-		ComoClient.emitter.triggerEvent(new ConnectEvent(entry, ci));
+		ComoClient.getInstance().emitter.triggerEvent(new ConnectEvent(entry, ci));
         
 	}
 }

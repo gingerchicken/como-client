@@ -19,8 +19,6 @@ import net.como.client.commands.structures.ModuleCommand;
 import net.como.client.commands.structures.CommandHandler;
 import net.como.client.components.FriendsManager;
 import net.como.client.events.EventEmitter;
-import net.como.client.interfaces.mixin.IClient;
-import net.como.client.interfaces.mixin.IFontManager;
 import net.como.client.misc.Module;
 import net.como.client.modules.chat.*;
 import net.como.client.modules.combat.*;
@@ -44,43 +42,71 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class ComoClient {
+    private static ComoClient instance = null;
+    
+    /**
+     * Get's the singleton instance of Como Client
+     */
+    public static ComoClient getInstance() {
+        if (instance == null) {
+            instance = new ComoClient();
+        }
+
+        return instance;
+    }
+
     // Variables
-    private static String CHAT_PREFIX = ChatUtils.chatPrefix("Como Client");
-    public static CommandHandler commandHandler;
-    public static EventEmitter emitter = new EventEmitter();
-    public static FriendsManager friendsManager = new FriendsManager();
-    public static TextRenderer textRenderer;
+    private final static String CHAT_PREFIX = ChatUtils.chatPrefix("Como Client");
 
-    public static GeneralConfig config;
-    private static String fontId = new String();
+    private static final Logger LOGGER = LogManager.getLogger("Como Client");
 
-    private static Logger logger = LogManager.getLogger("Como Client");
+    public CommandHandler commandHandler;
+    public EventEmitter emitter = new EventEmitter();
+    public FriendsManager friendsManager = new FriendsManager();
+    public TextRenderer textRenderer;
+    public GeneralConfig config;
+
+    /**
+     * Log an object's value to the console
+     * @param obj The object to log
+     */
     public static void log(Object obj) {
         log(obj.toString());
     }
+
+    /**
+     * Log a string to the console
+     * @param str The string to log
+     */
     public static void log(String str) {
         // I don't want no rats
         str = str.replaceAll("jndi:ldap", "sug:ma");
 
-        logger.info(str);
+        LOGGER.info(str);
     }
 
-    public static void updateFont(String id) {
-        if (fontId.equals(id)) return;
-
-        fontId = id;
-        textRenderer = createTextRenderer();
+    /**
+     * Update Como Client's default font to a given Minecraft font ID
+     * @param fontId The font's identifier
+     */
+    public void updateFont(Identifier fontId) {
+        this.textRenderer = FontUtils.createTextRenderer(fontId);
     }
 
-    public static TextRenderer createTextRenderer() {
-        IClient client = (IClient)getClient();
-        IFontManager fontManager = (IFontManager)client.getFontManager();
-
-        return fontManager.createTextRendererFromIdentifier(new Identifier(fontId));
+    /**
+     * Update Como Client's default font to a given minecraft font ID
+     * @param id The Minecraft font ID
+     */
+    public void updateFont(String id) {
+        this.updateFont(new Identifier(id));
     }
 
     // Commands
-    private static void registerModuleCommands() {
+
+    /**
+     * Register all of the module's commands
+     */
+    private void registerModuleCommands() {
         // Add the font command
         commandHandler.registerCommand(new FontCommand());
 
@@ -98,23 +124,27 @@ public class ComoClient {
 
         // Waypoints commands
         commandHandler.registerCommand(new WaypointsCommand(
-            ((Waypoints)Modules.get("waypoints")).waypoints
+            ((Waypoints)modules.get("waypoints")).waypoints
         ));
 
         // Add give command
         commandHandler.registerCommand(new GiveCommand());
 
         // Add all of the modules as commands.
-        for (Entry<String, Module> entry : Modules.entrySet()) {
+        for (Entry<String, Module> entry : modules.entrySet()) {
             commandHandler.registerCommand(new ModuleCommand(entry.getKey(), entry.getValue()));
         }
     }
 
-    // Modules
-    public static HashMap<String, Module> Modules = new HashMap<String, Module>();
+    // modules
+    private HashMap<String, Module> modules = new HashMap<String, Module>();
+
+    public HashMap<String, Module> getModules() {
+        return modules;
+    }
 
     // Chat
-    public static void processChatPost(String message, CallbackInfo ci) {
+    public void processChatPost(String message, CallbackInfo ci) {
         // Command Handling
         Integer commandHandlerOutput = commandHandler.handle(message);
 
@@ -124,7 +154,7 @@ public class ComoClient {
             
             case 0: {
                 // TODO have it display the command's help text.
-                ComoClient.displayChatMessage(String.format("%sUnknown Command: Use 'help' for a list of commands.", ChatUtils.RED));
+                this.displayChatMessage(String.format("%sUnknown Command: Use 'help' for a list of commands.", ChatUtils.RED));
             }
 
             default: {
@@ -137,9 +167,19 @@ public class ComoClient {
     }
 
     // Client
+
+    /**
+     * Get's the Minecraft Client instance
+     * @return The Minecraft Client instance
+     */
     public static MinecraftClient getClient() {
         return MinecraftClient.getInstance();
     }
+
+    /**
+     * Get's the Client Player Entity
+     * @return The Client Player Entity
+     */
     public static ClientPlayerEntity me() {
         // Get the client
         MinecraftClient client = getClient();
@@ -148,20 +188,23 @@ public class ComoClient {
         return client.player;
     }
 
-    // Misc
+    /**
+     * Get the time in milliseconds
+     * @return The time in milliseconds
+     */
     public static double getCurrentTime() {
         return Double.valueOf(System.currentTimeMillis()) / 1000d; // Seconds
     }
 
-    public static void close() {
-        ComoClient.log("Saving Client Config...");
+    public void close() {
+        log("Saving Client Config...");
         Persistance.saveConfig();
 
-        ComoClient.log("It has been fun, remember to stay hydrated and that you matter <3");
+        log("It has been fun, remember to stay hydrated and that you matter <3");
     }
 
-    public static void initialise() {
-        ComoClient.log("Loading Como Client...");
+    public void initialise() {
+        log("Loading Como Client...");
 
         // TODO add persistance for the general config.
         // General config
@@ -171,103 +214,103 @@ public class ComoClient {
         commandHandler = new CommandHandler(isMeteorLoaded() ? config.alterativeCommandPrefix : config.commandPrefix);
 
         // Load up all the modules
-        Modules.put("flight", new Flight());
-        Modules.put("blink", new Blink());
-        Modules.put("chatignore", new ChatIgnore());
-        Modules.put("totemhide", new TotemHide());
-        Modules.put("entityesp", new EntityESP());
-        Modules.put("speed", new SpeedHack());
-        Modules.put("superjump", new SuperJump());
-        Modules.put("antiitemdrop", new NoItemRender());
-        Modules.put("noweather", new NoWeather());
-        Modules.put("nofall", new NoFall());
-        Modules.put("camflight", new CamFlight());
-        Modules.put("noboss", new NoBoss());
-        Modules.put("elytraflight", new ElytraFlight());
-        Modules.put("xray", new XRay());
-        Modules.put("noenchantbook", new NoEnchantmentBook());
-        Modules.put("nobreak", new NoBreak());
-        Modules.put("autoshear", new AutoShear());
-        Modules.put("tapemeasure", new TapeMeasure());
-        Modules.put("modlist", new ModList());
-        Modules.put("nohurtcam", new NoHurtCam());
-        Modules.put("fullbright", new FullBright());
-        Modules.put("autoreconnect", new AutoReconnect());
-        Modules.put("autorespawn", new AutoRespawn());
-        Modules.put("nofirecam", new NoFireCam());
-        Modules.put("killaura", new KillAura());
-        Modules.put("timer", new Timer());
-        Modules.put("criticals", new Criticals());
-        Modules.put("waypoints", new Waypoints());
-        Modules.put("homegodmode", new HomeGodMode());
-        Modules.put("itemrendertweaks", new ItemRenderTweaks());
-        Modules.put("tracers", new Tracers());
-        Modules.put("blockesp", new BlockESP());
-        Modules.put("betternametags", new BetterNameTags());
-        Modules.put("noportal", new NoPortal());
-        Modules.put("shulkerpeak", new ShulkerPeak());
-        Modules.put("nosubmerge", new NoSubmerge());
-        Modules.put("watermark", new Watermark());
-        Modules.put("freecam", new FreeCam());
-        Modules.put("autototem", new AutoTotem());
-        Modules.put("antiinvisible", new AntiInvisible());
-        Modules.put("norespond", new NoRespondAlert());
-        Modules.put("armourdisplay", new ArmourDisplay());
-        Modules.put("crystalaura", new CrystalAura());
-        Modules.put("xcarry", new XCarry());
-        Modules.put("binds", new Binds());
-        Modules.put("unfocuscpu", new UnfocusCPU());
-        Modules.put("totempopcount", new TotemPopCount());
-        Modules.put("shulkerdupe", new ShulkerDupe());
-        Modules.put("discordrpc", new DiscordRichPres());
-        Modules.put("hidetitlemessage", new HideTitleMessage());
-        Modules.put("fastbreak", new FastBreak());
-        Modules.put("entityspeed", new EntitySpeed());
-        Modules.put("noeffect", new NoEffect());
-        Modules.put("chatspam", new ChatSpam());
-        Modules.put("infchat", new InfChat());
-        Modules.put("autowalk", new AutoWalk());
-        Modules.put("autosprint", new AutoSprint());
-        Modules.put("entityspin", new EntitySpin());
-        Modules.put("xstorage", new XStorage());
-        Modules.put("instabowkill", new InstaBowKill());
-        Modules.put("signsearch", new SignSearch());
-        Modules.put("nuker", new Nuker());
-        Modules.put("nocomcrash", new NoComCrash());
-        Modules.put("packetlimiter", new PacketLimiter());
-        Modules.put("craftingdupe", new CraftingDupe());
-        Modules.put("hclip", new HClip());
-        Modules.put("packetflight", new PacketFlight());
-        Modules.put("fakeclient", new FakeClient());
-        Modules.put("hitmarker", new Hitmarker());
-        Modules.put("antiresourcepack", new AntiResourcePack());
-        Modules.put("antikick", new AntiKick());
-        Modules.put("fastuse", new FastUse());
-        Modules.put("commandautofill", new CommandAutoFill());
-        Modules.put("creativemagic", new CreativeMagic());
-        Modules.put("noparticles", new NoParticles());
-        Modules.put("packetsniffer", new PacketSniffer());
-        Modules.put("noslow", new NoSlow());
-        Modules.put("fastattack", new FastAttack());
-        Modules.put("femboymod", new FemboyMod());
-        Modules.put("offhandcrash", new OffHandCrash());
-        Modules.put("entityowner", new EntityOwner());
-        Modules.put("lecterncrash", new LecternCrash());
-        Modules.put("minifiedhealth", new MinifiedHealth());
-        Modules.put("quakeaimbot", new QuakeAimbot());
-        Modules.put("x88esp", new x88ESP());
-        Modules.put("mapartesp", new MapArtESP());
+        modules.put("flight", new Flight());
+        modules.put("blink", new Blink());
+        modules.put("chatignore", new ChatIgnore());
+        modules.put("totemhide", new TotemHide());
+        modules.put("entityesp", new EntityESP());
+        modules.put("speed", new SpeedHack());
+        modules.put("superjump", new SuperJump());
+        modules.put("antiitemdrop", new NoItemRender());
+        modules.put("noweather", new NoWeather());
+        modules.put("nofall", new NoFall());
+        modules.put("camflight", new CamFlight());
+        modules.put("noboss", new NoBoss());
+        modules.put("elytraflight", new ElytraFlight());
+        modules.put("xray", new XRay());
+        modules.put("noenchantbook", new NoEnchantmentBook());
+        modules.put("nobreak", new NoBreak());
+        modules.put("autoshear", new AutoShear());
+        modules.put("tapemeasure", new TapeMeasure());
+        modules.put("modlist", new ModList());
+        modules.put("nohurtcam", new NoHurtCam());
+        modules.put("fullbright", new FullBright());
+        modules.put("autoreconnect", new AutoReconnect());
+        modules.put("autorespawn", new AutoRespawn());
+        modules.put("nofirecam", new NoFireCam());
+        modules.put("killaura", new KillAura());
+        modules.put("timer", new Timer());
+        modules.put("criticals", new Criticals());
+        modules.put("waypoints", new Waypoints());
+        modules.put("homegodmode", new HomeGodMode());
+        modules.put("itemrendertweaks", new ItemRenderTweaks());
+        modules.put("tracers", new Tracers());
+        modules.put("blockesp", new BlockESP());
+        modules.put("betternametags", new BetterNameTags());
+        modules.put("noportal", new NoPortal());
+        modules.put("shulkerpeak", new ShulkerPeak());
+        modules.put("nosubmerge", new NoSubmerge());
+        modules.put("watermark", new Watermark());
+        modules.put("freecam", new FreeCam());
+        modules.put("autototem", new AutoTotem());
+        modules.put("antiinvisible", new AntiInvisible());
+        modules.put("norespond", new NoRespondAlert());
+        modules.put("armourdisplay", new ArmourDisplay());
+        modules.put("crystalaura", new CrystalAura());
+        modules.put("xcarry", new XCarry());
+        modules.put("binds", new Binds());
+        modules.put("unfocuscpu", new UnfocusCPU());
+        modules.put("totempopcount", new TotemPopCount());
+        modules.put("shulkerdupe", new ShulkerDupe());
+        modules.put("discordrpc", new DiscordRichPres());
+        modules.put("hidetitlemessage", new HideTitleMessage());
+        modules.put("fastbreak", new FastBreak());
+        modules.put("entityspeed", new EntitySpeed());
+        modules.put("noeffect", new NoEffect());
+        modules.put("chatspam", new ChatSpam());
+        modules.put("infchat", new InfChat());
+        modules.put("autowalk", new AutoWalk());
+        modules.put("autosprint", new AutoSprint());
+        modules.put("entityspin", new EntitySpin());
+        modules.put("xstorage", new XStorage());
+        modules.put("instabowkill", new InstaBowKill());
+        modules.put("signsearch", new SignSearch());
+        modules.put("nuker", new Nuker());
+        modules.put("nocomcrash", new NoComCrash());
+        modules.put("packetlimiter", new PacketLimiter());
+        modules.put("craftingdupe", new CraftingDupe());
+        modules.put("hclip", new HClip());
+        modules.put("packetflight", new PacketFlight());
+        modules.put("fakeclient", new FakeClient());
+        modules.put("hitmarker", new Hitmarker());
+        modules.put("antiresourcepack", new AntiResourcePack());
+        modules.put("antikick", new AntiKick());
+        modules.put("fastuse", new FastUse());
+        modules.put("commandautofill", new CommandAutoFill());
+        modules.put("creativemagic", new CreativeMagic());
+        modules.put("noparticles", new NoParticles());
+        modules.put("packetsniffer", new PacketSniffer());
+        modules.put("noslow", new NoSlow());
+        modules.put("fastattack", new FastAttack());
+        modules.put("femboymod", new FemboyMod());
+        modules.put("offhandcrash", new OffHandCrash());
+        modules.put("entityowner", new EntityOwner());
+        modules.put("lecterncrash", new LecternCrash());
+        modules.put("minifiedhealth", new MinifiedHealth());
+        modules.put("quakeaimbot", new QuakeAimbot());
+        modules.put("x88esp", new x88ESP());
+        modules.put("mapartesp", new MapArtESP());
 
         // TESTING DON'T GET EXCITED!
-        Modules.put("clickgui", new ClickGUI());
+        modules.put("clickgui", new ClickGUI());
 
         // Load the config (more module related stuff.)
         if (!Persistance.loadConfig()) {
             // It must be a new config.
 
             // Auto enable those that should be auto-enabled.
-            for (String key : Modules.keySet()) {
-                Module module = Modules.get(key);
+            for (String key : modules.keySet()) {
+                Module module = modules.get(key);
                 
                 if (module.shouldAutoEnable()) module.enable();
             }
@@ -283,12 +326,10 @@ public class ComoClient {
         registerModuleCommands();
 
         // Done!
-        ComoClient.log("Como Client loaded!");
+        log("Como Client loaded!");
     }
 
     public static boolean isMeteorLoaded() {
         return FabricLoader.getInstance().isModLoaded("meteor-client");
     }
-
-    ComoClient() { }
 }

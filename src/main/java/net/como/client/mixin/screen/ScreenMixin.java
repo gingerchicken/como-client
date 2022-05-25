@@ -15,6 +15,6 @@ import net.minecraft.item.ItemStack;
 public class ScreenMixin {
     @Inject(at = @At("HEAD"), method="renderTooltip(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/item/ItemStack;II)V", cancellable = true)
     private void onRenderTooltip(MatrixStack matrices, ItemStack stack, int x, int y, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new RenderTooltipEvent(matrices, stack, x, y, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new RenderTooltipEvent(matrices, stack, x, y, ci));
     }
 }

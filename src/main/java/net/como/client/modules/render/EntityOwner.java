@@ -56,7 +56,7 @@ public class EntityOwner extends Module {
 		mStack.multiply(ComoClient.getClient().getEntityRenderDispatcher().getRotation());
 		float c = (float)Math.sqrt(ComoClient.getClient().cameraEntity.getLerpedPos(tickDelta).distanceTo(pos));
 
-        TextRenderer r = ComoClient.textRenderer;
+        TextRenderer r = ComoClient.getInstance().textRenderer;
 
         float scale = (float)(double)(this.getDoubleSetting("Scale"));
 		mStack.scale(-0.025F*c*scale, -0.025F*c*scale, 0);

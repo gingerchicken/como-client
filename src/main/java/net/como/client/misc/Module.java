@@ -124,7 +124,7 @@ public class Module extends Settings implements EventListener, Flatternable {
     }
 
     // Events
-    private EventEmitter emitter = ComoClient.emitter;
+    private EventEmitter emitter = ComoClient.getInstance().emitter;
 
     @Override
     public void addListen(Class<? extends Event> event) {

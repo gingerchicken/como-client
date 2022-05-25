@@ -24,7 +24,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
     }
 
     private CraftingDupe getCraftingDupe() {
-        return (CraftingDupe)ComoClient.Modules.get("craftingdupe");
+        return (CraftingDupe)ComoClient.getInstance().getModules().get("craftingdupe");
     }
 
     private Slot getTargetSlot() {

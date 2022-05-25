@@ -19,7 +19,7 @@ public class ChatIgnore extends Module {
         this.addSetting(new Setting("Phrases", new HashMap<String, Boolean>()));
 
         // Registering commandsCommandChatIgnore
-        ComoClient.commandHandler.registerCommand(new CommandChatIgnore());
+        ComoClient.getInstance().commandHandler.registerCommand(new CommandChatIgnore());
 
         this.setCategory("Chat");
     }

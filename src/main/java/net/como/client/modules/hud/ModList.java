@@ -79,7 +79,7 @@ public class ModList extends Module {
         }
 
         private Module getModList() {
-            return ComoClient.Modules.get("modlist");
+            return ComoClient.getInstance().getModules().get("modlist");
         }
 
         private int getSpeed() {
@@ -125,7 +125,7 @@ public class ModList extends Module {
         // This will prepare all of the colours so we can tick over them all at a constant rate (i.e. client TPS)
         private void tick() {
             set = new ArrayList<Colour>();
-            int totalModules = ComoClient.Modules.keySet().size();
+            int totalModules = ComoClient.getInstance().getModules().keySet().size();
             int speed = this.getSpeed();
 
             // Loop through them all as if we are wanting them their and then.
@@ -225,11 +225,11 @@ public class ModList extends Module {
             case "InGameHudRenderEvent": {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
-                TextRenderer textRenderer = ComoClient.textRenderer;
+                TextRenderer textRenderer = ComoClient.getInstance().textRenderer;
                 List<Module> enabledMods = new ArrayList<Module>();
                 
-                for (String moduleName : ComoClient.Modules.keySet()) {
-                    Module module = ComoClient.Modules.get(moduleName);
+                for (String moduleName : ComoClient.getInstance().getModules().keySet()) {
+                    Module module = ComoClient.getInstance().getModules().get(moduleName);
 
                     if (!module.shouldDisplayInModList()) continue;
                     

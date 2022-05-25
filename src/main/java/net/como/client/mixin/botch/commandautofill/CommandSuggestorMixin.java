@@ -30,7 +30,7 @@ public abstract class CommandSuggestorMixin {
     @Shadow CompletableFuture<Suggestions> pendingSuggestions;
 
     private CommandAutoFill getCommandAutoFill() {
-        return (CommandAutoFill)ComoClient.Modules.get("commandautofill");
+        return (CommandAutoFill)ComoClient.getInstance().getModules().get("commandautofill");
     }
 
     @Shadow abstract void showSuggestions(boolean narrateFirstSuggestion);
@@ -42,7 +42,7 @@ public abstract class CommandSuggestorMixin {
         String text = this.textField.getText();
 
         // Make sure that the command starts with a . or ,
-        CommandHandler handler = ComoClient.commandHandler;
+        CommandHandler handler = ComoClient.getInstance().commandHandler;
         if (!text.startsWith(handler.delimiter)) return;
 
         // We're taking control here!

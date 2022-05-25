@@ -48,7 +48,7 @@ public class BlockESP extends Module {
             case "RenderWorldEvent": {
                 RenderWorldEvent e = (RenderWorldEvent)event;
 
-                Colour colour = ComoClient.config.storageColour;
+                Colour colour = ComoClient.getInstance().config.storageColour;
 
                 List<BlockEntityTickInvoker> tickers = ((IWorld)(ComoClient.getClient().world)).getBlockEntityTickers();
                 for (BlockEntityTickInvoker ticker : tickers) {
