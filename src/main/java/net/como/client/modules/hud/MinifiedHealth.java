@@ -5,6 +5,7 @@ import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.events.render.RenderHealthBarEvent;
 import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
+import net.como.client.structures.EntityAttributes.entity.HealthAttribute;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.Render2DUtils;
@@ -48,14 +49,10 @@ public class MinifiedHealth extends Module {
         );
         
         immediate.draw();
-
-        // textRenderer.draw(matrices, this.getHealth(), x, y, );
     }
 
     private Text getHealth() {
-        int h = (int)Math.ceil(ComoClient.me().getHealth());
-
-        return Text.of(String.valueOf(h));
+        return (new HealthAttribute(ComoClient.me())).getText();
     }
 
     @Override
