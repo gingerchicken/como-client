@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.como.client.ComoClient;
-import net.como.client.events.GetModelEvent;
-import net.como.client.events.GetSkinTextureEvent;
+import net.como.client.events.render.GetModelEvent;
+import net.como.client.events.render.GetSkinTextureEvent;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.util.Identifier;
 

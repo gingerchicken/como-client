@@ -1,7 +1,7 @@
 package net.como.client.modules.render;
 
-import net.como.client.events.BossBarHudRenderEvent;
-import net.como.client.events.BossBarHudSkyEffectsEvent;
+import net.como.client.events.render.BossBarHudRenderEvent;
+import net.como.client.events.render.BossBarHudSkyEffectsEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 

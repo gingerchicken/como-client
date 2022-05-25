@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
-import net.como.client.events.DisconnectEvent;
-import net.como.client.events.HandleDisconnectionEvent;
+import net.como.client.events.client.DisconnectEvent;
+import net.como.client.events.client.HandleDisconnectionEvent;
 import net.minecraft.network.ClientConnection;
 
 @Mixin(ClientConnection.class)

@@ -3,7 +3,7 @@ package net.como.client.modules.render;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.como.client.ComoClient;
-import net.como.client.events.RenderWorldEvent;
+import net.como.client.events.render.RenderWorldEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

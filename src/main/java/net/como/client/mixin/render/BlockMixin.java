@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
-import net.como.client.events.GetVelocityMultiplierEvent;
-import net.como.client.events.ShouldDrawBlockSideEvent;
+import net.como.client.events.client.GetVelocityMultiplierEvent;
+import net.como.client.events.render.ShouldDrawBlockSideEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemConvertible;

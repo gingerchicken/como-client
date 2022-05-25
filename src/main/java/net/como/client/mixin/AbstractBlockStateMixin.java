@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
-import net.como.client.events.GetAmbientOcclusionLightLevelEvent;
+import net.como.client.events.render.GetAmbientOcclusionLightLevelEvent;
 import net.minecraft.block.AbstractBlock.AbstractBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;

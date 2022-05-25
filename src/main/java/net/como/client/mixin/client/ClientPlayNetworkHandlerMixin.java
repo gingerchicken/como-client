@@ -6,12 +6,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
-import net.como.client.events.OnDisconnectedEvent;
-import net.como.client.events.OnEntityStatusEvent;
-import net.como.client.events.OnGameStateChangeEvent;
-import net.como.client.events.OnResourcePackSendEvent;
-import net.como.client.events.OnWorldTimeUpdateEvent;
-import net.como.client.events.SendPacketEvent;
+import net.como.client.events.client.OnDisconnectedEvent;
+import net.como.client.events.packet.OnEntityStatusEvent;
+import net.como.client.events.packet.OnGameStateChangeEvent;
+import net.como.client.events.packet.OnResourcePackSendEvent;
+import net.como.client.events.packet.OnWorldTimeUpdateEvent;
+import net.como.client.events.packet.SendPacketEvent;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;

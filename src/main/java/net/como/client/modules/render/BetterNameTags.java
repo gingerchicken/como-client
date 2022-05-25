@@ -6,9 +6,9 @@ import org.lwjgl.opengl.GL11;
 
 import net.como.client.ComoClient;
 import net.como.client.components.ProjectionUtils;
-import net.como.client.events.InGameHudRenderEvent;
-import net.como.client.events.OnRenderEvent;
-import net.como.client.events.renderLabelIfPresentEvent;
+import net.como.client.events.render.InGameHudRenderEvent;
+import net.como.client.events.render.OnRenderEvent;
+import net.como.client.events.render.renderLabelIfPresentEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.EntityAttributes.Attribute;
 import net.como.client.structures.EntityAttributes.entity.HealthAttribute;

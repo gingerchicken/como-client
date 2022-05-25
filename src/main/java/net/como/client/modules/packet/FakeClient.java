@@ -5,8 +5,8 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.lang3.StringUtils;
 
 import io.netty.buffer.Unpooled;
-import net.como.client.events.GetClientModNameEvent;
-import net.como.client.events.SendPacketEvent;
+import net.como.client.events.client.GetClientModNameEvent;
+import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.mixin.packet.CustomPayloadC2SPacketAccessor;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;

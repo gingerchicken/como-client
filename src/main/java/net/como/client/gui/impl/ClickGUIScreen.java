@@ -337,6 +337,8 @@ public class ClickGUIScreen extends ImGuiScreen {
     public void tick() {
         super.tick();
 
+        if (!this.getClickGUI().isEnabled()) this.close();
+
         // Handle reset next
         if (resetNext) {
             resetNext = false;

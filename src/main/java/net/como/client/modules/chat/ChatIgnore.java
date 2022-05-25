@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import net.como.client.ComoClient;
 import net.como.client.commands.CommandChatIgnore;
-import net.como.client.events.AddMessageEvent;
+import net.como.client.events.client.AddMessageEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

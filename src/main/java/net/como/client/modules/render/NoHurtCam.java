@@ -1,6 +1,6 @@
 package net.como.client.modules.render;
 
-import net.como.client.events.BobViewWhenHurtEvent;
+import net.como.client.events.render.BobViewWhenHurtEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 

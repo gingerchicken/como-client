@@ -1,9 +1,9 @@
 package net.como.client.modules.render;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ClientTickEvent;
-import net.como.client.events.PlayerMoveEvent;
-import net.como.client.events.SendPacketEvent;
+import net.como.client.events.client.ClientTickEvent;
+import net.como.client.events.client.PlayerMoveEvent;
+import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

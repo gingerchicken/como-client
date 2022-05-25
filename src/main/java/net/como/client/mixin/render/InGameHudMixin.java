@@ -7,9 +7,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.ComoClient;
 import net.como.client.components.ProjectionUtils;
-import net.como.client.events.InGameHudRenderEvent;
-import net.como.client.events.RenderHealthBarEvent;
-import net.como.client.events.RenderPortalOverlayEvent;
+import net.como.client.events.render.InGameHudRenderEvent;
+import net.como.client.events.render.RenderHealthBarEvent;
+import net.como.client.events.render.RenderPortalOverlayEvent;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;

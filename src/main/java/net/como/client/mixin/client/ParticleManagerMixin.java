@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.como.client.ComoClient;
-import net.como.client.events.AddParticleEmitterEvent;
-import net.como.client.events.AddParticleEvent;
+import net.como.client.events.client.AddParticleEmitterEvent;
+import net.como.client.events.render.AddParticleEvent;
 import net.como.client.interfaces.mixin.IParticleManager;
 import net.minecraft.client.particle.EmitterParticle;
 import net.minecraft.client.particle.Particle;

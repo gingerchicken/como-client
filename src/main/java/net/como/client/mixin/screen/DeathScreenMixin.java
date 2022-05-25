@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.ComoClient;
-import net.como.client.events.DeathEvent;
+import net.como.client.events.screen.DeathEvent;
 import net.minecraft.client.gui.screen.DeathScreen;
 
 @Mixin(DeathScreen.class)

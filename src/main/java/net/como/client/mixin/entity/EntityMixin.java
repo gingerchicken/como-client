@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.como.client.ComoClient;
-import net.como.client.events.IsEntityGlowingEvent;
-import net.como.client.events.IsEntityInvisibleEvent;
+import net.como.client.events.render.IsEntityGlowingEvent;
+import net.como.client.events.render.IsEntityInvisibleEvent;
 import net.minecraft.entity.Entity;
 
 @Mixin(Entity.class)

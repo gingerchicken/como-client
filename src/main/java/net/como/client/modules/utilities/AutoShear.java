@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import net.como.client.structures.events.Event;
 import net.como.client.ComoClient;
-import net.como.client.events.RenderEntityEvent;
+import net.como.client.events.render.RenderEntityEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.settings.Setting;
 import net.minecraft.entity.passive.SheepEntity;

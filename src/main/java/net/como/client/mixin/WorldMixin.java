@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.como.client.ComoClient;
-import net.como.client.events.GetRainGradientEvent;
+import net.como.client.events.render.GetRainGradientEvent;
 import net.minecraft.world.World;
 
 @Mixin(World.class)

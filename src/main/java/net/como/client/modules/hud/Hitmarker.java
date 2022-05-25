@@ -3,10 +3,10 @@ package net.como.client.modules.hud;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ClientTickEvent;
-import net.como.client.events.InGameHudRenderEvent;
-import net.como.client.events.OnAttackEntityEvent;
-import net.como.client.events.OnGameStateChangeEvent;
+import net.como.client.events.client.ClientTickEvent;
+import net.como.client.events.client.OnAttackEntityEvent;
+import net.como.client.events.packet.OnGameStateChangeEvent;
+import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

@@ -8,8 +8,8 @@ import java.util.Queue;
 import java.util.Random;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ClientTickEvent;
-import net.como.client.events.RenderWorldEvent;
+import net.como.client.events.client.ClientTickEvent;
+import net.como.client.events.render.RenderWorldEvent;
 import net.como.client.interfaces.mixin.IClient;
 import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
