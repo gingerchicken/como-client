@@ -31,6 +31,7 @@ import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.util.Window;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -299,5 +300,9 @@ public class ClientUtils {
         PlayerListEntry playerListEntry = ComoClient.getClient().getNetworkHandler().getPlayerListEntry(ComoClient.me().getGameProfile().getId());
 
         return playerListEntry.getGameMode();
+    }
+
+    public static int getHealth(LivingEntity ent) {
+        return (int)Math.ceil(ent.getHealth());
     }
 }
