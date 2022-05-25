@@ -5,7 +5,7 @@ import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.events.render.RenderHealthBarEvent;
 import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
-import net.como.client.structures.EntityAttributes.entity.HealthAttribute;
+import net.como.client.structures.attributes.entity.HealthAttribute;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.Render2DUtils;

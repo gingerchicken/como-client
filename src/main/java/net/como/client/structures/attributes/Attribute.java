@@ -1,4 +1,4 @@
-package net.como.client.structures.EntityAttributes;
+package net.como.client.structures.attributes;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
