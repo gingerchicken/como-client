@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ConnectEvent;
+import net.como.client.events.screen.ConnectEvent;
 import net.como.client.utils.ServerUtils;
 import net.minecraft.client.network.ServerInfo;
 

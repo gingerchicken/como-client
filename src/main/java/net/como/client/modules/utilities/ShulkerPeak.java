@@ -8,8 +8,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.ComoClient;
-import net.como.client.events.InGameHudRenderEvent;
-import net.como.client.events.RenderTooltipEvent;
+import net.como.client.events.render.InGameHudRenderEvent;
+import net.como.client.events.render.RenderTooltipEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

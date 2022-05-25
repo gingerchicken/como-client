@@ -1,8 +1,8 @@
 package net.como.client.modules.movement;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ClientTickEvent;
-import net.como.client.events.PreMovementPacketEvent;
+import net.como.client.events.client.ClientTickEvent;
+import net.como.client.events.packet.PreMovementPacketEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

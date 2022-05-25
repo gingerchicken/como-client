@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.ComoClient;
-import net.como.client.events.RenderEntityEvent;
-import net.como.client.events.RenderWorldEvent;
+import net.como.client.events.render.RenderEntityEvent;
+import net.como.client.events.render.RenderWorldEvent;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.LightmapTextureManager;

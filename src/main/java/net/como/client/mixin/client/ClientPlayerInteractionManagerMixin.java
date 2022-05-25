@@ -7,9 +7,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.como.client.ComoClient;
-import net.como.client.events.OnAttackEntityEvent;
-import net.como.client.events.StopUsingItemEvent;
-import net.como.client.events.UpdateBlockBreakingProgressEvent;
+import net.como.client.events.client.OnAttackEntityEvent;
+import net.como.client.events.client.StopUsingItemEvent;
+import net.como.client.events.client.UpdateBlockBreakingProgressEvent;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

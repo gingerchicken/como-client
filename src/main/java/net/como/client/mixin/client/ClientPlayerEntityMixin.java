@@ -8,11 +8,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ClientTickEvent;
-import net.como.client.events.PreMovementPacketEvent;
-import net.como.client.events.PlayerChatEvent;
-import net.como.client.events.PlayerMoveEvent;
-import net.como.client.events.PostMovementPacketEvent;
+import net.como.client.events.client.ClientTickEvent;
+import net.como.client.events.client.PlayerChatEvent;
+import net.como.client.events.client.PlayerMoveEvent;
+import net.como.client.events.packet.PostMovementPacketEvent;
+import net.como.client.events.packet.PreMovementPacketEvent;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;

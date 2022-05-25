@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
-import net.como.client.events.OnRenderEvent;
-import net.como.client.events.RenderWorldViewBobbingEvent;
+import net.como.client.events.render.OnRenderEvent;
+import net.como.client.events.render.RenderWorldViewBobbingEvent;
 import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.interfaces.mixin.IWorld;
 import net.como.client.structures.Module;

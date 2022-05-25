@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.como.client.ComoClient;
-import net.como.client.events.BossBarHudRenderEvent;
-import net.como.client.events.BossBarHudSkyEffectsEvent;
+import net.como.client.events.render.BossBarHudRenderEvent;
+import net.como.client.events.render.BossBarHudSkyEffectsEvent;
 import net.minecraft.client.gui.hud.BossBarHud;
 import net.minecraft.client.util.math.MatrixStack;
 

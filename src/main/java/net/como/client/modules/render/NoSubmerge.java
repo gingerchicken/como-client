@@ -1,6 +1,6 @@
 package net.como.client.modules.render;
 
-import net.como.client.events.OnSubmersionTypeEvent;
+import net.como.client.events.render.OnSubmersionTypeEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

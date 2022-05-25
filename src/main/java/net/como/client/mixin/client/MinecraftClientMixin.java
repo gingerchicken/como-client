@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.ComoClient;
-import net.como.client.events.DisconnectEvent;
-import net.como.client.events.OnClientCloseEvent;
+import net.como.client.events.client.DisconnectEvent;
+import net.como.client.events.client.OnClientCloseEvent;
 import net.como.client.interfaces.mixin.IClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.FontManager;

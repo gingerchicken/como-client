@@ -3,10 +3,10 @@ package net.como.client.modules.render;
 import java.util.HashMap;
 
 import net.como.client.ComoClient;
-import net.como.client.events.BlockCracksRenderEvent;
-import net.como.client.events.BlockEntityRenderEvent;
-import net.como.client.events.GetAmbientOcclusionLightLevelEvent;
-import net.como.client.events.ShouldDrawBlockSideEvent;
+import net.como.client.events.render.BlockCracksRenderEvent;
+import net.como.client.events.render.BlockEntityRenderEvent;
+import net.como.client.events.render.GetAmbientOcclusionLightLevelEvent;
+import net.como.client.events.render.ShouldDrawBlockSideEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

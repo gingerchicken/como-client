@@ -7,7 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.ComoClient;
-import net.como.client.events.OnRenderEvent;
+import net.como.client.events.render.OnRenderEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.structures.settings.Setting;

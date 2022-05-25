@@ -1,8 +1,8 @@
 package net.como.client.modules.packet;
 
 import net.como.client.ComoClient;
-import net.como.client.events.ClientTickEvent;
-import net.como.client.events.OnResourcePackSendEvent;
+import net.como.client.events.client.ClientTickEvent;
+import net.como.client.events.packet.OnResourcePackSendEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ChatUtils;

@@ -1,7 +1,7 @@
 package net.como.client.modules.combat;
 
 import net.como.client.ComoClient;
-import net.como.client.events.OnAttackEntityEvent;
+import net.como.client.events.client.OnAttackEntityEvent;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
 import net.como.client.utils.ClientUtils;

@@ -6,8 +6,8 @@ import java.util.List;
 
 import net.como.client.ComoClient;
 import net.como.client.components.BlockBreaker;
-import net.como.client.events.ClientTickEvent;
-import net.como.client.events.RenderWorldEvent;
+import net.como.client.events.client.ClientTickEvent;
+import net.como.client.events.render.RenderWorldEvent;
 import net.como.client.structures.Colour;
 import net.como.client.structures.Module;
 import net.como.client.structures.events.Event;
