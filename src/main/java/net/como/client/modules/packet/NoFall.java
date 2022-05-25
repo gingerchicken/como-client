@@ -1,9 +1,9 @@
 package net.como.client.modules.packet;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.packet.PreMovementPacketEvent;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.como.client.utils.ClientUtils;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;

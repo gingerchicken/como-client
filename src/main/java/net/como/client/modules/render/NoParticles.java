@@ -1,12 +1,12 @@
 package net.como.client.modules.render;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.AddParticleEmitterEvent;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.render.AddParticleEvent;
 import net.como.client.interfaces.mixin.IParticleManager;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.minecraft.client.particle.ParticleManager;
 
 public class NoParticles extends Module {

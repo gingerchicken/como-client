@@ -1,4 +1,4 @@
-package net.como.client.misc.events;
+package net.como.client.events;
 
 /**
  * This really should be an interface, but currently that would require reworking the event system.

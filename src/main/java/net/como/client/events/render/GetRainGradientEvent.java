@@ -2,7 +2,7 @@ package net.como.client.events.render;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.como.client.misc.events.Event;
+import net.como.client.events.Event;
 
 public class GetRainGradientEvent extends Event {
     public CallbackInfoReturnable<Float> cir;

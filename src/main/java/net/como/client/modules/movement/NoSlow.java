@@ -1,8 +1,8 @@
 package net.como.client.modules.movement;
 
+import net.como.client.events.Event;
 import net.como.client.events.client.GetVelocityMultiplierEvent;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 
 public class NoSlow extends Module {
 

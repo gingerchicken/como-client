@@ -2,7 +2,7 @@ package net.como.client.events.render;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.como.client.misc.events.Event;
+import net.como.client.events.Event;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 

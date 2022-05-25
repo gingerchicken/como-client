@@ -1,4 +1,4 @@
-package net.como.client.misc.events;
+package net.como.client.events;
 
 public interface EventListener {
     void addListen(Class <? extends Event> event);

@@ -3,10 +3,10 @@ package net.como.client.modules.combat;
 import java.util.Random;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.interfaces.mixin.IClient;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.como.client.misc.settings.Setting;
 
 public class FastAttack extends Module {

@@ -2,7 +2,7 @@ package net.como.client.events.render;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.como.client.misc.events.Event;
+import net.como.client.events.Event;
 
 public class RenderPortalOverlayEvent extends Event {
     public float nauseaStrength;

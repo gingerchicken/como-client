@@ -1,8 +1,8 @@
 package net.como.client.modules.render;
 
+import net.como.client.events.Event;
 import net.como.client.events.render.BobViewWhenHurtEvent;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 
 public class NoHurtCam extends Module {
     public NoHurtCam() {

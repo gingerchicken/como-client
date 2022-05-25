@@ -1,10 +1,10 @@
 package net.como.client.modules.utilities;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.UpdateBlockBreakingProgressEvent;
 import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.como.client.misc.settings.Setting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;

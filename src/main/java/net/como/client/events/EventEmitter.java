@@ -1,4 +1,4 @@
-package net.como.client.misc.events;
+package net.como.client.events;
 
 import java.util.HashMap;
 

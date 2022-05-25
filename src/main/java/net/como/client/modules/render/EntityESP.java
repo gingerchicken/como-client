@@ -1,13 +1,13 @@
 package net.como.client.modules.render;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.render.IsEntityGlowingEvent;
 import net.como.client.events.render.OnRenderEvent;
 import net.como.client.events.render.RenderEntityEvent;
 import net.como.client.misc.Colour;
 import net.como.client.misc.Mode;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.como.client.misc.settings.Setting;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.render.OutlineVertexConsumerProvider;

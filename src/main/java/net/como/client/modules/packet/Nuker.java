@@ -6,11 +6,11 @@ import java.util.List;
 
 import net.como.client.ComoClient;
 import net.como.client.components.BlockBreaker;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.render.RenderWorldEvent;
 import net.como.client.misc.Colour;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.como.client.misc.settings.Setting;
 import net.como.client.utils.BlockUtils;
 import net.como.client.utils.ChatUtils;

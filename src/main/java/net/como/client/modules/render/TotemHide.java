@@ -1,9 +1,9 @@
 package net.como.client.modules.render;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.render.RenderItemEvent;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.minecraft.client.render.model.json.ModelTransformation;
 
 public class TotemHide extends Module {

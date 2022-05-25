@@ -1,8 +1,8 @@
 package net.como.client.modules.packet;
 
+import net.como.client.events.Event;
 import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
 
 public class XStorage extends Module {

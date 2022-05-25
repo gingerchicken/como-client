@@ -5,10 +5,10 @@ import java.util.List;
 
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.gui.impl.ClickGUIScreen;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.como.client.misc.settings.Setting;
 import net.como.client.utils.ImGuiUtils;
 

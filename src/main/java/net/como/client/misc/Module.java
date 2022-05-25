@@ -7,10 +7,10 @@ import com.google.gson.Gson;
 
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
+import net.como.client.events.Event;
+import net.como.client.events.EventEmitter;
+import net.como.client.events.EventListener;
 import net.como.client.interfaces.Flatternable;
-import net.como.client.misc.events.Event;
-import net.como.client.misc.events.EventEmitter;
-import net.como.client.misc.events.EventListener;
 import net.como.client.misc.settings.*;
 import net.como.client.utils.ChatUtils;
 import net.minecraft.client.font.TextRenderer;

@@ -2,7 +2,7 @@ package net.como.client.events.render;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.como.client.misc.events.Event;
+import net.como.client.events.Event;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;

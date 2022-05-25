@@ -1,11 +1,11 @@
 package net.como.client.modules.render;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.client.PlayerMoveEvent;
 import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.como.client.misc.settings.Setting;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.MathsUtils;

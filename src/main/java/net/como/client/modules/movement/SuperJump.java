@@ -1,9 +1,9 @@
 package net.como.client.modules.movement;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.JumpEvent;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.*;
 import net.como.client.misc.settings.Setting;
 
 public class SuperJump extends Module {

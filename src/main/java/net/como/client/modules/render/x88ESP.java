@@ -2,6 +2,7 @@ package net.como.client.modules.render;
 
 import net.como.client.ComoClient;
 import net.como.client.components.ProjectionUtils;
+import net.como.client.events.Event;
 import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.misc.Colour;
 import net.como.client.misc.Module;
@@ -10,7 +11,6 @@ import net.como.client.misc.attributes.entity.ActiveItemAttribute;
 import net.como.client.misc.attributes.entity.ArmourAttribute;
 import net.como.client.misc.attributes.entity.HealthAttribute;
 import net.como.client.misc.attributes.entity.NameAttribute;
-import net.como.client.misc.events.Event;
 import net.como.client.misc.maths.Box2D;
 import net.como.client.misc.maths.Vec3;
 import net.como.client.misc.settings.Setting;

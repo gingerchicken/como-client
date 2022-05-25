@@ -3,9 +3,9 @@ package net.como.client.modules.utilities;
 import java.util.HashMap;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.render.RenderEntityEvent;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.como.client.misc.settings.Setting;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;

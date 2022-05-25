@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.como.client.misc.settings.Setting;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.Packet;

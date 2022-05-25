@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.UUID;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.client.DisconnectEvent;
 import net.como.client.events.packet.OnEntityStatusEvent;
 import net.como.client.events.screen.DeathEvent;
 import net.como.client.misc.Module;
-import net.como.client.misc.events.Event;
 import net.como.client.misc.settings.Setting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

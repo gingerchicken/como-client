@@ -1,12 +1,12 @@
 package net.como.client.modules.hud;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.events.render.RenderHealthBarEvent;
 import net.como.client.misc.Colour;
 import net.como.client.misc.Module;
 import net.como.client.misc.attributes.entity.HealthAttribute;
-import net.como.client.misc.events.Event;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.Render2DUtils;
 import net.como.client.utils.RenderUtils;

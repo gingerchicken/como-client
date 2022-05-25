@@ -2,7 +2,7 @@ package net.como.client.events.screen;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.como.client.misc.events.Event;
+import net.como.client.events.Event;
 import net.minecraft.client.network.ServerInfo;
 
 public class ConnectEvent extends Event {
