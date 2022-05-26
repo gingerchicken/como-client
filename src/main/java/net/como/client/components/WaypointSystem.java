@@ -1,4 +1,4 @@
-package net.como.client.misc;
+package net.como.client.components;
 
 import java.util.ArrayList;
 import java.util.HashMap;
