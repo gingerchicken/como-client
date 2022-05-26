@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
-import net.como.client.components.BlockBreaker;
+import net.como.client.components.plugins.BlockBreaker;
 import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;

@@ -4,8 +4,8 @@ import java.util.List;
 
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
-import net.como.client.components.FriendsManager;
-import net.como.client.components.FriendsManager.Friend;
+import net.como.client.components.systems.FriendsManager;
+import net.como.client.components.systems.FriendsManager.Friend;
 import net.como.client.utils.ChatUtils;
 
 public class FriendsCommand extends CommandNode {

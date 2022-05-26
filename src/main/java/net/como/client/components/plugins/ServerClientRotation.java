@@ -1,4 +1,4 @@
-package net.como.client.components;
+package net.como.client.components.plugins;
 
 import net.como.client.events.Event;
 import net.como.client.events.packet.PostMovementPacketEvent;

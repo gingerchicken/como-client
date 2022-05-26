@@ -1,7 +1,7 @@
 package net.como.client.modules.utilities;
 
-import net.como.client.components.WaypointSystem;
-import net.como.client.components.WaypointSystem.Waypoint;
+import net.como.client.components.systems.WaypointSystem;
+import net.como.client.components.systems.WaypointSystem.Waypoint;
 import net.como.client.events.Event;
 import net.como.client.events.render.OnRenderEvent;
 import net.como.client.events.render.RenderWorldViewBobbingEvent;
