@@ -47,6 +47,10 @@ public class Binds extends Module {
      */
     protected BindsSystem binds = new BindsSystem();
 
+    public BindsSystem getBinds() {
+        return this.binds;
+    }
+
     public Binds() {
         super("Binds", true);
 
@@ -368,7 +372,7 @@ public class Binds extends Module {
             // Get the binds for this key
             Queue<Bind> binds = this.getBinds().binds.getKeyBinds(key);
 
-            if (binds == null) {
+            if (binds == null || binds.isEmpty()) {
                 this.getBinds().displayMessage(String.format("%sNo binds on key %s.", ChatUtils.RED, this.keyBindString(key)));
 
                 return true;
