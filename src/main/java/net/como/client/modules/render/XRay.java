@@ -3,13 +3,13 @@ package net.como.client.modules.render;
 import java.util.HashMap;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.render.BlockCracksRenderEvent;
 import net.como.client.events.render.BlockEntityRenderEvent;
 import net.como.client.events.render.GetAmbientOcclusionLightLevelEvent;
 import net.como.client.events.render.ShouldDrawBlockSideEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Module;
+import net.como.client.misc.settings.Setting;
 import net.minecraft.client.MinecraftClient;
 import net.como.client.utils.BlockUtils;
 
@@ -59,9 +59,9 @@ public class XRay extends Module {
         MinecraftClient client = ComoClient.getClient();
         client.worldRenderer.reload();
 
-        this.fullbrightWasEnabled = ComoClient.Modules.get("fullbright").isEnabled();
+        this.fullbrightWasEnabled = ComoClient.getInstance().getModules().get("fullbright").isEnabled();
 
-        if (this.shouldOverrideFullbright()) ComoClient.Modules.get("fullbright").enable();
+        if (this.shouldOverrideFullbright()) ComoClient.getInstance().getModules().get("fullbright").enable();
 
         this.addListen(BlockEntityRenderEvent.class);
         this.addListen(BlockCracksRenderEvent.class);
@@ -79,7 +79,7 @@ public class XRay extends Module {
         MinecraftClient client = ComoClient.getClient();
         client.worldRenderer.reload();
 
-        if (this.shouldOverrideFullbright()) ComoClient.Modules.get("fullbright").disable();
+        if (this.shouldOverrideFullbright()) ComoClient.getInstance().getModules().get("fullbright").disable();
         
         this.fullbrightWasEnabled = false;
     }

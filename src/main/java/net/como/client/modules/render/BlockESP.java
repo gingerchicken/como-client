@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.render.RenderWorldEvent;
 import net.como.client.interfaces.mixin.IWorld;
-import net.como.client.structures.Module;
-import net.como.client.structures.Colour;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Colour;
+import net.como.client.misc.Module;
+import net.como.client.misc.settings.Setting;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.world.chunk.BlockEntityTickInvoker;
 
@@ -48,7 +48,7 @@ public class BlockESP extends Module {
             case "RenderWorldEvent": {
                 RenderWorldEvent e = (RenderWorldEvent)event;
 
-                Colour colour = ComoClient.config.storageColour;
+                Colour colour = ComoClient.getInstance().config.storageColour;
 
                 List<BlockEntityTickInvoker> tickers = ((IWorld)(ComoClient.getClient().world)).getBlockEntityTickers();
                 for (BlockEntityTickInvoker ticker : tickers) {

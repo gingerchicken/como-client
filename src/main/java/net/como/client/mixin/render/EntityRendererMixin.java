@@ -36,7 +36,7 @@ public abstract class EntityRendererMixin<T extends Entity>
         VertexConsumerProvider vertexConsumerProvider,
 		int i, CallbackInfo ci
     ) {
-		ComoClient.emitter.triggerEvent(
+		ComoClient.getInstance().emitter.triggerEvent(
             new renderLabelIfPresentEvent<T>(
                 entity, text, matrixStack, vertexConsumerProvider, i, this.dispatcher, ci
             )

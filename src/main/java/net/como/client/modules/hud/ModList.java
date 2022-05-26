@@ -9,14 +9,14 @@ import java.util.List;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.Window;
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.render.InGameHudRenderEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.Colour;
-import net.como.client.structures.GUIPos;
-import net.como.client.structures.Mode;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Colour;
+import net.como.client.misc.GUIPos;
+import net.como.client.misc.Mode;
+import net.como.client.misc.Module;
+import net.como.client.misc.settings.Setting;
 import net.como.client.utils.RenderUtils;
 
 public class ModList extends Module {
@@ -79,7 +79,7 @@ public class ModList extends Module {
         }
 
         private Module getModList() {
-            return ComoClient.Modules.get("modlist");
+            return ComoClient.getInstance().getModules().get("modlist");
         }
 
         private int getSpeed() {
@@ -125,7 +125,7 @@ public class ModList extends Module {
         // This will prepare all of the colours so we can tick over them all at a constant rate (i.e. client TPS)
         private void tick() {
             set = new ArrayList<Colour>();
-            int totalModules = ComoClient.Modules.keySet().size();
+            int totalModules = ComoClient.getInstance().getModules().keySet().size();
             int speed = this.getSpeed();
 
             // Loop through them all as if we are wanting them their and then.
@@ -225,11 +225,11 @@ public class ModList extends Module {
             case "InGameHudRenderEvent": {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
-                TextRenderer textRenderer = ComoClient.textRenderer;
+                TextRenderer textRenderer = ComoClient.getInstance().textRenderer;
                 List<Module> enabledMods = new ArrayList<Module>();
                 
-                for (String moduleName : ComoClient.Modules.keySet()) {
-                    Module module = ComoClient.Modules.get(moduleName);
+                for (String moduleName : ComoClient.getInstance().getModules().keySet()) {
+                    Module module = ComoClient.getInstance().getModules().get(moduleName);
 
                     if (!module.shouldDisplayInModList()) continue;
                     
@@ -241,7 +241,7 @@ public class ModList extends Module {
                     return c2.getTextWidth(textRenderer) - c1.getTextWidth(textRenderer);
                 });
 
-                Float scale = (Float)this.getSetting("Scale").value;
+                float scale = (float)this.getSetting("Scale").value;
 
                 e.mStack.push();
                 e.mStack.scale(scale, scale, 0);

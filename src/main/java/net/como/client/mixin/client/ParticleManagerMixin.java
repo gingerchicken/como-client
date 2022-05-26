@@ -23,12 +23,12 @@ import net.minecraft.client.particle.ParticleTextureSheet;
 public abstract class ParticleManagerMixin implements IParticleManager {
     @Inject(at = @At("HEAD"), method = "addEmitter", cancellable = true)
     private void onAddEmitter(CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new AddParticleEmitterEvent(ci));
+        ComoClient.getInstance().emitter.triggerEvent(new AddParticleEmitterEvent(ci));
     }
 
     @Inject(at = @At("HEAD"), method = "addParticle", cancellable = true)
     private void onAddParticle(CallbackInfoReturnable<Particle> ci) {
-        ComoClient.emitter.triggerEvent(new AddParticleEvent(ci));
+        ComoClient.getInstance().emitter.triggerEvent(new AddParticleEvent(ci));
     }
 
     @Shadow private Queue<EmitterParticle> newEmitterParticles;

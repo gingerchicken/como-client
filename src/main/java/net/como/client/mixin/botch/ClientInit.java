@@ -12,6 +12,6 @@ import net.minecraft.client.MinecraftClient;
 public class ClientInit {
     @Inject(at = @At("TAIL"), method = "<init>", cancellable = false)
     public void init(CallbackInfo ci) {
-        ComoClient.initialise();
+        ComoClient.getInstance().initialise();
     }
 }

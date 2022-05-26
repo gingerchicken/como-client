@@ -13,6 +13,6 @@ import net.minecraft.client.gui.screen.DeathScreen;
 public class DeathScreenMixin {
     @Inject(at = @At("TAIL"), method = "init()V", cancellable = false)
     public void init(CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new DeathEvent(ci));
+        ComoClient.getInstance().emitter.triggerEvent(new DeathEvent(ci));
     }
 }

@@ -6,17 +6,17 @@ import org.lwjgl.opengl.GL11;
 
 import net.como.client.ComoClient;
 import net.como.client.components.ProjectionUtils;
+import net.como.client.events.Event;
 import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.events.render.OnRenderEvent;
 import net.como.client.events.render.renderLabelIfPresentEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.EntityAttributes.Attribute;
-import net.como.client.structures.EntityAttributes.entity.HealthAttribute;
-import net.como.client.structures.EntityAttributes.entity.NameAttribute;
-import net.como.client.structures.EntityAttributes.player.PingAttribute;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.maths.Vec3;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Module;
+import net.como.client.misc.attributes.Attribute;
+import net.como.client.misc.attributes.entity.HealthAttribute;
+import net.como.client.misc.attributes.entity.NameAttribute;
+import net.como.client.misc.attributes.player.PingAttribute;
+import net.como.client.misc.maths.Vec3;
+import net.como.client.misc.settings.Setting;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
@@ -62,7 +62,7 @@ public class BetterNameTags extends Module {
         Vec3d pos = player.getLerpedPos(tickDelta).add(0, player.getBoundingBox().maxY - player.getPos().y + 0.25, 0);
         
         // Text renderer
-        TextRenderer r = ComoClient.textRenderer;
+        TextRenderer r = ComoClient.getInstance().textRenderer;
 
         // Get the different attributes
         float textOffsets = r.getWidth(" ")/2;

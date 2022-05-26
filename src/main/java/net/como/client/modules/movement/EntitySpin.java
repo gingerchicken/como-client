@@ -1,10 +1,10 @@
 package net.como.client.modules.movement;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Module;
+import net.como.client.misc.settings.Setting;
 import net.minecraft.entity.Entity;
 
 public class EntitySpin extends Module {

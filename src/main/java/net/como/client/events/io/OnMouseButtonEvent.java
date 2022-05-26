@@ -2,7 +2,7 @@ package net.como.client.events.io;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.como.client.structures.events.Event;
+import net.como.client.events.Event;
 
 public class OnMouseButtonEvent extends Event {
     public long window;

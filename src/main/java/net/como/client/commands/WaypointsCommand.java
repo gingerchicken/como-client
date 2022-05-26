@@ -5,8 +5,8 @@ import java.util.List;
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
-import net.como.client.structures.WaypointSystem;
-import net.como.client.structures.WaypointSystem.Waypoint;
+import net.como.client.misc.WaypointSystem;
+import net.como.client.misc.WaypointSystem.Waypoint;
 import net.como.client.utils.ChatUtils;
 import net.minecraft.util.math.Vec3d;
 

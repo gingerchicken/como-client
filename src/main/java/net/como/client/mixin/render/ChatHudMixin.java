@@ -15,6 +15,6 @@ import net.minecraft.text.Text;
 public class ChatHudMixin {
 	@Inject(at = @At("HEAD"), method = "addMessage(Lnet/minecraft/text/Text;I)V", cancellable = true)
 	private void onAddMessage(Text chatText, int chatLineId, CallbackInfo ci) {
-		ComoClient.emitter.triggerEvent(new AddMessageEvent(chatText, chatLineId, ci));
+		ComoClient.getInstance().emitter.triggerEvent(new AddMessageEvent(chatText, chatLineId, ci));
 	}
 }

@@ -6,8 +6,8 @@ import java.util.List;
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
-import net.como.client.structures.Mode;
-import net.como.client.structures.settings.*;
+import net.como.client.misc.Mode;
+import net.como.client.misc.settings.*;
 import net.como.client.utils.ChatUtils;
 
 public class SettingsCommand extends CommandNode {
@@ -34,7 +34,7 @@ public class SettingsCommand extends CommandNode {
             case "java.util.HashMap": {
                 return new HashMapCommand(setting);
             }
-            case "net.como.client.structures.Mode": {
+            case "net.como.client.misc.Mode": {
                 return new ModeCommand(setting);
             }
             default: {

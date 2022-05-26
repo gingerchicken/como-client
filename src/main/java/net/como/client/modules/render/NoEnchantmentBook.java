@@ -1,8 +1,8 @@
 package net.como.client.modules.render;
 
+import net.como.client.events.Event;
 import net.como.client.events.render.BlockEntityRenderEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
+import net.como.client.misc.Module;
 
 public class NoEnchantmentBook extends Module {
     public NoEnchantmentBook() {

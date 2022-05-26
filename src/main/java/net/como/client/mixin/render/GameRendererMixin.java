@@ -19,7 +19,7 @@ import net.minecraft.client.util.math.MatrixStack;
 public abstract class GameRendererMixin {
     @Inject(at = @At("HEAD"), method="bobViewWhenHurt(Lnet/minecraft/client/util/math/MatrixStack;F)V", cancellable = true)
     void onBobViewWhenHurt(MatrixStack mStack, float f, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new BobViewWhenHurtEvent(mStack, f, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new BobViewWhenHurtEvent(mStack, f, ci));
     }
 
     @Inject(
@@ -33,7 +33,7 @@ public abstract class GameRendererMixin {
         cancellable = true
     )
     private void onRender(float tickDelta, long limitTime, MatrixStack matrix, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new OnRenderEvent(
+        ComoClient.getInstance().emitter.triggerEvent(new OnRenderEvent(
             tickDelta, limitTime, matrix, ci
         ));
     }
@@ -51,7 +51,7 @@ public abstract class GameRendererMixin {
 	private void onRenderWorldViewBobbing(GameRenderer gameRenderer, MatrixStack matrixStack, float partalTicks) {
         RenderWorldViewBobbingEvent event = new RenderWorldViewBobbingEvent(gameRenderer, matrixStack, partalTicks);
 
-        ComoClient.emitter.triggerEvent(event);
+        ComoClient.getInstance().emitter.triggerEvent(event);
 
         if (event.cancel) {
             return;

@@ -20,16 +20,16 @@ import net.minecraft.util.math.Direction;
 public class ClientPlayerInteractionManagerMixin {
     @Inject(at = @At("HEAD"), method = "attackEntity(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/entity/Entity;)V", cancellable = true)
     private void onAttackEntity(PlayerEntity player, Entity target, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new OnAttackEntityEvent(player, target, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new OnAttackEntityEvent(player, target, ci));
     }
 
     @Inject(at = @At("HEAD"), method = "stopUsingItem(Lnet/minecraft/entity/player/PlayerEntity;)V", cancellable = true)
     private void onStopUsingItem(PlayerEntity playerEntity, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new StopUsingItemEvent(playerEntity, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new StopUsingItemEvent(playerEntity, ci));
     }
 
     @Inject(at = @At("HEAD"), method = "updateBlockBreakingProgress(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;)Z", cancellable = true)
     private void onUpdateBlockBreakingProgress(BlockPos pos, Direction direction, CallbackInfoReturnable<Boolean> cir) {
-        ComoClient.emitter.triggerEvent(new UpdateBlockBreakingProgressEvent(pos, direction, cir));
+        ComoClient.getInstance().emitter.triggerEvent(new UpdateBlockBreakingProgressEvent(pos, direction, cir));
     }
 }

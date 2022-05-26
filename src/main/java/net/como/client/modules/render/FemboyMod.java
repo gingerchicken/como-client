@@ -5,11 +5,11 @@ import java.util.UUID;
 
 import net.como.client.ComoClient;
 import net.como.client.components.FemboySkinHelper;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.render.GetModelEvent;
 import net.como.client.events.render.GetSkinTextureEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
+import net.como.client.misc.Module;
 import net.minecraft.util.Identifier;
 
 public class FemboyMod extends Module {

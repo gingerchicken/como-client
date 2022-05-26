@@ -3,10 +3,10 @@ package net.como.client.modules.render;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.render.RenderWorldEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Module;
+import net.como.client.misc.settings.Setting;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;

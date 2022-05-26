@@ -24,31 +24,31 @@ import net.minecraft.text.Text;
 public class ClientPlayNetworkHandlerMixin {
     @Inject(at = @At("HEAD"), method="sendPacket(Lnet/minecraft/network/Packet;)V", cancellable = true)
     public void onSendPacket(Packet<?> packet, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new SendPacketEvent(packet, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new SendPacketEvent(packet, ci));
     }
 
     @Inject(at = @At("HEAD"), method="onWorldTimeUpdate(Lnet/minecraft/network/packet/s2c/play/WorldTimeUpdateS2CPacket;)V", cancellable=true)
     public void onWorldTimeUpdate(WorldTimeUpdateS2CPacket packet, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new OnWorldTimeUpdateEvent(packet, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new OnWorldTimeUpdateEvent(packet, ci));
     }
 
     @Inject(at = @At("HEAD"), method="onEntityStatus(Lnet/minecraft/network/packet/s2c/play/EntityStatusS2CPacket;)V", cancellable = true)
     public void onEntityStatus(EntityStatusS2CPacket packet, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new OnEntityStatusEvent(packet, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new OnEntityStatusEvent(packet, ci));
     }
 
     @Inject(at = @At("HEAD"), method="onGameStateChange(Lnet/minecraft/network/packet/s2c/play/GameStateChangeS2CPacket;)V", cancellable = true)
     public void onGameStateChange(GameStateChangeS2CPacket packet, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new OnGameStateChangeEvent(packet, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new OnGameStateChangeEvent(packet, ci));
     }
 
     @Inject(at = @At("HEAD"), method="onResourcePackSend(Lnet/minecraft/network/packet/s2c/play/ResourcePackSendS2CPacket;)V", cancellable = true)
     public void onResourcePackSend(ResourcePackSendS2CPacket packet, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new OnResourcePackSendEvent(packet, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new OnResourcePackSendEvent(packet, ci));
     }
 
     @Inject(at = @At("HEAD"), method="onDisconnected(Lnet/minecraft/text/Text;)V", cancellable = true)
     public void onDisconnected(Text reason, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new OnDisconnectedEvent(reason, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new OnDisconnectedEvent(reason, ci));
     }
 }

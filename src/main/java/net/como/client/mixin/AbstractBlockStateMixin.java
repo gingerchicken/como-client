@@ -20,6 +20,6 @@ public class AbstractBlockStateMixin {
         cancellable = true
     )
     private void onGetAmbientOcclusionLightLevel(BlockView blockView, BlockPos blockPos, CallbackInfoReturnable<Float> cir) {
-        ComoClient.emitter.triggerEvent(new GetAmbientOcclusionLightLevelEvent(blockView, blockPos, cir));
+        ComoClient.getInstance().emitter.triggerEvent(new GetAmbientOcclusionLightLevelEvent(blockView, blockPos, cir));
     }
 }

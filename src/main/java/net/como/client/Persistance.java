@@ -10,7 +10,7 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import net.como.client.structures.Module;
+import net.como.client.misc.Module;
 
 public class Persistance {
     public static final String CONFIG_PATH = "como-config.json";
@@ -42,7 +42,7 @@ public class Persistance {
         writer.close();
     }
 
-    public static Boolean loadConfig() {
+    public static boolean loadConfig() {
         String data;
         try {
             data = readConfig(CONFIG_PATH);
@@ -56,7 +56,7 @@ public class Persistance {
         // Load all of the flattened states
         HashMap<String, HashMap<String, String>> flat = new Gson().fromJson(data, new TypeToken<HashMap<String, HashMap<String, String>>>() {}.getType());
         for (String name : flat.keySet()) {
-            Module module = ComoClient.Modules.get(name);
+            Module module = ComoClient.getInstance().getModules().get(name);
             
             // Check that we can get the module
             if (module == null) {
@@ -75,8 +75,8 @@ public class Persistance {
 
         // Save all of the modules
         HashMap<String, HashMap<String, String>> flat = new HashMap<String, HashMap<String, String>>();
-        for (String name : ComoClient.Modules.keySet()) {
-            Module module = ComoClient.Modules.get(name);
+        for (String name : ComoClient.getInstance().getModules().keySet()) {
+            Module module = ComoClient.getInstance().getModules().get(name);
 
             flat.put(name, module.flatten());
         }

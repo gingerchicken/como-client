@@ -1,12 +1,12 @@
 package net.como.client.modules.packet;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.client.HandleDisconnectionEvent;
 import net.como.client.events.client.OnDisconnectedEvent;
 import net.como.client.events.render.RenderWorldEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
+import net.como.client.misc.Module;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.ClientUtils;
 import net.minecraft.client.gui.screen.DownloadingTerrainScreen;

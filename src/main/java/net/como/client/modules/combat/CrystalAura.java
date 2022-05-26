@@ -9,11 +9,11 @@ import java.util.stream.StreamSupport;
 
 import net.como.client.ComoClient;
 import net.como.client.components.ServerClientRotation;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.render.RenderWorldEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Module;
+import net.como.client.misc.settings.Setting;
 import net.como.client.utils.BlockUtils;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.InteractionUtils;

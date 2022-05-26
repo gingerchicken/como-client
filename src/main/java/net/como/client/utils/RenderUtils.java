@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.ComoClient;
-import net.como.client.structures.Colour;
+import net.como.client.misc.Colour;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BufferRenderer;

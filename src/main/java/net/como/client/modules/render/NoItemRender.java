@@ -1,6 +1,5 @@
 package net.como.client.modules.render;
 
-import net.como.client.structures.events.Event;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 
@@ -8,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
-import net.como.client.structures.Module;
+import net.como.client.misc.Module;
 
 public class NoItemRender extends Module {
     public NoItemRender() {

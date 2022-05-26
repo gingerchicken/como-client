@@ -1,9 +1,9 @@
 package net.como.client.modules.movement;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
+import net.como.client.misc.Module;
 import net.minecraft.client.network.ClientPlayerEntity;
 
 public class Flight extends Module {

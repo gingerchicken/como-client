@@ -27,6 +27,6 @@ public class BlockModelRendererMixin {
         cancellable = true
     )
 	private void onRenderBlock(BlockRenderView world, BakedModel model, BlockState state, BlockPos pos, MatrixStack matrix, VertexConsumer vertexConsumer, boolean cull, Random random, long seed, int overlay, CallbackInfoReturnable<Boolean> cir) {
-        ComoClient.emitter.triggerEvent(new BlockCracksRenderEvent(world, model, state, pos, matrix, vertexConsumer, cull, random, seed, overlay, cir));
+        ComoClient.getInstance().emitter.triggerEvent(new BlockCracksRenderEvent(world, model, state, pos, matrix, vertexConsumer, cull, random, seed, overlay, cir));
     }
 }

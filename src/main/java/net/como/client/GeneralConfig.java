@@ -1,6 +1,6 @@
 package net.como.client;
 
-import net.como.client.structures.Colour;
+import net.como.client.misc.Colour;
 
 public class GeneralConfig {
     public Colour storageColour = new Colour(255, 223, 0, 255);
