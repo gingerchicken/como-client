@@ -1,9 +1,9 @@
-package net.como.client.components.plugins;
+package net.como.client.components.plugins.impl;
 
+import net.como.client.components.plugins.ModulePlugin;
 import net.como.client.events.Event;
 import net.como.client.events.packet.PostMovementPacketEvent;
 import net.como.client.events.packet.PreMovementPacketEvent;
-import net.como.client.interfaces.ModulePlugin;
 import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.RotationUtils;

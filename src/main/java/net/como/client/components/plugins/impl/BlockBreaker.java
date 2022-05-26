@@ -1,14 +1,12 @@
-package net.como.client.components.plugins;
+package net.como.client.components.plugins.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
+import net.como.client.components.plugins.ModulePlugin;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
-import net.como.client.events.packet.SendPacketEvent;
-import net.como.client.interfaces.ModulePlugin;
 import net.como.client.modules.Module;
 import net.como.client.utils.BlockUtils;
 import net.como.client.utils.MathsUtils;

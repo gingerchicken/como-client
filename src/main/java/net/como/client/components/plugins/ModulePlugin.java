@@ -1,4 +1,4 @@
-package net.como.client.interfaces;
+package net.como.client.components.plugins;
 import net.como.client.events.Event;
 import net.como.client.modules.Module;
 

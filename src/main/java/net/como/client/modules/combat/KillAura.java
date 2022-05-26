@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import net.como.client.ComoClient;
-import net.como.client.components.plugins.ServerClientRotation;
+import net.como.client.components.plugins.impl.ServerClientRotation;
 import net.como.client.config.settings.Setting;
 import net.como.client.config.specials.Mode;
 import net.como.client.events.Event;
