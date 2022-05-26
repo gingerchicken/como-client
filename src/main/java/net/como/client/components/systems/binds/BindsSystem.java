@@ -2,6 +2,7 @@ package net.como.client.components.systems.binds;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -9,7 +10,7 @@ import java.util.function.Predicate;
 
 import net.como.client.utils.ChatUtils;
 
-public class BindsSystem {
+public class BindsSystem implements Iterable<Integer> {
     protected HashMap<Integer, Queue<Bind>> binds = new HashMap<>();
     protected boolean hideMessage = true;
 
@@ -112,5 +113,10 @@ public class BindsSystem {
         }
 
         return keys;
+    }
+
+    @Override
+    public Iterator<Integer> iterator() {
+        return binds.keySet().iterator();
     }
 }
