@@ -3,8 +3,9 @@ package net.como.client.gui.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Queue;
 
-import org.lwjgl.system.CallbackI.F;
+import org.lwjgl.glfw.GLFW;
 
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
@@ -17,6 +18,9 @@ import imgui.type.ImInt;
 import imgui.type.ImString;
 import joptsimple.internal.Strings;
 import net.como.client.ComoClient;
+import net.como.client.components.systems.binds.Bind;
+import net.como.client.components.systems.binds.BindsSystem;
+import net.como.client.components.systems.binds.impl.ModuleBind;
 import net.como.client.config.settings.Setting;
 import net.como.client.config.specials.Mode;
 import net.como.client.gui.ImGuiScreen;
@@ -24,7 +28,9 @@ import net.como.client.gui.impl.widgets.BouncyWidget;
 import net.como.client.misc.Colour;
 import net.como.client.modules.Module;
 import net.como.client.modules.hud.ClickGUI;
+import net.como.client.modules.utilities.Binds;
 import net.como.client.utils.ChatUtils;
+import net.como.client.utils.ClientUtils;
 import net.como.client.utils.ImGuiUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.util.math.MatrixStack;
@@ -89,6 +95,9 @@ public class ClickGUIScreen extends ImGuiScreen {
 
         // Set the search example as random module name
         this.updateSearchExample();
+
+        // Update the keybinds
+        this.populateKeyBinds();
     }
 
     private void updateSearchExample() {
@@ -107,31 +116,31 @@ public class ClickGUIScreen extends ImGuiScreen {
         this.searchExample = Strings.EMPTY;
     }
 
-    private static HashMap<Module, Boolean> openedSettings = new HashMap<>();
+    private static HashMap<Module, Boolean> openedOptions = new HashMap<>();
 
     /**
      * States if the settings should be rendered for a given module
      * @return if the settings should be rendered
      */
-    public boolean shouldShowSettings(Module module) {
-        return openedSettings.containsKey(module) && openedSettings.get(module);
+    public boolean shouldShowOptions(Module module) {
+        return openedOptions.containsKey(module) && openedOptions.get(module);
     }
 
     /**
-     * Hides the settings for the given module
+     * Hides the options for the given module
      * @param module
      */
-    public void hideSettings(Module module) {
+    public void hideOptions(Module module) {
         // Remove the module from the opened settings hashmap
-        openedSettings.remove(module);
+        openedOptions.remove(module);
     }
 
     /**
-     * Flags a given module to have its settings rendered
+     * Flags a given module to have its options rendered
      * @param module the module to render the settings for
      */
-    public void showSettings(Module module) {
-        openedSettings.put(module, true);
+    public void showOptions(Module module) {
+        openedOptions.put(module, true);
     }
 
     private static HashMap<Class<?>, Boolean> renderableSettingTypes = new HashMap<>() {{
@@ -287,15 +296,15 @@ public class ClickGUIScreen extends ImGuiScreen {
      * @param module the module to toggle the settings for
      * @return if the settings are now being rendered
      */
-    public boolean toggleSettings(Module module) {
+    public boolean toggleOptions(Module module) {
         // Hide the module is already added then remove it to hide it
-        if (this.shouldShowSettings(module)) {
-            this.hideSettings(module);
+        if (this.shouldShowOptions(module)) {
+            this.hideOptions(module);
             return false;
         }
 
         // Otherwise add the module to the opened settings hashmap
-        this.showSettings(module);
+        this.showOptions(module);
         return true;
     }
 
@@ -344,7 +353,7 @@ public class ClickGUIScreen extends ImGuiScreen {
             resetNext = false;
             
             // Clear the opened settings
-            openedSettings.clear();
+            openedOptions.clear();
         }
 
         // Update the global ImGUI scale
@@ -501,17 +510,33 @@ public class ClickGUIScreen extends ImGuiScreen {
                     ImGui.setTooltip(mod.getDescription() == null ? "No description, sorry :(" : mod.getDescription());
 
                     // Handle right clicks
-                    if (ImGui.isMouseClicked(1) && hasSettings) {
-                        this.toggleSettings(mod);
+                    if (ImGui.isMouseClicked(1)) {
+                        this.toggleOptions(mod);
                     }
                 }
 
                 // Render the module options
                 if (
-                    (this.shouldShowSettings(mod) && hasSettings)
+                    (this.shouldShowOptions(mod))
                 ) {
-
                     ImGui.separator();
+
+                    ImGui.spacing();
+                    ImGui.sameLine();
+
+                    String boundText = this.getBoundKey(mod) == -1 ? "Add bind" : "Key " + ClientUtils.getKeyCodeName(this.getBoundKey(mod)).toUpperCase();
+
+                    // Render the bind button
+                    if (ImGui.button(
+                        this.bindNext == mod ? "Waiting for a key..." : boundText
+                    )) {
+                        this.bindNext = this.bindNext == mod ? null : mod;
+                    }
+
+                    if (ImGui.isItemHovered()) {
+                        // Add tooltip to the button
+                        ImGui.setTooltip("Press ESCAPE to cancel, BACKSPACE to remove, or any other key to bind.");
+                    }
 
                     // Handle the stupid reset button case
                     if (mod instanceof ClickGUI) {
@@ -530,10 +555,13 @@ public class ClickGUIScreen extends ImGuiScreen {
                         ImGui.popStyleVar(1);
                     }
 
-                    for (String settingName : mod.getSettings()) {
-                        Setting setting = mod.getSetting(settingName);
+                    // Render the settings
+                    if (hasSettings) {
+                        for (String settingName : mod.getSettings()) {
+                            Setting setting = mod.getSetting(settingName);
 
-                        this.renderSetting(mod, setting);
+                            this.renderSetting(mod, setting);
+                        }
                     }
 
                     ImGui.separator();
@@ -645,4 +673,107 @@ public class ClickGUIScreen extends ImGuiScreen {
         // Render everything else
         super.render(matrices, mouseX, mouseY, delta);
     }
+
+    // Binds
+
+    private Binds getBinds() {
+        return (Binds)ComoClient.getInstance().getModules().get("binds");
+    }
+
+    private HashMap<Module, Integer> activeKeyBinds = new HashMap<>();
+
+    private void populateKeyBinds() {
+        activeKeyBinds.clear();
+
+        Binds bindsModule = this.getBinds();
+        BindsSystem binds = bindsModule.getBinds();
+
+        for (int key : binds) {
+            Queue<Bind> bindQueue = binds.getKeyBinds(key);
+
+            for (Bind bind : bindQueue) {
+                if (!(bind instanceof ModuleBind)) continue;
+
+                // Get the module bind
+                ModuleBind moduleBind = (ModuleBind)bind;
+
+                // Add the bind
+                activeKeyBinds.put(moduleBind.getModule(), key);
+            }
+        }
+    }
+
+    private int getBoundKey(Module module) {
+        return this.activeKeyBinds.getOrDefault(module, -1);
+    }
+
+    private void removeModuleBinds(Module module) {
+        // Get the binds module
+        Binds bindsModule = this.getBinds();
+
+        // Get the bind system
+        BindsSystem system = bindsModule.getBinds();
+
+        // Unbind other keys
+        system.removeBinds(b -> {
+            if (!(b instanceof ModuleBind)) return false;
+
+            // Get the module bind
+            ModuleBind moduleBind = (ModuleBind)b;
+
+            // Check if the module is the same
+            return moduleBind.getModule() == module;
+        });
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        // Make sure that we're binding something
+        if (this.bindNext == null) return super.keyPressed(keyCode, scanCode, modifiers);
+
+        // Get the binds module
+        Module mod = this.bindNext;
+
+        // Check if the keycode is escape
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            this.bindNext = null;
+            return true;
+        }
+
+        // Check if the keycode is backspace
+        if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
+            // Remove the bind
+            this.removeModuleBinds(mod);
+
+            // Populate the key binds
+            this.populateKeyBinds();
+
+            // Make sure we're done binding things
+            this.bindNext = null;
+
+            return true;
+        }
+
+        // Get the binds module
+        Binds bindsModule = this.getBinds();
+
+        // Get the bind system
+        BindsSystem system = bindsModule.getBinds();
+
+        // Unbind other keys
+        this.removeModuleBinds(mod);
+
+        // Add the key bind
+        system.addBind(keyCode, new ModuleBind(this.bindNext));
+
+        // Set the bind next to null
+        this.bindNext = null;
+
+        // Update the key binds
+        this.populateKeyBinds();
+
+        return true;
+    }
+
+    private Module bindNext = null;
 }
