@@ -102,7 +102,7 @@ public class Tracers extends Module {
 
             case "OnRenderEvent": {
                 OnRenderEvent e = (OnRenderEvent)event;
-                Float transparency = (Float)this.getSetting("Transparency").value;
+                float transparency = (Float)this.getSetting("Transparency").value;
 
                 // Render entity/player tracers
                 Iterable<Entity> ents = ComoClient.getClient().world.getEntities();
