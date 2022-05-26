@@ -1,10 +1,9 @@
 package net.como.client.modules.movement;
 
 import net.como.client.config.settings.Setting;
-import net.como.client.events.Event;
-import net.como.client.modules.Module;
+import net.como.client.modules.DummyModule;
 
-public class Timer extends Module {
+public class Timer extends DummyModule {
     public Timer() {
         super("Timer");
 
@@ -13,23 +12,5 @@ public class Timer extends Module {
         this.setDescription("Change the client-side tick rate.");
 
         this.setCategory("Movement");
-    }
-
-    @Override
-    public void activate() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void deactivate() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void fireEvent(Event event) {
-        // TODO Auto-generated method stub
-        
     }
 }

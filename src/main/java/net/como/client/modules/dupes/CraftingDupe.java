@@ -1,10 +1,9 @@
 package net.como.client.modules.dupes;
 
 import net.como.client.config.settings.Setting;
-import net.como.client.events.Event;
-import net.como.client.modules.Module;
+import net.como.client.modules.DummyModule;
 
-public class CraftingDupe extends Module {
+public class CraftingDupe extends DummyModule {
 
     public CraftingDupe() {
         super("CraftingDupe");
@@ -17,17 +16,5 @@ public class CraftingDupe extends Module {
     @Override
     public void activate() {
         if (this.getBoolSetting("ShowTip")) this.displayMessage("Remember, this will only work on servers that are 1.17 and lower, you can connect to them via multiconnect.");
-    }
-
-    @Override
-    public void deactivate() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void fireEvent(Event event) {
-        // TODO Auto-generated method stub
-        
     }
 }

@@ -1,9 +1,8 @@
 package net.como.client.modules.render;
 
-import net.como.client.events.Event;
-import net.como.client.modules.Module;
+import net.como.client.modules.DummyModule;
 
-public class HideTitleMessage extends Module {
+public class HideTitleMessage extends DummyModule {
 
     public HideTitleMessage() {
         super("HideTitleMessage");
@@ -16,23 +15,5 @@ public class HideTitleMessage extends Module {
     @Override
     public boolean shouldDisplayInModList() {
         return false;
-    }
-
-    @Override
-    public void activate() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void deactivate() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void fireEvent(Event event) {
-        // TODO Auto-generated method stub
-        
     }
 }
