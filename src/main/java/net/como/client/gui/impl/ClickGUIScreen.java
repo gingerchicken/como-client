@@ -407,6 +407,137 @@ public class ClickGUIScreen extends ImGuiScreen {
     }
 
     /**
+     * Render the bind button
+     * @param mod the module to render the bind button for
+     */
+    private void renderBindButton(Module mod) {
+        ImGui.pushID(mod.getName()+"_bind");
+
+        // Render key binding
+        ImGui.spacing();
+        ImGui.sameLine();
+
+        // Get the default button text
+        String boundText = this.getBoundKey(mod) == -1 ? "Add bind" : "Key " + ClientUtils.getKeyCodeName(this.getBoundKey(mod)).toUpperCase();
+
+        // Further process the button text (if the key is waiting to be bound)
+        boundText = this.bindNext == mod ? "Waiting for a key..." : boundText;
+
+        // Render the bind button
+        if (ImGui.button(boundText)) {
+            this.bindNext = this.bindNext == mod ? null : mod;
+        }
+
+        if (ImGui.isItemHovered()) {
+            // Add tooltip to the button
+            ImGui.setTooltip("Press ESCAPE to cancel, BACKSPACE to remove, or any other key to bind.");
+        }
+
+        ImGui.popID();
+    }
+
+    /**
+     * Renders edge cases for different modules, for example the ClickGUI's reset button
+     * @param mod the module to render the edge case for
+     */
+    private void renderOptionEdgeCase(Module mod) {
+        // Handle the stupid reset button case
+        if (mod instanceof ClickGUI) {
+            // Render the reset button
+
+            // Center the button text
+            ImGui.pushStyleVar(ImGuiStyleVar.ButtonTextAlign, 0.5f, 0.5f);
+
+            ImGui.spacing();
+            ImGui.sameLine();
+
+            if (ImGui.button("Reset All", ImGui.getWindowWidth() - ImGui.getStyle().getWindowPaddingX()*2 - ImGui.getStyle().getItemSpacingX()*2, 0)) {
+                resetNext = true;
+            }
+
+            ImGui.popStyleVar(1);
+        }
+    }
+
+    /**
+     * Render the module's options
+     * @param mod the module to render the options for
+     */
+    private void renderModuleOptions(Module mod) {
+        ImGui.separator();
+
+        // Render the bind button
+        this.renderBindButton(mod);
+
+        // Render the edge cases
+        this.renderOptionEdgeCase(mod);
+
+        // Render the settings
+        if (!mod.getSettings().isEmpty()) {
+            for (String settingName : mod.getSettings()) {
+                Setting setting = mod.getSetting(settingName);
+
+                this.renderSetting(mod, setting);
+            }
+        }
+
+        ImGui.separator();
+    }
+
+    /**
+     * Render a given module
+     * @param mod the module to render
+     */
+    private void renderModule(Module mod) {
+        // Push a new id
+        ImGui.pushID(mod.getName());
+
+        // Push style variable
+        ImGui.pushStyleVar(ImGuiStyleVar.ButtonTextAlign, 0.0f, 0.5f);
+
+        // Push enabled style
+        if (mod.isEnabled()) {
+            ImGui.pushStyleColor(ImGuiCol.Button, 0.10f, 0.60f, 0.10f, 0.75f);
+            ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.10f, 0.50f, 0.10f, 0.75f);
+            ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.30f, 0.70f, 0.30f, 0.75f);
+        }
+
+        boolean shouldToggle = ImGui.button(mod.getName(), ImGui.getWindowWidth() - ImGui.getStyle().getWindowPaddingX()*2, 0);
+
+        // Pop enabled style
+        if (mod.isEnabled()) {
+            ImGui.popStyleColor(3);
+        }
+
+        // Handle if the mouse is being hovered
+        if (ImGui.isItemHovered()) {
+            ImGui.setTooltip(mod.getDescription() == null ? "No description, sorry :(" : mod.getDescription());
+
+            // Handle right clicks
+            if (ImGui.isMouseClicked(1)) {
+                this.toggleOptions(mod);
+            }
+        }
+
+        // Render the module options
+        if (this.shouldShowOptions(mod)) this.renderModuleOptions(mod);
+
+        // Pop the style variable
+        ImGui.popStyleVar(1);
+
+        // Handle outputs
+
+        // Draw button that toggles the module
+        if (shouldToggle) {
+            ChatUtils.hideNextChat = true;
+            mod.toggle();
+        }
+
+        // Pop the id
+        ImGui.popID();
+    }
+
+    /**
      * Creates windows for all the categories and populates them with modules
      */
     private void renderModules(float tickDelta) {        
@@ -486,103 +617,7 @@ public class ClickGUIScreen extends ImGuiScreen {
             ImGui.begin(cat);
 
             for (Module mod : modules) {
-                // Push a new id
-                ImGui.pushID(mod.getName());
-
-                // Push style variable
-                ImGui.pushStyleVar(ImGuiStyleVar.ButtonTextAlign, 0.0f, 0.5f);
-
-                // Push enabled style
-                if (mod.isEnabled()) {
-                    ImGui.pushStyleColor(ImGuiCol.Button, 0.10f, 0.60f, 0.10f, 0.75f);
-                    ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.10f, 0.50f, 0.10f, 0.75f);
-                    ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.30f, 0.70f, 0.30f, 0.75f);
-                }
-
-                boolean shouldToggle = ImGui.button(mod.getName(), ImGui.getWindowWidth() - ImGui.getStyle().getWindowPaddingX()*2, 0);
-
-                // Pop enabled style
-                if (mod.isEnabled()) {
-                    ImGui.popStyleColor(3);
-                }
-
-                boolean hasSettings = !mod.getSettings().isEmpty();
-
-                // Handle if the mouse is being hovered
-                if (ImGui.isItemHovered()) {
-                    ImGui.setTooltip(mod.getDescription() == null ? "No description, sorry :(" : mod.getDescription());
-
-                    // Handle right clicks
-                    if (ImGui.isMouseClicked(1)) {
-                        this.toggleOptions(mod);
-                    }
-                }
-
-                // Render the module options
-                if (
-                    (this.shouldShowOptions(mod))
-                ) {
-                    ImGui.separator();
-
-                    ImGui.spacing();
-                    ImGui.sameLine();
-
-                    String boundText = this.getBoundKey(mod) == -1 ? "Add bind" : "Key " + ClientUtils.getKeyCodeName(this.getBoundKey(mod)).toUpperCase();
-
-                    // Render the bind button
-                    if (ImGui.button(
-                        this.bindNext == mod ? "Waiting for a key..." : boundText
-                    )) {
-                        this.bindNext = this.bindNext == mod ? null : mod;
-                    }
-
-                    if (ImGui.isItemHovered()) {
-                        // Add tooltip to the button
-                        ImGui.setTooltip("Press ESCAPE to cancel, BACKSPACE to remove, or any other key to bind.");
-                    }
-
-                    // Handle the stupid reset button case
-                    if (mod instanceof ClickGUI) {
-                        // Render the reset button
-
-                        // Center the button text
-                        ImGui.pushStyleVar(ImGuiStyleVar.ButtonTextAlign, 0.5f, 0.5f);
-
-                        ImGui.spacing();
-                        ImGui.sameLine();
-
-                        if (ImGui.button("Reset All", ImGui.getWindowWidth() - ImGui.getStyle().getWindowPaddingX()*2 - ImGui.getStyle().getItemSpacingX()*2, 0)) {
-                            resetNext = true;
-                        }
-
-                        ImGui.popStyleVar(1);
-                    }
-
-                    // Render the settings
-                    if (hasSettings) {
-                        for (String settingName : mod.getSettings()) {
-                            Setting setting = mod.getSetting(settingName);
-
-                            this.renderSetting(mod, setting);
-                        }
-                    }
-
-                    ImGui.separator();
-                }
-
-                // Pop the style variable
-                ImGui.popStyleVar(1);
-
-                // Handle outputs
-
-                // Draw button that toggles the module
-                if (shouldToggle) {
-                    ChatUtils.hideNextChat = true;
-                    mod.toggle();
-                }
-
-                // Pop the id
-                ImGui.popID();
+                this.renderModule(mod);
             }
 
             ImGui.end();
