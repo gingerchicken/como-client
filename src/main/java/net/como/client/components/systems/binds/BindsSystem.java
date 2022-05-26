@@ -59,6 +59,28 @@ public class BindsSystem implements Iterable<Integer> {
     }
 
     /**
+     * Removes a bind from all queues in the system
+     * @param predicate The predicate to use to find the bind.
+     * @return True if at least one bind was removed, false otherwise.
+     */
+    public boolean removeBinds(Predicate<Bind> predicate) {
+        boolean removed = false;
+
+        for (Queue<Bind> queue : binds.values()) {
+            for (Iterator<Bind> iterator = queue.iterator(); iterator.hasNext();) {
+                Bind bind = iterator.next();
+
+                if (predicate.test(bind)) {
+                    iterator.remove();
+                    removed = true;
+                }
+            }
+        }
+
+        return removed;
+    }
+
+    /**
      * Removes a key from the system.
      * @param key The key to remove.
      * @return True if the key was removed, false otherwise.
