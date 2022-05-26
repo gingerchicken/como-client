@@ -19,7 +19,7 @@ import net.como.client.commands.structures.ModuleCommand;
 import net.como.client.commands.structures.CommandHandler;
 import net.como.client.components.FriendsManager;
 import net.como.client.events.EventEmitter;
-import net.como.client.misc.Module;
+import net.como.client.modules.Module;
 import net.como.client.modules.chat.*;
 import net.como.client.modules.combat.*;
 import net.como.client.modules.dupes.*;

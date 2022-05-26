@@ -4,7 +4,7 @@ import net.como.client.ComoClient;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.packet.OnResourcePackSendEvent;
-import net.como.client.misc.Module;
+import net.como.client.modules.Module;
 import net.como.client.utils.ChatUtils;
 import net.minecraft.network.packet.c2s.play.ResourcePackStatusC2SPacket;
 import net.minecraft.network.packet.s2c.play.ResourcePackSendS2CPacket;

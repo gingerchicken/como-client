@@ -1,8 +1,8 @@
 package net.como.client.modules.packet;
 
 import net.como.client.ComoClient;
-import net.como.client.misc.Module;
 import net.como.client.misc.settings.Setting;
+import net.como.client.modules.Module;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.MathsUtils;
 import net.minecraft.util.math.Vec3d;

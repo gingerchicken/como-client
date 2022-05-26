@@ -1,6 +1,6 @@
 package net.como.client.modules.chat;
 
-import net.como.client.misc.Module;
+import net.como.client.modules.Module;
 
 public class InfChat extends Module {
     public InfChat() {

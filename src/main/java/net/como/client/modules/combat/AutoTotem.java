@@ -6,7 +6,7 @@ import java.util.List;
 import net.como.client.ComoClient;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
-import net.como.client.misc.Module;
+import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.InteractionUtils;
 import net.minecraft.entity.player.PlayerInventory;

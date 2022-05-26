@@ -4,8 +4,8 @@ import net.como.client.ComoClient;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.packet.PreMovementPacketEvent;
-import net.como.client.misc.Module;
 import net.como.client.misc.settings.Setting;
+import net.como.client.modules.Module;
 import net.minecraft.util.math.Vec3d;
 
 public class SpeedHack extends Module {

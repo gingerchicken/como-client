@@ -1,7 +1,7 @@
 package net.como.client.modules.dupes;
 
-import net.como.client.misc.Module;
 import net.como.client.misc.settings.Setting;
+import net.como.client.modules.Module;
 
 public class CraftingDupe extends Module {
 

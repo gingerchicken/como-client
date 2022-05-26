@@ -1,4 +1,4 @@
-package net.como.client.misc;
+package net.como.client.modules;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +11,7 @@ import net.como.client.events.Event;
 import net.como.client.events.EventEmitter;
 import net.como.client.events.EventListener;
 import net.como.client.interfaces.Flatternable;
+import net.como.client.misc.Mode;
 import net.como.client.misc.settings.*;
 import net.como.client.utils.ChatUtils;
 import net.minecraft.client.font.TextRenderer;

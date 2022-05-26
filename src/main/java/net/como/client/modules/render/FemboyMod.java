@@ -9,7 +9,7 @@ import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.render.GetModelEvent;
 import net.como.client.events.render.GetSkinTextureEvent;
-import net.como.client.misc.Module;
+import net.como.client.modules.Module;
 import net.minecraft.util.Identifier;
 
 public class FemboyMod extends Module {

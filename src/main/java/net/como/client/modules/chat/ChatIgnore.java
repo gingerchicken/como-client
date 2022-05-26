@@ -6,8 +6,8 @@ import net.como.client.ComoClient;
 import net.como.client.commands.CommandChatIgnore;
 import net.como.client.events.Event;
 import net.como.client.events.client.AddMessageEvent;
-import net.como.client.misc.Module;
 import net.como.client.misc.settings.Setting;
+import net.como.client.modules.Module;
 
 public class ChatIgnore extends Module {
 

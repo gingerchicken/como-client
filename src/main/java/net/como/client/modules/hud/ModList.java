@@ -15,8 +15,8 @@ import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.misc.Colour;
 import net.como.client.misc.GUIPos;
 import net.como.client.misc.Mode;
-import net.como.client.misc.Module;
 import net.como.client.misc.settings.Setting;
+import net.como.client.modules.Module;
 import net.como.client.utils.RenderUtils;
 
 public class ModList extends Module {

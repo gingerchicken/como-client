@@ -3,7 +3,7 @@ package net.como.client.modules.movement;
 import net.como.client.ComoClient;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
-import net.como.client.misc.Module;
+import net.como.client.modules.Module;
 import net.minecraft.client.MinecraftClient;
 
 public class AutoSprint extends Module {

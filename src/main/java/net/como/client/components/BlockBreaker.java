@@ -9,7 +9,7 @@ import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.interfaces.ModulePlugin;
-import net.como.client.misc.Module;
+import net.como.client.modules.Module;
 import net.como.client.utils.BlockUtils;
 import net.como.client.utils.MathsUtils;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;

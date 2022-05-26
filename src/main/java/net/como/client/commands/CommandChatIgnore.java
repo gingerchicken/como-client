@@ -2,7 +2,7 @@ package net.como.client.commands;
 
 import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
-import net.como.client.misc.Module;
+import net.como.client.modules.Module;
 import net.como.client.utils.ChatUtils;
 
 import java.util.HashMap;

@@ -10,7 +10,7 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import net.como.client.misc.Module;
+import net.como.client.modules.Module;
 
 public class Persistence {
     public static final String CONFIG_PATH = "como-config.json";

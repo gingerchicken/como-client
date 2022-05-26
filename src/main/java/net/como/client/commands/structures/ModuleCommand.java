@@ -1,7 +1,7 @@
 package net.como.client.commands.structures;
 
 import net.como.client.commands.settings.SettingsCommand;
-import net.como.client.misc.Module;
+import net.como.client.modules.Module;
 
 public class ModuleCommand extends CommandNode {
     public Module module;

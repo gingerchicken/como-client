@@ -8,8 +8,8 @@ import java.util.List;
 import net.como.client.ComoClient;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
-import net.como.client.misc.Module;
 import net.como.client.misc.settings.Setting;
+import net.como.client.modules.Module;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 

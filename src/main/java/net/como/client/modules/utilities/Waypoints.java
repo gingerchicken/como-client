@@ -5,7 +5,7 @@ import net.como.client.components.WaypointSystem.Waypoint;
 import net.como.client.events.Event;
 import net.como.client.events.render.OnRenderEvent;
 import net.como.client.events.render.RenderWorldViewBobbingEvent;
-import net.como.client.misc.Module;
+import net.como.client.modules.Module;
 import net.como.client.utils.RenderUtils;
 
 public class Waypoints extends Module {
