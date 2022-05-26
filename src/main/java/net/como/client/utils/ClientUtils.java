@@ -295,11 +295,20 @@ public class ClientUtils {
         return usernames.get(uuid);
     }
 
-    public static GameMode getGameMode() {
-        // Get the localplayer in the tab list
-        PlayerListEntry playerListEntry = ComoClient.getClient().getNetworkHandler().getPlayerListEntry(ComoClient.me().getGameProfile().getId());
+    public static GameMode getGameMode(PlayerEntity player) {
+        PlayerListEntry playerListEntry = ComoClient.getClient().getNetworkHandler().getPlayerListEntry(player.getGameProfile().getId());
+
+        // Check for null and return the default gamemode
+        if (playerListEntry == null) {
+            return GameMode.SURVIVAL;
+        }
 
         return playerListEntry.getGameMode();
+    }
+
+    public static GameMode getGameMode() {
+        // Get the localplayer in the tab list
+        return getGameMode(ComoClient.me());
     }
 
     public static int getHealth(LivingEntity ent) {
