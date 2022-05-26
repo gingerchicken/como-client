@@ -352,6 +352,9 @@ public class ClickGUIScreen extends ImGuiScreen {
         if (resetNext) {
             resetNext = false;
             
+            // Clear the search
+            searchPhrase = "";
+
             // Clear the opened settings
             openedOptions.clear();
         }
@@ -435,7 +438,7 @@ public class ClickGUIScreen extends ImGuiScreen {
             List<Module> modules = new ArrayList<>(categories.get(cat));
 
             // Remove all of the modules from the list that don't contain the search phrase
-            if (searchPhrase != null && !searchPhrase.isEmpty()) {
+            if (searchPhrase != null && !searchPhrase.isEmpty() && !resetNext) {
                 modules.removeIf(mod -> !mod.getName().toLowerCase().contains(searchPhrase.toLowerCase()));
             }
 
