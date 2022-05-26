@@ -1,4 +1,4 @@
-package net.como.client.interfaces;
+package net.como.client.config;
 
 import java.util.HashMap;
 
