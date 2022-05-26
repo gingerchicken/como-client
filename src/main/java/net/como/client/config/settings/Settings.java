@@ -1,9 +1,9 @@
-package net.como.client.misc.settings;
+package net.como.client.config.settings;
 
 import java.util.HashMap;
 import java.util.Set;
 
-import net.como.client.misc.Mode;
+import net.como.client.config.specials.Mode;
 
 public class Settings {
     // TODO add a "on change" function

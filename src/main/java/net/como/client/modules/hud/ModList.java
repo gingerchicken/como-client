@@ -9,13 +9,13 @@ import java.util.List;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.Window;
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
+import net.como.client.config.specials.Mode;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.misc.Colour;
 import net.como.client.misc.GUIPos;
-import net.como.client.misc.Mode;
-import net.como.client.misc.settings.Setting;
 import net.como.client.modules.Module;
 import net.como.client.utils.RenderUtils;
 

@@ -3,12 +3,12 @@ package net.como.client.modules.render;
 import java.util.HashMap;
 
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.render.BlockCracksRenderEvent;
 import net.como.client.events.render.BlockEntityRenderEvent;
 import net.como.client.events.render.GetAmbientOcclusionLightLevelEvent;
 import net.como.client.events.render.ShouldDrawBlockSideEvent;
-import net.como.client.misc.settings.Setting;
 import net.como.client.modules.Module;
 import net.minecraft.client.MinecraftClient;
 import net.como.client.utils.BlockUtils;

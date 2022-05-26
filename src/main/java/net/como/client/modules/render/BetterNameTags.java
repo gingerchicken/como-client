@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.como.client.ComoClient;
 import net.como.client.components.ProjectionUtils;
+import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.events.render.OnRenderEvent;
@@ -15,7 +16,6 @@ import net.como.client.misc.attributes.entity.HealthAttribute;
 import net.como.client.misc.attributes.entity.NameAttribute;
 import net.como.client.misc.attributes.player.PingAttribute;
 import net.como.client.misc.maths.Vec3;
-import net.como.client.misc.settings.Setting;
 import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.RenderUtils;

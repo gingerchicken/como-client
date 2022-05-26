@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import net.como.client.ComoClient;
 import net.como.client.commands.CommandChatIgnore;
+import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.client.AddMessageEvent;
-import net.como.client.misc.settings.Setting;
 import net.como.client.modules.Module;
 
 public class ChatIgnore extends Module {

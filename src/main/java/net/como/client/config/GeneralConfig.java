@@ -1,4 +1,4 @@
-package net.como.client;
+package net.como.client.config;
 
 import net.como.client.misc.Colour;
 

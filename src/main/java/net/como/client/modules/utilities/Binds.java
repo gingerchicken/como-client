@@ -10,11 +10,11 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import net.como.client.ComoClient;
-import net.como.client.GeneralConfig;
 import net.como.client.commands.structures.Command;
+import net.como.client.config.GeneralConfig;
+import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.io.OnKeyEvent;
-import net.como.client.misc.settings.Setting;
 import net.como.client.modules.Module;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.ClientUtils;

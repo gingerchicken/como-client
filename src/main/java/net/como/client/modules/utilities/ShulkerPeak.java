@@ -8,10 +8,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.events.render.RenderTooltipEvent;
-import net.como.client.misc.settings.Setting;
 import net.como.client.modules.Module;
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;

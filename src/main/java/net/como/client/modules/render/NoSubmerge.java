@@ -1,8 +1,8 @@
 package net.como.client.modules.render;
 
+import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.render.OnSubmersionTypeEvent;
-import net.como.client.misc.settings.Setting;
 import net.como.client.modules.Module;
 import net.minecraft.client.render.CameraSubmersionType;
 

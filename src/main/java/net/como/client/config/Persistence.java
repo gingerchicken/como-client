@@ -1,4 +1,4 @@
-package net.como.client;
+package net.como.client.config;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +10,7 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import net.como.client.ComoClient;
 import net.como.client.modules.Module;
 
 public class Persistence {

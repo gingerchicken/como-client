@@ -3,9 +3,9 @@ package net.como.client.modules.utilities;
 import java.util.HashMap;
 
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.packet.SendPacketEvent;
-import net.como.client.misc.settings.Setting;
 import net.como.client.modules.Module;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;

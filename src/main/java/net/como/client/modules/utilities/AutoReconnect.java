@@ -1,7 +1,7 @@
 package net.como.client.modules.utilities;
 
 import net.como.client.ComoClient;
-import net.como.client.misc.settings.Setting;
+import net.como.client.config.settings.Setting;
 import net.como.client.modules.Module;
 import net.como.client.utils.ServerUtils;
 import net.minecraft.client.gui.screen.Screen;

@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.render.RenderWorldEvent;
 import net.como.client.interfaces.mixin.IWorld;
 import net.como.client.misc.Colour;
-import net.como.client.misc.settings.Setting;
 import net.como.client.modules.Module;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.world.chunk.BlockEntityTickInvoker;
