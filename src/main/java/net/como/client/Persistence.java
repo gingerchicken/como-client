@@ -12,9 +12,9 @@ import com.google.gson.reflect.TypeToken;
 
 import net.como.client.misc.Module;
 
-public class Persistance {
+public class Persistence {
     public static final String CONFIG_PATH = "como-config.json";
-    Persistance() { }
+    Persistence() { }
 
     private static String readConfig(String path) throws FileNotFoundException {
         String json = "";

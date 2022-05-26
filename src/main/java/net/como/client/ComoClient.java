@@ -210,7 +210,7 @@ public class ComoClient {
 
     public void close() {
         log("Saving Client Config...");
-        Persistance.saveConfig();
+        Persistence.saveConfig();
 
         log("It has been fun, remember to stay hydrated and that you matter <3");
     }
@@ -312,7 +312,7 @@ public class ComoClient {
     }
 
     private void loadPersistance() {
-        if (Persistance.loadConfig()) return;
+        if (Persistence.loadConfig()) return;
 
         // It must be a new config.
 
