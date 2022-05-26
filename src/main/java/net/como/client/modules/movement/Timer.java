@@ -1,6 +1,7 @@
 package net.como.client.modules.movement;
 
 import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.modules.Module;
 
 public class Timer extends Module {
@@ -22,6 +23,12 @@ public class Timer extends Module {
 
     @Override
     public void deactivate() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void fireEvent(Event event) {
         // TODO Auto-generated method stub
         
     }

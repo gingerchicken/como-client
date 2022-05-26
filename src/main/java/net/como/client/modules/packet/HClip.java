@@ -2,6 +2,7 @@ package net.como.client.modules.packet;
 
 import net.como.client.ComoClient;
 import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.modules.Module;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.MathsUtils;
@@ -100,6 +101,12 @@ public class HClip extends Module {
 
     @Override
     public void deactivate() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void fireEvent(Event event) {
         // TODO Auto-generated method stub
         
     }

@@ -228,12 +228,6 @@ public abstract class Module extends Settings implements EventListener, Flattern
         this.emitter.removeListener(this, event);
     }
 
-    @Override
-    public void fireEvent(Event event) {
-        // TODO Auto-generated method stub
-        
-    }
-
     /**
      * Converts each setting to a string for saving in the config file
      */

@@ -1,6 +1,7 @@
 package net.como.client.modules.dupes;
 
 import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.modules.Module;
 
 public class CraftingDupe extends Module {
@@ -20,6 +21,12 @@ public class CraftingDupe extends Module {
 
     @Override
     public void deactivate() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void fireEvent(Event event) {
         // TODO Auto-generated method stub
         
     }

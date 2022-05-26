@@ -6,6 +6,7 @@ import java.util.List;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandHandler;
 import net.como.client.commands.structures.CommandNode;
+import net.como.client.events.Event;
 import net.como.client.modules.Module;
 import net.como.client.utils.ChatUtils;
 
@@ -87,5 +88,11 @@ public class CommandAutoFill extends Module {
     @Override
     public void deactivate() {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void fireEvent(Event event) {
+        // TODO Auto-generated method stub
+        
     }
 }

@@ -1,5 +1,6 @@
 package net.como.client.modules.render;
 
+import net.como.client.events.Event;
 import net.como.client.modules.Module;
 
 public class HideTitleMessage extends Module {
@@ -25,6 +26,12 @@ public class HideTitleMessage extends Module {
 
     @Override
     public void deactivate() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void fireEvent(Event event) {
         // TODO Auto-generated method stub
         
     }

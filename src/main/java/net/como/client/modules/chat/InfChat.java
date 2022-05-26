@@ -1,5 +1,6 @@
 package net.como.client.modules.chat;
 
+import net.como.client.events.Event;
 import net.como.client.modules.Module;
 
 public class InfChat extends Module {
@@ -18,6 +19,12 @@ public class InfChat extends Module {
 
     @Override
     public void deactivate() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void fireEvent(Event event) {
         // TODO Auto-generated method stub
         
     }

@@ -2,6 +2,7 @@ package net.como.client.modules.utilities;
 
 import net.como.client.ComoClient;
 import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.modules.Module;
 import net.como.client.utils.ServerUtils;
 import net.minecraft.client.gui.screen.Screen;
@@ -50,6 +51,11 @@ public class AutoReconnect extends Module {
     }
     @Override
     public void deactivate() {
+        // TODO Auto-generated method stub
+        
+    }
+    @Override
+    public void fireEvent(Event event) {
         // TODO Auto-generated method stub
         
     }
