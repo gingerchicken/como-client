@@ -14,23 +14,33 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
 public class ProjectionUtils {
-    private static final Vec4 vec4 = new Vec4();
-    private static final Vec4 mmMat4 = new Vec4();
-    private static final Vec4 pmMat4 = new Vec4();
-    private static final Vec3 camera = new Vec3();
+    private final Vec4 vec4 = new Vec4();
+    private final Vec4 mmMat4 = new Vec4();
+    private final Vec4 pmMat4 = new Vec4();
+    private final Vec3 camera = new Vec3();
 
-    private static final Vec3 cameraNegated = new Vec3();
+    private final Vec3 cameraNegated = new Vec3();
 
-    private static Matrix4f model;
-    private static Matrix4f projection;
+    private Matrix4f model;
+    private Matrix4f projection;
 
-    private static double windowScale;
+    private double windowScale;
 
-    public static void update(MatrixStack matrices, Matrix4f projection) {
+    private static ProjectionUtils instance = null;
+
+    public static ProjectionUtils getInstance() {
+        if (instance == null) {
+            instance = new ProjectionUtils();
+        }
+
+        return instance;
+    }
+
+    public void update(MatrixStack matrices, Matrix4f projection) {
         MinecraftClient mc = ComoClient.getClient();
 
         model = matrices.peek().getPositionMatrix().copy();
-        ProjectionUtils.projection = projection;
+        this.projection = projection;
 
         camera.set(mc.gameRenderer.getCamera().getPos());
         cameraNegated.set(camera);
@@ -39,7 +49,7 @@ public class ProjectionUtils {
         windowScale = mc.getWindow().calculateScaleFactor(1, mc.forcesUnicodeFont());
     }
 
-    public static boolean to2D(Vec3 pos, double scale) {
+    public boolean to2D(Vec3 pos, double scale) {
         MinecraftClient mc = ComoClient.getClient();
 
         vec4.set(cameraNegated.x + pos.x, cameraNegated.y + pos.y, cameraNegated.z + pos.z, 1);

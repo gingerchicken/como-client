@@ -80,7 +80,7 @@ public class x88ESP extends Module {
         Vec3 projectedEndPos = new Vec3(endPos);
 
         // Project the positions to 2D
-        if (ProjectionUtils.to2D(projectedEndPos, 1) && ProjectionUtils.to2D(projectedEyePos, 1)) {
+        if (ProjectionUtils.getInstance().to2D(projectedEndPos, 1) && ProjectionUtils.getInstance().to2D(projectedEyePos, 1)) {
             // Render the line
             Render2DUtils.renderLine(mStack, (int)projectedEyePos.x, (int)projectedEyePos.y, (int)projectedEndPos.x, (int)projectedEndPos.y);
         }

@@ -85,7 +85,7 @@ public class BetterNameTags extends Module {
 
         // WorldToScreen
         Vec3 playerPos = new Vec3(pos);
-        if (!ProjectionUtils.to2D(playerPos, absoluteScale)) return;
+        if (!ProjectionUtils.getInstance().to2D(playerPos, absoluteScale)) return;
         ProjectionUtils.scaleProjection(absoluteScale);
 
         // Positions

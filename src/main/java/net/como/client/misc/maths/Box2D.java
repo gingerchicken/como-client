@@ -57,7 +57,7 @@ public class Box2D {
 
     private static boolean checkCorner(double x, double y, double z, Vec3 min, Vec3 max) {
         Vec3 pos = new Vec3(x, y, z);
-        if (!ProjectionUtils.to2D(pos, 1)) return true;
+        if (!ProjectionUtils.getInstance().to2D(pos, 1)) return true;
 
         // Check Min
         if (pos.x < min.x) min.x = pos.x;
