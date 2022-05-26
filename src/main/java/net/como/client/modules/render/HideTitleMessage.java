@@ -16,4 +16,16 @@ public class HideTitleMessage extends Module {
     public boolean shouldDisplayInModList() {
         return false;
     }
+
+    @Override
+    public void activate() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void deactivate() {
+        // TODO Auto-generated method stub
+        
+    }
 }

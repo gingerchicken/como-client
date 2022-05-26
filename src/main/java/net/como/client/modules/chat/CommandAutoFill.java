@@ -78,4 +78,14 @@ public class CommandAutoFill extends Module {
         // Else get the suggestions
         return currentCmd.getSuggestions();
     }
+
+    @Override
+    public void activate() {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void deactivate() {
+        // TODO Auto-generated method stub
+    }
 }

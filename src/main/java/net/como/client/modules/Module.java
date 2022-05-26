@@ -16,7 +16,7 @@ import net.como.client.interfaces.Flatternable;
 import net.como.client.utils.ChatUtils;
 import net.minecraft.client.font.TextRenderer;
 
-public class Module extends Settings implements EventListener, Flatternable {
+public abstract class Module extends Settings implements EventListener, Flatternable {
     private String name;
     private boolean enabled;
     private String category = "Misc";
@@ -106,8 +106,8 @@ public class Module extends Settings implements EventListener, Flatternable {
     }
 
     // Override me!
-    public void activate() { }
-    public void deactivate() { }
+    public abstract void activate();
+    public abstract void deactivate();
 
     protected Module(String name) {
         // Set the name

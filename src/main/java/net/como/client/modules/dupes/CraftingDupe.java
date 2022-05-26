@@ -17,4 +17,10 @@ public class CraftingDupe extends Module {
     public void activate() {
         if (this.getBoolSetting("ShowTip")) this.displayMessage("Remember, this will only work on servers that are 1.17 and lower, you can connect to them via multiconnect.");
     }
+
+    @Override
+    public void deactivate() {
+        // TODO Auto-generated method stub
+        
+    }
 }

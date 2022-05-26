@@ -9,4 +9,16 @@ public class InfChat extends Module {
 
         this.setCategory("Chat");
     }
+
+    @Override
+    public void activate() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void deactivate() {
+        // TODO Auto-generated method stub
+        
+    }
 }

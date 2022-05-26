@@ -97,4 +97,10 @@ public class HClip extends Module {
 
         this.disable();
     }
+
+    @Override
+    public void deactivate() {
+        // TODO Auto-generated method stub
+        
+    }
 }
