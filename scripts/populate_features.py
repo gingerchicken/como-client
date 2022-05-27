@@ -226,7 +226,7 @@ class Feature:
         return settings
 
 # Scan for all of the features
-features = [Feature(str(path)) for path in Path(FEATURES_DIR).rglob("*.java")]
+features = [Feature(str(path)) for path in Path(FEATURES_DIR).rglob("*.java") if path.name not in ["Module.java", "DummyModule.java"]]
 
 # Sort them alphabetically
 features.sort(key=lambda x: x.get_name())
