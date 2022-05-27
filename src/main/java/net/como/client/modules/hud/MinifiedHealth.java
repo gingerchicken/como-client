@@ -59,7 +59,7 @@ public class MinifiedHealth extends Module {
     public void fireEvent(Event event) {
         // Ignore if we're not in survival or adventure mode
         GameMode mode = ClientUtils.getGameMode();
-        if (mode != GameMode.SURVIVAL || mode != GameMode.ADVENTURE) return;
+        if (mode != GameMode.SURVIVAL && mode != GameMode.ADVENTURE) return;
 
         // Handle the events
         switch (event.getClass().getSimpleName()) {
