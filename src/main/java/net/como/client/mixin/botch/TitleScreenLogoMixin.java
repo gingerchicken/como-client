@@ -24,7 +24,7 @@ public class TitleScreenLogoMixin extends Screen {
 
     @Inject(method = "render", at = @At("TAIL"))
     private void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
-        if (ComoClient.Modules.get("hidetitlemessage").isEnabled()) return;
+        if (ComoClient.getInstance().getModules().get("hidetitlemessage").isEnabled()) return;
 
         MinecraftClient client = ComoClient.getClient();
         

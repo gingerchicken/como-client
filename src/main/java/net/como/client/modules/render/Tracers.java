@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.events.render.OnRenderEvent;
 import net.como.client.events.render.RenderWorldViewBobbingEvent;
 import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.interfaces.mixin.IWorld;
-import net.como.client.structures.Module;
-import net.como.client.structures.Colour;
-import net.como.client.structures.EntityFlags;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Colour;
+import net.como.client.misc.EntityFlags;
+import net.como.client.modules.Module;
 import net.como.client.utils.BlockUtils;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
@@ -102,7 +102,7 @@ public class Tracers extends Module {
 
             case "OnRenderEvent": {
                 OnRenderEvent e = (OnRenderEvent)event;
-                Float transparency = (Float)this.getSetting("Transparency").value;
+                float transparency = (Float)this.getSetting("Transparency").value;
 
                 // Render entity/player tracers
                 Iterable<Entity> ents = ComoClient.getClient().world.getEntities();
@@ -115,7 +115,7 @@ public class Tracers extends Module {
                     }
 
                     // TODO add different colours for different entities
-                    Colour c = ComoClient.config.entityColour;
+                    Colour c = ComoClient.getInstance().config.entityColour;
 
                     // Render tracers
                     RenderUtils.drawTracer(e.mStack, MathsUtils.getLerpedCentre(entity, e.tickDelta), e.tickDelta, c.r, c.g, c.b, c.a*transparency);
@@ -129,7 +129,7 @@ public class Tracers extends Module {
 
                         // This is only storage colouring for now but whatever.
                         // TODO what if it isn't storage!?
-                        Colour c = ComoClient.config.storageColour;
+                        Colour c = ComoClient.getInstance().config.storageColour;
 
                         RenderUtils.drawTracer(e.mStack, BlockUtils.blockPos(ticker.getPos()).add(0.5, 0.5, 0.5), e.tickDelta, c.r, c.g, c.b, c.a * transparency);
                     }

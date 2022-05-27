@@ -1,9 +1,9 @@
 package net.como.client.modules.dupes;
 
-import net.como.client.structures.Module;
-import net.como.client.structures.settings.Setting;
+import net.como.client.config.settings.Setting;
+import net.como.client.modules.DummyModule;
 
-public class CraftingDupe extends Module {
+public class CraftingDupe extends DummyModule {
 
     public CraftingDupe() {
         super("CraftingDupe");

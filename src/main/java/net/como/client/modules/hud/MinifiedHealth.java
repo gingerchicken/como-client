@@ -1,11 +1,12 @@
 package net.como.client.modules.hud;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.events.render.RenderHealthBarEvent;
-import net.como.client.structures.Colour;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
+import net.como.client.misc.Colour;
+import net.como.client.misc.attributes.entity.HealthAttribute;
+import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.Render2DUtils;
 import net.como.client.utils.RenderUtils;
@@ -48,21 +49,17 @@ public class MinifiedHealth extends Module {
         );
         
         immediate.draw();
-
-        // textRenderer.draw(matrices, this.getHealth(), x, y, );
     }
 
     private Text getHealth() {
-        int h = (int)Math.ceil(ComoClient.me().getHealth());
-
-        return Text.of(String.valueOf(h));
+        return (new HealthAttribute(ComoClient.me())).getText();
     }
 
     @Override
     public void fireEvent(Event event) {
         // Ignore if we're not in survival or adventure mode
         GameMode mode = ClientUtils.getGameMode();
-        if (mode != GameMode.SURVIVAL || mode != GameMode.ADVENTURE) return;
+        if (mode != GameMode.SURVIVAL && mode != GameMode.ADVENTURE) return;
 
         // Handle the events
         switch (event.getClass().getSimpleName()) {

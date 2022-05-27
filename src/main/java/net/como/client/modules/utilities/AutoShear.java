@@ -2,11 +2,11 @@ package net.como.client.modules.utilities;
 
 import java.util.HashMap;
 
-import net.como.client.structures.events.Event;
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.events.render.RenderEntityEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.settings.Setting;
+import net.como.client.modules.Module;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.util.Hand;

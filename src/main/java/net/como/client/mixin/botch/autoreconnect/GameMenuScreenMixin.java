@@ -27,7 +27,7 @@ public abstract class GameMenuScreenMixin extends Screen {
 
     // TODO wait this was in the last one, surely this should be a common function in an interface or something?
     private AutoReconnect getAutoReconnect() {
-        return (AutoReconnect)ComoClient.Modules.get("autoreconnect");
+        return (AutoReconnect)ComoClient.getInstance().getModules().get("autoreconnect");
     }
 
     private Boolean shouldDisplayButton() {

@@ -4,10 +4,10 @@ import java.util.HashMap;
 
 import net.como.client.ComoClient;
 import net.como.client.commands.CommandChatIgnore;
+import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.events.client.AddMessageEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.modules.Module;
 
 public class ChatIgnore extends Module {
 
@@ -19,7 +19,7 @@ public class ChatIgnore extends Module {
         this.addSetting(new Setting("Phrases", new HashMap<String, Boolean>()));
 
         // Registering commandsCommandChatIgnore
-        ComoClient.commandHandler.registerCommand(new CommandChatIgnore());
+        ComoClient.getInstance().commandHandler.registerCommand(new CommandChatIgnore());
 
         this.setCategory("Chat");
     }

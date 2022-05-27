@@ -4,7 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import net.como.client.interfaces.mixin.IMatrix4f;
-import net.como.client.structures.maths.Vec4;
+import net.como.client.misc.maths.Vec4;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 

@@ -13,6 +13,6 @@ import net.minecraft.client.Mouse;
 public class MouseMixin {
     @Inject(at = @At("HEAD"), method="onMouseButton(JIII)V", cancellable = true)
     private void onMouseButton(long window, int button, int action, int mods, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new OnMouseButtonEvent(window, button, action, mods, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new OnMouseButtonEvent(window, button, action, mods, ci));
     }
 }

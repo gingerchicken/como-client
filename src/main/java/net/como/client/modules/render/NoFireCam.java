@@ -1,8 +1,8 @@
 package net.como.client.modules.render;
 
+import net.como.client.events.Event;
 import net.como.client.events.render.RenderFireOverlayEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
+import net.como.client.modules.Module;
 
 public class NoFireCam extends Module {
     public NoFireCam() {

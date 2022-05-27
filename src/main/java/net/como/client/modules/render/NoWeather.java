@@ -1,8 +1,8 @@
 package net.como.client.modules.render;
 
+import net.como.client.events.Event;
 import net.como.client.events.render.GetRainGradientEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
+import net.como.client.modules.Module;
 
 public class NoWeather extends Module {
     public NoWeather() {

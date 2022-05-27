@@ -5,12 +5,12 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.lang3.StringUtils;
 
 import io.netty.buffer.Unpooled;
+import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.events.client.GetClientModNameEvent;
 import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.mixin.packet.CustomPayloadC2SPacketAccessor;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.modules.Module;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
 import net.minecraft.util.Identifier;

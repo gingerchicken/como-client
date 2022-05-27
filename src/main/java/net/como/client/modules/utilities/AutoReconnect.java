@@ -1,12 +1,12 @@
 package net.como.client.modules.utilities;
 
 import net.como.client.ComoClient;
-import net.como.client.structures.Module;
-import net.como.client.structures.settings.Setting;
+import net.como.client.config.settings.Setting;
+import net.como.client.modules.DummyModule;
 import net.como.client.utils.ServerUtils;
 import net.minecraft.client.gui.screen.Screen;
 
-public class AutoReconnect extends Module {
+public class AutoReconnect extends DummyModule {
     public AutoReconnect() {
         super("AutoReconnect");
 
@@ -40,6 +40,7 @@ public class AutoReconnect extends Module {
 
         return timeRemaining;
     }
+
     private double deltaTime() {
         return ComoClient.getCurrentTime() - startTime;
     }

@@ -1,10 +1,10 @@
 package net.como.client.modules.utilities;
 
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.modules.Module;
 import net.minecraft.client.util.Window;
 
 public class UnfocusCPU extends Module {

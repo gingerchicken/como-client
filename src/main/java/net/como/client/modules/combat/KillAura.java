@@ -7,14 +7,14 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import net.como.client.ComoClient;
-import net.como.client.components.ServerClientRotation;
+import net.como.client.components.plugins.impl.ServerClientRotation;
+import net.como.client.config.settings.Setting;
+import net.como.client.config.specials.Mode;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.render.OnRenderEvent;
 import net.como.client.events.render.RenderWorldViewBobbingEvent;
-import net.como.client.structures.Mode;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
@@ -102,7 +102,7 @@ public class KillAura extends Module {
             .filter(e -> e.isAlive())
 
             // Make sure that we are not attacking friends where needed
-            .filter(e -> !(e instanceof PlayerEntity) || !(ComoClient.friendsManager.onFriendList((PlayerEntity)e)) || (boolean)this.getSetting("AttackFriends").value )
+            .filter(e -> !(e instanceof PlayerEntity) || !(ComoClient.getInstance().friendsManager.onFriendList((PlayerEntity)e)) || (boolean)this.getSetting("AttackFriends").value )
             
             // Make sure it ain't us
             .filter(e -> e != ComoClient.me());

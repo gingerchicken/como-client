@@ -1,8 +1,8 @@
 package net.como.client.modules.render;
 
-import net.como.client.structures.Module;
+import net.como.client.modules.DummyModule;
 
-public class HideTitleMessage extends Module {
+public class HideTitleMessage extends DummyModule {
 
     public HideTitleMessage() {
         super("HideTitleMessage");

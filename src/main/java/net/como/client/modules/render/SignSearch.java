@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.events.render.RenderWorldEvent;
 import net.como.client.events.render.RenderWorldViewBobbingEvent;
 import net.como.client.events.render.SignRenderEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.modules.Module;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.block.entity.SignBlockEntity;

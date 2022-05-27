@@ -19,10 +19,10 @@ import net.minecraft.client.gui.screen.Screen;
 public abstract class MinecraftClientMixin implements IClient {
     @Inject(at = @At("HEAD"), method = "close()V", cancellable = false)
     private void onClose(CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new OnClientCloseEvent(ci));
+        ComoClient.getInstance().emitter.triggerEvent(new OnClientCloseEvent(ci));
 
         // Close our client after all is said and done.
-        ComoClient.close();
+        ComoClient.getInstance().close();
     }
 
     @Shadow
@@ -36,7 +36,7 @@ public abstract class MinecraftClientMixin implements IClient {
 
     @Inject(at = @At("HEAD"), method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;)V", cancellable = true)
     private void onDisconnect(Screen screen, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new DisconnectEvent(ci));
+        ComoClient.getInstance().emitter.triggerEvent(new DisconnectEvent(ci));
     }
 
     @Shadow protected abstract void doItemUse();

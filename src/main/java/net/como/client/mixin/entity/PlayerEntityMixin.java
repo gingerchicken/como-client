@@ -13,6 +13,6 @@ import net.minecraft.entity.player.PlayerEntity;
 public class PlayerEntityMixin {
     @Inject(at = @At("HEAD"), method="jump()V", cancellable = true)
     private void onJump(CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new JumpEvent(ci));
+        ComoClient.getInstance().emitter.triggerEvent(new JumpEvent(ci));
     }
 }
