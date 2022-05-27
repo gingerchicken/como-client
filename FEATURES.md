@@ -125,6 +125,9 @@
 ### Default Settings
  - ShowServer: `True`
 
+## DummyModule (`.dummymodule`)
+[(Source Code)](src/main/java/net/como/client/modules/DummyModule.java) No description available as of yet.
+
 ## ElytraFlight (`.elytraflight`)
 [(Source Code)](src/main/java/net/como/client/modules/movement/ElytraFlight.java) Fly with the elytra but without needing fireworks etc.
 ### Default Settings
@@ -307,6 +310,9 @@
     - BottomRight
  - RGBIntensity: `5`
  - Scale: `1.0`
+
+## Module (`.module`)
+[(Source Code)](src/main/java/net/como/client/modules/Module.java) No description available as of yet.
 
 ## NoBoss (`.noboss`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoBoss.java) Hide annoying boss bars and their effects.
