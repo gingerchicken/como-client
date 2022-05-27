@@ -21,7 +21,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     }
 
     private NoSlow getNoSlow() {
-        return (NoSlow)(ComoClient.Modules.get("noslow"));
+        return (NoSlow)(ComoClient.getInstance().getModules().get("noslow"));
     }
 
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z", ordinal = 0), method = "tickMovement()V")

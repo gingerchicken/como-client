@@ -13,6 +13,6 @@ import net.minecraft.client.render.RenderTickCounter;
 public class RenderTickCounterMixin {
     @Inject(at = @At("HEAD"), method = "beginRenderTick(J)I", cancellable = true)
     private void onBeginRenderTick(long timeMillis, CallbackInfoReturnable<Integer> ci) {
-        ComoClient.emitter.triggerEvent(new BeginRenderTickEvent(timeMillis, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new BeginRenderTickEvent(timeMillis, ci));
     }
 }

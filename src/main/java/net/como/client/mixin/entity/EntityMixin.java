@@ -14,13 +14,13 @@ import net.minecraft.entity.Entity;
 public class EntityMixin {
     @Inject(at = @At("RETURN"), method="isInvisible()Z", cancellable = true)
     public void onIsInvisible(CallbackInfoReturnable<Boolean> cir) {
-        ComoClient.emitter.triggerEvent(new IsEntityInvisibleEvent(cir));
+        ComoClient.getInstance().emitter.triggerEvent(new IsEntityInvisibleEvent(cir));
     }
 
     @Inject(at = @At("RETURN"), method="isGlowing()Z", cancellable = true)
     public void onIsGlowing(CallbackInfoReturnable<Boolean> cir) {
         Entity ent = (Entity)((Object)(this));
 
-        ComoClient.emitter.triggerEvent(new IsEntityGlowingEvent(ent, cir));
+        ComoClient.getInstance().emitter.triggerEvent(new IsEntityGlowingEvent(ent, cir));
     }
 }

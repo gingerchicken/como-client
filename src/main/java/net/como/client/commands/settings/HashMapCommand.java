@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
-import net.como.client.structures.settings.Setting;
+import net.como.client.config.settings.Setting;
 import net.como.client.utils.ChatUtils;
 
 public class HashMapCommand extends CommandNode {

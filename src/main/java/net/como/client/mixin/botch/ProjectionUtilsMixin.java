@@ -25,7 +25,7 @@ public abstract class ProjectionUtilsMixin {
 
         client.getProfiler().push("como-client_render");
         
-        ProjectionUtils.update(matrices, matrix4f);
+        ProjectionUtils.getInstance().update(matrices, matrix4f);
 
         RenderSystem.applyModelViewMatrix();
         client.getProfiler().pop();

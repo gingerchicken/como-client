@@ -1,21 +1,24 @@
 package net.como.client.modules.utilities;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Queue;
+import java.util.function.Predicate;
 
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import net.como.client.ComoClient;
-import net.como.client.GeneralConfig;
 import net.como.client.commands.structures.Command;
+import net.como.client.components.systems.binds.Bind;
+import net.como.client.components.systems.binds.BindsSystem;
+import net.como.client.components.systems.binds.impl.CommandBind;
+import net.como.client.components.systems.binds.impl.ModuleBind;
+import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.events.io.OnKeyEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.modules.Module;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.ClientUtils;
 
@@ -39,112 +42,13 @@ public class Binds extends Module {
         }
     }
 
-    public static class Bind {
-        private int key;
-        private String command;
+    /**
+     * Used for any binds etc on the client
+     */
+    protected BindsSystem binds = new BindsSystem();
 
-        public int getKey() {
-            return this.key;
-        }
-
-        public String getCommand() {
-            return this.command;
-        }
-
-        private String getTriggerCommand() {
-            return String.format("%s%s", ComoClient.commandHandler.delimiter, this.getCommand());
-        }
-
-        public Bind(int key, String command) {
-            this.key = key;
-            this.command = command;
-        }
-
-        public void executeCommand() {
-            ComoClient.commandHandler.handle(this.getTriggerCommand());
-        }
-    }
-
-    private HashMap<Integer, List<Bind>> binds = new HashMap<Integer, List<Bind>>();
-
-    public boolean addBind(Bind bind) {
-        if (!binds.containsKey(bind.getKey())) {
-            binds.put(bind.getKey(), new ArrayList<Bind>());
-        }
-
-        // Make sure it ain't a dupe.
-        if (this.getBindIndex(bind) != -1) return false;
-
-        // TODO check if the key is valid.
-        binds.get(bind.getKey()).add(bind);
-
-        return true;
-    }
-    public boolean addBind(int key, String command) {
-        return this.addBind(new Bind(key, command));
-    }
-    
-    public boolean removeBind(int key, String command) {
-        int index = getBindIndex(key, command);
-
-        // Make sure that the item exists.
-        if (index == -1) return false;
-
-        // Remove the item from the list
-        binds.get(key).remove(index);
-
-        // If its empty we can just remove the entire thing.
-        if (binds.get(key).size() == 0) return this.removeBind(key);
-
-        // All done!
-        return true;
-    }
-    public boolean removeBind(int key) {
-        // Check that we actually have the key bound.
-        if (!binds.containsKey(key)) return false;
-
-        // Remove the entire object.
-        binds.remove(key);
-
-        // We good.
-        return true;
-    }
-    
-    public boolean fireBind(int key) {
-        if (!this.binds.containsKey(key)) return false;
-
-        List<Bind> active = this.binds.get(key);
-
-        for (Bind bind : active) {
-            ChatUtils.hideNextChat = this.getBoolSetting("HideCommandOutput");
-            bind.executeCommand();
-        }
-
-        return true;
-    }
-
-    private int getBindIndex(int key, String command) {
-        return this.getBindIndex(new Bind(key, command));
-    }
-    private int getBindIndex(Bind bind) {
-        int i = -1;
-        if (!binds.containsKey(bind.key)) {
-            return i;
-        }
-
-        List<Bind> active = binds.get(bind.key);
-        
-        int j = 0;
-        for (Bind b : active) {
-            if (b.getCommand().equals(bind.command)) {
-                i = j;
-                break;
-            }
-
-            j++;
-        }
-
-        return i;
+    public BindsSystem getBinds() {
+        return this.binds;
     }
 
     public Binds() {
@@ -177,7 +81,7 @@ public class Binds extends Module {
 
         }
 
-        return (keyChar == ComoClient.commandHandler.delimiter.charAt(0));
+        return (keyChar == ComoClient.getInstance().commandHandler.delimiter.charAt(0));
     }
 
     public boolean logNextKey = false;
@@ -206,7 +110,7 @@ public class Binds extends Module {
                 }
 
                 // Handle the keypress
-                if (ComoClient.getClient().currentScreen == null) this.fireBind(e.key);
+                if (ComoClient.getClient().currentScreen == null) binds.fireBinds(e.key);
 
                 // Open chat if it is our command button.
                 if (this.isChatDelimiter(e.key) && ComoClient.getClient().currentScreen == null) {
@@ -214,14 +118,49 @@ public class Binds extends Module {
                 }
 
                 // Open ClickGUI (if we dont have meteor)
-                if (!ComoClient.isMeteorLoaded() && this.getBoolSetting("GUIKey") && e.key == ComoClient.config.menuKey) {
+                if (!ComoClient.isMeteorLoaded() && this.getBoolSetting("GUIKey") && e.key == ComoClient.getInstance().config.menuKey) {
                     ChatUtils.hideNextChat = true;
-                    ComoClient.Modules.get("clickgui").toggle();
+                    ComoClient.getInstance().getModules().get("clickgui").toggle();
                 }
 
                 break;
             }
         }
+    }
+
+    // TODO replace the lift/flatten system, it is disgusting.
+
+    @Override
+    public HashMap<String, String> flatten() {
+        HashMap<String, String> data = super.flatten();
+        
+        Gson gson = new Gson();
+        HashMap<String, String> flatBindsList = new HashMap<>();
+        for (int key : this.binds) {
+            List<String> flatBinds = new ArrayList<>();
+
+            for (Bind bind : this.binds.getKeyBinds(key)) {
+                String value = "";
+
+                if (bind instanceof CommandBind) {
+                    CommandBind commandBind = (CommandBind)bind;
+
+                    value = commandBind.getCommand();
+                } else if (bind instanceof ModuleBind) {
+                    ModuleBind commandBind = (ModuleBind)bind;
+
+                    value = commandBind.getModule().getName().toLowerCase();
+                }
+
+                flatBinds.add(value);
+            }
+
+            flatBindsList.put(String.valueOf(key), gson.toJson(flatBinds));
+        }
+
+        data.put("binds", gson.toJson(flatBindsList));
+
+        return data;
     }
 
     // This works but it is nasty
@@ -236,10 +175,23 @@ public class Binds extends Module {
             bindsObj = gson.fromJson(rawBindsObj, bindsObj.getClass());
 
             for (String key : bindsObj.keySet()) {
-                Type type = new TypeToken<ArrayList<Bind>>() {}.getType();
-                List<Bind> bindsList = gson.fromJson(bindsObj.get(key), type);
+                int keyCode = Integer.parseInt(key);
+                
+                // Retrieve the array of the commands
+                String[] commands = gson.fromJson(bindsObj.get(key), String[].class);
 
-                this.binds.put(Integer.parseInt(key), bindsList);
+                for (String command : commands) {
+                    if (command.equals("")) continue;
+
+                    // If the command is a module, then we need to find it and bind it.
+                    if (ComoClient.getInstance().getModules().containsKey(command)) {
+                        Module module = ComoClient.getInstance().getModules().get(command);
+
+                        this.binds.addBind(keyCode, new ModuleBind(module));
+                    } else {
+                        this.binds.addBind(keyCode, new CommandBind(command));
+                    }
+                }
             }
     
             data.remove("binds");
@@ -249,33 +201,13 @@ public class Binds extends Module {
     }
 
     @Override
-    public HashMap<String, String> flatten() {
-        HashMap<String, String> data = super.flatten();
-        
-        Gson gson = new Gson();
-        HashMap<String, String> flatBindsList = new HashMap<>();
-        for (Integer key : this.binds.keySet()) {
-            List<Bind> flatBinds = new ArrayList<>();
-
-            for (Bind bind : this.binds.get(key)) {
-                flatBinds.add(bind);
-            }
-
-            flatBindsList.put(key.toString(), gson.toJson(flatBinds));
-        }
-
-        data.put("binds", gson.toJson(flatBindsList));
-
-        return data;
-    }
-
-    @Override
     public Iterable<Command> getCommands() {
         List<Command> commands = new ArrayList<>();
 
         commands.add(new AddBind());
         commands.add(new RemoveBind());
         commands.add(new LogNext());
+        commands.add(new ListBind());
 
         return commands;
     }
@@ -283,6 +215,25 @@ public class Binds extends Module {
     private static class BindsSub extends Command {
         public BindsSub(String command, String helpText, String description) {
             super(command, helpText, description);
+        }
+
+        protected boolean isModuleCommand(String command) {
+            return this.getModule(command) != null;
+        }
+
+        protected Module getModule(String command) {
+            ComoClient cc = ComoClient.getInstance();
+
+            // Strip it if it begins with the prefix
+            if (command.startsWith(cc.config.commandPrefix)) {
+                command = command.substring(cc.config.commandPrefix.length());
+            }
+
+            // Check if we have the module with this name
+            if (!cc.getModules().containsKey(command)) return null;
+
+            // If it exists then return it
+            return cc.getModules().get(command);
         }
 
         @Override
@@ -293,7 +244,7 @@ public class Binds extends Module {
         }
 
         public Binds getBinds() {
-            return (Binds)ComoClient.Modules.get("binds");
+            return (Binds)ComoClient.getInstance().getModules().get("binds");
         }
 
         public boolean shouldDisplayKey(Integer keyCode) {
@@ -361,12 +312,13 @@ public class Binds extends Module {
 
             if (checkKey(key)) return true;
 
-            if (!this.getBinds().addBind(key, command)) {
-                this.getBinds().displayMessage(String.format("%sFailed to add key bind.", ChatUtils.RED));
-                return true;
-            }
+            boolean isModule = this.isModuleCommand(command);
+            Bind bind = isModule ? new ModuleBind(this.getModule(command)) : new CommandBind(command);
 
-            this.getBinds().displayMessage(String.format("Bound %s to run \"%s\".", this.keyBindString(key), command));
+            // Add the bind
+            this.getBinds().binds.addBind(key, bind);
+            this.getBinds().displayMessage(String.format("Bound %s to run %s \"%s\".", this.keyBindString(key), isModule ? "module" : "command", command));
+
             return true;
         }
 
@@ -400,6 +352,44 @@ public class Binds extends Module {
         }
     }
 
+    private static class ListBind extends BindsSub {
+        @Override
+        public boolean shouldShowHelp(String[] args) {
+            return (args.length == 0);
+        }
+        
+        public ListBind() {
+            super("list", "binds list <key to check>", "Lists all the binds on a key");
+        }
+
+        @Override
+        public Boolean trigger(String[] args) {
+            if (this.handleHelp(args)) return true;
+
+            int key = this.getKeyArg(args);
+            if (checkKey(key)) return true;
+
+            // Get the binds for this key
+            Queue<Bind> binds = this.getBinds().binds.getKeyBinds(key);
+
+            if (binds == null || binds.isEmpty()) {
+                this.getBinds().displayMessage(String.format("%sNo binds on key %s.", ChatUtils.RED, this.keyBindString(key)));
+
+                return true;
+            }
+
+            this.getBinds().displayMessage(String.format("Binds queue for key %s:", this.keyBindString(key)));
+
+            int i = 1;
+            for (Bind bind : binds) {
+                this.getBinds().displayMessage(String.format("%d.  %s", i, bind.toString()));
+                i++;
+            }
+
+            return true;
+        }
+    }
+
     // TODO add a list binds command
 
     private static class RemoveBind extends BindsSub {
@@ -422,7 +412,7 @@ public class Binds extends Module {
 
             // Handle entire key
             if (args.length == 1) {
-                if (!this.getBinds().removeBind(key)) {
+                if (!this.getBinds().binds.removeBind(key)) {
                     this.getBinds().displayMessage(String.format("%sFailed to remove key bind for key '%s'.", ChatUtils.RED, this.keyBindString(key)));
                     return true;
                 }
@@ -432,9 +422,30 @@ public class Binds extends Module {
             }
 
             String command = this.getCommandArg(args);
+            boolean success = false;
+
+            // Find the bind with the specific command
+            Queue<Bind> binds = this.getBinds().binds.getKeyBinds(key);
+
+            // Create a new predicate
+
+            Predicate<Bind> check = this.isModuleCommand(command) ?
+                    // If it is a module command then check if the module is the same
+                    (Bind bind) -> bind instanceof ModuleBind && ((ModuleBind)bind).getModule().getName().toLowerCase().equals(command) :
+
+                    // If it is a command then check if the command is the same
+                    (Bind bind) -> bind instanceof CommandBind && ((CommandBind)bind).getCommand().equals(command);
+                
+
+            for (Bind bind : binds) {
+                if (!check.test(bind)) continue;
+
+                success = true;
+                this.getBinds().binds.removeBind(key, bind);
+            }
 
             // Handle key + command
-            if (!this.getBinds().removeBind(key, command)) {
+            if (!success) {
                 this.getBinds().displayMessage(String.format("%sFailed to remove key bind for key '%s' with command '%s'.", ChatUtils.RED, this.keyBindString(key), command));
                 return true;
             }

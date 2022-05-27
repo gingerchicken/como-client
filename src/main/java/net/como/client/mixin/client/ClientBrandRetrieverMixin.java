@@ -13,6 +13,6 @@ import net.minecraft.client.ClientBrandRetriever;
 public class ClientBrandRetrieverMixin {
     @Inject(at = @At("TAIL"), method="getClientModName()Ljava/lang/String;", cancellable = true, remap = false)
     private static void onGetClientModName(CallbackInfoReturnable<String> cir) {
-        ComoClient.emitter.triggerEvent(new GetClientModNameEvent(cir));
+        ComoClient.getInstance().emitter.triggerEvent(new GetClientModNameEvent(cir));
     }
 }

@@ -1,6 +1,6 @@
 package net.como.client.interfaces.mixin;
 
-import net.como.client.structures.maths.Vec4;
+import net.como.client.misc.maths.Vec4;
 import net.minecraft.util.math.Vec3d;
 
 public interface IMatrix4f {

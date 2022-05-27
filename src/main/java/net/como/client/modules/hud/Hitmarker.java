@@ -3,13 +3,13 @@ package net.como.client.modules.hud;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.client.OnAttackEntityEvent;
 import net.como.client.events.packet.OnGameStateChangeEvent;
 import net.como.client.events.render.InGameHudRenderEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.modules.Module;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
@@ -65,7 +65,7 @@ public class Hitmarker extends Module {
         float k = 0.75f;
         RenderSystem.setShaderColor(k, k, k, k);
 
-        Double scale = this.getDoubleSetting("Scale") + alpha/(255d*8d);
+        double scale = this.getDoubleSetting("Scale") + alpha/(255d*8d);
 
         // Scaling
         int width  = (int)(HITMARKER_WIDTH * scale);
@@ -116,12 +116,12 @@ public class Hitmarker extends Module {
     private int heldTicks = 0;
 
     private void incAlpha() {
-        Float next = alpha + (float)(double)this.getDoubleSetting("AlphaStep");
+        float next = alpha + (float)(double)this.getDoubleSetting("AlphaStep");
         alpha = next > 255f ? 255f : next;
     }
 
     private void decAlpha() {
-        Float next = alpha - (float)(double)this.getDoubleSetting("AlphaStep");
+        float next = alpha - (float)(double)this.getDoubleSetting("AlphaStep");
         alpha = next < 0 ? 0 : next;
     }
 
@@ -170,8 +170,8 @@ public class Hitmarker extends Module {
 
 
     private LivingEntity target;
-    private Float beforeHealth;
-    private Double hitTime;
+    private float beforeHealth;
+    private double hitTime;
     private void registerHit(LivingEntity entity) {
         this.target = entity;
         this.beforeHealth = entity.getHealth();

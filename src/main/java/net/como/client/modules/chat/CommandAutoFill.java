@@ -6,10 +6,10 @@ import java.util.List;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandHandler;
 import net.como.client.commands.structures.CommandNode;
-import net.como.client.structures.Module;
+import net.como.client.modules.DummyModule;
 import net.como.client.utils.ChatUtils;
 
-public class CommandAutoFill extends Module {
+public class CommandAutoFill extends DummyModule {
 
     @Override
     public boolean shouldDisplayInModList() {

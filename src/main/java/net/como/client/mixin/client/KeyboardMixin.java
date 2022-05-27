@@ -13,6 +13,6 @@ import net.minecraft.client.Keyboard;
 public class KeyboardMixin {
     @Inject(at = @At("HEAD"), method="onKey(JIIII)V", cancellable = true)
     private void onKey(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
-        ComoClient.emitter.triggerEvent(new OnKeyEvent(window, key, scancode, action, modifiers, ci));
+        ComoClient.getInstance().emitter.triggerEvent(new OnKeyEvent(window, key, scancode, action, modifiers, ci));
     }
 }

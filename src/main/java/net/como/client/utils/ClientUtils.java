@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mojang.authlib.minecraft.client.ObjectMapper;
 
+import org.lwjgl.glfw.GLFW;
+
 import joptsimple.internal.Strings;
 import net.como.client.ComoClient;
 import net.como.client.interfaces.mixin.IEntity;
@@ -28,9 +30,11 @@ import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.Window;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -294,10 +298,31 @@ public class ClientUtils {
         return usernames.get(uuid);
     }
 
-    public static GameMode getGameMode() {
-        // Get the localplayer in the tab list
-        PlayerListEntry playerListEntry = ComoClient.getClient().getNetworkHandler().getPlayerListEntry(ComoClient.me().getGameProfile().getId());
+    public static GameMode getGameMode(PlayerEntity player) {
+        PlayerListEntry playerListEntry = ComoClient.getClient().getNetworkHandler().getPlayerListEntry(player.getGameProfile().getId());
+
+        // Check for null and return the default gamemode
+        if (playerListEntry == null) {
+            return GameMode.SURVIVAL;
+        }
 
         return playerListEntry.getGameMode();
+    }
+
+    public static GameMode getGameMode() {
+        // Get the localplayer in the tab list
+        return getGameMode(ComoClient.me());
+    }
+
+    public static int getHealth(LivingEntity ent) {
+        return (int)Math.ceil(ent.getHealth());
+    }
+
+    public static String getKeyCodeName(int keyCode, int scanCode) {
+        return getTextString(InputUtil.fromKeyCode(keyCode, scanCode).getLocalizedText());
+    }
+
+    public static String getKeyCodeName(int keyCode) {
+        return getKeyCodeName(keyCode, GLFW.GLFW_KEY_UNKNOWN);
     }
 }

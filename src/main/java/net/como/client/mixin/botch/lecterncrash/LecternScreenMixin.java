@@ -19,7 +19,7 @@ public abstract class LecternScreenMixin extends Screen {
     }
 
     private LecternCrash getLecternCrash() {
-        return (LecternCrash)(ComoClient.Modules.get("lecterncrash"));
+        return (LecternCrash)(ComoClient.getInstance().getModules().get("lecterncrash"));
     }
 
     @Inject(at = {@At("TAIL")}, method = {"init"})

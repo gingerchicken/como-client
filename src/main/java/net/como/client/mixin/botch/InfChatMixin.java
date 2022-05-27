@@ -18,7 +18,7 @@ public abstract class InfChatMixin {
 
     @Inject(at = @At("TAIL"), method="init()V")
     private void onInit(CallbackInfo ci) {
-        InfChat infChat = (InfChat)(ComoClient.Modules.get("infchat"));
+        InfChat infChat = (InfChat)(ComoClient.getInstance().getModules().get("infchat"));
         if (!infChat.isEnabled()) return;
 
         chatField.setMaxLength(Integer.MAX_VALUE);

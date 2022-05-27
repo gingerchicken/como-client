@@ -3,10 +3,10 @@ package net.como.client.modules.hud;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.events.render.InGameHudRenderEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.modules.Module;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;

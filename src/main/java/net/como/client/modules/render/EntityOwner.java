@@ -7,10 +7,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.opengl.GL11;
 
 import net.como.client.ComoClient;
+import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.events.render.OnRenderEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.settings.Setting;
+import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
@@ -56,7 +56,7 @@ public class EntityOwner extends Module {
 		mStack.multiply(ComoClient.getClient().getEntityRenderDispatcher().getRotation());
 		float c = (float)Math.sqrt(ComoClient.getClient().cameraEntity.getLerpedPos(tickDelta).distanceTo(pos));
 
-        TextRenderer r = ComoClient.textRenderer;
+        TextRenderer r = ComoClient.getInstance().textRenderer;
 
         float scale = (float)(double)(this.getDoubleSetting("Scale"));
 		mStack.scale(-0.025F*c*scale, -0.025F*c*scale, 0);

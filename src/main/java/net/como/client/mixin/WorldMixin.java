@@ -13,6 +13,6 @@ import net.minecraft.world.World;
 public class WorldMixin {
     @Inject(at = @At("RETURN"), method = "getRainGradient(F)F", cancellable = true)
     private void onIsRaining(float delta, CallbackInfoReturnable<Float> cir) {
-        ComoClient.emitter.triggerEvent(new GetRainGradientEvent(delta, cir));
+        ComoClient.getInstance().emitter.triggerEvent(new GetRainGradientEvent(delta, cir));
     }
 }

@@ -1,9 +1,9 @@
 package net.como.client.modules.combat;
 
 import net.como.client.ComoClient;
+import net.como.client.events.Event;
 import net.como.client.events.client.OnAttackEntityEvent;
-import net.como.client.structures.Module;
-import net.como.client.structures.events.Event;
+import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
 import net.minecraft.util.math.Vec3d;
 

@@ -2,18 +2,18 @@ package net.como.client.modules.render;
 
 import net.como.client.ComoClient;
 import net.como.client.components.ProjectionUtils;
+import net.como.client.config.settings.Setting;
+import net.como.client.events.Event;
 import net.como.client.events.render.InGameHudRenderEvent;
-import net.como.client.structures.Colour;
-import net.como.client.structures.Module;
-import net.como.client.structures.EntityAttributes.Attribute;
-import net.como.client.structures.EntityAttributes.entity.ActiveItemAttribute;
-import net.como.client.structures.EntityAttributes.entity.ArmourAttribute;
-import net.como.client.structures.EntityAttributes.entity.HealthAttribute;
-import net.como.client.structures.EntityAttributes.entity.NameAttribute;
-import net.como.client.structures.events.Event;
-import net.como.client.structures.maths.Box2D;
-import net.como.client.structures.maths.Vec3;
-import net.como.client.structures.settings.Setting;
+import net.como.client.misc.Colour;
+import net.como.client.misc.attributes.Attribute;
+import net.como.client.misc.attributes.entity.ActiveItemAttribute;
+import net.como.client.misc.attributes.entity.ArmourAttribute;
+import net.como.client.misc.attributes.entity.HealthAttribute;
+import net.como.client.misc.attributes.entity.NameAttribute;
+import net.como.client.misc.maths.Box2D;
+import net.como.client.misc.maths.Vec3;
+import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.Render2DUtils;
@@ -80,7 +80,7 @@ public class x88ESP extends Module {
         Vec3 projectedEndPos = new Vec3(endPos);
 
         // Project the positions to 2D
-        if (ProjectionUtils.to2D(projectedEndPos, 1) && ProjectionUtils.to2D(projectedEyePos, 1)) {
+        if (ProjectionUtils.getInstance().to2D(projectedEndPos, 1) && ProjectionUtils.getInstance().to2D(projectedEyePos, 1)) {
             // Render the line
             Render2DUtils.renderLine(mStack, (int)projectedEyePos.x, (int)projectedEyePos.y, (int)projectedEndPos.x, (int)projectedEndPos.y);
         }
