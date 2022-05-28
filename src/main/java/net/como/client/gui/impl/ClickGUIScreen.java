@@ -181,7 +181,7 @@ public class ClickGUIScreen extends ImGuiScreen {
         switch (setting.value.getClass().getSimpleName()) {
             // Handle Booleans
             case "Boolean": {
-                if (ImGui.checkbox(setting.name, (Boolean)setting.value)) {
+                if (ImGui.checkbox(setting.getNiceName(), (Boolean)setting.value)) {
                     setting.value = !(Boolean)setting.value; // It was toggled
                 }
 
@@ -191,7 +191,7 @@ public class ClickGUIScreen extends ImGuiScreen {
             // Handle Strings
             case "String": {
                 ImString str = new ImString((String)setting.value, 128);
-                ImGui.inputText(setting.name, str);
+                ImGui.inputText(setting.getNiceName(), str);
                 setting.value = str.toString();
 
                 break;
@@ -212,9 +212,9 @@ public class ClickGUIScreen extends ImGuiScreen {
                     double max = (double) setting.getMax();
 
                     // Render the slider
-                    changed = ImGui.sliderScalar(setting.name, ImGuiDataType.Double, value, min, max, numericalFormat);
+                    changed = ImGui.sliderScalar(setting.getNiceName(), ImGuiDataType.Double, value, min, max, numericalFormat);
                 } else {
-                    changed = ImGuiUtils.accurateDoubleInput(setting.name, value, numericalFormat);
+                    changed = ImGuiUtils.accurateDoubleInput(setting.getNiceName(), value, numericalFormat);
                 }
 
                 // Update the value
@@ -240,9 +240,9 @@ public class ClickGUIScreen extends ImGuiScreen {
                     int min = (int) setting.getMin();
                     int max = (int) setting.getMax();
 
-                    changed = ImGui.sliderScalar(setting.name, ImGuiDataType.S32, value, min, max);
+                    changed = ImGui.sliderScalar(setting.getNiceName(), ImGuiDataType.S32, value, min, max);
                 } else {
-                    changed = ImGui.inputInt(setting.name, value, 0, 0);
+                    changed = ImGui.inputInt(setting.getNiceName(), value, 0, 0);
                 }
                 
                 if (changed) {
@@ -275,7 +275,7 @@ public class ClickGUIScreen extends ImGuiScreen {
                 String[] modeStrings = modes.toArray(new String[modes.size()]);
 
                 // Render the combo box
-                if (ImGui.combo(setting.name, imInt, modeStrings)) {
+                if (ImGui.combo(setting.getNiceName(), imInt, modeStrings)) {
                     mode.setState(imInt.get());
                 }
 

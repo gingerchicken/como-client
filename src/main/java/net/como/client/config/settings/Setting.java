@@ -133,4 +133,24 @@ public class Setting {
     public boolean hasCategory() {
         return this.category != null;
     }
+
+    /**
+     * Gets the name of the setting in a more human readable format
+     * @return setting nice name
+     */
+    public String getNiceName() {
+        String name = this.name;
+
+        // Separate the CamelCase with spaces
+        name = name.replaceAll(
+            String.format("%s|%s|%s",
+                "(?<=[A-Z])(?=[A-Z][a-z])",
+                "(?<=[^A-Z])(?=[A-Z])",
+                "(?<=[A-Za-z])(?=[^A-Za-z])"
+            ),
+            " "
+        );
+
+        return name;
+    }
 }
