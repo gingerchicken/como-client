@@ -161,7 +161,11 @@ public class ClickGUIScreen extends ImGuiScreen {
     }
 
     private boolean renderSetting(Module mod, Setting setting) {
+        // Make sure that we have the functionality implemented to display the setting
         if (!this.canSettingBeRender(setting)) return false;
+
+        // Make sure that the setting should be rendered
+        if (!setting.shouldShow()) return false;
 
         final String numericalFormat = "%.3f";
 

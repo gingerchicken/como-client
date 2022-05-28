@@ -99,4 +99,12 @@ public class Setting {
             ? String.format("No Description. (default: %s)", this.defaultValue.toString())
             : String.format("%s. (default: %s)", this.getDescription(), this.defaultValue.toString());
     }
+
+    /**
+     * Gets if the setting should be shown in the menu
+     * @return true if the setting should be shown in the menu, false otherwise
+     */
+    public boolean shouldShow() {
+        return true;
+    }
 }
