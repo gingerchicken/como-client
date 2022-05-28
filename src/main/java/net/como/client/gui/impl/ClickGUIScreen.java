@@ -160,6 +160,12 @@ public class ClickGUIScreen extends ImGuiScreen {
         return renderableSettingTypes.containsKey(setting.value.getClass());
     }
 
+    /**
+     * Renders a setting for a given module
+     * @param mod the module to render the setting for
+     * @param setting the setting to render
+     * @return if the setting was rendered
+     */
     private boolean renderSetting(Module mod, Setting setting) {
         // Make sure that we have the functionality implemented to display the setting
         if (!this.canSettingBeRender(setting)) return false;
@@ -308,6 +314,11 @@ public class ClickGUIScreen extends ImGuiScreen {
         return true;
     }
 
+    /**
+     * Renders a darkened background
+     * @param matrices the matrix stack
+     * @param tickDelta the tick delta
+     */
     public void renderBackground(MatrixStack matrices, float tickDelta) {
         // Current background darkness
         float current = this.backgroundDarkness;
@@ -336,6 +347,10 @@ public class ClickGUIScreen extends ImGuiScreen {
     private final static float BACKGROUND_DARKNESS_SPEED = -0.10f;
     private final static float BACKGROUND_DARKNESS_MIN = 0f;
 
+    /**
+     * Gets the scale for the GUI
+     * @return
+     */
     private float getScale() {
         double scale = this.getClickGUI().getDoubleSetting("Scale");
 
@@ -455,6 +470,12 @@ public class ClickGUIScreen extends ImGuiScreen {
         }
     }
 
+    /**
+     * Renders a given setting category
+     * @param mod the module to render the settings for
+     * @param settings the settings to render
+     * @return if the settings were rendered
+     */
     private boolean renderSettingsCategory(Module mod, Setting[] settings) {
         if (settings.length == 0) return false;
 
@@ -490,8 +511,8 @@ public class ClickGUIScreen extends ImGuiScreen {
 
             // Unindent
             if (doDropDown) {
-                // Unindent and separate
-                ImGui.separator();
+                // Unindent
+                ImGui.spacing();
                 ImGui.unindent();
             }
         }
