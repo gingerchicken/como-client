@@ -8,34 +8,84 @@ import net.como.client.modules.Module;
 import net.minecraft.util.math.Vec3d;
 
 public class ItemRenderTweaks extends Module {
+    private class HandSetting extends Setting {
+        protected boolean isLeftHand() {
+            return name.toLowerCase().charAt(0) == 'l';
+        }
+
+        protected boolean isRightHand() {
+            return name.toLowerCase().charAt(0) == 'r';
+        }
+
+        protected String getComponent() {
+            return name.substring(name.length() - 1);
+        }
+
+        public HandSetting(String name, Object defaultValue) {
+            super(name, defaultValue);
+        
+            this.setCategory(
+                this.isLeftHand() ? "Left Hand" : "Right Hand"
+            );
+        }
+
+        @Override
+        public boolean shouldShow() {
+            return (this.isLeftHand() && getBoolSetting("LeftHand")) || (this.isRightHand() && getBoolSetting("RightHand"));
+        }
+
+        @Override
+        public String getNiceName() {
+            // Remove the 'l' or 'r' from the name
+            return super.getNiceName().substring(1);
+        }
+    }
+    private class OffsetSetting extends HandSetting {
+        public OffsetSetting(String name, Object defaultValue) {
+            super(name, defaultValue);
+
+            this.setMin(-15d);
+            this.setMax(15d);
+        
+            this.setDescription("Offset the " + this.getComponent());
+        }
+    }
+    private class ScaleSetting extends HandSetting {
+        public ScaleSetting(String name, Object defaultValue) {
+            super(name, defaultValue);
+
+            this.setMin(0d);
+            this.setMax(5d);
+
+            this.setDescription("Scale the " + this.getComponent());
+        }
+    }
+
+    private void createHandSettings(String hand) {
+        // Hand
+        this.addSetting(new Setting(hand + "Hand", true) {{
+            this.setDescription("Enable " + hand + " hand tweaks");
+        }});
+
+        // Get the first letter of the hand as a string
+        String handLetter = hand.substring(0, 1);
+
+        // Offset
+        this.addSetting(new OffsetSetting(handLetter + "OffsetX", 0.0d));
+        this.addSetting(new OffsetSetting(handLetter + "OffsetY", 0.0d));
+        this.addSetting(new OffsetSetting(handLetter + "OffsetZ", 0.0d));
+
+        // Scale
+        this.addSetting(new ScaleSetting(handLetter + "ScaleX", 1.0d));
+        this.addSetting(new ScaleSetting(handLetter + "ScaleY", 1.0d));
+        this.addSetting(new ScaleSetting(handLetter + "ScaleZ", 1.0d));
+    }
+
     public ItemRenderTweaks() {
         super("ItemRenderTweaks");
 
-        // Right Hand
-        this.addSetting(new Setting("RightHand", true));
-
-        // Offset
-        this.addSetting(new Setting("ROffsetX", 0.0d));
-        this.addSetting(new Setting("ROffsetY", 0.0d));
-        this.addSetting(new Setting("ROffsetZ", 0.0d));
-
-        // Scale
-        this.addSetting(new Setting("RScaleX", 1.0d));
-        this.addSetting(new Setting("RScaleY", 1.0d));
-        this.addSetting(new Setting("RScaleZ", 1.0d));
-
-        // Left Hand
-        this.addSetting(new Setting("LeftHand", true));
-        
-        // Offset
-        this.addSetting(new Setting("LOffsetX", 0.0d));
-        this.addSetting(new Setting("LOffsetY", 0.0d));
-        this.addSetting(new Setting("LOffsetZ", 0.0d));
-
-        // Left Scale
-        this.addSetting(new Setting("LScaleX", 1.0d));
-        this.addSetting(new Setting("LScaleY", 1.0d));
-        this.addSetting(new Setting("LScaleZ", 1.0d));
+        this.createHandSettings("Left");
+        this.createHandSettings("Right");
 
         this.setDescription("Allows you to change how held items are rendered.");
         this.setCategory("Render");
