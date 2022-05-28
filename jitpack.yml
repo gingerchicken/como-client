@@ -7,5 +7,4 @@ before_install:
 install:
   - if ! bash ensure-jitpack-java-17 use; then source ~/.sdkman/bin/sdkman-init.sh; fi
   - java -version
-  - chmod +x gradlew
   - ./gradlew publishToMavenLocal
