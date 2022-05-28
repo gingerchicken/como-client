@@ -76,8 +76,6 @@ public class ImGuiUtils {
      * Sets up the ImGui style
      */
     public static void refreshStyle() {
-        // TODO this style was taken from Atomic client, please customise it to make it look even better!
-
         ImGuiStyle style = ImGui.getStyle();
 
         // Window style
@@ -88,8 +86,8 @@ public class ImGuiUtils {
         style.setItemSpacing(8, 4);
         style.setItemInnerSpacing(4, 4);
         style.setTouchExtraPadding(0, 0);
-        style.setIndentSpacing(21);
-        style.setScrollbarSize(15);
+        style.setIndentSpacing(10);
+        style.setScrollbarSize(7);
         style.setGrabMinSize(4);
 
         style.setWindowRounding(5);
@@ -118,10 +116,10 @@ public class ImGuiUtils {
         style.setColor(ImGuiCol.TitleBgCollapsed, k, k, k, 0.80f);
 
         // Scrollbar
-        style.setColor(ImGuiCol.ScrollbarBg, 0.07f, 0.12f, 0.13f, 0.94f);
-        style.setColor(ImGuiCol.ScrollbarGrab, 0.20f, 0.50f, 0.35f, 0.50f);
-        style.setColor(ImGuiCol.ScrollbarGrabHovered, 0.28f, 0.54f, 0.41f, 0.50f);
-        style.setColor(ImGuiCol.ScrollbarGrabActive, 0.20f, 0.50f, 0.28f, 0.50f);
+        style.setColor(ImGuiCol.ScrollbarBg, 0.10f, 0.10f, 0.10f, 0.94f);
+        style.setColor(ImGuiCol.ScrollbarGrab, 0.20f, 0.60f, 0.28f, 0.50f);
+        style.setColor(ImGuiCol.ScrollbarGrabHovered, 0.20f, 0.60f, 0.28f, 0.50f);
+        style.setColor(ImGuiCol.ScrollbarGrabActive, 0.20f, 0.60f, 0.28f, 0.50f);
 
         style.setColor(ImGuiCol.BorderShadow, 0.00f, 0.00f, 0.00f, 1.00f);
 
@@ -134,8 +132,8 @@ public class ImGuiUtils {
         style.setColor(ImGuiCol.CheckMark, 0.10f, 0.60f, 0.10f, 1f);
         
         // Slider
-        style.setColor(ImGuiCol.SliderGrab, 0.24f, 0.52f, 0.88f, 1.00f);
-        style.setColor(ImGuiCol.SliderGrabActive, 0.26f, 0.59f, 0.98f, 1.00f);
+        style.setColor(ImGuiCol.SliderGrab, 0.24f, 0.52f, 0.25f, 1.00f);
+        style.setColor(ImGuiCol.SliderGrabActive, 0.24f, 0.52f, 0.25f, 1.00f);
         
         // Button
         style.setColor(ImGuiCol.Button, 0.00f, 0.00f, 0.00f, 0.50f);
@@ -143,9 +141,10 @@ public class ImGuiUtils {
         style.setColor(ImGuiCol.ButtonActive, 0.10f, 0.10f, 0.10f, 0.76f);
         
         // Header
-        style.setColor(ImGuiCol.Header, 0.15f, 0.22f, 0.31f, 0.31f);
-        style.setColor(ImGuiCol.HeaderHovered, 0.16f, 0.28f, 0.41f, 0.31f);
-        style.setColor(ImGuiCol.HeaderActive, 0.25f, 0.35f, 0.47f, 0.31f);
+        k = 0.1f;
+        style.setColor(ImGuiCol.Header, 0.10f - k, 0.60f - k, 0.10f - k, 0.55f);
+        style.setColor(ImGuiCol.HeaderHovered, 0.10f - k, 0.50f - k, 0.10f - k, 0.75f);
+        style.setColor(ImGuiCol.HeaderActive, 0.30f - k, 0.70f - k, 0.30f - k, 0.75f);
         
         // Separator
         style.setColor(ImGuiCol.Separator, 0.5f, 0.5f, 0.5f, 0.25f);
