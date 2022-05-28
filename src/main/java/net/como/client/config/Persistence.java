@@ -4,11 +4,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Scanner;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
 import net.como.client.ComoClient;
 import net.como.client.modules.Module;
@@ -17,21 +21,29 @@ public class Persistence {
     public static final String CONFIG_PATH = "como-config.json";
     Persistence() { }
 
+    /**
+     * Read the config file into a string
+     * @param path the path to the config file
+     * @return the config file as a string
+     * @throws FileNotFoundException if the file is not found
+     */
     private static String readConfig(String path) throws FileNotFoundException {
-        String json = "";
-        
-        // Read the file
-        File file = new File(path);
-        Scanner reader = new Scanner(file);
+        // Create the string builder
+        StringBuilder sb = new StringBuilder();
 
-        while (reader.hasNext()) {
-            json = json.concat(reader.next());
+        // Create the scanner
+        Scanner sc = new Scanner(new File(path));
+
+        // Read the file
+        while (sc.hasNextLine()) {
+            sb.append(sc.nextLine());
         }
 
-        // Close the file
-        reader.close();
+        // Close the scanner
+        sc.close();
 
-        return json;
+        // Return the string
+        return sb.toString();
     }
 
     private static void writeConfig(String data, String path) throws IOException {
