@@ -107,4 +107,30 @@ public class Setting {
     public boolean shouldShow() {
         return true;
     }
+
+    protected String category = null;
+
+    /**
+     * Gets the category of the setting
+     * @return the category of the setting
+     */
+    public String getCategory() {
+        return category;
+    }
+
+    /**
+     * Sets the category of the setting
+     * @param category the category of the setting
+     */
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    /**
+     * Checks if the setting has a category
+     * @return true if the setting has a category, false otherwise
+     */
+    public boolean hasCategory() {
+        return this.category != null;
+    }
 }

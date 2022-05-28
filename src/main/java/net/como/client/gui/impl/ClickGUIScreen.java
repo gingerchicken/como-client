@@ -463,6 +463,112 @@ public class ClickGUIScreen extends ImGuiScreen {
         }
     }
 
+    private boolean renderSettingsCategory(Module mod, Setting[] settings) {
+        if (settings.length == 0) return false;
+
+        // Get the first setting
+        Setting firstSetting = settings[0];
+
+        // Get the category name
+        String categoryName = firstSetting.hasCategory() ? firstSetting.getCategory() : "Uncategorised";
+
+        // Render an ImGui category
+        ImGui.pushID(categoryName);
+
+        boolean doDropDown = firstSetting.hasCategory();
+        boolean shouldRender = !doDropDown;
+
+        if (doDropDown) {
+            // Padd
+            ImGui.spacing();
+            ImGui.sameLine();
+
+            shouldRender = ImGui.collapsingHeader(categoryName);
+        }
+
+        // Render the settings
+        if (shouldRender) {
+            if (doDropDown) {
+                // Render indentation and separator
+                ImGui.indent();
+            }
+
+            for (Setting setting : settings) {
+                if (!setting.shouldShow()) continue;
+
+                // Render the setting
+                this.renderSetting(mod, setting);
+            }
+
+            // Unindent
+            if (doDropDown) {
+                // Unindent and separate
+                ImGui.separator();
+                ImGui.unindent();
+            }
+        }
+
+        // Pop the ID
+        ImGui.popID();
+
+        return shouldRender;
+    }
+
+    /**
+     * Renders the module settings
+     * @param mod the module to render the settings for
+     * @return if the module settings were rendered
+     */
+    private boolean renderSettings(Module mod) {
+        if (mod.getSettings().isEmpty()) return false;
+
+        HashMap<String, List<Setting>> settingCategory = new HashMap<>();
+        List<Setting> uncategorised = new ArrayList<>();
+
+        // Get the settings categories
+        for (String settingName : mod.getSettings()) {
+            // Get the setting
+            Setting setting = mod.getSetting(settingName);
+
+            // Check if we even should show this setting
+            if (!setting.shouldShow()) continue;
+
+            // Check that the setting has a category
+            if (!setting.hasCategory()) {
+                // Add to the uncategorised list
+                uncategorised.add(setting);
+                
+                continue;
+            }
+
+            // Get the category
+            String category = setting.getCategory();
+
+            // Check if the category exists
+            if (!settingCategory.containsKey(category)) {
+                // Create the category
+                settingCategory.put(category, new ArrayList<>());
+            }
+
+            // Add the setting to the category
+            settingCategory.get(category).add(setting);
+        }
+
+        // Render the settings
+        for (String category : settingCategory.keySet()) {
+            Setting settings[] = settingCategory.get(category).toArray(Setting[]::new);
+
+            this.renderSettingsCategory(mod, settings);
+        }
+
+        // Render the uncategorised settings
+        if (!uncategorised.isEmpty()) {
+            this.renderSettingsCategory(mod, uncategorised.toArray(Setting[]::new));
+        }
+
+        return true;
+    }
+
     /**
      * Render the module's options
      * @param mod the module to render the options for
@@ -477,13 +583,7 @@ public class ClickGUIScreen extends ImGuiScreen {
         this.renderOptionEdgeCase(mod);
 
         // Render the settings
-        if (!mod.getSettings().isEmpty()) {
-            for (String settingName : mod.getSettings()) {
-                Setting setting = mod.getSetting(settingName);
-
-                this.renderSetting(mod, setting);
-            }
-        }
+        this.renderSettings(mod);
 
         ImGui.separator();
     }
