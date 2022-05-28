@@ -171,10 +171,6 @@ public class ClickGUIScreen extends ImGuiScreen {
 
         ImGui.pushID(setting.name);
 
-        // "Padding"
-        ImGui.spacing();
-        ImGui.sameLine();
-
         // Handle different types of settings
         switch (setting.value.getClass().getSimpleName()) {
             // Handle Booleans
@@ -417,10 +413,6 @@ public class ClickGUIScreen extends ImGuiScreen {
     private void renderBindButton(Module mod) {
         ImGui.pushID(mod.getName()+"_bind");
 
-        // Render key binding
-        ImGui.spacing();
-        ImGui.sameLine();
-
         // Get the default button text
         String boundText = this.getBoundKey(mod) == -1 ? "Add bind" : "Key " + ClientUtils.getKeyCodeName(this.getBoundKey(mod)).toUpperCase();
 
@@ -452,10 +444,10 @@ public class ClickGUIScreen extends ImGuiScreen {
             // Center the button text
             ImGui.pushStyleVar(ImGuiStyleVar.ButtonTextAlign, 0.5f, 0.5f);
 
-            ImGui.spacing();
+            // Render the reset button on the same line as the "bind button"
             ImGui.sameLine();
 
-            if (ImGui.button("Reset All", ImGui.getWindowWidth() - ImGui.getStyle().getWindowPaddingX()*2 - ImGui.getStyle().getItemSpacingX()*2, 0)) {
+            if (ImGui.button("Reset All", 0, 0)) {
                 resetNext = true;
             }
 
@@ -479,10 +471,6 @@ public class ClickGUIScreen extends ImGuiScreen {
         boolean shouldRender = !doDropDown;
 
         if (doDropDown) {
-            // Padd
-            ImGui.spacing();
-            ImGui.sameLine();
-
             shouldRender = ImGui.collapsingHeader(categoryName);
         }
 
@@ -574,6 +562,7 @@ public class ClickGUIScreen extends ImGuiScreen {
      * @param mod the module to render the options for
      */
     private void renderModuleOptions(Module mod) {
+        ImGui.indent();
         ImGui.separator();
 
         // Render the bind button
@@ -586,6 +575,7 @@ public class ClickGUIScreen extends ImGuiScreen {
         this.renderSettings(mod);
 
         ImGui.separator();
+        ImGui.unindent();
     }
 
     /**
