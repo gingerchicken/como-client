@@ -99,4 +99,58 @@ public class Setting {
             ? String.format("No Description. (default: %s)", this.defaultValue.toString())
             : String.format("%s. (default: %s)", this.getDescription(), this.defaultValue.toString());
     }
+
+    /**
+     * Gets if the setting should be shown in the menu
+     * @return true if the setting should be shown in the menu, false otherwise
+     */
+    public boolean shouldShow() {
+        return true;
+    }
+
+    protected String category = null;
+
+    /**
+     * Gets the category of the setting
+     * @return the category of the setting
+     */
+    public String getCategory() {
+        return category;
+    }
+
+    /**
+     * Sets the category of the setting
+     * @param category the category of the setting
+     */
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    /**
+     * Checks if the setting has a category
+     * @return true if the setting has a category, false otherwise
+     */
+    public boolean hasCategory() {
+        return this.category != null;
+    }
+
+    /**
+     * Gets the name of the setting in a more human readable format
+     * @return setting nice name
+     */
+    public String getNiceName() {
+        String name = this.name;
+
+        // Separate the CamelCase with spaces
+        name = name.replaceAll(
+            String.format("%s|%s|%s",
+                "(?<=[A-Z])(?=[A-Z][a-z])",
+                "(?<=[^A-Z])(?=[A-Z])",
+                "(?<=[A-Za-z])(?=[^A-Za-z])"
+            ),
+            " "
+        );
+
+        return name;
+    }
 }

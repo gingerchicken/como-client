@@ -28,12 +28,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult.Type;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
 public class QuakeAimbot extends Module {
-    Random random = new Random();
+    private Random random = new Random();
 
     @Override
     public String listOption() {
@@ -50,34 +49,48 @@ public class QuakeAimbot extends Module {
         this.setCategory("Combat");
 
         // Targetting
-        this.addSetting(new Setting("Range", 128d));
-        this.addSetting(new Setting("FOV", 180d));
-        this.addSetting(new Setting("Headshot", true));
-        this.addSetting(new Setting("IgnoreTeamMates", true));
+        this.addSetting(new TargettingSetting("Range", 128d));
+        this.addSetting(new TargettingSetting("FOV", 180d));
+        this.addSetting(new TargettingSetting("Headshot", true));
+        this.addSetting(new TargettingSetting("IgnoreTeamMates", true));
 
         // Prediction
         this.addSetting(new Setting("Predict", true));
-        this.addSetting(new Setting("PredictStep", 4d));
-        this.addSetting(new Setting("Preaim", true));
-        this.addSetting(new Setting("PredictBlockWall", true));
 
+        this.addSetting(new PredictionSetting("PredictStep", 4d));
+        this.addSetting(new PredictionSetting("Preaim", true));
+        this.addSetting(new PredictionSetting("PredictBlockWall", true));
+
+        // Local backtrack
         this.addSetting(new Setting("LocalBacktrack", false));
-        this.addSetting(new Setting("BacktrackStep", 5));
-        this.addSetting(new Setting("BacktrackRenderSteps", false));
+
+        this.addSetting(new LocalBacktrackSetting("BacktrackStep", 5));
+        this.addSetting(new LocalBacktrackSetting("BacktrackRenderSteps", false));
 
         // Smoothing
         this.addSetting(new Setting("Smoothing", true));
-        this.addSetting(new Setting("SmoothingStep", 50d));
-        this.addSetting(new Setting("SmoothingIgnoreFOV", 1d));
+
+        this.addSetting(new SmoothingSetting("SmoothingStep", 50d));
+        this.addSetting(new SmoothingSetting("SmoothingIgnoreFOV", 1d));
         
         // Legit
         this.addSetting(new Setting("Randomise", false));
-        this.addSetting(new Setting("RandomiseAmount", 0.125d));
+
+        this.addSetting(new Setting("RandomiseAmount", 0.125d) {
+            @Override
+            public boolean shouldShow() {
+                return getBoolSetting("Randomise");
+            }
+
+            {
+                this.setCategory("Randomisation");
+            }
+        });
 
         // Auto shoot
         this.addSetting(new Setting("AutoShoot", true));
-        this.addSetting(new Setting("ShootDelay", 0d));
-        this.addSetting(new Setting("ShootAngle", 1d));
+        this.addSetting(new AutoShootSetting("ShootDelay", 0d));
+        this.addSetting(new AutoShootSetting("ShootAngle", 1d));
     }
     
     @Override
@@ -455,4 +468,62 @@ public class QuakeAimbot extends Module {
             }
         }
     }
+
+    // Setting Types
+    private class TargettingSetting extends Setting {
+        public TargettingSetting(String name, Object value) {
+            super(name, value);
+
+            this.setCategory("Targetting");
+        }
+    }
+    private class PredictionSetting extends Setting {
+        public PredictionSetting(String name, Object value) {
+            super(name, value);
+
+            this.setCategory("Prediction");
+        }
+
+        @Override
+        public boolean shouldShow() {
+            return getBoolSetting("Predict");
+        }
+    }
+    private class LocalBacktrackSetting extends Setting {
+        public LocalBacktrackSetting(String name, Object value) {
+            super(name, value);
+
+            this.setCategory("Local Backtrack");
+        }
+
+        @Override
+        public boolean shouldShow() {
+            return getBoolSetting("LocalBacktrack");
+        }
+    }
+    private class AutoShootSetting extends Setting {
+        public AutoShootSetting(String name, Object value) {
+            super(name, value);
+
+            this.setCategory("Auto Shoot");
+        }
+
+        @Override
+        public boolean shouldShow() {
+            return getBoolSetting("AutoShoot");
+        }
+    }
+    private class SmoothingSetting extends Setting {
+        public SmoothingSetting(String name, Object value) {
+            super(name, value);
+
+            this.setCategory("Smoothing");
+        }
+
+        @Override
+        public boolean shouldShow() {
+            return getBoolSetting("Smoothing");
+        }
+    }
+
 }

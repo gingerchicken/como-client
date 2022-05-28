@@ -160,22 +160,28 @@ public class ClickGUIScreen extends ImGuiScreen {
         return renderableSettingTypes.containsKey(setting.value.getClass());
     }
 
+    /**
+     * Renders a setting for a given module
+     * @param mod the module to render the setting for
+     * @param setting the setting to render
+     * @return if the setting was rendered
+     */
     private boolean renderSetting(Module mod, Setting setting) {
+        // Make sure that we have the functionality implemented to display the setting
         if (!this.canSettingBeRender(setting)) return false;
+
+        // Make sure that the setting should be rendered
+        if (!setting.shouldShow()) return false;
 
         final String numericalFormat = "%.3f";
 
         ImGui.pushID(setting.name);
 
-        // "Padding"
-        ImGui.spacing();
-        ImGui.sameLine();
-
         // Handle different types of settings
         switch (setting.value.getClass().getSimpleName()) {
             // Handle Booleans
             case "Boolean": {
-                if (ImGui.checkbox(setting.name, (Boolean)setting.value)) {
+                if (ImGui.checkbox(setting.getNiceName(), (Boolean)setting.value)) {
                     setting.value = !(Boolean)setting.value; // It was toggled
                 }
 
@@ -185,7 +191,7 @@ public class ClickGUIScreen extends ImGuiScreen {
             // Handle Strings
             case "String": {
                 ImString str = new ImString((String)setting.value, 128);
-                ImGui.inputText(setting.name, str);
+                ImGui.inputText(setting.getNiceName(), str);
                 setting.value = str.toString();
 
                 break;
@@ -206,9 +212,9 @@ public class ClickGUIScreen extends ImGuiScreen {
                     double max = (double) setting.getMax();
 
                     // Render the slider
-                    changed = ImGui.sliderScalar(setting.name, ImGuiDataType.Double, value, min, max, numericalFormat);
+                    changed = ImGui.sliderScalar(setting.getNiceName(), ImGuiDataType.Double, value, min, max, numericalFormat);
                 } else {
-                    changed = ImGuiUtils.accurateDoubleInput(setting.name, value, numericalFormat);
+                    changed = ImGuiUtils.accurateDoubleInput(setting.getNiceName(), value, numericalFormat);
                 }
 
                 // Update the value
@@ -234,9 +240,9 @@ public class ClickGUIScreen extends ImGuiScreen {
                     int min = (int) setting.getMin();
                     int max = (int) setting.getMax();
 
-                    changed = ImGui.sliderScalar(setting.name, ImGuiDataType.S32, value, min, max);
+                    changed = ImGui.sliderScalar(setting.getNiceName(), ImGuiDataType.S32, value, min, max);
                 } else {
-                    changed = ImGui.inputInt(setting.name, value, 0, 0);
+                    changed = ImGui.inputInt(setting.getNiceName(), value, 0, 0);
                 }
                 
                 if (changed) {
@@ -269,7 +275,7 @@ public class ClickGUIScreen extends ImGuiScreen {
                 String[] modeStrings = modes.toArray(new String[modes.size()]);
 
                 // Render the combo box
-                if (ImGui.combo(setting.name, imInt, modeStrings)) {
+                if (ImGui.combo(setting.getNiceName(), imInt, modeStrings)) {
                     mode.setState(imInt.get());
                 }
 
@@ -308,6 +314,11 @@ public class ClickGUIScreen extends ImGuiScreen {
         return true;
     }
 
+    /**
+     * Renders a darkened background
+     * @param matrices the matrix stack
+     * @param tickDelta the tick delta
+     */
     public void renderBackground(MatrixStack matrices, float tickDelta) {
         // Current background darkness
         float current = this.backgroundDarkness;
@@ -336,6 +347,10 @@ public class ClickGUIScreen extends ImGuiScreen {
     private final static float BACKGROUND_DARKNESS_SPEED = -0.10f;
     private final static float BACKGROUND_DARKNESS_MIN = 0f;
 
+    /**
+     * Gets the scale for the GUI
+     * @return
+     */
     private float getScale() {
         double scale = this.getClickGUI().getDoubleSetting("Scale");
 
@@ -413,10 +428,6 @@ public class ClickGUIScreen extends ImGuiScreen {
     private void renderBindButton(Module mod) {
         ImGui.pushID(mod.getName()+"_bind");
 
-        // Render key binding
-        ImGui.spacing();
-        ImGui.sameLine();
-
         // Get the default button text
         String boundText = this.getBoundKey(mod) == -1 ? "Add bind" : "Key " + ClientUtils.getKeyCodeName(this.getBoundKey(mod)).toUpperCase();
 
@@ -448,10 +459,10 @@ public class ClickGUIScreen extends ImGuiScreen {
             // Center the button text
             ImGui.pushStyleVar(ImGuiStyleVar.ButtonTextAlign, 0.5f, 0.5f);
 
-            ImGui.spacing();
+            // Render the reset button on the same line as the "bind button"
             ImGui.sameLine();
 
-            if (ImGui.button("Reset All", ImGui.getWindowWidth() - ImGui.getStyle().getWindowPaddingX()*2 - ImGui.getStyle().getItemSpacingX()*2, 0)) {
+            if (ImGui.button("Reset All", 0, 0)) {
                 resetNext = true;
             }
 
@@ -460,10 +471,119 @@ public class ClickGUIScreen extends ImGuiScreen {
     }
 
     /**
+     * Renders a given setting category
+     * @param mod the module to render the settings for
+     * @param settings the settings to render
+     * @return if the settings were rendered
+     */
+    private boolean renderSettingsCategory(Module mod, Setting[] settings) {
+        if (settings.length == 0) return false;
+
+        // Get the first setting
+        Setting firstSetting = settings[0];
+
+        // Get the category name
+        String categoryName = firstSetting.hasCategory() ? firstSetting.getCategory() : "Uncategorised";
+
+        // Render an ImGui category
+        ImGui.pushID(categoryName);
+
+        boolean doDropDown = firstSetting.hasCategory();
+        boolean shouldRender = !doDropDown;
+
+        if (doDropDown) {
+            shouldRender = ImGui.collapsingHeader(categoryName);
+        }
+
+        // Render the settings
+        if (shouldRender) {
+            if (doDropDown) {
+                // Render indentation and separator
+                ImGui.indent();
+            }
+
+            for (Setting setting : settings) {
+                if (!setting.shouldShow()) continue;
+
+                // Render the setting
+                this.renderSetting(mod, setting);
+            }
+
+            // Unindent
+            if (doDropDown) {
+                // Unindent
+                ImGui.spacing();
+                ImGui.unindent();
+            }
+        }
+
+        // Pop the ID
+        ImGui.popID();
+
+        return shouldRender;
+    }
+
+    /**
+     * Renders the module settings
+     * @param mod the module to render the settings for
+     * @return if the module settings were rendered
+     */
+    private boolean renderSettings(Module mod) {
+        if (mod.getSettings().isEmpty()) return false;
+
+        HashMap<String, List<Setting>> settingCategory = new HashMap<>();
+        List<Setting> uncategorised = new ArrayList<>();
+
+        // Get the settings categories
+        for (String settingName : mod.getSettings()) {
+            // Get the setting
+            Setting setting = mod.getSetting(settingName);
+
+            // Check if we even should show this setting
+            if (!setting.shouldShow()) continue;
+
+            // Check that the setting has a category
+            if (!setting.hasCategory()) {
+                // Add to the uncategorised list
+                uncategorised.add(setting);
+                
+                continue;
+            }
+
+            // Get the category
+            String category = setting.getCategory();
+
+            // Check if the category exists
+            if (!settingCategory.containsKey(category)) {
+                // Create the category
+                settingCategory.put(category, new ArrayList<>());
+            }
+
+            // Add the setting to the category
+            settingCategory.get(category).add(setting);
+        }
+
+        // Render the settings
+        for (String category : settingCategory.keySet()) {
+            Setting settings[] = settingCategory.get(category).toArray(Setting[]::new);
+
+            this.renderSettingsCategory(mod, settings);
+        }
+
+        // Render the uncategorised settings
+        if (!uncategorised.isEmpty()) {
+            this.renderSettingsCategory(mod, uncategorised.toArray(Setting[]::new));
+        }
+
+        return true;
+    }
+
+    /**
      * Render the module's options
      * @param mod the module to render the options for
      */
     private void renderModuleOptions(Module mod) {
+        ImGui.indent();
         ImGui.separator();
 
         // Render the bind button
@@ -473,15 +593,10 @@ public class ClickGUIScreen extends ImGuiScreen {
         this.renderOptionEdgeCase(mod);
 
         // Render the settings
-        if (!mod.getSettings().isEmpty()) {
-            for (String settingName : mod.getSettings()) {
-                Setting setting = mod.getSetting(settingName);
-
-                this.renderSetting(mod, setting);
-            }
-        }
+        this.renderSettings(mod);
 
         ImGui.separator();
+        ImGui.unindent();
     }
 
     /**
