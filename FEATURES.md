@@ -247,22 +247,26 @@
  - Multiplier: `100`
 
 ## ItemRenderTweaks (`.itemrendertweaks`)
-[(Source Code)](src/main/java/net/como/client/modules/render/ItemRenderTweaks.java) Allows you to change how held items are rendered.
+[(Source Code)](src/main/java/net/como/client/modules/render/ItemRenderTweaks.java) Offset the " + this.getComponent());
+        }
+    }
+    private class ScaleSetting extends HandSetting {
+        public ScaleSetting(String name, Object defaultValue) {
+            super(name, defaultValue);
+
+            this.setMin(0d);
+            this.setMax(5d);
+
+            this.setDescription("Scale the " + this.getComponent());
+        }
+    }
+
+    private void createHandSettings(String hand) {
+        // Hand
+        this.addSetting(new Setting(hand + "Hand", true) {{
+            this.setDescription("Enable " + hand + " hand tweaks
 ### Default Settings
- - LOffsetX: `0.0`
- - LOffsetY: `0.0`
- - LOffsetZ: `0.0`
- - LScaleX: `1.0`
- - LScaleY: `1.0`
- - LScaleZ: `1.0`
- - LeftHand: `True`
- - ROffsetX: `0.0`
- - ROffsetY: `0.0`
- - ROffsetZ: `0.0`
- - RScaleX: `1.0`
- - RScaleY: `1.0`
- - RScaleZ: `1.0`
- - RightHand: `True`
+ - and + : `and", true`
 
 ## KillAura (`.killaura`)
 [(Source Code)](src/main/java/net/como/client/modules/combat/KillAura.java) Automatically attacks specified targets.
@@ -413,24 +417,14 @@
 [(Source Code)](src/main/java/net/como/client/modules/combat/QuakeAimbot.java) A Basic Hypixel Quakecraft Aimbot
 ### Default Settings
  - AutoShoot: `True`
- - BacktrackRenderSteps: `True`
- - BacktrackStep: `5`
- - FOV: `180.0`
- - Headshot: `True`
- - IgnoreTeamMates: `True`
  - LocalBacktrack: `True`
- - Preaim: `True`
  - Predict: `True`
- - PredictBlockWall: `True`
- - PredictStep: `4.0`
  - Randomise: `True`
- - RandomiseAmount: `0.125`
- - Range: `128.0`
- - ShootAngle: `1.0`
- - ShootDelay: `0.0`
+ - RandomiseAmount: `0.125d) {
+            @Override
+            public boolean shouldShow() {
+                return getBoolSetting("Randomise");`
  - Smoothing: `True`
- - SmoothingIgnoreFOV: `1.0`
- - SmoothingStep: `50.0`
 
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/dupes/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
