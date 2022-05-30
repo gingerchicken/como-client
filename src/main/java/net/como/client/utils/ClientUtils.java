@@ -327,6 +327,12 @@ public class ClientUtils {
         return getKeyCodeName(keyCode, GLFW.GLFW_KEY_UNKNOWN);
     }
 
+    /**
+     * Gets a class and gets the last part of the class name.
+     * <p>This is horrible and should be replaced ASAP!</p>
+     * @param classId The class to get the name of
+     * @return The last part of the class name
+     */
     private static String getNameFromClassId(String classId) {
         String parts[] = classId.split("\\.");
 
@@ -337,10 +343,20 @@ public class ClientUtils {
         return parts[parts.length - 1];
     }
 
+    /**
+     * Gets an entity type as a string
+     * @param entity The entity to get the type of
+     * @return The entity type
+     */
     public static String getEntityType(Entity entity) {
         return getNameFromClassId(entity.getType().getTranslationKey());
     }
 
+    /**
+     * Gets an effect type as a string
+     * @param effect The effect to get the type of
+     * @return The effect type
+     */
     public static String getEffectType(StatusEffectInstance effect) {
         return getNameFromClassId(effect.getTranslationKey());
     }
