@@ -339,12 +339,12 @@ public class ComoClient {
 
         this.registerModules();
 
+        // Load the persistence
+        this.loadPersistance();
+
         // Register commands
         this.registerCommands();
         this.registerModuleCommands();
-
-        // Load the persistance
-        this.loadPersistance();
 
         // Load all of the block ids
         BlockUtils.initialiseIdList();
