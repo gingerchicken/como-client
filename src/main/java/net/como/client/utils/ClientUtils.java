@@ -325,4 +325,14 @@ public class ClientUtils {
     public static String getKeyCodeName(int keyCode) {
         return getKeyCodeName(keyCode, GLFW.GLFW_KEY_UNKNOWN);
     }
+
+    public static String getEntityType(Entity entity) {
+        String parts[] = entity.getType().getTranslationKey().split("\\.");
+
+        if (parts.length == 0) {
+            return "";
+        }
+
+        return parts[parts.length - 1];
+    }
 }
