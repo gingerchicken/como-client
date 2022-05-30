@@ -18,7 +18,7 @@ public class BanBook implements StringCreativeItem {
             pages[i] = page;
         }
 
-        return String.format("{author:\"%s\",pages:[%s],title:\"Bye-bye Book\",display:{Name:'{\"text\":\"Ban Book\",\"color\":\"dark_purple\",\"bold\":true,\"underlined\":true}'}}", ClientUtils.getUsername(), StringUtils.join(pages, ","));
+        return String.format("{author:\"%s\",pages:[%s],title:\"Bye-bye Book\"}", ClientUtils.getUsername(), StringUtils.join(pages, ","));
     }
 
     @Override
