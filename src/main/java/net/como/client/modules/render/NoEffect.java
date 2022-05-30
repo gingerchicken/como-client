@@ -44,9 +44,10 @@ public class NoEffect extends Module {
                 
                 List<StatusEffect> targets = new ArrayList<>();
                 HashMap<String, Boolean> cancelEffects = this.getHashMapSetting("Effects");
-                
+
                 for (StatusEffectInstance effect : effects) {
-                    String name = ClientUtils.getTextString(effect.getEffectType().getName());
+                    String name = this.getEffectName(effect);
+                    
                     if (cancelEffects.containsKey(name)) {
                         targets.add(effect.getEffectType());
                     }
@@ -62,6 +63,10 @@ public class NoEffect extends Module {
         }
     }
 
+    private String getEffectName(StatusEffectInstance effect) {
+        return ClientUtils.getEffectType(effect);
+    }
+
     @Override
     public Iterable<Command> getCommands() {
         List<Command> commands = new ArrayList<>();
@@ -71,7 +76,7 @@ public class NoEffect extends Module {
         return commands;
     }
 
-    private static class ListEffectsCommand extends Command {
+    private class ListEffectsCommand extends Command {
 
         public NoEffect getNoEffect() {
             return (NoEffect) ComoClient.getInstance().getModules().get("noeffect");
@@ -91,8 +96,7 @@ public class NoEffect extends Module {
 
             this.getNoEffect().displayMessage("Active effects:");
             for (StatusEffectInstance effect : ComoClient.me().getStatusEffects()) {
-                String name = ClientUtils.getTextString(effect.getEffectType().getName());
-                this.getNoEffect().displayMessage("-> " + name);
+                this.getNoEffect().displayMessage("-> " + getEffectName(effect));
             }
 
             return true;

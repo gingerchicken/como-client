@@ -35,6 +35,7 @@ import net.minecraft.client.util.Window;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -326,13 +327,21 @@ public class ClientUtils {
         return getKeyCodeName(keyCode, GLFW.GLFW_KEY_UNKNOWN);
     }
 
-    public static String getEntityType(Entity entity) {
-        String parts[] = entity.getType().getTranslationKey().split("\\.");
+    private static String getNameFromClassId(String classId) {
+        String parts[] = classId.split("\\.");
 
         if (parts.length == 0) {
             return "";
         }
 
         return parts[parts.length - 1];
+    }
+
+    public static String getEntityType(Entity entity) {
+        return getNameFromClassId(entity.getType().getTranslationKey());
+    }
+
+    public static String getEffectType(StatusEffectInstance effect) {
+        return getNameFromClassId(effect.getTranslationKey());
     }
 }
