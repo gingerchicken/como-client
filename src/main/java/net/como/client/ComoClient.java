@@ -308,6 +308,7 @@ public class ComoClient {
         this.registerModule(new QuakeAimbot());
         this.registerModule(new x88ESP());
         this.registerModule(new MapArtESP());
+        this.registerModule(new NoEntityRender());
 
         // TESTING DON'T GET EXCITED!
         this.registerModule(new ClickGUI());

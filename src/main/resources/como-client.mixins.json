@@ -16,6 +16,7 @@
     "client/ClientBrandRetrieverMixin",
     "client/ParticleManagerMixin",
     "client/AbstractClientPlayerEntityMixin",
+    "client/ClientWorldMixin",
 
     "entity/PlayerEntityMixin",
     "entity/EntityMixin",
