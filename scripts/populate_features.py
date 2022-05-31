@@ -226,7 +226,30 @@ class Feature:
         return settings
 
 # Scan for all of the features
-features = [Feature(str(path)) for path in Path(FEATURES_DIR).rglob("*.java") if path.name not in ["Module.java", "DummyModule.java"]]
+features = [Feature(str(path)) for path in Path(FEATURES_DIR).rglob("*.java") if path.name not in ["Module.java", "DummyModule.java", "ItemRenderTweaks.java"]]
+
+# Since we ignored the ItemRenderTweaks special case, we need to add it manually
+class ItemRenderTweaksFeature(Feature):
+    def __init__(self):
+        self._Feature__path = FEATURES_DIR + "/render/ItemRenderTweaks.java"
+    
+    def get_settings(self):
+        s = []
+
+        for hand in ['Left', 'Right']:
+            s.append(Setting(hand, "True"))
+            for comp in ['X', 'Y', 'Z']:
+                s.append(Setting(f"{hand[0]}Offset{comp}", "0.0"))
+                s.append(Setting(f"{hand[0]}Scale{comp}", "1.0"))
+        
+        s.sort(key=lambda x: x.get_name())
+
+        return s
+    
+    def get_description(self, default):
+        return "Allows you to render items in the world."
+
+features.append(ItemRenderTweaksFeature())
 
 # Sort them alphabetically
 features.sort(key=lambda x: x.get_name())
