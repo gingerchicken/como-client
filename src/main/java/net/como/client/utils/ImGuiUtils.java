@@ -256,7 +256,6 @@ public class ImGuiUtils {
             try {
                 d = Double.parseDouble(entered);
             } catch (NumberFormatException e) {
-                e.printStackTrace();
                 return false;
             }
 
