@@ -247,7 +247,7 @@
  - Multiplier: `100`
 
 ## ItemRenderTweaks (`.itemrendertweaks`)
-[(Source Code)](src/main/java/net/como/client/modules/render/ItemRenderTweaks.java) Allows you to render items in the world.
+[(Source Code)](src/main/java/net/como/client/modules/render/ItemRenderTweaks.java) Allows you to change how held items are rendered.
 ### Default Settings
  - LOffsetX: `0.0`
  - LOffsetY: `0.0`
