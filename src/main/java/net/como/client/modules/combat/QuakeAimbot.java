@@ -26,6 +26,7 @@ import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -264,7 +265,7 @@ public class QuakeAimbot extends Module {
 
         // Get all of the players
         for (Entity ent : ComoClient.getClient().world.getEntities()) {
-            // if (!(ent instanceof PlayerEntity)) continue;
+            if (!(ent instanceof PlayerEntity)) continue;
 
             Entity player = ent;
 
