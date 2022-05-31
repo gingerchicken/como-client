@@ -247,11 +247,15 @@ public class ImGuiUtils {
             // Replace all non-numerical characters with nothing (except for the decimal point and minus sign)
             entered = entered.replaceAll("[^\\d\\.\\-]", "");
 
+            // Check that the string is not empty
+            if (entered.isEmpty()) {
+                return false;
+            }
+
             double d;
             try {
                 d = Double.parseDouble(entered);
             } catch (NumberFormatException e) {
-                e.printStackTrace();
                 return false;
             }
 

@@ -308,6 +308,7 @@ public class ComoClient {
         this.registerModule(new QuakeAimbot());
         this.registerModule(new x88ESP());
         this.registerModule(new MapArtESP());
+        this.registerModule(new NoEntityRender());
 
         // TESTING DON'T GET EXCITED!
         this.registerModule(new ClickGUI());
@@ -338,12 +339,12 @@ public class ComoClient {
 
         this.registerModules();
 
+        // Load the persistence
+        this.loadPersistance();
+
         // Register commands
         this.registerCommands();
         this.registerModuleCommands();
-
-        // Load the persistance
-        this.loadPersistance();
 
         // Load all of the block ids
         BlockUtils.initialiseIdList();

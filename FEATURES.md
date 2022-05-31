@@ -247,29 +247,25 @@
  - Multiplier: `100`
 
 ## ItemRenderTweaks (`.itemrendertweaks`)
-[(Source Code)](src/main/java/net/como/client/modules/render/ItemRenderTweaks.java) Offset the " + this.getComponent());
-        }
-    }
-    private class ScaleSetting extends HandSetting {
-        public ScaleSetting(String name, Object defaultValue) {
-            super(name, defaultValue);
-
-            this.setMin(0d);
-            this.setMax(5d);
-
-            this.setDescription("Scale the " + this.getComponent());
-        }
-    }
-
-    private void createHandSettings(String hand) {
-        // Hand
-        this.addSetting(new Setting(hand + "Hand", true) {{
-            this.setDescription("Enable " + hand + " hand tweaks
+[(Source Code)](src/main/java/net/como/client/modules/render/ItemRenderTweaks.java) Allows you to render items in the world.
 ### Default Settings
- - and + : `and", true`
+ - LOffsetX: `0.0`
+ - LOffsetY: `0.0`
+ - LOffsetZ: `0.0`
+ - LScaleX: `1.0`
+ - LScaleY: `1.0`
+ - LScaleZ: `1.0`
+ - Left: `True`
+ - ROffsetX: `0.0`
+ - ROffsetY: `0.0`
+ - ROffsetZ: `0.0`
+ - RScaleX: `1.0`
+ - RScaleY: `1.0`
+ - RScaleZ: `1.0`
+ - Right: `True`
 
 ## KillAura (`.killaura`)
-[(Source Code)](src/main/java/net/como/client/modules/combat/KillAura.java) Automatically attacks specified targets.
+[(Source Code)](src/main/java/net/como/client/modules/combat/KillAura.java) Doesn't show the turn on your client
 ### Default Settings
  - AttackFriends: `True`
  - Delay: `0.0`
@@ -333,6 +329,11 @@
 
 ## NoEnchantmentBook (`.noenchantmentbook`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoEnchantmentBook.java) Hide the enchantment book on the enchantment table.
+
+## NoEntityRender (`.noentityrender`)
+[(Source Code)](src/main/java/net/como/client/modules/render/NoEntityRender.java) Blocks all entities from rendering.
+### Default Settings
+ - Whitelist: `{ ... }`
 
 ## NoFall (`.nofall`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/NoFall.java) Take less fall damage.
@@ -420,10 +421,7 @@
  - LocalBacktrack: `True`
  - Predict: `True`
  - Randomise: `True`
- - RandomiseAmount: `0.125d) {
-            @Override
-            public boolean shouldShow() {
-                return getBoolSetting("Randomise");`
+ - RandomiseAmount: `0.125`
  - Smoothing: `True`
 
 ## ShulkerDupe (`.shulkerdupe`)

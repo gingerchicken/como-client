@@ -33,6 +33,11 @@ public class CrashSack implements CreativeItem {
     }
 
     @Override
+    public String getName() {
+        return "Lag Sack";
+    }
+
+    @Override
     public Boolean isLaggy() {
         return true;
     }

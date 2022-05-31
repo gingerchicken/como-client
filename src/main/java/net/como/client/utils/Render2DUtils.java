@@ -48,6 +48,10 @@ public class Render2DUtils {
         public void vertex2D(int x, int y) {
             this.bufferBuilder.vertex(x, y, 0).next();
         }
+
+        public void vertex2D(double x, double y) {
+            this.bufferBuilder.vertex(x, y, 0).next();
+        }
     }
 
     public static Vec2f relPosition(Vec2f vec) {
@@ -188,5 +192,23 @@ public class Render2DUtils {
 
         DrawableHelper.drawTexture(matrixStack, x, y, u, 9, 9, 9, 256, 256);
         DrawableHelper.drawTexture(matrixStack, x, y, u, 0, 9, 9, 256, 256);
+    }
+
+    public static void renderCircle(MatrixStack matrixStack, double x, double y, double radius, Colour colour) {
+        // Render a circle using opengl
+
+        begin(matrixStack, colour);
+        BufferContainer bufferContainer = new BufferContainer(matrixStack);
+
+        for (double i = 0; i < 360; i += 0.01d) {
+            double angle = Math.toRadians(i);
+            double x1 = x + Math.cos(angle) * radius;
+            double y1 = y + Math.sin(angle) * radius;
+
+            bufferContainer.vertex2D(x1, y1);
+        }
+
+        bufferContainer.close();
+        finish(matrixStack);
     }
 }

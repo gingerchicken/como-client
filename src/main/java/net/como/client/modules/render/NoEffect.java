@@ -6,10 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.como.client.ComoClient;
+import net.como.client.commands.structures.Command;
 import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.modules.Module;
+import net.como.client.utils.ClientUtils;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 
@@ -42,12 +44,13 @@ public class NoEffect extends Module {
                 
                 List<StatusEffect> targets = new ArrayList<>();
                 HashMap<String, Boolean> cancelEffects = this.getHashMapSetting("Effects");
+
                 for (StatusEffectInstance effect : effects) {
-                    String parts[] = effect.getTranslationKey().split("\\.");
-                    if (parts.length == 0) continue;
+                    String name = this.getEffectName(effect);
                     
-                    String name = parts[parts.length - 1];
-                    if (cancelEffects.containsKey(name)) targets.add(effect.getEffectType());
+                    if (cancelEffects.containsKey(name)) {
+                        targets.add(effect.getEffectType());
+                    }
                 }
 
                 // Remove them
@@ -57,6 +60,46 @@ public class NoEffect extends Module {
 
                 break;
             }
+        }
+    }
+
+    private String getEffectName(StatusEffectInstance effect) {
+        return ClientUtils.getEffectType(effect);
+    }
+
+    @Override
+    public Iterable<Command> getCommands() {
+        List<Command> commands = new ArrayList<>();
+
+        commands.add(new ListEffectsCommand());
+
+        return commands;
+    }
+
+    private class ListEffectsCommand extends Command {
+
+        public NoEffect getNoEffect() {
+            return (NoEffect) ComoClient.getInstance().getModules().get("noeffect");
+        }
+
+        public ListEffectsCommand() {
+            super("list", "", "lists all active effects");
+        }
+        
+        @Override
+        public Boolean trigger(String[] args) {
+            if (ComoClient.me().getStatusEffects().isEmpty()) {
+                this.getNoEffect().displayMessage("There are no active effects.");
+
+                return true;
+            }
+
+            this.getNoEffect().displayMessage("Active effects:");
+            for (StatusEffectInstance effect : ComoClient.me().getStatusEffects()) {
+                this.getNoEffect().displayMessage("-> " + getEffectName(effect));
+            }
+
+            return true;
         }
     }
 }
