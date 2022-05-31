@@ -20,20 +20,15 @@ import net.como.client.misc.Colour;
 import net.como.client.misc.maths.Vec3;
 import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
-import net.como.client.utils.Render2DUtils;
 import net.como.client.utils.RenderUtils;
 import net.como.client.utils.RotationUtils;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult.Type;
 import net.minecraft.util.math.Vec3d;
@@ -68,7 +63,15 @@ public class QuakeAimbot extends Module {
         }});
         this.addSetting(new TargettingSetting("Headshot", true));
         this.addSetting(new TargettingSetting("IgnoreTeamMates", true));
-        this.addSetting(new TargettingSetting("RenderFOVCircle", true));
+        this.addSetting(new TargettingSetting("RenderFOVCircle", true) {
+            @Override
+            public boolean shouldShow() {
+                return super.shouldShow() && getBoolSetting("UseCircles");
+            }
+        });
+        this.addSetting(new TargettingSetting("UseCircles", true) {{
+            this.setDescription("Use the screen position to target them rather than the difference in angles");
+        }});
 
         // Prediction
         this.addSetting(new Setting("Predict", true));
@@ -91,7 +94,12 @@ public class QuakeAimbot extends Module {
             this.setMin(0d);
             this.setMax(360d);
         }});
-        this.addSetting(new SmoothingSetting("RenderIgnoreCircle", false));
+        this.addSetting(new SmoothingSetting("RenderIgnoreCircle", false) {
+            @Override
+            public boolean shouldShow() {
+                return super.shouldShow() && getBoolSetting("UseCircles");
+            }
+        });
         
         // Legit
         this.addSetting(new Setting("Randomise", false));
@@ -114,7 +122,12 @@ public class QuakeAimbot extends Module {
             this.setMin(0d);
             this.setMax(360d);
         }});
-        this.addSetting(new AutoShootSetting("RenderShootCircle", false));
+        this.addSetting(new AutoShootSetting("RenderShootCircle", false) {
+            @Override
+            public boolean shouldShow() {
+                return super.shouldShow() && getBoolSetting("UseCircles");
+            }
+        });
     }
     
     @Override
@@ -129,6 +142,11 @@ public class QuakeAimbot extends Module {
         this.removeListen(ClientTickEvent.class);
     }
 
+    /**
+     * Offset the target's position to their eye or chest
+     * @param target The target
+     * @return The offset position
+     */
     private Vec3d getTargetOffset(Entity target) {
         Vec3d offset = this.getBoolSetting("Headshot") 
             ? target.getEyePos()
@@ -153,6 +171,12 @@ public class QuakeAimbot extends Module {
         return target.getLerpedPos(tickDelta).add(offset);
     }
 
+    /**
+     * Extrapolates their current and next position even further
+     * @param target the target
+     * @param tickDelta the tick delta
+     * @return the extrapolated position
+     */
     private Vec3d getPredictPos(Entity target, float tickDelta) {
         Vec3d offset = this.getTargetOffset(target);
 
@@ -219,6 +243,9 @@ public class QuakeAimbot extends Module {
         return -1;
     }
 
+    /**
+     * Loads the circle settings for the aimbot
+     */
     private void updateCircles() {
         this.antiSmoothCircle.setFov(this.getDoubleSetting("SmoothingIgnoreFOV"));
         this.shootCircle.setFov(this.getDoubleSetting("ShootFOV"));
@@ -237,7 +264,7 @@ public class QuakeAimbot extends Module {
 
         // Get all of the players
         for (Entity ent : ComoClient.getClient().world.getEntities()) {
-            if (!(ent instanceof PlayerEntity)) continue;
+            // if (!(ent instanceof PlayerEntity)) continue;
 
             Entity player = ent;
 
@@ -261,7 +288,7 @@ public class QuakeAimbot extends Module {
             if (!canSee) continue;
 
             // Make sure the player is in the FOV
-            if (!this.targetCircle.isInCircle(this.getTargetPos(player))) continue;
+            if (!this.isInFov(this.targetCircle, pos)) continue;
 
             // Checks if they are in the same team
             if (localTeamColour != -1 && this.getBoolSetting("IgnoreTeamMates") && this.getTeamColour(player) == localTeamColour) continue;
@@ -421,7 +448,7 @@ public class QuakeAimbot extends Module {
         float yaw   = (float)targetRotation.yaw;
 
         // Apply the step
-        if (this.getBoolSetting("Smoothing") && !this.antiSmoothCircle.isInCircle(targetPos)) {
+        if (this.getBoolSetting("Smoothing") && !this.isInFov(this.antiSmoothCircle, targetPos, tickDelta)) {
             double step = this.getDoubleSetting("SmoothingStep");
 
             pitch = (float)(current.pitch + diff.pitch / step);
@@ -435,7 +462,7 @@ public class QuakeAimbot extends Module {
         // Shoot
         this.shooting = false;
         if (this.getBoolSetting("AutoShoot")) {
-            if (!this.shootCircle.isInCircle(targetPos)) return;
+            if (!this.isInFov(this.shootCircle, targetPos, tickDelta)) return;
 
             this.shooting = true;                    
 
@@ -500,6 +527,10 @@ public class QuakeAimbot extends Module {
 
     private void renderCircles(MatrixStack mStack) {
         // TODO add configs for the colours
+
+        if (!this.getBoolSetting("UseCircles")) {
+            return;
+        }
         
         // FOV Circle
         if (this.getBoolSetting("RenderFOVCircle")) this.targetCircle.render(mStack);
@@ -568,4 +599,33 @@ public class QuakeAimbot extends Module {
         }
     }
 
+    private boolean isInFov(TargetCircle circle, Vec3d targetPos, float tickDelta) {
+        Vec3d localPos = this.getLocalPos(tickDelta);
+
+        // Use the new method
+        if (this.getBoolSetting("UseCircles")) {
+            return circle.isInCircle(targetPos);
+        }
+
+        // Else use the old method
+
+        double fov = circle.getFov();
+
+        // Handle the maximum case
+        if (fov >= 360) {
+            return true;
+        }
+
+        // Get the angles
+        Rotation targetRotation = RotationUtils.getRequiredRotation(localPos, targetPos, tickDelta);
+        Rotation current = new Rotation(ComoClient.me().getYaw(), ComoClient.me().getPitch());
+        Rotation diff = targetRotation.difference(current);
+
+        // Return if it is within the FOV
+        return diff.magnitude() <= circle.getFov();
+    }
+
+    private boolean isInFov(TargetCircle circle, Vec3d targetPos) {
+        return this.isInFov(circle, targetPos, 0);
+    }
 }
