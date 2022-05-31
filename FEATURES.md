@@ -269,7 +269,7 @@
  - and + : `and", true`
 
 ## KillAura (`.killaura`)
-[(Source Code)](src/main/java/net/como/client/modules/combat/KillAura.java) Automatically attacks specified targets.
+[(Source Code)](src/main/java/net/como/client/modules/combat/KillAura.java) Doesn't show the turn on your client
 ### Default Settings
  - AttackFriends: `True`
  - Delay: `0.0`
@@ -333,6 +333,11 @@
 
 ## NoEnchantmentBook (`.noenchantmentbook`)
 [(Source Code)](src/main/java/net/como/client/modules/render/NoEnchantmentBook.java) Hide the enchantment book on the enchantment table.
+
+## NoEntityRender (`.noentityrender`)
+[(Source Code)](src/main/java/net/como/client/modules/render/NoEntityRender.java) Blocks all entities from rendering.
+### Default Settings
+ - Whitelist: `{ ... }`
 
 ## NoFall (`.nofall`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/NoFall.java) Take less fall damage.
@@ -420,10 +425,7 @@
  - LocalBacktrack: `True`
  - Predict: `True`
  - Randomise: `True`
- - RandomiseAmount: `0.125d) {
-            @Override
-            public boolean shouldShow() {
-                return getBoolSetting("Randomise");`
+ - RandomiseAmount: `0.125`
  - Smoothing: `True`
 
 ## ShulkerDupe (`.shulkerdupe`)

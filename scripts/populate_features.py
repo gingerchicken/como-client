@@ -110,7 +110,7 @@ class Setting:
         # Handle description setting
         # TODO get this and display it
         # ... but for now I will just remove it
-        default = default.split(') {{')[0]
+        default = default.split(') {')[0]
 
         return Setting(name, default)
 
