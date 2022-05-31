@@ -57,13 +57,20 @@ public class QuakeAimbot extends Module {
         this.setCategory("Combat");
 
         // Targetting
-        this.addSetting(new TargettingSetting("Range", 128d));
+        this.addSetting(new TargettingSetting("Range", 128d) {{
+            this.setDescription("Maximum distance to the target");
+        }});
         this.addSetting(new TargettingSetting("FOV", 90d) {{
             this.setMin(0d);
             this.setMax(360d);
+            this.setDescription("The aimbot FOV");
         }});
-        this.addSetting(new TargettingSetting("Headshot", true));
-        this.addSetting(new TargettingSetting("IgnoreTeamMates", true));
+        this.addSetting(new TargettingSetting("Headshot", true) {{
+            this.setDescription("Shoot at the head of the target");
+        }});
+        this.addSetting(new TargettingSetting("IgnoreTeamMates", true) {{
+            this.setDescription("Ignores players on your team");
+        }});
         this.addSetting(new TargettingSetting("RenderFOVCircle", true) {
             @Override
             public boolean shouldShow() {
@@ -75,35 +82,60 @@ public class QuakeAimbot extends Module {
         }});
 
         // Prediction
-        this.addSetting(new Setting("Predict", true));
+        this.addSetting(new Setting("Predict", true) {{
+            this.setDescription("Predict the target's movement");
+        }});
 
-        this.addSetting(new PredictionSetting("PredictStep", 4d));
-        this.addSetting(new PredictionSetting("Preaim", true));
-        this.addSetting(new PredictionSetting("PredictBlockWall", true));
+        this.addSetting(new PredictionSetting("PredictStep", 4d) {{
+            this.setDescription("How many ticks ahead to predict");
+        }});
+        this.addSetting(new PredictionSetting("Preaim", true) {{
+            this.setDescription("Preaim the shot even if you cannot see them yet");
+        }});
+        this.addSetting(new PredictionSetting("PredictBlockWall", true) {{
+            this.setDescription("Predict if the player is going to hit a wall and clamp it to the furthest block");
+        }});
 
         // Local backtrack
-        this.addSetting(new Setting("LocalBacktrack", false));
+        this.addSetting(new Setting("LocalBacktrack", false) {{
+            this.setDescription("Fires from a previous location");
+        }});
 
-        this.addSetting(new LocalBacktrackSetting("BacktrackStep", 5));
-        this.addSetting(new LocalBacktrackSetting("BacktrackRenderSteps", false));
+        this.addSetting(new LocalBacktrackSetting("BacktrackStep", 5) {{
+            this.setDescription("How many ticks back to go");
+        }});
+        this.addSetting(new LocalBacktrackSetting("BacktrackRenderSteps", false) {{
+            this.setDescription("Render the backtrack steps");
+        }});
 
         // Smoothing
-        this.addSetting(new Setting("Smoothing", true));
+        this.addSetting(new Setting("Smoothing", true) {{
+            this.setDescription("Smooth the aimbot when aiming at people");
+        }});
 
-        this.addSetting(new SmoothingSetting("SmoothingStep", 50d));
+        this.addSetting(new SmoothingSetting("SmoothingStep", 50d) {{
+            this.setDescription("How smooth should the aim be, the lower the less smooth");
+        }});
         this.addSetting(new SmoothingSetting("SmoothingIgnoreFOV", 1d) {{
             this.setMin(0d);
             this.setMax(360d);
+            this.setDescription("At which angle should the smoothing be stopped and just go straight to the target");
         }});
         this.addSetting(new SmoothingSetting("RenderIgnoreCircle", false) {
             @Override
             public boolean shouldShow() {
                 return super.shouldShow() && getBoolSetting("UseCircles");
             }
+
+            {
+                this.setDescription("Render the circle that outlines where is being ignored");
+            }
         });
         
         // Legit
-        this.addSetting(new Setting("Randomise", false));
+        this.addSetting(new Setting("Randomise", false) {{
+            this.setDescription("Randomise the entity position");
+        }});
 
         this.addSetting(new Setting("RandomiseAmount", 0.125d) {
             @Override
@@ -113,20 +145,30 @@ public class QuakeAimbot extends Module {
 
             {
                 this.setCategory("Randomisation");
+                this.setDescription("How much to randomise the entity position");
             }
         });
 
         // Auto shoot
-        this.addSetting(new Setting("AutoShoot", true));
-        this.addSetting(new AutoShootSetting("ShootDelay", 0d));
+        this.addSetting(new Setting("AutoShoot", true) {{
+            this.setDescription("Automatically shoot when the target is in range");
+        }});
+        this.addSetting(new AutoShootSetting("ShootDelay", 0d) {{
+            this.setDescription("How long to wait before shooting each time");
+        }});
         this.addSetting(new AutoShootSetting("ShootFOV", 1d) {{
             this.setMin(0d);
             this.setMax(360d);
+            this.setDescription("At which angle should the shot be fired");
         }});
         this.addSetting(new AutoShootSetting("RenderShootCircle", false) {
             @Override
             public boolean shouldShow() {
                 return super.shouldShow() && getBoolSetting("UseCircles");
+            }
+
+            {
+                this.setDescription("Render the circle that outlines where shots will be fired");
             }
         });
     }
