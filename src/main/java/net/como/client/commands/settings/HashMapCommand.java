@@ -29,7 +29,7 @@ public class HashMapCommand extends CommandNode {
     private static class Add extends SubCommand {
 
         public Add(Setting setting) {
-            super("add", "remove [key to be added]", "Add an item to the hash map", setting);
+            super("add", "add [key to be added]", "Add an item to the hash map", setting);
         }
         
         @Override

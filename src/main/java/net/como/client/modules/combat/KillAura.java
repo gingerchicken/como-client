@@ -32,17 +32,32 @@ public class KillAura extends Module {
         super("KillAura");
 
         // Misc
-        this.addSetting(new Setting("SilentAim", true));
+        this.addSetting(new Setting("SilentAim", true) {{
+            this.setDescription("Doesn't show the turn on your client");
+        }});
 
         // Constraints
-        this.addSetting(new Setting("MaxDistance", 7d));
-        this.addSetting(new Setting("MaxFOV", 25d));
-        this.addSetting(new Setting("Delay", 0d));
+        this.addSetting(new Setting("MaxDistance", 7d) {{
+            this.setDescription("The maximum distance to check for players");
+
+            this.setMax(10d);
+            this.setMin(1d);
+        }});
+        this.addSetting(new Setting("MaxFOV", 25d) {{
+            this.setDescription("The maximum field of view to check for players");
+        }});
+        this.addSetting(new Setting("Delay", 0d) {{
+            this.setDescription("The delay in seconds to wait before hitting players");
+        }});
 
         // Friends
-        this.addSetting(new Setting("AttackFriends", false));
+        this.addSetting(new Setting("AttackFriends", false) {{
+            this.setDescription("Attacks players that are on your friends list");
+        }});
 
-        this.addSetting(new Setting("TargetMode", new Mode("Angle", "Distance")));
+        this.addSetting(new Setting("TargetMode", new Mode("Angle", "Distance")) {{
+            this.setDescription("Which attribute should we prioritise when targeting players");
+        }});
 
         // Tracers
         this.addSetting(new Setting("TargetTracers", true));

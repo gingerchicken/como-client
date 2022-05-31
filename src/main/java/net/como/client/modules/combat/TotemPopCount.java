@@ -23,8 +23,15 @@ public class TotemPopCount extends Module {
         this.setDescription("This counts the total number of totems used by a player before death.");
 
         // Default One min
-        this.addSetting(new Setting("CountDuration", 60d));
-        this.addSetting(new Setting("DeathMessage", true));
+        this.addSetting(new Setting("CountDuration", 60d) {{
+            this.setDescription("The duration in seconds to count the totems before resetting.");
+
+            this.setMax(3600d);
+            this.setMin(1d);
+        }});
+        this.addSetting(new Setting("DeathMessage", true) {{
+            this.setDescription("Show how many totems someone has used before death.");
+        }});
         
         this.setCategory("Combat");
     }
