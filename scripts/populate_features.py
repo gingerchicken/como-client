@@ -247,7 +247,7 @@ class ItemRenderTweaksFeature(Feature):
         return s
     
     def get_description(self, default):
-        return "Allows you to render items in the world."
+        return "Allows you to change how held items are rendered."
 
 features.append(ItemRenderTweaksFeature())
 
