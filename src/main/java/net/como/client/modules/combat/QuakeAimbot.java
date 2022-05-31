@@ -8,24 +8,31 @@ import java.util.Queue;
 import java.util.Random;
 
 import net.como.client.ComoClient;
+import net.como.client.components.ProjectionUtils;
 import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
-import net.como.client.events.render.RenderWorldEvent;
+import net.como.client.events.render.InGameHudRenderEvent;
+import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.interfaces.mixin.IClient;
 import net.como.client.misc.Colour;
+import net.como.client.misc.maths.Vec3;
 import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
+import net.como.client.utils.Render2DUtils;
 import net.como.client.utils.RenderUtils;
 import net.como.client.utils.RotationUtils;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult.Type;
 import net.minecraft.util.math.Vec3d;
@@ -50,9 +57,13 @@ public class QuakeAimbot extends Module {
 
         // Targetting
         this.addSetting(new TargettingSetting("Range", 128d));
-        this.addSetting(new TargettingSetting("FOV", 180d));
+        this.addSetting(new TargettingSetting("FOV", 90d) {{
+            this.setMin(0d);
+            this.setMax(360d);
+        }});
         this.addSetting(new TargettingSetting("Headshot", true));
         this.addSetting(new TargettingSetting("IgnoreTeamMates", true));
+        this.addSetting(new TargettingSetting("RenderFOVCircle", true));
 
         // Prediction
         this.addSetting(new Setting("Predict", true));
@@ -71,7 +82,11 @@ public class QuakeAimbot extends Module {
         this.addSetting(new Setting("Smoothing", true));
 
         this.addSetting(new SmoothingSetting("SmoothingStep", 50d));
-        this.addSetting(new SmoothingSetting("SmoothingIgnoreFOV", 1d));
+        this.addSetting(new SmoothingSetting("SmoothingIgnoreFOV", 1d) {{
+            this.setMin(0d);
+            this.setMax(360d);
+        }});
+        this.addSetting(new SmoothingSetting("RenderIgnoreCircle", false));
         
         // Legit
         this.addSetting(new Setting("Randomise", false));
@@ -90,21 +105,23 @@ public class QuakeAimbot extends Module {
         // Auto shoot
         this.addSetting(new Setting("AutoShoot", true));
         this.addSetting(new AutoShootSetting("ShootDelay", 0d));
-        this.addSetting(new AutoShootSetting("ShootAngle", 1d));
+        this.addSetting(new AutoShootSetting("ShootFOV", 1d) {{
+            this.setMin(0d);
+            this.setMax(360d);
+        }});
+        this.addSetting(new AutoShootSetting("RenderShootCircle", false));
     }
     
     @Override
     public void activate() {
-        this.addListen(RenderWorldEvent.class);
+        this.addListen(InGameHudRenderEvent.class);
         this.addListen(ClientTickEvent.class);
-        this.addListen(RenderWorldEvent.class);
     }
 
     @Override
     public void deactivate() {
-        this.removeListen(RenderWorldEvent.class);
+        this.removeListen(InGameHudRenderEvent.class);
         this.removeListen(ClientTickEvent.class);
-        this.removeListen(RenderWorldEvent.class);
     }
 
     private Vec3d getTargetOffset(Entity target) {
@@ -197,6 +214,56 @@ public class QuakeAimbot extends Module {
         return -1;
     }
 
+    private double getTargetCircleRadius(double fov) {
+        return fov / 180d * ComoClient.getClient().getWindow().getScaledWidth();
+    }
+
+    private double getTargetCircleRadius() {
+        return this.getTargetCircleRadius(this.getDoubleSetting("FOV"));
+    }
+
+    private void renderFOVCircle(MatrixStack matrixStack, double fov, Colour colour) {
+        // Get the window
+
+        Window window = MinecraftClient.getInstance().getWindow();
+        
+        double width  = window.getScaledWidth();
+        double height = window.getScaledHeight();
+
+        Render2DUtils.renderCircle(matrixStack, width / 2, height / 2, this.getTargetCircleRadius(fov), colour);
+    }
+
+    private boolean isInCircle(Entity entity, double radius) {
+        Vec3 pos = new Vec3(this.getTargetPos(entity));
+
+        ProjectionUtils.unscaledProjection();
+
+        // Get the 2D position
+        boolean visible = ProjectionUtils.getInstance().to2D(pos, 1);
+        ProjectionUtils.resetProjection();
+
+        if (!visible) return false;
+
+        // Find distance from the center of the screen
+        Vec3 center = new Vec3(
+            MinecraftClient.getInstance().getWindow().getWidth()  / 2,
+            MinecraftClient.getInstance().getWindow().getHeight() / 2,
+            0
+        );
+
+        pos.z = 0;
+
+        // Get the distance
+        double distance = pos.distanceTo(center);
+
+        // Check if it is in the circle
+        return distance / 2 <= radius;
+    }
+
+    private boolean isInCircle(Entity entity) {
+        return this.isInCircle(entity, this.getTargetCircleRadius());
+    }
+
     /**
      * Gets an array of targets
      * @return array of targets
@@ -205,12 +272,11 @@ public class QuakeAimbot extends Module {
         List<Entity> players = new ArrayList<>();
 
         Vec3d localPos = ComoClient.me().getPos();
-        double fov = this.getDoubleSetting("FOV");
         int localTeamColour = this.getTeamColour(ComoClient.me());
 
         // Get all of the players
         for (Entity ent : ComoClient.getClient().world.getEntities()) {
-            if (!(ent instanceof PlayerEntity)) continue;
+            // if (!(ent instanceof PlayerEntity)) continue;
 
             Entity player = ent;
 
@@ -234,9 +300,7 @@ public class QuakeAimbot extends Module {
             if (!canSee) continue;
 
             // Make sure the player is in the FOV
-            Rotation current = new Rotation(ComoClient.me().getYaw(), ComoClient.me().getPitch());
-            Rotation rotation = RotationUtils.getRequiredRotation(pos).difference(current);
-            if (rotation.magnitude() > fov) continue;
+            if (!this.isInCircle(player)) continue;
 
             // Checks if they are in the same team
             if (localTeamColour != -1 && this.getBoolSetting("IgnoreTeamMates") && this.getTeamColour(player) == localTeamColour) continue;
@@ -400,7 +464,7 @@ public class QuakeAimbot extends Module {
             double step = this.getDoubleSetting("SmoothingStep");
             double antiSmoothingFOV = this.getDoubleSetting("SmoothingIgnoreFOV");
 
-            if (diff.magnitude() > antiSmoothingFOV) {
+            if (!this.isInCircle(target, this.getTargetCircleRadius(antiSmoothingFOV))) {
                 pitch = (float)(current.pitch + diff.pitch / step);
                 yaw   = (float)(current.yaw   + diff.yaw   / step);
             }
@@ -413,7 +477,7 @@ public class QuakeAimbot extends Module {
         // Shoot
         this.shooting = false;
         if (this.getBoolSetting("AutoShoot")) {
-            if (diff.magnitude() > this.getDoubleSetting("ShootAngle")) return;
+            if (!this.isInCircle(target, this.getTargetCircleRadius(this.getDoubleSetting("ShootFOV")))) return;
 
             this.shooting = true;                    
 
@@ -439,12 +503,12 @@ public class QuakeAimbot extends Module {
 
                 break;
             }
-            case "RenderWorldEvent": {
+            case "InGameHudRenderEvent": {
                 // Get tick delta
-                float tickDelta = ((RenderWorldEvent)event).tickDelta;
+                float tickDelta = ((InGameHudRenderEvent)event).tickDelta;
 
                 // Get mStack
-                MatrixStack mStack = ((RenderWorldEvent)event).mStack;
+                MatrixStack mStack = ((InGameHudRenderEvent)event).mStack;
 
                 // Render backtrack
                 if (this.getBoolSetting("LocalBacktrack") && this.getBoolSetting("BacktrackRenderSteps")) {
@@ -464,9 +528,25 @@ public class QuakeAimbot extends Module {
                 // Do the aimbot (this SHOULD not be done inside of a render thread)
                 this.aimbotThink(tickDelta);
 
+                // Render overall circle
+                this.renderCircles(mStack);
+
                 break;
             }
         }
+    }
+
+    private void renderCircles(MatrixStack mStack) {
+        // TODO add configs for the colours
+        
+        // FOV Circle
+        if (this.getBoolSetting("RenderFOVCircle")) this.renderFOVCircle(mStack, this.getDoubleSetting("FOV"), new Colour(255, 255, 255, 50));
+
+        // Ignore Smoothing Circle
+        if (this.getBoolSetting("RenderIgnoreCircle") && this.getBoolSetting("Smoothing")) this.renderFOVCircle(mStack, this.getDoubleSetting("SmoothingIgnoreFOV"), new Colour(255, 255, 0, 50));
+        
+        // Shoot Circle
+        if (this.getBoolSetting("RenderShootCircle") && this.getBoolSetting("AutoShoot")) this.renderFOVCircle(mStack, this.getDoubleSetting("ShootFOV"), new Colour(255, 0, 0, 50));
     }
 
     // Setting Types
