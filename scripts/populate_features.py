@@ -229,6 +229,7 @@ class Feature:
 features = [Feature(str(path)) for path in Path(FEATURES_DIR).rglob("*.java") if path.name not in ["Module.java", "DummyModule.java", "ItemRenderTweaks.java"]]
 
 # Since we ignored the ItemRenderTweaks special case, we need to add it manually
+# The reason why it is a special case is because I automated generating the settings for me in this module meaning this script won't be able to detect the settings properly.
 class ItemRenderTweaksFeature(Feature):
     def __init__(self):
         self._Feature__path = FEATURES_DIR + "/render/ItemRenderTweaks.java"
@@ -249,6 +250,7 @@ class ItemRenderTweaksFeature(Feature):
     def get_description(self, default):
         return "Allows you to change how held items are rendered."
 
+# Add the special case
 features.append(ItemRenderTweaksFeature())
 
 # Sort them alphabetically
