@@ -9,6 +9,7 @@ import java.util.Random;
 
 import net.como.client.ComoClient;
 import net.como.client.components.ProjectionUtils;
+import net.como.client.components.systems.TargetCircle;
 import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
@@ -40,6 +41,10 @@ import net.minecraft.world.RaycastContext;
 
 public class QuakeAimbot extends Module {
     private Random random = new Random();
+
+    private TargetCircle targetCircle     = new TargetCircle(new Colour(255, 255, 255, 255));
+    private TargetCircle shootCircle      = new TargetCircle(new Colour(255, 0, 0, 255));
+    private TargetCircle antiSmoothCircle = new TargetCircle(new Colour(255, 255, 0, 255));
 
     @Override
     public String listOption() {
@@ -214,54 +219,10 @@ public class QuakeAimbot extends Module {
         return -1;
     }
 
-    private double getTargetCircleRadius(double fov) {
-        return fov / 180d * ComoClient.getClient().getWindow().getScaledWidth();
-    }
-
-    private double getTargetCircleRadius() {
-        return this.getTargetCircleRadius(this.getDoubleSetting("FOV"));
-    }
-
-    private void renderFOVCircle(MatrixStack matrixStack, double fov, Colour colour) {
-        // Get the window
-
-        Window window = MinecraftClient.getInstance().getWindow();
-        
-        double width  = window.getScaledWidth();
-        double height = window.getScaledHeight();
-
-        Render2DUtils.renderCircle(matrixStack, width / 2, height / 2, this.getTargetCircleRadius(fov), colour);
-    }
-
-    private boolean isInCircle(Entity entity, double radius) {
-        Vec3 pos = new Vec3(this.getTargetPos(entity));
-
-        ProjectionUtils.unscaledProjection();
-
-        // Get the 2D position
-        boolean visible = ProjectionUtils.getInstance().to2D(pos, 1);
-        ProjectionUtils.resetProjection();
-
-        if (!visible) return false;
-
-        // Find distance from the center of the screen
-        Vec3 center = new Vec3(
-            MinecraftClient.getInstance().getWindow().getWidth()  / 2,
-            MinecraftClient.getInstance().getWindow().getHeight() / 2,
-            0
-        );
-
-        pos.z = 0;
-
-        // Get the distance
-        double distance = pos.distanceTo(center);
-
-        // Check if it is in the circle
-        return distance / 2 <= radius;
-    }
-
-    private boolean isInCircle(Entity entity) {
-        return this.isInCircle(entity, this.getTargetCircleRadius());
+    private void updateCircles() {
+        this.antiSmoothCircle.setFov(this.getDoubleSetting("SmoothingIgnoreFOV"));
+        this.shootCircle.setFov(this.getDoubleSetting("ShootFOV"));
+        this.targetCircle.setFov(this.getDoubleSetting("FOV"));
     }
 
     /**
@@ -276,7 +237,7 @@ public class QuakeAimbot extends Module {
 
         // Get all of the players
         for (Entity ent : ComoClient.getClient().world.getEntities()) {
-            // if (!(ent instanceof PlayerEntity)) continue;
+            if (!(ent instanceof PlayerEntity)) continue;
 
             Entity player = ent;
 
@@ -300,7 +261,7 @@ public class QuakeAimbot extends Module {
             if (!canSee) continue;
 
             // Make sure the player is in the FOV
-            if (!this.isInCircle(player)) continue;
+            if (!this.targetCircle.isInCircle(this.getTargetPos(player))) continue;
 
             // Checks if they are in the same team
             if (localTeamColour != -1 && this.getBoolSetting("IgnoreTeamMates") && this.getTeamColour(player) == localTeamColour) continue;
@@ -460,14 +421,11 @@ public class QuakeAimbot extends Module {
         float yaw   = (float)targetRotation.yaw;
 
         // Apply the step
-        if (this.getBoolSetting("Smoothing")) {
+        if (this.getBoolSetting("Smoothing") && !this.antiSmoothCircle.isInCircle(targetPos)) {
             double step = this.getDoubleSetting("SmoothingStep");
-            double antiSmoothingFOV = this.getDoubleSetting("SmoothingIgnoreFOV");
 
-            if (!this.isInCircle(target, this.getTargetCircleRadius(antiSmoothingFOV))) {
-                pitch = (float)(current.pitch + diff.pitch / step);
-                yaw   = (float)(current.yaw   + diff.yaw   / step);
-            }
+            pitch = (float)(current.pitch + diff.pitch / step);
+            yaw   = (float)(current.yaw   + diff.yaw   / step);
         }
 
         // Set the pitch and yaw
@@ -477,7 +435,7 @@ public class QuakeAimbot extends Module {
         // Shoot
         this.shooting = false;
         if (this.getBoolSetting("AutoShoot")) {
-            if (!this.isInCircle(target, this.getTargetCircleRadius(this.getDoubleSetting("ShootFOV")))) return;
+            if (!this.shootCircle.isInCircle(targetPos)) return;
 
             this.shooting = true;                    
 
@@ -525,6 +483,10 @@ public class QuakeAimbot extends Module {
                     }
                 }
 
+                // Update the circles
+                // TODO replace this with a setting update event
+                this.updateCircles();
+
                 // Do the aimbot (this SHOULD not be done inside of a render thread)
                 this.aimbotThink(tickDelta);
 
@@ -540,13 +502,13 @@ public class QuakeAimbot extends Module {
         // TODO add configs for the colours
         
         // FOV Circle
-        if (this.getBoolSetting("RenderFOVCircle")) this.renderFOVCircle(mStack, this.getDoubleSetting("FOV"), new Colour(255, 255, 255, 50));
+        if (this.getBoolSetting("RenderFOVCircle")) this.targetCircle.render(mStack);
 
         // Ignore Smoothing Circle
-        if (this.getBoolSetting("RenderIgnoreCircle") && this.getBoolSetting("Smoothing")) this.renderFOVCircle(mStack, this.getDoubleSetting("SmoothingIgnoreFOV"), new Colour(255, 255, 0, 50));
+        if (this.getBoolSetting("RenderIgnoreCircle") && this.getBoolSetting("Smoothing")) this.antiSmoothCircle.render(mStack);
         
         // Shoot Circle
-        if (this.getBoolSetting("RenderShootCircle") && this.getBoolSetting("AutoShoot")) this.renderFOVCircle(mStack, this.getDoubleSetting("ShootFOV"), new Colour(255, 0, 0, 50));
+        if (this.getBoolSetting("RenderShootCircle") && this.getBoolSetting("AutoShoot")) this.shootCircle.render(mStack);
     }
 
     // Setting Types
