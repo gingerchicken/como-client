@@ -25,6 +25,8 @@ public class ClickGUI extends Module {
         
         this.addSetting(new Setting("TotalBouncies", 1) {{
             this.setDescription("The total amount of felixes bouncing around in the background!");
+            this.setMax(420);
+            this.setMin(1);
         }});
 
         this.addSetting(new Setting("BouncySpeed", 1.0d) {{
