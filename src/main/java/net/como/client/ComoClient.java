@@ -309,6 +309,7 @@ public class ComoClient {
         this.registerModule(new x88ESP());
         this.registerModule(new MapArtESP());
         this.registerModule(new NoEntityRender());
+        this.registerModule(new ExploitSkid());
 
         // TESTING DON'T GET EXCITED!
         this.registerModule(new ClickGUI());
