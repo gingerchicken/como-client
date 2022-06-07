@@ -16,13 +16,47 @@ public class HClip extends Module {
 
         this.setCategory("Packet");
 
-        this.addSetting(new Setting("X", 0d));
-        this.addSetting(new Setting("Y", 0d));
-        this.addSetting(new Setting("Z", 0d));
+        this.addSetting(new Setting("X", 0d) {{
+            this.setCategory("Offset");
+        }});
+        this.addSetting(new Setting("Y", 0d) {{
+            this.setCategory("Offset");
+        }});
+        this.addSetting(new Setting("Z", 0d) {{
+            this.setCategory("Offset");
+        }});
 
         this.addSetting(new Setting("ChatMessage", true));
 
         this.addSetting(new Setting("AngleRelative", false));
+
+        this.addSetting(new Setting("Steps", true));
+        this.addSetting(new Setting("StepsAmount", 10) {
+            @Override
+            public boolean shouldShow() {
+                return super.shouldShow() && getBoolSetting("Steps");
+            }
+
+            {
+                this.setMin(1);
+                this.setMax(128);
+                this.setDescription("The amount of steps to take");
+                this.setCategory("Steps");
+            }
+        });
+        this.addSetting(new Setting("StepDelay", 0d) {
+            @Override
+            public boolean shouldShow() {
+                return super.shouldShow() && getBoolSetting("Steps");
+            }
+
+            {
+                this.setMin(0d);
+                this.setMax(1d);
+                this.setDescription("The delay between each step");
+                this.setCategory("Steps");
+            }
+        });
     }
 
     @Override
@@ -38,7 +72,9 @@ public class HClip extends Module {
     }
 
     private void showWoosh() {
-        int realDistance = (int)Math.round(this.getOffset().distanceTo(Vec3d.ZERO));
+        Vec3d travelled = new Vec3d(getDoubleSetting("X"), getDoubleSetting("Y"), getDoubleSetting("Z"));
+
+        int realDistance = (int)Math.round(travelled.distanceTo(Vec3d.ZERO));
 
         // Clamp it
         int distance = realDistance;
@@ -60,39 +96,98 @@ public class HClip extends Module {
 
     public Vec3d getOffset() {
         return new Vec3d(
-            this.getDoubleSetting("X"),
-            this.getDoubleSetting("Y"),
-            this.getDoubleSetting("Z")
+            this.getComponentOrStep("X"),
+            this.getComponentOrStep("Y"),
+            this.getComponentOrStep("Z")
         );
     }
 
+    protected double getComponentOrStep(String component) {
+        double k = this.getDoubleSetting(component);
+
+        if (!this.getBoolSetting("Steps")) return k;
+
+        return k / (double)this.getIntSetting("StepsAmount");
+    }
+
     public Vec3d nextPos() {
-        Vec3d offset = this.getOffset();
-        
-        if (this.getBoolSetting("AngleRelative")) {
-            // Calculate the sides
-            Vec3d forward = MathsUtils.getForwardVelocity(ComoClient.me());
-            Vec3d right   = MathsUtils.getRightVelocity(ComoClient.me());
+        boolean shouldStep = this.getBoolSetting("Steps");
 
-            // Get the results
-            Vec3d result = Vec3d.ZERO;
-            result = result.add(forward.multiply(offset.getX()));
-            result = result.add(right.multiply(offset.getZ()));
+        Vec3d finalOffset = Vec3d.ZERO;
+
+        for (int i = 0; (!shouldStep && i == 0) || i < this.getIntSetting("StepsAmount"); i++) {
+            Vec3d offset = this.getOffset();
             
-            // We don't have a vertical component
-            result = result.add(0, offset.getY(), 0);
+            if (this.getBoolSetting("AngleRelative")) {
+                // Calculate the sides
+                Vec3d forward = MathsUtils.getForwardVelocity(ComoClient.me());
+                Vec3d right   = MathsUtils.getRightVelocity(ComoClient.me());
 
-            // Set the result
-            offset = result;
+                // Get the results
+                Vec3d result = Vec3d.ZERO;
+
+                result = result.add(forward.multiply(offset.getX()));
+                result = result.add(right.multiply(offset.getZ()));
+                
+                // We don't have a vertical component
+                result = result.add(0, offset.getY(), 0);
+
+                // Set the result
+                offset = result;
+            }
+
+            // Add the step to the final offset
+            finalOffset = finalOffset.add(offset);
         }
 
-        return ComoClient.me().getPos().add(offset);
+        return ComoClient.me().getPos().add(finalOffset);
+    }
+
+    private void performMove() {
+        Thread t = new Thread(() -> {
+            boolean shouldStep = this.getBoolSetting("Steps");
+            Vec3d offset = this.getOffset();
+                
+            if (this.getBoolSetting("AngleRelative")) {
+                // Calculate the sides
+                Vec3d forward = MathsUtils.getForwardVelocity(ComoClient.me());
+                Vec3d right   = MathsUtils.getRightVelocity(ComoClient.me());
+    
+                // Get the results
+                Vec3d result = Vec3d.ZERO;
+    
+                result = result.add(forward.multiply(offset.getX()));
+                result = result.add(right.multiply(offset.getZ()));
+                
+                // We don't have a vertical component
+                result = result.add(0, offset.getY(), 0);
+            }
+    
+            for (int i = 0; ((!shouldStep && i == 0) || (shouldStep && i < this.getIntSetting("StepsAmount"))) && ComoClient.getClient().world != null; i++) {
+                Vec3d nextPos = ComoClient.me().getPos().add(offset);
+    
+                // Update the position
+                ComoClient.me().setPos(
+                    nextPos.getX(), nextPos.getY(), nextPos.getZ()
+                );
+
+                // Wait for the delay
+                if (shouldStep) {
+                    try {
+                        Thread.sleep((long)(this.getDoubleSetting("StepDelay") * 1000));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        t.start();
     }
 
     @Override
     public void activate() {
-        Vec3d pos = this.nextPos();
-        ComoClient.me().setPos(pos.getX(), pos.getY(), pos.getZ());
+        this.performMove();
 
         if (this.getBoolSetting("ChatMessage")) this.showWoosh();
 
