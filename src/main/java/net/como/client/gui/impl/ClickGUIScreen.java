@@ -816,7 +816,7 @@ public class ClickGUIScreen extends ImGuiScreen {
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         // Render background
-        // TODO fix this, currently disabled as the entire game's textures disappear for some ungodly reason
+        // TODO fix this, currently disabled as the entire game's textures disappear for some ungodly reason (due to the colour rendering issue!!)
         // this.renderBackground(matrices, delta);
 
         // Render Bouncy widgets
