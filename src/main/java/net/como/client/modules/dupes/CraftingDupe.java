@@ -9,7 +9,7 @@ public class CraftingDupe extends DummyModule {
         super("CraftingDupe");
         this.setDescription("An old drop dupe for versions 1.17 and earlier");
 
-        this.setCategory("Exploits");
+        this.setCategory("Exploit");
         this.addSetting(new Setting("ShowTip", true));
     }
     

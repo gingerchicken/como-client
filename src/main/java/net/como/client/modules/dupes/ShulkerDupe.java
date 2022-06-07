@@ -27,7 +27,7 @@ public class ShulkerDupe extends Module {
         this.addSetting(new Setting("DupeAll", true));
         this.addSetting(new Setting("TargetSlot", 0));
 
-        this.setCategory("Exploits");
+        this.setCategory("Exploit");
     }
 
     @Override
