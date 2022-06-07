@@ -19,14 +19,14 @@ import net.minecraft.world.BlockRenderView;
 
 @Mixin(BlockModelRenderer.class)
 public class BlockModelRendererMixin {
-    @Inject(at = {@At("HEAD")},
-		method = {
-			"renderSmooth(Lnet/minecraft/world/BlockRenderView;Lnet/minecraft/client/render/model/BakedModel;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;ZLjava/util/Random;JI)Z",
-			"renderFlat(Lnet/minecraft/world/BlockRenderView;Lnet/minecraft/client/render/model/BakedModel;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;ZLjava/util/Random;JI)Z"
-        },
-        cancellable = true
-    )
-	private void onRenderBlock(BlockRenderView world, BakedModel model, BlockState state, BlockPos pos, MatrixStack matrix, VertexConsumer vertexConsumer, boolean cull, Random random, long seed, int overlay, CallbackInfoReturnable<Boolean> cir) {
-        ComoClient.getInstance().emitter.triggerEvent(new BlockCracksRenderEvent(world, model, state, pos, matrix, vertexConsumer, cull, random, seed, overlay, cir));
-    }
+    // @Inject(at = {@At("HEAD")},
+	// 	method = {
+	// 		"renderSmooth(Lnet/minecraft/world/BlockRenderView;Lnet/minecraft/client/render/model/BakedModel;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;ZLjava/util/Random;JI)Z",
+	// 		"renderFlat(Lnet/minecraft/world/BlockRenderView;Lnet/minecraft/client/render/model/BakedModel;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;ZLjava/util/Random;JI)Z"
+    //     },
+    //     cancellable = true
+    // )
+	// private void onRenderBlock(BlockRenderView world, BakedModel model, BlockState state, BlockPos pos, MatrixStack matrix, VertexConsumer vertexConsumer, boolean cull, Random random, long seed, int overlay, CallbackInfoReturnable<Boolean> cir) {
+    //     ComoClient.getInstance().emitter.triggerEvent(new BlockCracksRenderEvent(world, model, state, pos, matrix, vertexConsumer, cull, random, seed, overlay, cir));
+    // }
 }
