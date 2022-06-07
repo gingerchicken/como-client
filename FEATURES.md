@@ -161,6 +161,11 @@
  - Speed: `5.0`
  - Yaw: `True`
 
+## ExploitSkid (`.exploitskid`)
+[(Source Code)](src/main/java/net/como/client/modules/exploits/ExploitSkid.java) Grabs player's held item NBT and prints it to the console.
+### Default Settings
+ - ChatLog: `True`
+
 ## FakeClient (`.fakeclient`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/FakeClient.java) Makes the client appear as vanilla to any servers.
 ### Default Settings
@@ -212,6 +217,9 @@
 ### Default Settings
  - AngleRelative: `True`
  - ChatMessage: `True`
+ - StepDelay: `0.0`
+ - Steps: `True`
+ - StepsAmount: `10`
  - X: `0.0`
  - Y: `0.0`
  - Z: `0.0`
@@ -516,5 +524,6 @@
 ## x88ESP (`.x88esp`)
 [(Source Code)](src/main/java/net/como/client/modules/render/x88ESP.java) See players with a x88 lookalike box.
 ### Default Settings
+ - HideDefaultTags: `True`
  - LookLength: `3.0`
 
