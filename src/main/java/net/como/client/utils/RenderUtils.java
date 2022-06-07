@@ -103,7 +103,7 @@ public class RenderUtils {
         // Make it so it is our mobBox.
         Shader shader = RenderSystem.getShader();
         Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
-        simpleMobBox.setShader(mStack.peek().getPositionMatrix(), matrix4f, shader);
+        simpleMobBox.draw(mStack.peek().getPositionMatrix(), matrix4f, shader);
         
         // Pop the stack (i.e. render it)
         mStack.pop();
@@ -143,8 +143,7 @@ public class RenderUtils {
 		bufferBuilder.vertex(matrix, (float)(start.x - regionX), (float)start.y, (float)(start.z - regionZ)).next();
 		bufferBuilder.vertex(matrix, (float)end.x - regionX, (float)end.y, (float)end.z - regionZ).next();
 		
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		BufferRenderer.drawWithoutShader(bufferBuilder.end());
 
 		matrixStack.pop();
 
@@ -341,8 +340,7 @@ public class RenderUtils {
 		bufferBuilder
 			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
 			.next();
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		BufferRenderer.drawWithoutShader(bufferBuilder.end());
 	}
 	
 	public static void drawSolidBox(Box bb, VertexBuffer vertexBuffer)
@@ -352,9 +350,8 @@ public class RenderUtils {
 		bufferBuilder.begin(VertexFormat.DrawMode.QUADS,
 			VertexFormats.POSITION);
 		drawSolidBox(bb, bufferBuilder);
-		bufferBuilder.end();
-		
-		vertexBuffer.upload(bufferBuilder);
+
+		vertexBuffer.upload(bufferBuilder.end());
 	}
 	
 	public static void drawSolidBox(Box bb, BufferBuilder bufferBuilder)
@@ -486,8 +483,7 @@ public class RenderUtils {
 		bufferBuilder
 			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
 			.next();
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		BufferRenderer.drawWithoutShader(bufferBuilder.end());
 	}
 	
 	public static void drawOutlinedBox(Box bb, VertexBuffer vertexBuffer)
@@ -497,9 +493,8 @@ public class RenderUtils {
 		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
 			VertexFormats.POSITION);
 		drawOutlinedBox(bb, bufferBuilder);
-		bufferBuilder.end();
-		
-		vertexBuffer.upload(bufferBuilder);
+
+		vertexBuffer.upload(bufferBuilder.end());
 	}
 	
 	public static void drawOutlinedBox(Box bb, BufferBuilder bufferBuilder)
@@ -631,8 +626,8 @@ public class RenderUtils {
 		bufferBuilder
 			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
 			.next();
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+
+		BufferRenderer.drawWithoutShader(bufferBuilder.end());
 	}
 	
 	public static void drawCrossBox(Box bb, VertexBuffer vertexBuffer)
@@ -642,9 +637,8 @@ public class RenderUtils {
 		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
 			VertexFormats.POSITION);
 		drawCrossBox(bb, bufferBuilder);
-		bufferBuilder.end();
-		
-		vertexBuffer.upload(bufferBuilder);
+
+		vertexBuffer.upload(bufferBuilder.end());
 	}
 	
 	public static void drawCrossBox(Box bb, BufferBuilder bufferBuilder)
@@ -759,8 +753,7 @@ public class RenderUtils {
 		bufferBuilder.vertex(matrix, (float)midX, (float)midY, (float)bb.maxZ)
 			.next();
 		
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		BufferRenderer.drawWithoutShader(bufferBuilder.end());
 	}
 	
 	public static void drawNode(Box bb, VertexBuffer vertexBuffer)
@@ -770,9 +763,8 @@ public class RenderUtils {
 		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
 			VertexFormats.POSITION);
 		drawNode(bb, bufferBuilder);
-		bufferBuilder.end();
 		
-		vertexBuffer.upload(bufferBuilder);
+		vertexBuffer.upload(bufferBuilder.end());
 	}
 	
 	public static void drawNode(Box bb, BufferBuilder bufferBuilder)
@@ -888,8 +880,7 @@ public class RenderUtils {
 		
 		matrixStack.pop();
 		
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		BufferRenderer.drawWithoutShader(bufferBuilder.end());
 	}
 	
 	public static void drawArrow(Vec3d from, Vec3d to,
@@ -901,8 +892,7 @@ public class RenderUtils {
 		
 		drawArrow(from, to, bufferBuilder);
 		
-		bufferBuilder.end();
-		vertexBuffer.upload(bufferBuilder);
+		vertexBuffer.upload(bufferBuilder.end());
 	}
 	
 	public static void drawArrow(Vec3d from, Vec3d to,
@@ -999,7 +989,7 @@ public class RenderUtils {
         // Make it so it is our mobBox.
         Shader shader = RenderSystem.getShader();
         Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
-        blockBox.setShader(mStack.peek().getPositionMatrix(), matrix4f, shader);
+        blockBox.draw(mStack.peek().getPositionMatrix(), matrix4f, shader);
         
         // Pop the stack (i.e. render it)
         mStack.pop();
@@ -1035,6 +1025,7 @@ public class RenderUtils {
 		return RGBA2Int((int)c.r, (int)c.g, (int)c.b, (int)c.a);
 	}
 
+	// This function breaks literally everything for no reason I have no idea why!
 	public static int RGBA2Int(int r, int g, int b, int a) {
 		int colour[] = {
 			a, r, g, b

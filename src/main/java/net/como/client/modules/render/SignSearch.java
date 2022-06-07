@@ -94,7 +94,7 @@ public class SignSearch extends Module {
                 
                 boolean found = false;
                 for (int i = 0; i < this.SIGN_ROWS; i++) {
-                    String str = sign.getTextOnRow(i, false).asString();
+                    String str = sign.getTextOnRow(i, false).getString();
 
                     if (!this.isTarget(str)) continue;
 

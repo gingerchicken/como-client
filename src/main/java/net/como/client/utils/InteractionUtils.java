@@ -34,9 +34,9 @@ public class InteractionUtils {
         ClientPlayerEntity me = ComoClient.me();
 
         // Send block packet
-        im.interactBlock(me, client.world, Hand.MAIN_HAND, new BlockHitResult(hitVec, side, pos, false));
+        im.interactBlock(me, Hand.MAIN_HAND, new BlockHitResult(hitVec, side, pos, false));
 
         // Send item packet
-		im.interactItem(client.player, client.world, Hand.MAIN_HAND);
+		im.interactItem(client.player, Hand.MAIN_HAND);
     }
 }

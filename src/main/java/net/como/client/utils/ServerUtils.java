@@ -31,7 +31,7 @@ public class ServerUtils {
         List<AbstractClientPlayerEntity> players = ComoClient.getClient().world.getPlayers();
 
         for (AbstractClientPlayerEntity player : players) {
-            if (player.getDisplayName().asString().equals(name)) {
+            if (player.getDisplayName().getContent().equals(name)) {
                 return player;
             }
         }
@@ -59,6 +59,6 @@ public class ServerUtils {
         List<Text> parts = playerCountLabel.getSiblings();
         if (parts.size() != 2) return fakeTotal;
 
-        return Integer.decode(parts.get(1).asString());
+        return Integer.decode(parts.get(1).getString());
     }
 }

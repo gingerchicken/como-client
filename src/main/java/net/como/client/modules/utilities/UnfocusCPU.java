@@ -36,7 +36,7 @@ public class UnfocusCPU extends Module {
                 if (!ComoClient.getClient().isWindowFocused()) {
                     window.setFramerateLimit(this.getIntSetting("MaxFPS"));
                 } else {
-                    window.setFramerateLimit(ComoClient.getClient().options.maxFps);
+                    window.setFramerateLimit(ComoClient.getClient().options.getMaxFps().getValue());
                 }
             }
         }

@@ -41,7 +41,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Language;
 import net.minecraft.util.math.Vec2f;
@@ -191,16 +191,16 @@ public class ClientUtils {
     }
 
     public static String getTextString(Text text) {
-        if (text instanceof TranslatableText) {
+        if (text instanceof TranslatableTextContent) {
             Language language = Language.getInstance();
 
-            TranslatableText transText = (TranslatableText)text;
+            TranslatableTextContent transText = (TranslatableTextContent)text;
 
             String str = language.get(transText.getKey());
-            return str.equals("%s") ? transText.asString() : str;
+            return str.equals("%s") ? transText.getKey() : str;
         }
 
-        return text.asString();
+        return text.getString();
     }
 
     /**
@@ -262,7 +262,7 @@ public class ClientUtils {
      * @return the username of the player
      */
     public static String getUsername() {
-        return ComoClient.me().getName().asString();
+        return ComoClient.me().getName().getString();
     }
 
     private static HashMap<UUID, String> usernames = new HashMap<>();

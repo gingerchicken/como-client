@@ -43,7 +43,7 @@ public class FriendsManager {
         public String getUsername() {
             PlayerEntity player = ComoClient.getClient().world.getPlayerByUuid(this.uuid);
             if (player != null) {
-                username = player.getDisplayName().asString();
+                username = player.getDisplayName().getString();
             }
             
             return username;

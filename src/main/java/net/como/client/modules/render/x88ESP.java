@@ -107,13 +107,13 @@ public class x88ESP extends Module {
             new HealthAttribute(entity) {
                 @Override
                 public Text getText() {
-                    return Text.of("HP: " + super.getText().asString());
+                    return Text.of("HP: " + super.getText().getContent());
                 }
             },
             new ArmourAttribute(entity) {
                 @Override
                 public Text getText() {
-                    return Text.of("Armour: " + super.getText().asString());
+                    return Text.of("Armour: " + super.getText().getContent());
                 }
             },
             new ActiveItemAttribute(entity) {
@@ -137,7 +137,7 @@ public class x88ESP extends Module {
 
             textRenderer.draw(mStack, text, (int)bottomPos.x, (int)bottomPos.y, attribute.getColour());
 
-            if (!text.asString().isBlank()) bottomPos.add(0, textHeight, 0);
+            if (!text.getString().isBlank()) bottomPos.add(0, textHeight, 0);
         }
 
         // Render the top attributes

@@ -38,7 +38,7 @@ public class FullBright extends Module {
         if (!this.hasSetGamma) return;
 
         MinecraftClient client = ComoClient.getClient();
-        client.options.gamma = this.normalGamma;
+        client.options.getGamma().setValue(this.normalGamma);
         this.hasSetGamma = false;
     }
 
@@ -74,13 +74,14 @@ public class FullBright extends Module {
                         MinecraftClient client = ComoClient.getClient();
 
                         if (!this.hasSetGamma) {
-                            this.normalGamma = client.options.gamma;
+                            this.normalGamma = client.options.getGamma().getValue();
                             this.hasSetGamma = true;
         
                             this.restoreEffect();
                         }
         
-                        client.options.gamma = 16d;
+                        // TODO This is broken for now as the max cannot be set as of yet
+                        client.options.getGamma().setValue(16d);
                         break;
                     }
                 }

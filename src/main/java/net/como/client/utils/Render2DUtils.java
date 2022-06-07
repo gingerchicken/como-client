@@ -41,8 +41,7 @@ public class Render2DUtils {
         }
 
         public void close() {
-            this.bufferBuilder.end();
-            BufferRenderer.draw(bufferBuilder);            
+            BufferRenderer.drawWithShader(this.bufferBuilder.end());            
         }
 
         public void vertex2D(int x, int y) {
