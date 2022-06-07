@@ -18,6 +18,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.MovementType;
 import net.minecraft.network.encryption.PlayerPublicKey;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
 @Mixin(ClientPlayerEntity.class)
@@ -31,8 +32,8 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
         ComoClient.getInstance().emitter.triggerEvent(new PlayerMoveEvent(type, offset, ci));
     }
 
-    @Inject(at = @At("HEAD"), method="sendChatMessage(Ljava/lang/String;)V", cancellable = true)
-    private void onSendChatMessage(String message, CallbackInfo ci) {
+    @Inject(at = @At("HEAD"), method="sendChatMessage(Ljava/lang/String;Lnet/minecraft/text/Text;)V", cancellable = true)
+    private void onSendChatMessage(String message, Text preview, CallbackInfo ci) {
         // Handle commands etc.
         ComoClient.getInstance().processChatPost(message, ci);
 
