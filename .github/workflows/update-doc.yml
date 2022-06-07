@@ -36,11 +36,11 @@ jobs:
           git commit -m "Auto-generate FEATURES.md"
         continue-on-error: true
       
-      - name: Commit gradle.properties
-        run: |
-          git add gradle.properties
-          git commit -m "Auto-update mod version"
-        continue-on-error: true
+      # - name: Commit gradle.properties
+      #   run: |
+      #     git add gradle.properties
+      #     git commit -m "Auto-update mod version"
+      #   continue-on-error: true
 
       - name: Push changes
         run: git push
