@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
+import net.como.client.misc.Colour;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -13,6 +14,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.ColorHelper;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenLogoMixin extends Screen {
@@ -35,6 +37,6 @@ public class TitleScreenLogoMixin extends Screen {
         int x = client.getWindow().getScaledWidth() - tr.getWidth(text) - padding;
         int y = ComoClient.isMeteorLoaded() ? 12 + padding : padding;
 
-        tr.drawWithShadow(matrices, Text.of(text), x, y, RenderUtils.RGBA2Int(0, 255, 0, 255));
+        tr.drawWithShadow(matrices, Text.of(text), x, y, Colour.GREEN.toARGB());
     }
 }

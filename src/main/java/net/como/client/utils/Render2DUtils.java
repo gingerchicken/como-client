@@ -176,7 +176,7 @@ public class Render2DUtils {
             Text.of(text),
             0,
             0,
-            RenderUtils.RGBA2Int(colour)
+            colour.toARGB()
         );
 
         finish(matrixStack);

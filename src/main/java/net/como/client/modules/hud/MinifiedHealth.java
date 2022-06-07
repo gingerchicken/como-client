@@ -45,7 +45,7 @@ public class MinifiedHealth extends Module {
 
         ComoClient.getClient().textRenderer.drawWithOutline(
             this.getHealth().asOrderedText(),
-            (float)x, (float)y, RenderUtils.RGBA2Int(new Colour(255, 19, 19, 255)), RenderUtils.RGBA2Int(new Colour(0, 0, 0, 150)), matrices.peek().getPositionMatrix(), immediate, 255
+            (float)x, (float)y, (new Colour(255, 19, 19, 255)).toARGB(), (new Colour(0, 0, 0, 150)).toARGB(), matrices.peek().getPositionMatrix(), immediate, 255
         );
         
         immediate.draw();

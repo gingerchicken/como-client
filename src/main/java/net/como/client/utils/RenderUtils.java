@@ -1020,25 +1020,4 @@ public class RenderUtils {
 	public static void renderBlockBox(MatrixStack mStack, Vec3d pos, Colour colour) {
 		renderBlockBox(mStack, pos, colour.r, colour.g, colour.b, colour.a);
 	}
-
-	public static int RGBA2Int(Colour c) {
-		return RGBA2Int((int)c.r, (int)c.g, (int)c.b, (int)c.a);
-	}
-
-	// This function breaks literally everything for no reason I have no idea why!
-	public static int RGBA2Int(int r, int g, int b, int a) {
-		int colour[] = {
-			a, r, g, b
-		};
-
-		String hex = "";
-		for (int part : colour) {
-			part = part > 255 ? 255 : part;
-			part = part < 0 ? 0 : part;
-
-			hex += StringUtils.leftPad(Integer.toHexString(part), 2, "0");
-		}
-
-		return (int)Long.parseLong(hex, 16);
-	}
 }

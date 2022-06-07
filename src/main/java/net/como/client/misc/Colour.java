@@ -3,9 +3,12 @@ package net.como.client.misc;
 import net.como.client.ComoClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.ColorHelper;
 
 public class Colour {
     public float r,g,b,a;
+
+    public static Colour GREEN = new Colour(0, 255, 0, 255);
 
     private static float clamp(float x) {
         if (x > 255) return 255.0f;
@@ -15,11 +18,21 @@ public class Colour {
     }
 
     public Colour(float r, float g, float b, float a) {
-
         this.r = clamp(r);
         this.g = clamp(g);
         this.b = clamp(b);
         this.a = clamp(a);
+    }
+
+    public Colour(float r, float g, float b) {
+        this.r = clamp(r);
+        this.g = clamp(g);
+        this.b = clamp(b);
+        this.a = 255;
+    }
+
+    public int toARGB() {
+        return ColorHelper.Argb.getArgb((int)this.a, (int)this.r, (int)this.g, (int)this.b);
     }
 
     public static Colour fromDistance(float distance) {

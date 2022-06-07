@@ -81,7 +81,7 @@ public class NoRespondAlert extends Module {
 
                 // Render the text
                 x = t.drawWithShadow(e.mStack, message, x, y, 0xFFFFFFFF);
-                x = t.drawWithShadow(e.mStack, timer, x, y, RenderUtils.RGBA2Int((int)timerColour.r, (int)timerColour.g, (int)timerColour.b, 255));
+                x = t.drawWithShadow(e.mStack, timer, x, y, (new Colour((int)timerColour.r, (int)timerColour.g, (int)timerColour.b, 255).toARGB()));
 
                 break;
             }
