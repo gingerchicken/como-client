@@ -107,13 +107,13 @@ public class x88ESP extends Module {
             new HealthAttribute(entity) {
                 @Override
                 public Text getText() {
-                    return Text.of("HP: " + super.getText().getContent());
+                    return Text.of("HP: " + super.getText().getString());
                 }
             },
             new ArmourAttribute(entity) {
                 @Override
                 public Text getText() {
-                    return Text.of("Armour: " + super.getText().getContent());
+                    return Text.of("Armour: " + super.getText().getString());
                 }
             },
             new ActiveItemAttribute(entity) {

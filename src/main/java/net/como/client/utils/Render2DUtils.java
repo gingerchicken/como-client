@@ -72,10 +72,10 @@ public class Render2DUtils {
 
 		matrixStack.push();
         RenderSystem.setShaderColor(
-            RenderUtils.normaliseColourPart(colour.r),
-            RenderUtils.normaliseColourPart(colour.g),
-            RenderUtils.normaliseColourPart(colour.b),
-            RenderUtils.normaliseColourPart(colour.a)
+            colour.r / 255f,
+            colour.g / 255f,
+            colour.b / 255f,
+            colour.a / 255f
         );
     }
 
