@@ -5,6 +5,7 @@ import net.como.client.components.ProjectionUtils;
 import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.render.InGameHudRenderEvent;
+import net.como.client.events.render.renderLabelIfPresentEvent;
 import net.como.client.misc.Colour;
 import net.como.client.misc.attributes.Attribute;
 import net.como.client.misc.attributes.entity.ActiveItemAttribute;
@@ -41,16 +42,22 @@ public class x88ESP extends Module {
 
             this.setDescription("The length of the angle tracer.");
         }});
+
+        this.addSetting(new Setting("HideDefaultTags", true) {{
+            this.setDescription("Hides the default name tags");
+        }});
     }
     
     @Override
     public void activate() {
         this.addListen(InGameHudRenderEvent.class);
+        this.addListen(renderLabelIfPresentEvent.class);
     }
 
     @Override
     public void deactivate() {
         this.removeListen(InGameHudRenderEvent.class);
+        this.removeListen(renderLabelIfPresentEvent.class);
     }
 
     private void renderx88Box(LivingEntity entity, float tickDelta, MatrixStack mStack) {
@@ -175,6 +182,20 @@ public class x88ESP extends Module {
 
                 ProjectionUtils.resetProjection();
                 break;
+            }
+
+            case "renderLabelIfPresentEvent": {
+                // Check if we should cancel
+                if (!this.getBoolSetting("HideDefaultTags")) break;
+
+                // Get the event
+                renderLabelIfPresentEvent e = (renderLabelIfPresentEvent)event;
+
+                // Make sure that it is a player that is getting rendered
+                if (!(e.entity instanceof PlayerEntity)) break;
+
+                // Hide the default name tag
+                e.ci.cancel();
             }
         }
     }
