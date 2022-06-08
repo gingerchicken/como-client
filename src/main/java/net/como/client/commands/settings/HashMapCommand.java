@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import net.como.client.ComoClient;
 import net.como.client.commands.structures.Command;
 import net.como.client.commands.structures.CommandNode;
 import net.como.client.config.settings.Setting;
 import net.como.client.utils.ChatUtils;
+import net.minecraft.client.MinecraftClient;
 
 public class HashMapCommand extends CommandNode {
     private static class SubCommand extends Command {
@@ -44,6 +46,10 @@ public class HashMapCommand extends CommandNode {
             
             // Say we did it.
             this.displayChatMessage(String.format("Added %s%s%s to %s.", ChatUtils.GREEN, val, ChatUtils.WHITE, super.getSettingName()));
+
+            // Reload the world so that changes done here are applied (such as adding to XRay DesiredBlocks)
+            MinecraftClient client = ComoClient.getClient();
+            client.worldRenderer.reload();
             
             return true;
         }
@@ -67,6 +73,10 @@ public class HashMapCommand extends CommandNode {
             
             // Say we did it.
             this.displayChatMessage(String.format("Removed %s%s%s from %s.", ChatUtils.RED, val, ChatUtils.WHITE, super.getSettingName()));
+
+            // Reload the world so that changes done here are applied (such as removing from XRay DesiredBlocks)
+            MinecraftClient client = ComoClient.getClient();
+            client.worldRenderer.reload();
 
             return true;
         }
