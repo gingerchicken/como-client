@@ -25,15 +25,6 @@ import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.chunk.Chunk;
 
 public class RenderUtils {
-	// TODO name this accordingly as currently I have no clue to what this actually does...
-	public static Vec3d whackifyPos(Entity e, double regionX, double regionZ, double partialTicks) {
-		return new Vec3d(
-			e.prevX + (e.getX() - e.prevX) * partialTicks - regionX,
-            e.prevY + (e.getY() - e.prevY) * partialTicks,
-            e.prevZ + (e.getZ() - e.prevZ) * partialTicks - regionZ
-		);
-	}
-
 	// TODO Cache this or remove it, this is for my dumb brain and debugging reasons
 	public static void g11COLORRGB(float r, float g, float b, float a) {
 		GL11.glColor4f(r/255f, g/255f, b/255f, a/255f);
@@ -143,7 +134,7 @@ public class RenderUtils {
 		bufferBuilder.vertex(matrix, (float)(start.x - regionX), (float)start.y, (float)(start.z - regionZ)).next();
 		bufferBuilder.vertex(matrix, (float)end.x - regionX, (float)end.y, (float)end.z - regionZ).next();
 		
-		BufferRenderer.drawWithoutShader(bufferBuilder.end());
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 
 		matrixStack.pop();
 
@@ -340,7 +331,7 @@ public class RenderUtils {
 		bufferBuilder
 			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
 			.next();
-		BufferRenderer.drawWithoutShader(bufferBuilder.end());
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 	}
 	
 	public static void drawSolidBox(Box bb, VertexBuffer vertexBuffer)
@@ -483,15 +474,13 @@ public class RenderUtils {
 		bufferBuilder
 			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
 			.next();
-		BufferRenderer.drawWithoutShader(bufferBuilder.end());
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 	}
 	
-	public static void drawOutlinedBox(Box bb, VertexBuffer vertexBuffer)
-	{
+	public static void drawOutlinedBox(Box bb, VertexBuffer vertexBuffer) {
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		
-		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
-			VertexFormats.POSITION);
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION);
 		drawOutlinedBox(bb, bufferBuilder);
 
 		vertexBuffer.upload(bufferBuilder.end());
@@ -627,7 +616,7 @@ public class RenderUtils {
 			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
 			.next();
 
-		BufferRenderer.drawWithoutShader(bufferBuilder.end());
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 	}
 	
 	public static void drawCrossBox(Box bb, VertexBuffer vertexBuffer)
@@ -753,7 +742,7 @@ public class RenderUtils {
 		bufferBuilder.vertex(matrix, (float)midX, (float)midY, (float)bb.maxZ)
 			.next();
 		
-		BufferRenderer.drawWithoutShader(bufferBuilder.end());
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 	}
 	
 	public static void drawNode(Box bb, VertexBuffer vertexBuffer)
@@ -880,7 +869,7 @@ public class RenderUtils {
 		
 		matrixStack.pop();
 		
-		BufferRenderer.drawWithoutShader(bufferBuilder.end());
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 	}
 	
 	public static void drawArrow(Vec3d from, Vec3d to,
