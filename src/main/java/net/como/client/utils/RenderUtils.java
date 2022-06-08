@@ -25,6 +25,7 @@ import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.chunk.Chunk;
 
 public class RenderUtils {
+
 	// TODO Cache this or remove it, this is for my dumb brain and debugging reasons
 	public static void g11COLORRGB(float r, float g, float b, float a) {
 		GL11.glColor4f(r/255f, g/255f, b/255f, a/255f);
@@ -59,6 +60,9 @@ public class RenderUtils {
 	}
 
 	public static void renderBox(Entity e, double partialTicks, MatrixStack mStack, boolean blend, float extraSize) {
+		// Render Section
+		mStack.push();
+
 		// GL Settings
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -70,8 +74,6 @@ public class RenderUtils {
 		// Get region
 		BlockPos region = getRegion();
 
-        // Render Section
-        mStack.push();
         RenderUtils.applyRegionalRenderOffset(mStack);
 
         // Load the renderer
@@ -83,21 +85,16 @@ public class RenderUtils {
             e.prevY + (e.getY() - e.prevY) * partialTicks,
             e.prevZ + (e.getZ() - e.prevZ) * partialTicks - region.getZ()
         );
-        
+
         // Update the size of the box.
         mStack.scale(e.getWidth() + extraSize, e.getHeight() + extraSize, e.getWidth() + extraSize);
 
         // Make the boxes change colour depending on their distance.
         float f = ComoClient.me().distanceTo(e) / 20F;
         RenderSystem.setShaderColor(2 - f, f, 0, 0.5F);
-        
-        // Make it so it is our mobBox.
-        Shader shader = RenderSystem.getShader();
-        Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
-        simpleMobBox.draw(mStack.peek().getPositionMatrix(), matrix4f, shader);
-        
-        // Pop the stack (i.e. render it)
-        mStack.pop();
+
+		// Render the box
+		drawOutlinedBox(DEFAULT_BOX, mStack);
 
         // GL resets
         RenderSystem.setShaderColor(1, 1, 1, 1);
@@ -106,6 +103,9 @@ public class RenderUtils {
         if (blend) {
             GL11.glDisable(GL11.GL_BLEND);
         }
+
+		// Pop the stack (i.e. render it)
+		mStack.pop();
 	}
 
 	public static float normaliseColourPart(float x) {
@@ -378,17 +378,20 @@ public class RenderUtils {
 		bufferBuilder.vertex(bb.minX, bb.maxY, bb.minZ).next();
 	}
 	
-	public static void drawOutlinedBox(MatrixStack matrixStack)
-	{
+	public static void drawOutlinedBox(MatrixStack matrixStack) {
 		drawOutlinedBox(DEFAULT_BOX, matrixStack);
 	}
 	
 	public static void drawOutlinedBox(Box bb, MatrixStack matrixStack)
 	{
 		Matrix4f matrix = matrixStack.peek().getPositionMatrix();
-		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		Tessellator tessellator = RenderSystem.renderThreadTesselator();
+		BufferBuilder bufferBuilder = tessellator.getBuffer();
 		RenderSystem.setShader(GameRenderer::getPositionShader);
-		
+
+		// It was always centered (which makes sense) so we need to shift it so that the bottom of the box isn't in the center
+		matrixStack.translate(-0.5f, 0, -0.5f);
+
 		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
 			VertexFormats.POSITION);
 		bufferBuilder
@@ -474,7 +477,7 @@ public class RenderUtils {
 		bufferBuilder
 			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
 			.next();
-		BufferRenderer.drawWithShader(bufferBuilder.end());
+		tessellator.draw();
 	}
 	
 	public static void drawOutlinedBox(Box bb, VertexBuffer vertexBuffer) {
@@ -976,9 +979,7 @@ public class RenderUtils {
         RenderSystem.setShaderColor(r/255, g/255, b/255, a/255);
         
         // Make it so it is our mobBox.
-        Shader shader = RenderSystem.getShader();
-        Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
-        blockBox.draw(mStack.peek().getPositionMatrix(), matrix4f, shader);
+		drawOutlinedBox(DEFAULT_BOX, mStack);
         
         // Pop the stack (i.e. render it)
         mStack.pop();
