@@ -17,7 +17,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.HorseBaseEntity;
+import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.text.Text;
@@ -94,7 +94,7 @@ public class EntityOwner extends Module {
         // TODO add projectiles
 
         if (entity instanceof TameableEntity) ownerUuid = ((TameableEntity) entity).getOwnerUuid();
-        else if (entity instanceof HorseBaseEntity) ownerUuid = ((HorseBaseEntity) entity).getOwnerUuid();
+        else if (entity instanceof AbstractHorseEntity) ownerUuid = ((AbstractHorseEntity) entity).getOwnerUuid();
 
         return ownerUuid;
     }

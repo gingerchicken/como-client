@@ -100,7 +100,7 @@ public class TargetCircle {
      * @return The radius of the circle.
      */
     public double getRadius() {
-        return fov * ComoClient.getClient().getWindow().getScaledWidth() / ComoClient.getClient().options.fov;
+        return fov * ComoClient.getClient().getWindow().getScaledWidth() / ComoClient.getClient().options.getFov().getValue();
     }
 
     /**

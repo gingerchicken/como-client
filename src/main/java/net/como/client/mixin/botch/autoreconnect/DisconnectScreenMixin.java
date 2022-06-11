@@ -11,7 +11,7 @@ import net.como.client.ComoClient;
 import net.como.client.modules.utilities.AutoReconnect;
 import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.Text;
 import net.minecraft.client.gui.widget.ButtonWidget;
 
@@ -52,7 +52,7 @@ public class DisconnectScreenMixin extends Screen {
 
         reconnectButton.setMessage(
             // We add one to the value instead of math.ceil'ing it.
-            new LiteralText(String.format("AutoReconnect (%d)", (int)(this.getAutoReconnect().workCountdown(this.parent)) + 1))
+            Text.of(String.format("AutoReconnect (%d)", (int)(this.getAutoReconnect().workCountdown(this.parent)) + 1))
         );
     }
 
@@ -71,7 +71,7 @@ public class DisconnectScreenMixin extends Screen {
 
         reconnectButton = this.addDrawableChild(
 			new ButtonWidget(backButtonX, backButtonY + 24, 200, 20,
-				new LiteralText("Reconnect"),
+				Text.of("Reconnect"),
                 button -> this.getAutoReconnect().reconnect(parent)
             )
         );

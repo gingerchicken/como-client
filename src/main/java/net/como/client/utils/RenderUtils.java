@@ -25,14 +25,6 @@ import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.chunk.Chunk;
 
 public class RenderUtils {
-	// TODO name this accordingly as currently I have no clue to what this actually does...
-	public static Vec3d whackifyPos(Entity e, double regionX, double regionZ, double partialTicks) {
-		return new Vec3d(
-			e.prevX + (e.getX() - e.prevX) * partialTicks - regionX,
-            e.prevY + (e.getY() - e.prevY) * partialTicks,
-            e.prevZ + (e.getZ() - e.prevZ) * partialTicks - regionZ
-		);
-	}
 
 	// TODO Cache this or remove it, this is for my dumb brain and debugging reasons
 	public static void g11COLORRGB(float r, float g, float b, float a) {
@@ -68,6 +60,9 @@ public class RenderUtils {
 	}
 
 	public static void renderBox(Entity e, double partialTicks, MatrixStack mStack, boolean blend, float extraSize) {
+		// Render Section
+		mStack.push();
+
 		// GL Settings
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -79,8 +74,6 @@ public class RenderUtils {
 		// Get region
 		BlockPos region = getRegion();
 
-        // Render Section
-        mStack.push();
         RenderUtils.applyRegionalRenderOffset(mStack);
 
         // Load the renderer
@@ -92,21 +85,16 @@ public class RenderUtils {
             e.prevY + (e.getY() - e.prevY) * partialTicks,
             e.prevZ + (e.getZ() - e.prevZ) * partialTicks - region.getZ()
         );
-        
+
         // Update the size of the box.
         mStack.scale(e.getWidth() + extraSize, e.getHeight() + extraSize, e.getWidth() + extraSize);
 
         // Make the boxes change colour depending on their distance.
         float f = ComoClient.me().distanceTo(e) / 20F;
         RenderSystem.setShaderColor(2 - f, f, 0, 0.5F);
-        
-        // Make it so it is our mobBox.
-        Shader shader = RenderSystem.getShader();
-        Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
-        simpleMobBox.setShader(mStack.peek().getPositionMatrix(), matrix4f, shader);
-        
-        // Pop the stack (i.e. render it)
-        mStack.pop();
+
+		// Render the box
+		drawOutlinedBox(DEFAULT_BOX, mStack);
 
         // GL resets
         RenderSystem.setShaderColor(1, 1, 1, 1);
@@ -115,6 +103,9 @@ public class RenderUtils {
         if (blend) {
             GL11.glDisable(GL11.GL_BLEND);
         }
+
+		// Pop the stack (i.e. render it)
+		mStack.pop();
 	}
 
 	public static float normaliseColourPart(float x) {
@@ -143,8 +134,7 @@ public class RenderUtils {
 		bufferBuilder.vertex(matrix, (float)(start.x - regionX), (float)start.y, (float)(start.z - regionZ)).next();
 		bufferBuilder.vertex(matrix, (float)end.x - regionX, (float)end.y, (float)end.z - regionZ).next();
 		
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 
 		matrixStack.pop();
 
@@ -341,8 +331,7 @@ public class RenderUtils {
 		bufferBuilder
 			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
 			.next();
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 	}
 	
 	public static void drawSolidBox(Box bb, VertexBuffer vertexBuffer)
@@ -352,9 +341,8 @@ public class RenderUtils {
 		bufferBuilder.begin(VertexFormat.DrawMode.QUADS,
 			VertexFormats.POSITION);
 		drawSolidBox(bb, bufferBuilder);
-		bufferBuilder.end();
-		
-		vertexBuffer.upload(bufferBuilder);
+
+		vertexBuffer.upload(bufferBuilder.end());
 	}
 	
 	public static void drawSolidBox(Box bb, BufferBuilder bufferBuilder)
@@ -390,17 +378,20 @@ public class RenderUtils {
 		bufferBuilder.vertex(bb.minX, bb.maxY, bb.minZ).next();
 	}
 	
-	public static void drawOutlinedBox(MatrixStack matrixStack)
-	{
+	public static void drawOutlinedBox(MatrixStack matrixStack) {
 		drawOutlinedBox(DEFAULT_BOX, matrixStack);
 	}
 	
 	public static void drawOutlinedBox(Box bb, MatrixStack matrixStack)
 	{
 		Matrix4f matrix = matrixStack.peek().getPositionMatrix();
-		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+		Tessellator tessellator = RenderSystem.renderThreadTesselator();
+		BufferBuilder bufferBuilder = tessellator.getBuffer();
 		RenderSystem.setShader(GameRenderer::getPositionShader);
-		
+
+		// It was always centered (which makes sense) so we need to shift it so that the bottom of the box isn't in the center
+		matrixStack.translate(-0.5f, 0, -0.5f);
+
 		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
 			VertexFormats.POSITION);
 		bufferBuilder
@@ -486,20 +477,16 @@ public class RenderUtils {
 		bufferBuilder
 			.vertex(matrix, (float)bb.minX, (float)bb.maxY, (float)bb.minZ)
 			.next();
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		tessellator.draw();
 	}
 	
-	public static void drawOutlinedBox(Box bb, VertexBuffer vertexBuffer)
-	{
+	public static void drawOutlinedBox(Box bb, VertexBuffer vertexBuffer) {
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		
-		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
-			VertexFormats.POSITION);
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION);
 		drawOutlinedBox(bb, bufferBuilder);
-		bufferBuilder.end();
-		
-		vertexBuffer.upload(bufferBuilder);
+
+		vertexBuffer.upload(bufferBuilder.end());
 	}
 	
 	public static void drawOutlinedBox(Box bb, BufferBuilder bufferBuilder)
@@ -631,8 +618,8 @@ public class RenderUtils {
 		bufferBuilder
 			.vertex(matrix, (float)bb.minX, (float)bb.minY, (float)bb.minZ)
 			.next();
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 	}
 	
 	public static void drawCrossBox(Box bb, VertexBuffer vertexBuffer)
@@ -642,9 +629,8 @@ public class RenderUtils {
 		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
 			VertexFormats.POSITION);
 		drawCrossBox(bb, bufferBuilder);
-		bufferBuilder.end();
-		
-		vertexBuffer.upload(bufferBuilder);
+
+		vertexBuffer.upload(bufferBuilder.end());
 	}
 	
 	public static void drawCrossBox(Box bb, BufferBuilder bufferBuilder)
@@ -759,8 +745,7 @@ public class RenderUtils {
 		bufferBuilder.vertex(matrix, (float)midX, (float)midY, (float)bb.maxZ)
 			.next();
 		
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 	}
 	
 	public static void drawNode(Box bb, VertexBuffer vertexBuffer)
@@ -770,9 +755,8 @@ public class RenderUtils {
 		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES,
 			VertexFormats.POSITION);
 		drawNode(bb, bufferBuilder);
-		bufferBuilder.end();
 		
-		vertexBuffer.upload(bufferBuilder);
+		vertexBuffer.upload(bufferBuilder.end());
 	}
 	
 	public static void drawNode(Box bb, BufferBuilder bufferBuilder)
@@ -888,8 +872,7 @@ public class RenderUtils {
 		
 		matrixStack.pop();
 		
-		bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 	}
 	
 	public static void drawArrow(Vec3d from, Vec3d to,
@@ -901,8 +884,7 @@ public class RenderUtils {
 		
 		drawArrow(from, to, bufferBuilder);
 		
-		bufferBuilder.end();
-		vertexBuffer.upload(bufferBuilder);
+		vertexBuffer.upload(bufferBuilder.end());
 	}
 	
 	public static void drawArrow(Vec3d from, Vec3d to,
@@ -997,9 +979,7 @@ public class RenderUtils {
         RenderSystem.setShaderColor(r/255, g/255, b/255, a/255);
         
         // Make it so it is our mobBox.
-        Shader shader = RenderSystem.getShader();
-        Matrix4f matrix4f = RenderSystem.getProjectionMatrix();
-        blockBox.setShader(mStack.peek().getPositionMatrix(), matrix4f, shader);
+		drawOutlinedBox(DEFAULT_BOX, mStack);
         
         // Pop the stack (i.e. render it)
         mStack.pop();
@@ -1029,25 +1009,5 @@ public class RenderUtils {
 
 	public static void renderBlockBox(MatrixStack mStack, Vec3d pos, Colour colour) {
 		renderBlockBox(mStack, pos, colour.r, colour.g, colour.b, colour.a);
-	}
-
-	public static int RGBA2Int(Colour c) {
-		return RGBA2Int((int)c.r, (int)c.g, (int)c.b, (int)c.a);
-	}
-
-	public static int RGBA2Int(int r, int g, int b, int a) {
-		int colour[] = {
-			a, r, g, b
-		};
-
-		String hex = "";
-		for (int part : colour) {
-			part = part > 255 ? 255 : part;
-			part = part < 0 ? 0 : part;
-
-			hex += StringUtils.leftPad(Integer.toHexString(part), 2, "0");
-		}
-
-		return (int)Long.parseLong(hex, 16);
 	}
 }

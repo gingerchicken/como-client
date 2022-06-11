@@ -1,6 +1,7 @@
 package net.como.client.misc.attributes.player;
 
 import net.como.client.ComoClient;
+import net.como.client.misc.Colour;
 import net.como.client.misc.attributes.PlayerAttribute;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -38,6 +39,6 @@ public class PingAttribute extends PlayerAttribute {
         float f = (float)ping/(float)badPing * 255;
         if (f > 255) f = 255;
 
-        return RenderUtils.RGBA2Int((int)(2*f), (int)(255 - f), 0, 255);
+        return (new Colour((int)(2*f), (int)(255 - f), 0, 255)).toARGB();
     } 
 }

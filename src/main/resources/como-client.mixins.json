@@ -51,6 +51,7 @@
     "botch/InfChatMixin",
     "botch/ProjectionUtilsMixin",
     "botch/lecterncrash/LecternScreenMixin",
+    "botch/SimpleOptionMixin",
 
     "botch/autoreconnect/DisconnectScreenMixin",
     "botch/autoreconnect/GameMenuScreenMixin",

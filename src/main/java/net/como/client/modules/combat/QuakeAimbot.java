@@ -14,7 +14,7 @@ import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.render.InGameHudRenderEvent;
-import net.como.client.events.render.InGameHudRenderEvent;
+import net.como.client.events.render.RenderWorldEvent;
 import net.como.client.interfaces.mixin.IClient;
 import net.como.client.misc.Colour;
 import net.como.client.misc.maths.Vec3;
@@ -175,14 +175,16 @@ public class QuakeAimbot extends Module {
     
     @Override
     public void activate() {
+        this.addListen(RenderWorldEvent.class);
         this.addListen(InGameHudRenderEvent.class);
         this.addListen(ClientTickEvent.class);
     }
 
     @Override
     public void deactivate() {
-        this.removeListen(InGameHudRenderEvent.class);
+        this.removeListen(RenderWorldEvent.class);
         this.removeListen(ClientTickEvent.class);
+        this.removeListen(InGameHudRenderEvent.class);
     }
 
     /**
@@ -538,21 +540,6 @@ public class QuakeAimbot extends Module {
                 // Get mStack
                 MatrixStack mStack = ((InGameHudRenderEvent)event).mStack;
 
-                // Render backtrack
-                if (this.getBoolSetting("LocalBacktrack") && this.getBoolSetting("BacktrackRenderSteps")) {
-                    Colour chosen = new Colour(255, 0, 0, 255);
-                    Colour normal = new Colour(255, 255, 255, 255);
-                    for (Vec3d pos : this.previousPositions) {
-                        boolean isChosenPosition = pos.equals(this.getBacktrackPos());
-
-                        // Get the colour
-                        Colour c = isChosenPosition ? chosen : normal;
-
-                        // Render the position
-                        RenderUtils.renderBlockBox(mStack, pos, c);
-                    }
-                }
-
                 // Update the circles
                 // TODO replace this with a setting update event
                 this.updateCircles();
@@ -565,6 +552,33 @@ public class QuakeAimbot extends Module {
 
                 break;
             }
+            case "RenderWorldEvent": {
+                // Get matrixStack
+                MatrixStack mStack = ((RenderWorldEvent)event).mStack;
+                
+                // Render backtrack steps
+                this.renderBacktrack(mStack);
+
+                break;
+            }
+        }
+    }
+
+    private void renderBacktrack(MatrixStack matrixStack) {
+        if (!(this.getBoolSetting("LocalBacktrack") && this.getBoolSetting("BacktrackRenderSteps"))) return;
+
+        Colour chosen = new Colour(255, 0, 0, 255);
+        Colour normal = new Colour(255, 255, 255, 255);
+        for (Vec3d pos : this.previousPositions) {
+            boolean isChosenPosition = pos.equals(this.getBacktrackPos());
+
+            // Get the colour
+            Colour c = isChosenPosition ? chosen : normal;
+
+            matrixStack.push();
+            // Render the position
+            RenderUtils.renderBlockBox(matrixStack, pos, c);
+            matrixStack.pop();
         }
     }
 

@@ -5,6 +5,7 @@ import net.como.client.config.settings.Setting;
 import net.como.client.config.specials.Mode;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
+import net.como.client.interfaces.mixin.SimpleOptionAccessor;
 import net.como.client.modules.Module;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -38,7 +39,7 @@ public class FullBright extends Module {
         if (!this.hasSetGamma) return;
 
         MinecraftClient client = ComoClient.getClient();
-        client.options.gamma = this.normalGamma;
+        client.options.getGamma().setValue(this.normalGamma);
         this.hasSetGamma = false;
     }
 
@@ -57,6 +58,7 @@ public class FullBright extends Module {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
@@ -74,13 +76,15 @@ public class FullBright extends Module {
                         MinecraftClient client = ComoClient.getClient();
 
                         if (!this.hasSetGamma) {
-                            this.normalGamma = client.options.gamma;
+                            this.normalGamma = client.options.getGamma().getValue();
                             this.hasSetGamma = true;
         
                             this.restoreEffect();
                         }
         
-                        client.options.gamma = 16d;
+                        SimpleOptionAccessor<Double> accessor = (SimpleOptionAccessor<Double>)(Object)(client.options.getGamma());
+                        accessor.setUnsafeValue(16d);
+
                         break;
                     }
                 }

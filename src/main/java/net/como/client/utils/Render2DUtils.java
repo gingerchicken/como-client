@@ -41,8 +41,7 @@ public class Render2DUtils {
         }
 
         public void close() {
-            this.bufferBuilder.end();
-            BufferRenderer.draw(bufferBuilder);            
+            BufferRenderer.drawWithShader(this.bufferBuilder.end());            
         }
 
         public void vertex2D(int x, int y) {
@@ -73,10 +72,10 @@ public class Render2DUtils {
 
 		matrixStack.push();
         RenderSystem.setShaderColor(
-            RenderUtils.normaliseColourPart(colour.r),
-            RenderUtils.normaliseColourPart(colour.g),
-            RenderUtils.normaliseColourPart(colour.b),
-            RenderUtils.normaliseColourPart(colour.a)
+            colour.r / 255f,
+            colour.g / 255f,
+            colour.b / 255f,
+            colour.a / 255f
         );
     }
 
@@ -177,7 +176,7 @@ public class Render2DUtils {
             Text.of(text),
             0,
             0,
-            RenderUtils.RGBA2Int(colour)
+            colour.toARGB()
         );
 
         finish(matrixStack);

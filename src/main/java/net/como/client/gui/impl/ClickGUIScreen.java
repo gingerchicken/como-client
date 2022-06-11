@@ -335,7 +335,7 @@ public class ClickGUIScreen extends ImGuiScreen {
         Colour s = new Colour(0, 0, 0, 100*d);
         Colour e = new Colour(0, 0, 0, 150*d);
 
-        this.fillGradient(matrices, 0, 0, this.width, this.height, RenderUtils.RGBA2Int(s), RenderUtils.RGBA2Int(e));
+        this.fillGradient(matrices, 0, 0, this.width, this.height, s.toARGB(), e.toARGB());
     }
 
     @Override

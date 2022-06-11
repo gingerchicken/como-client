@@ -11,6 +11,7 @@ import net.como.client.events.Event;
 import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.events.render.OnRenderEvent;
 import net.como.client.events.render.renderLabelIfPresentEvent;
+import net.como.client.misc.Colour;
 import net.como.client.misc.attributes.Attribute;
 import net.como.client.misc.attributes.entity.HealthAttribute;
 import net.como.client.misc.attributes.entity.NameAttribute;
@@ -97,7 +98,9 @@ public class BetterNameTags extends Module {
         for (Attribute attribute : attributes) {
             VertexConsumerProvider.Immediate immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
             
-            r.drawWithOutline(attribute.getText().asOrderedText(), x, y, attribute.getColour(), RenderUtils.RGBA2Int(0, 0, 0, outlineAlpha + 5), matrix4f, immediate, 255);
+            Colour c = new Colour(0, 0, 0, outlineAlpha + 5);
+
+            r.drawWithOutline(attribute.getText().asOrderedText(), x, y, attribute.getColour(), c.toARGB(), matrix4f, immediate, 255);
             x += r.getWidth(attribute.getText()) + textOffsets;
             
             immediate.draw();

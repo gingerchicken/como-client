@@ -162,7 +162,7 @@ public class ModList extends Module {
             Colour c = this.set.get(cur);
 
             // Return it as an integer
-            return RenderUtils.RGBA2Int((int)c.r, (int)c.g, (int)c.b, 255);
+            return c.toARGB();
         }
     }
 

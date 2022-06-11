@@ -14,7 +14,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.Text;
 
 @Mixin(GameMenuScreen.class)
@@ -57,7 +57,7 @@ public abstract class GameMenuScreenMixin extends Screen {
 
         this.reconnectButton = this.addDrawableChild(
 			new ButtonWidget(x, y + 24, 204, 20,
-				new LiteralText("Reconnect"),
+				Text.of("Reconnect"),
                 button -> this.reconnect()
             )
         );
