@@ -5,12 +5,14 @@ import java.util.HashMap;
 import net.como.client.ComoClient;
 import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
-import net.como.client.events.render.BlockCracksRenderEvent;
 import net.como.client.events.render.BlockEntityRenderEvent;
 import net.como.client.events.render.GetAmbientOcclusionLightLevelEvent;
+import net.como.client.events.render.RenderQuadEvent;
 import net.como.client.events.render.ShouldDrawBlockSideEvent;
 import net.como.client.modules.Module;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.VertexConsumer;
 import net.como.client.utils.BlockUtils;
 
 @SuppressWarnings("unchecked")
@@ -64,7 +66,7 @@ public class XRay extends Module {
         if (this.shouldOverrideFullbright()) ComoClient.getInstance().getModules().get("fullbright").enable();
 
         this.addListen(BlockEntityRenderEvent.class);
-        this.addListen(BlockCracksRenderEvent.class);
+        // this.addListen(RenderQuadEvent.class);
         this.addListen(ShouldDrawBlockSideEvent.class);
         this.addListen(GetAmbientOcclusionLightLevelEvent.class);
     }
@@ -72,7 +74,7 @@ public class XRay extends Module {
     @Override
     public void deactivate() {
         this.removeListen(BlockEntityRenderEvent.class);
-        this.removeListen(BlockCracksRenderEvent.class);
+        // this.removeListen(RenderQuadEvent.class);
         this.removeListen(ShouldDrawBlockSideEvent.class);
         this.removeListen(GetAmbientOcclusionLightLevelEvent.class);
 
@@ -98,17 +100,6 @@ public class XRay extends Module {
 
                 break;
             }
-            case "BlockCracksRenderEvent": {
-                BlockCracksRenderEvent e = (BlockCracksRenderEvent)event;
-
-                // Get the block at the position
-                String blockId = BlockUtils.getName(e.pos);
-
-                // If it is not what we want, don't render the cracks
-                if (!isDesiredBlock(blockId)) e.cir.cancel();
-
-                break;
-            }
             case "ShouldDrawBlockSideEvent": {
                 ShouldDrawBlockSideEvent e = (ShouldDrawBlockSideEvent)event;
 
@@ -118,12 +109,48 @@ public class XRay extends Module {
                 // Say if we want it or not.
                 e.cir.setReturnValue(isDesiredBlock(blockId));
 
+                // break;
                 break;
             }
             case "GetAmbientOcclusionLightLevelEvent": {
                 ((GetAmbientOcclusionLightLevelEvent)(event)).cir.setReturnValue(1f);
                 break;
             }
+            // This can be used to change block transparency.
+            // case "RenderQuadEvent": {
+            //     RenderQuadEvent e = (RenderQuadEvent)event;
+                
+            //     String blockId = BlockUtils.getName(e.pos);
+
+            //     if (this.isDesiredBlock(blockId)) break;
+
+            //     // this.rewriteBuffer(e.vertexConsumer, 0);
+            //     e.ci.cancel();
+                
+            //     break;
+            // }
         }
     }
+
+    // Currently the accessor is dying so this function doesn't work.
+    // private void rewriteBuffer(VertexConsumer vertexConsumer, int alpha) {
+    //     if (!(vertexConsumer instanceof BufferBuilder)) return;
+
+    //     BufferBuilder bufferBuilder = (BufferBuilder)vertexConsumer;
+
+    //     // Create an accessor
+    //     BufferBuilderAccessor accessor = (BufferBuilderAccessor)bufferBuilder;
+
+    //     // Get the previous offset
+    //     int prevOffset = accessor.getElementOffset();
+    //     if (prevOffset <= 0) return;
+
+    //     int k = accessor.getVertexFormat().getVertexSizeInteger();
+    //     for (int i = 1; i <= 4; i++) {
+    //         accessor.setElementOffset(prevOffset - i * k);
+    //         bufferBuilder.putByte(15, (byte)(alpha));
+    //     }
+
+    //     accessor.setElementOffset(prevOffset);
+    // }
 }
