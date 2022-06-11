@@ -5,6 +5,7 @@ import net.como.client.config.settings.Setting;
 import net.como.client.config.specials.Mode;
 import net.como.client.events.Event;
 import net.como.client.events.client.ClientTickEvent;
+import net.como.client.interfaces.mixin.SimpleOptionAccessor;
 import net.como.client.modules.Module;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -57,6 +58,7 @@ public class FullBright extends Module {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "ClientTickEvent": {
@@ -80,8 +82,9 @@ public class FullBright extends Module {
                             this.restoreEffect();
                         }
         
-                        // TODO This is broken for now as the max cannot be set as of yet
-                        client.options.getGamma().setValue(16d);
+                        SimpleOptionAccessor<Double> accessor = (SimpleOptionAccessor<Double>)(Object)(client.options.getGamma());
+                        accessor.setUnsafeValue(16d);
+
                         break;
                     }
                 }
