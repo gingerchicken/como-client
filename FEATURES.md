@@ -41,7 +41,6 @@
 ## BetterNameTags (`.betternametags`)
 [(Source Code)](src/main/java/net/como/client/modules/render/BetterNameTags.java) Renders a different kind of name-tag above nearby players.
 ### Default Settings
- - EntityOwner: `True`
  - OutlineAlpha: `125`
  - Scale: `0.5`
 
@@ -398,7 +397,7 @@
  - SpecificBlocks: `True`
 
 ## OffHandCrash (`.offhandcrash`)
-[(Source Code)](src/main/java/net/como/client/modules/exploits/OffHandCrash.java) No description available as of yet.
+[(Source Code)](src/main/java/net/como/client/modules/exploits/OffHandCrash.java) Crashes other players by quickly swapping your offhand.
 ### Default Settings
  - Amount: `500`
 
