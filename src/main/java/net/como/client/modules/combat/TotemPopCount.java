@@ -149,7 +149,7 @@ public class TotemPopCount extends Module {
                     PlayerEntry entry = this.entries.get(uuid);
 
                     if (!player.isAlive() && entry.isPop()) {
-                        if (this.getBoolSetting("DeathMessage")) this.displayMessage(String.format("%s died after popping a total of %d totems.", player.getDisplayName().getContent(), entry.getPops()));
+                        if (this.getBoolSetting("DeathMessage")) this.displayMessage(String.format("%s died after popping a total of %d totems.", player.getEntityName(), entry.getPops()));
                         this.entries.remove(uuid);
                         continue;
                     }
@@ -194,7 +194,7 @@ public class TotemPopCount extends Module {
                 // MC is a bit wacky when handling totem popping.
                 if (entry == null || !entry.isPop()) break;
 
-                this.displayMessage(String.format("%s has popped %d totems so far.", player.getDisplayName().getContent(), entry.getPops()));
+                this.displayMessage(String.format("%s has popped %d totems so far.", player.getEntityName(), entry.getPops()));
 
                 break;
             }
