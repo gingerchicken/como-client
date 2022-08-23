@@ -70,6 +70,9 @@ While developing this I was aided by the source code of the [Wurst Project](http
 ### Meteor Client
 I would also like to thank [Meteor Client](https://github.com/MeteorDevelopment/meteor-client) as I used their world-to-screen conversion code within Como Client, this made rendering information about entities and blocks much easier due to Minecraft's janky world rendering system.
 
+### Coderx-Gamer
+Many thanks to [Coderx-Gamer](https://github.com/Coderx-Gamer) for publishing his exploits such as [The Shulker Dupe](https://github.com/Coderx-Gamer/shulker-dupe) and [The Lectern Crash](https://github.com/Coderx-Gamer/lectern-crash), in which I based the `ShulkerDupe` and `LecternCrash` modules on.
+
 ## Reviews
 ### Happy Customer #1
 Here is a very satisfied and happy customer !!!
