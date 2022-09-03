@@ -108,7 +108,7 @@ public class ChatSpam extends Module {
                 if (delay > deltaTime) break;
 
                 // Send a message
-                ComoClient.me().sendChatMessage(this.generateMessage());
+                ChatUtils.sendChatMessage(this.generateMessage());
 
                 // Update last post time
                 this.lastPostTime = ComoClient.getCurrentTime();

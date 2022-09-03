@@ -80,4 +80,8 @@ public class ChatUtils {
 
         return i;
     }
+
+    public static void sendChatMessage(String message) {
+        ComoClient.me().sendChatMessage(message, null);
+    }
 }
