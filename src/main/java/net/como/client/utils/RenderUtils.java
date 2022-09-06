@@ -113,12 +113,12 @@ public class RenderUtils {
 	}
 
 	public static void drawLine3D(MatrixStack matrixStack, Vec3d start, Vec3d end, float r, float g, float b, float a) {
+		matrixStack.push();
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_LINE_SMOOTH);
 
-		matrixStack.push();
 		RenderUtils.applyRegionalRenderOffset(matrixStack);
 		RenderSystem.setShaderColor(normaliseColourPart(r), normaliseColourPart(g), normaliseColourPart(b), normaliseColourPart(a));
 
@@ -136,12 +136,11 @@ public class RenderUtils {
 		
 		BufferRenderer.drawWithShader(bufferBuilder.end());
 
-		matrixStack.pop();
-
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LINE_SMOOTH);
+		matrixStack.pop();
 	}
 
 	public static void drawTracer(MatrixStack matrixStack, Vec3d end, float delta, float r, float g, float b, float a) {
@@ -952,15 +951,15 @@ public class RenderUtils {
 	}
 
 	public static void renderBlockBox(MatrixStack mStack, Vec3d bPos, float r, float g, float b, float a) {
+		// Push a new item to the render stack
+		mStack.push();
+
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glEnable(GL11.GL_LINE_SMOOTH);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
         // Load the renderer
         RenderSystem.setShader(GameRenderer::getPositionShader);
-
-        // Push a new item to the render stack
-        mStack.push();
 
         // Apply
         RenderUtils.applyRegionalRenderOffset(mStack);
@@ -980,15 +979,15 @@ public class RenderUtils {
         
         // Make it so it is our mobBox.
 		drawOutlinedBox(DEFAULT_BOX, mStack);
-        
-        // Pop the stack (i.e. render it)
-        mStack.pop();
 
         // GL resets
         RenderSystem.setShaderColor(1, 1, 1, 1);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
+
+		// Pop the stack (i.e. render it)
+		mStack.pop();
 	}
 
 	public static void renderBlockBox(MatrixStack mStack, BlockPos bPos, float r, float g, float b, float a) {
