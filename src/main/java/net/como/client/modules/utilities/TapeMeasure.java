@@ -133,10 +133,6 @@ public class TapeMeasure extends Module {
     public void activate() {
         this.displayMessage("Hit the two blocks you want to measure the distance between.");
         clickCount = 0;
-
-        blockBox = new VertexBuffer();
-		Box bb = new Box(-0.5, 0, -0.5, 0.5, 1, 0.5);
-		RenderUtils.drawOutlinedBox(bb, blockBox);
     
         this.addListen(RenderWorldEvent.class);
         this.addListen(SendPacketEvent.class);

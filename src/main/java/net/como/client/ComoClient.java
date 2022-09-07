@@ -13,6 +13,8 @@ import net.como.client.commands.FontCommand;
 import net.como.client.commands.FriendsCommand;
 import net.como.client.commands.PanicCommand;
 import net.como.client.commands.WaypointsCommand;
+import net.como.client.commands.exploits.DiscardLocal;
+import net.como.client.commands.exploits.ParticleCrash;
 import net.como.client.commands.nbt.GiveCommand;
 import net.como.client.commands.nbt.NbtCommand;
 import net.como.client.commands.structures.ModuleCommand;
@@ -126,6 +128,10 @@ public class ComoClient {
 
         // Add give command
         this.commandHandler.registerCommand(new GiveCommand());
+
+        // Exploit commands
+        this.commandHandler.registerCommand(new ParticleCrash());
+        this.commandHandler.registerCommand(new DiscardLocal());
 
         // TODO replace this with just a Module sub command
         // Waypoints commands

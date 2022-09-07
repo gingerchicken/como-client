@@ -18,11 +18,11 @@ import net.como.client.ComoClient;
 import net.como.client.commands.structures.CommandHandler;
 import net.como.client.modules.chat.CommandAutoFill;
 import net.como.client.utils.ChatUtils;
-import net.minecraft.client.gui.screen.CommandSuggestor;
+import net.minecraft.client.gui.screen.ChatInputSuggestor;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.command.CommandSource;
 
-@Mixin(CommandSuggestor.class)
+@Mixin(ChatInputSuggestor.class)
 public abstract class CommandSuggestorMixin {
     @Shadow TextFieldWidget textField;
     @Shadow CompletableFuture<Suggestions> pendingSuggestions;
@@ -31,7 +31,7 @@ public abstract class CommandSuggestorMixin {
         return (CommandAutoFill)ComoClient.getInstance().getModules().get("chatsuggestion");
     }
 
-    @Shadow abstract void showSuggestions(boolean narrateFirstSuggestion);
+    @Shadow abstract void show(boolean narrateFirstSuggestion);
     
     @Inject(at = @At("TAIL"), method="refresh()V", cancellable = true)
     void onRefresh(CallbackInfo ci) {
@@ -62,7 +62,7 @@ public abstract class CommandSuggestorMixin {
             }
             
             // We cannot use show since it is not a typical command
-            this.showSuggestions(true);
+            this.show(true);
         });
     }
 }

@@ -27,6 +27,6 @@ public class FontManagerMixin implements IFontManager {
 
     @Override
     public TextRenderer createTextRendererFromIdentifier(Identifier ident) {
-        return new TextRenderer(id -> this.fontStorages.getOrDefault(ident, this.missingStorage));
+        return new TextRenderer(id -> this.fontStorages.getOrDefault(ident, this.missingStorage), true);
     }
 }
