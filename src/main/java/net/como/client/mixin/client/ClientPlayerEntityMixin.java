@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.ComoClient;
 import net.como.client.events.client.ClientTickEvent;
+import net.como.client.events.client.ClientTickMovementEvent;
 import net.como.client.events.client.PlayerChatEvent;
 import net.como.client.events.client.PlayerMoveEvent;
 import net.como.client.events.packet.PostMovementPacketEvent;
@@ -53,5 +54,10 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
     @Inject(at = @At("RETURN"), method="tick()V", cancellable = false)
     private void onTick(CallbackInfo ci) {
         ComoClient.getInstance().emitter.triggerEvent(new ClientTickEvent(ci));
+    }
+
+    @Inject(at = @At("HEAD"), method="tickMovement()V", cancellable = false)
+    private void onTickMovement(CallbackInfo ci) {
+        ComoClient.getInstance().emitter.triggerEvent(new ClientTickMovementEvent(ci));
     }
 }

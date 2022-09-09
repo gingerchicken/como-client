@@ -25,13 +25,6 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         return (NoSlow)(ComoClient.getInstance().getModules().get("noslow"));
     }
 
-    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z", ordinal = 0), method = "tickMovement()V")
-    public boolean onIsUsingItem(ClientPlayerEntity player) {
-        if (!this.getNoSlow().isEnabled()) return player.isUsingItem();
-
-        return false;
-    }
-
     @Override
     public void slowMovement(BlockState state, Vec3d multiplier) {
         if (!this.getNoSlow().isEnabled()) {

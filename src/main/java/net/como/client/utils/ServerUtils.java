@@ -30,6 +30,7 @@ public class ServerUtils {
     public static AbstractClientPlayerEntity getPlayerByName(String name) {
         List<AbstractClientPlayerEntity> players = ComoClient.getClient().world.getPlayers();
 
+        // TODO use a tab list since this isn't all players, just rendered ones!
         for (AbstractClientPlayerEntity player : players) {
             if (player.getDisplayName().getContent().equals(name)) {
                 return player;

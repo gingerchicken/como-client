@@ -21,6 +21,7 @@ import net.como.client.events.io.OnKeyEvent;
 import net.como.client.modules.Module;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.ClientUtils;
+import net.como.client.utils.ThirdPartyUtils;
 
 public class Binds extends Module {
     private static enum KeyAction {
@@ -118,7 +119,7 @@ public class Binds extends Module {
                 }
 
                 // Open ClickGUI (if we dont have meteor)
-                if (!ComoClient.isMeteorLoaded() && this.getBoolSetting("GUIKey") && e.key == ComoClient.getInstance().config.menuKey) {
+                if (!ThirdPartyUtils.isOtherClientLoaded() && this.getBoolSetting("GUIKey") && e.key == ComoClient.getInstance().config.menuKey) {
                     ChatUtils.hideNextChat = true;
                     ComoClient.getInstance().getModules().get("clickgui").toggle();
                 }
