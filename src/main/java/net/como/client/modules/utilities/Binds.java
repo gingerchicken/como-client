@@ -118,7 +118,7 @@ public class Binds extends Module {
                 }
 
                 // Open ClickGUI (if we dont have meteor)
-                if (!ComoClient.isMeteorLoaded() && this.getBoolSetting("GUIKey") && e.key == ComoClient.getInstance().config.menuKey) {
+                if (!ComoClient.isOtherClientLoaded() && this.getBoolSetting("GUIKey") && e.key == ComoClient.getInstance().config.menuKey) {
                     ChatUtils.hideNextChat = true;
                     ComoClient.getInstance().getModules().get("clickgui").toggle();
                 }
