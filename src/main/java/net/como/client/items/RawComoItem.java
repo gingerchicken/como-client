@@ -21,6 +21,13 @@ public class RawComoItem implements CreativeItem {
         this.encodedNbt = encodedNbt;
     }
 
+    public RawComoItem(ItemStack stack) {
+        this.itemType = Registry.ITEM.getId(stack.getItem()).toString();
+        this.encodedNbt = Base64.getEncoder().encodeToString(
+            stack.getNbt().asString().getBytes()
+        );
+    }
+
     /**
      * Gets the Minecraft item type.
      * @return The item type.
