@@ -317,7 +317,6 @@ public class ComoClient {
         this.registerModule(new NoEntityRender());
         this.registerModule(new ExploitSkid());
 
-        // TESTING DON'T GET EXCITED!
         this.registerModule(new ClickGUI());
     }
 
