@@ -19,6 +19,7 @@ import org.lwjgl.glfw.GLFW;
 
 import joptsimple.internal.Strings;
 import net.como.client.ComoClient;
+import net.como.client.interfaces.mixin.IClientWorld;
 import net.como.client.interfaces.mixin.IEntity;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.MinecraftClient;
@@ -29,9 +30,11 @@ import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.network.PendingUpdateManager;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.Window;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -359,5 +362,30 @@ public class ClientUtils {
      */
     public static String getEffectType(StatusEffectInstance effect) {
         return getNameFromClassId(effect.getTranslationKey());
+    }
+
+    /**
+     * Gets the PendingUpdateManager
+     * @param world The world to get the manager from
+     * @return The PendingUpdateManager
+     */
+    public static PendingUpdateManager getUpdateManager(ClientWorld world) {
+        IClientWorld iWorld = (IClientWorld)world;
+
+        return iWorld.obtainPendingUpdateManager();
+    }
+
+    /**
+     * Opens, increments and closes the PendingUpdateManager for a given world
+     * @param world The world to open the manager for
+     * @return The new sequence number
+     */
+    public static int incrementPendingUpdateManager(ClientWorld world) {
+        PendingUpdateManager manager = getUpdateManager(world);
+
+        int current = manager.getSequence();
+        manager.close();
+
+        return current;
     }
 }

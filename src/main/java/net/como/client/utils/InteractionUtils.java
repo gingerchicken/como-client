@@ -4,6 +4,8 @@ import net.como.client.ComoClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -38,5 +40,27 @@ public class InteractionUtils {
 
         // Send item packet
 		im.interactItem(client.player, Hand.MAIN_HAND);
+    }
+
+    public static void fireActive(Hand hand) {
+        Vec3d pos = ComoClient.me().getPos();
+        ClientWorld world = ComoClient.me().clientWorld;
+
+        BlockHitResult result = new BlockHitResult(
+            pos,
+            Direction.DOWN,
+            new BlockPos(pos),
+            false
+        );
+
+        // Create the interact packet
+        PlayerInteractBlockC2SPacket packet = new PlayerInteractBlockC2SPacket(
+            hand,
+            result,
+            ClientUtils.incrementPendingUpdateManager(world)
+        );
+
+        // Send the packet
+        ComoClient.getClient().getNetworkHandler().sendPacket(packet);
     }
 }
