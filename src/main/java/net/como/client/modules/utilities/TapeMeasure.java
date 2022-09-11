@@ -29,7 +29,7 @@ public class TapeMeasure extends Module {
 
         this.setDescription("Measure the distance between two points.");
         
-        this.setCategory("Utilities");
+        this.setCategory("Utility");
     }
 
     @Override

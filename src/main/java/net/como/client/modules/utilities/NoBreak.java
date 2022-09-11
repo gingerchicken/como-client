@@ -19,7 +19,7 @@ public class NoBreak extends Module {
 
         this.setDescription("Prevent your pickaxes from accidentally breaking.");
         
-        this.setCategory("Utilities");
+        this.setCategory("Utility");
     }
 
     @Override

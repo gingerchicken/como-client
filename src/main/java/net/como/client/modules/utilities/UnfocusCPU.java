@@ -15,7 +15,7 @@ public class UnfocusCPU extends Module {
         this.setDescription("Decreases game performance while the window is not focused.");
 
         this.addSetting(new Setting("MaxFPS", 15));
-        this.setCategory("Utilities");
+        this.setCategory("Utility");
     }
     
     @Override

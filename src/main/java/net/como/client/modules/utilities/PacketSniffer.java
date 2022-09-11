@@ -22,7 +22,7 @@ public class PacketSniffer extends Module {
 
         this.addSetting(new Setting("HidePacket", new HashMap<String, Boolean>()));
 
-        this.setCategory("Utilities");
+        this.setCategory("Utility");
     }
     
     @Override

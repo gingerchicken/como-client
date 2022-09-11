@@ -41,7 +41,7 @@ public class DiscordRichPres extends Module {
         this.setDescription("Displays which client you are using in discord rich presence.");
 
         this.addSetting(new Setting("ShowServer", false));
-        this.setCategory("Utilities");
+        this.setCategory("Utility");
     }
 
     public String getState() {
