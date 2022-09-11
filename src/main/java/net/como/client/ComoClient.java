@@ -16,6 +16,7 @@ import net.como.client.commands.WaypointsCommand;
 import net.como.client.commands.exploits.DiscardLocal;
 import net.como.client.commands.exploits.ParticleCrash;
 import net.como.client.commands.nbt.GiveCommand;
+import net.como.client.commands.nbt.ItemEggCommand;
 import net.como.client.commands.nbt.NbtCommand;
 import net.como.client.commands.structures.ModuleCommand;
 import net.como.client.components.systems.FriendsManager;
@@ -123,11 +124,10 @@ public class ComoClient {
         // Add copyip command
         this.commandHandler.registerCommand(new CopyServerIPCommand());
 
-        // Add nbt command
+        // Add nbt commands
         this.commandHandler.registerCommand(new NbtCommand());
-
-        // Add give command
         this.commandHandler.registerCommand(new GiveCommand());
+        this.commandHandler.registerCommand(new ItemEggCommand());
 
         // Exploit commands
         this.commandHandler.registerCommand(new ParticleCrash());
