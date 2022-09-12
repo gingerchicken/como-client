@@ -14,7 +14,6 @@ import net.como.client.commands.FriendsCommand;
 import net.como.client.commands.PanicCommand;
 import net.como.client.commands.WaypointsCommand;
 import net.como.client.commands.exploits.DiscardLocal;
-import net.como.client.commands.exploits.KillCommand;
 import net.como.client.commands.exploits.ParticleCrash;
 import net.como.client.commands.nbt.GiveCommand;
 import net.como.client.commands.nbt.ItemEggCommand;
@@ -41,7 +40,6 @@ import net.como.client.modules.packet.*;
 import net.como.client.modules.render.*;
 import net.como.client.modules.utilities.*;
 import net.como.client.utils.*;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -133,7 +131,6 @@ public class ComoClient {
         // Exploit commands
         this.commandHandler.registerCommand(new ParticleCrash());
         this.commandHandler.registerCommand(new DiscardLocal());
-        this.commandHandler.registerCommand(new KillCommand());
 
         // TODO replace this with just a Module sub command
         // Waypoints commands
@@ -319,6 +316,7 @@ public class ComoClient {
         this.registerModule(new NoEntityRender());
         this.registerModule(new ExploitSkid());
         this.registerModule(new Placer());
+        this.registerModule(new CreativeKill());
 
         this.registerModule(new ClickGUI());
     }
