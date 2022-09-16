@@ -61,7 +61,7 @@ public class Binds extends Module {
         this.addSetting(new Setting("HideCommandOutput", true));
         this.addSetting(new Setting("GUIKey", true));
 
-        this.setCategory("Utilities");
+        this.setCategory("Utility");
     }
 
     @Override

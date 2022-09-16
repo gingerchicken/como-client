@@ -15,7 +15,7 @@ public class AutoReconnect extends DummyModule {
         this.addSetting(new Setting("InGameButton", true));
 
         this.setDescription("Automatically reconnects to a server after a given time.");
-        this.setCategory("Utilities");
+        this.setCategory("Utility");
     }
 
     private double startTime = 0;

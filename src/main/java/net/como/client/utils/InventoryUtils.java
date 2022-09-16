@@ -68,4 +68,16 @@ public class InventoryUtils {
 
         return inv.selectedSlot + 36;
     }
+
+    public static int getFreeSlot() {
+        int slot = ComoClient.me().getInventory().getEmptySlot();
+
+        if (slot == -1) return -1;
+
+        // Handle the hotbar
+        if (slot < 9) return slot + 36;
+
+        // Others
+        return slot;
+    }
 }

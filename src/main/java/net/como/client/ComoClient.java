@@ -16,6 +16,7 @@ import net.como.client.commands.WaypointsCommand;
 import net.como.client.commands.exploits.DiscardLocal;
 import net.como.client.commands.exploits.ParticleCrash;
 import net.como.client.commands.nbt.GiveCommand;
+import net.como.client.commands.nbt.ItemEggCommand;
 import net.como.client.commands.nbt.NbtCommand;
 import net.como.client.commands.structures.ModuleCommand;
 import net.como.client.components.systems.FriendsManager;
@@ -39,7 +40,6 @@ import net.como.client.modules.packet.*;
 import net.como.client.modules.render.*;
 import net.como.client.modules.utilities.*;
 import net.como.client.utils.*;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -123,11 +123,10 @@ public class ComoClient {
         // Add copyip command
         this.commandHandler.registerCommand(new CopyServerIPCommand());
 
-        // Add nbt command
+        // Add nbt commands
         this.commandHandler.registerCommand(new NbtCommand());
-
-        // Add give command
         this.commandHandler.registerCommand(new GiveCommand());
+        this.commandHandler.registerCommand(new ItemEggCommand());
 
         // Exploit commands
         this.commandHandler.registerCommand(new ParticleCrash());
@@ -317,8 +316,9 @@ public class ComoClient {
         this.registerModule(new NoEntityRender());
         this.registerModule(new ExploitSkid());
         this.registerModule(new RoboWalk());
+        this.registerModule(new Placer());
+        this.registerModule(new CreativeKill());
 
-        // TESTING DON'T GET EXCITED!
         this.registerModule(new ClickGUI());
     }
 

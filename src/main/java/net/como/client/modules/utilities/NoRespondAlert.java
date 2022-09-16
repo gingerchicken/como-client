@@ -24,7 +24,7 @@ public class NoRespondAlert extends Module {
     
         this.setDescription("Displays an alert when the server has stopped sending data.");
         
-        this.setCategory("Utilities");
+        this.setCategory("Utility");
     }
 
     @Override
