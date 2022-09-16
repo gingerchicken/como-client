@@ -73,6 +73,10 @@ I would also like to thank [Meteor Client](https://github.com/MeteorDevelopment/
 ### Coderx-Gamer
 Many thanks to [Coderx-Gamer](https://github.com/Coderx-Gamer) for publishing his exploits such as [The Shulker Dupe](https://github.com/Coderx-Gamer/shulker-dupe) and [The Lectern Crash](https://github.com/Coderx-Gamer/lectern-crash), which I based the `ShulkerDupe` and `LecternCrash` modules on.
 
+### Saturn5Vfive
+
+Thanks to [Saturn5Vfive](https://github.com/Saturn5Vfive) for publishing their implementation of [Robowalk](https://github.com/Saturn5Vfive/robowalk), which Como Client's implementation is heavily inspired by.
+
 ## Reviews
 ### Happy Customer #1
 Here is a very satisfied and happy customer !!!

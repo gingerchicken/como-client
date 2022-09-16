@@ -316,6 +316,7 @@ public class ComoClient {
         this.registerModule(new MapArtESP());
         this.registerModule(new NoEntityRender());
         this.registerModule(new ExploitSkid());
+        this.registerModule(new RoboWalk());
 
         // TESTING DON'T GET EXCITED!
         this.registerModule(new ClickGUI());
