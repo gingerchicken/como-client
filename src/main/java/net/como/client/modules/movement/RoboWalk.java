@@ -179,6 +179,9 @@ public class RoboWalk extends Module {
                     this.sendPacket(movePacket);
                     break;
                 }
+            
+                // Ignore other cases
+                break;
             }
         }
     }
