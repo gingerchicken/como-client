@@ -60,6 +60,16 @@ public class RoboWalk extends Module {
             )
         );
     }
+
+    private Vec3d smoothPacketPos(VehicleMoveC2SPacket packet) {
+        return this.smoothPacketPos(
+            new Vec3d(
+                packet.getX(),
+                packet.getY(),
+                packet.getZ()
+            )
+        );
+    }
     
     private Vec3d smoothPacketPos(double x, double y, double z) {
         return this.smoothPacketPos(new Vec3d(x, y, z));
@@ -155,7 +165,7 @@ public class RoboWalk extends Module {
                     VehicleMoveC2SPacket castPacket = (VehicleMoveC2SPacket) packet;
 
                     // Get the smooth position
-                    Vec3d smoothPos = this.smoothPacketPos(castPacket.getX(), castPacket.getY(), castPacket.getZ());
+                    Vec3d smoothPos = this.smoothPacketPos(castPacket);
 
                     // simulate the check that liveoverflow runs
                     if (!this.shouldSend(smoothPos)) return;
