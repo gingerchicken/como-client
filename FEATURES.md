@@ -96,11 +96,27 @@
 ### Default Settings
  - ShowTip: `True`
 
+## CreativeKill (`.creativekill`)
+[(Source Code)](src/main/java/net/como/client/modules/exploits/CreativeKill.java) Kills a player in creative mode
+### Default Settings
+ - Daemon: `True`
+ - Mode
+    - Spam
+    - Basic
+ - OffsetX: `0.0`
+ - OffsetY: `2.1`
+ - OffsetZ: `0.0`
+ - RefreshItem: `True`
+ - TargetName: `"gingerchicken"`
+ - ThreadDelay: `100`
+
 ## CreativeMagic (`.creativemagic`)
 [(Source Code)](src/main/java/net/como/client/modules/exploits/CreativeMagic.java) Adds a creative item group with custom NBT items.
 ### Default Settings
  - AllowLaggy: `True`
  - AutoRefresh: `True`
+ - Debug: `True`
+ - FileOnly: `True`
 
 ## Criticals (`.criticals`)
 [(Source Code)](src/main/java/net/como/client/modules/combat/Criticals.java) Makes every hit a critical hit.
@@ -164,6 +180,8 @@
 [(Source Code)](src/main/java/net/como/client/modules/exploits/ExploitSkid.java) Grabs player's held item NBT and prints it to the console.
 ### Default Settings
  - ChatLog: `True`
+ - NoSave: `True`
+ - ScanAll: `True`
 
 ## FakeClient (`.fakeclient`)
 [(Source Code)](src/main/java/net/como/client/modules/packet/FakeClient.java) Makes the client appear as vanilla to any servers.
@@ -421,6 +439,12 @@
 ### Default Settings
  - HidePacket: `{ ... }`
 
+## Placer (`.placer`)
+[(Source Code)](src/main/java/net/como/client/modules/exploits/Placer.java) Allows further reach when using spawn eggs by updating the item's NBT data
+### Default Settings
+ - HeightOffset: `1.0`
+ - Range: `500.0`
+
 ## QuakeAimbot (`.quakeaimbot`)
 [(Source Code)](src/main/java/net/como/client/modules/combat/QuakeAimbot.java) A Basic Hypixel Quakecraft Aimbot
 ### Default Settings
@@ -430,6 +454,9 @@
  - Randomise: `True`
  - RandomiseAmount: `0.125`
  - Smoothing: `True`
+
+## RoboWalk (`.robowalk`)
+[(Source Code)](src/main/java/net/como/client/modules/movement/RoboWalk.java) Ensures that you always walk with exact co-ordinates (required for LiveOverflow server)
 
 ## ShulkerDupe (`.shulkerdupe`)
 [(Source Code)](src/main/java/net/como/client/modules/dupes/ShulkerDupe.java) Allows the user to duplicate shulker boxes (Vanilla Only.)
