@@ -30,11 +30,16 @@ public abstract class LecternScreenMixin extends Screen {
         int buttonWidth = 98;
         int buttonHeight = 20;
 
-        this.addDrawableChild(new ButtonWidget(this.width / 2 - buttonWidth / 2, 196 + buttonHeight + 4, buttonWidth, buttonHeight, Text.of("Crash"), button -> {
-            lecternCrash.doCrash();
+        addDrawableChild(
+            new ButtonWidget.Builder(Text.of("Crash"), button -> {
+                lecternCrash.doCrash();
 
-            this.close();
-            button.active = false;
-        }));
+                this.close();
+                button.active = false;
+            })
+            .position(this.width / 2 - buttonWidth / 2, 196 + buttonHeight + 4)
+            .size(buttonWidth, buttonHeight)
+            .build()
+        );
     }
 }

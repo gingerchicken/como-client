@@ -56,10 +56,13 @@ public abstract class GameMenuScreenMixin extends Screen {
         int y = this.height / 4 + 120 - 16;
 
         this.reconnectButton = this.addDrawableChild(
-			new ButtonWidget(x, y + 24, 204, 20,
-				Text.of("Reconnect"),
+            new ButtonWidget.Builder(
+                Text.of("Reconnect"),
                 button -> this.reconnect()
             )
+            .position(x, y + 24)
+            .size(204, 20)
+            .build()
         );
     }
 }

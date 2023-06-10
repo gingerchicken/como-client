@@ -70,10 +70,13 @@ public class DisconnectScreenMixin extends Screen {
 		int backButtonY = Math.min(height / 2 + this.reasonHeight / 2 + 9, height - 30);
 
         reconnectButton = this.addDrawableChild(
-			new ButtonWidget(backButtonX, backButtonY + 24, 200, 20,
+			new ButtonWidget.Builder(
 				Text.of("Reconnect"),
                 button -> this.getAutoReconnect().reconnect(parent)
             )
+            .position(backButtonX, backButtonY + 24)
+            .size(200, 20)
+            .build()
         );
 
     }

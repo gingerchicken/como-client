@@ -42,7 +42,7 @@ public class EntityOwner extends Module {
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 
-        RenderSystem.setShader(GameRenderer::getPositionShader);
+        RenderSystem.setShader(GameRenderer::getPositionProgram);
         
         mStack.push();
 

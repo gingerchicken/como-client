@@ -1,6 +1,5 @@
 package net.como.client.commands.nbt;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,11 +10,10 @@ import net.como.client.commands.structures.Command;
 import net.como.client.utils.BlockUtils;
 import net.como.client.utils.ChatUtils;
 import net.como.client.utils.NbtUtils;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
-import net.minecraft.registry.Registry;
+import net.minecraft.registry.Registries;
 
 public class GiveCommand extends Command {
 

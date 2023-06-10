@@ -4,6 +4,8 @@
 
 package net.como.client.misc.maths;
 
+import org.joml.Vector4d;
+
 public class Vec4 {
     public double x, y, z, w;
 
@@ -22,5 +24,9 @@ public class Vec4 {
         z = z * newW + 0.5d;
 
         w = newW;
+    }
+
+    public Vector4d toVec4d() {
+        return new Vector4d(x, y, z, w);
     }
 }

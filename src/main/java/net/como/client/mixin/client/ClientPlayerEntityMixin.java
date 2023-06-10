@@ -18,27 +18,18 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.MovementType;
-import net.minecraft.network.encryption.PlayerPublicKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
-    public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile, PlayerPublicKey publicKey) {
-        super(world, profile, publicKey);
+    public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
+        super(world, profile);
     }
 
     @Inject(at = @At("HEAD"), method="move(Lnet/minecraft/entity/MovementType;Lnet/minecraft/util/math/Vec3d;)V")
     private void onMove(MovementType type, Vec3d offset, CallbackInfo ci) {
         ComoClient.getInstance().emitter.triggerEvent(new PlayerMoveEvent(type, offset, ci));
-    }
-
-    @Inject(at = @At("HEAD"), method="sendChatMessage(Ljava/lang/String;Lnet/minecraft/text/Text;)V", cancellable = true)
-    private void onSendChatMessage(String message, Text preview, CallbackInfo ci) {
-        // Handle commands etc.
-        ComoClient.getInstance().processChatPost(message, ci);
-
-        ComoClient.getInstance().emitter.triggerEvent(new PlayerChatEvent(message, ci));
     }
 
     @Inject(at = @At("HEAD"), method="sendMovementPackets()V", cancellable = true)

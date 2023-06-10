@@ -66,9 +66,8 @@ public class PacketFlight extends Module {
 
                 Vec3d pos = this.nextPos();
                 if (!this.getBoolSetting("Noclip")) {
-                    BlockPos blockPos = new BlockPos(pos);
-
-                    BlockState state = BlockUtils.getState(blockPos);
+                    BlockPos bPos = new BlockPos((int)pos.getX(), (int)pos.getY(), (int)pos.getZ());
+                    BlockState state = BlockUtils.getState(bPos);
                     if (!state.isAir()) break;
                 }
 

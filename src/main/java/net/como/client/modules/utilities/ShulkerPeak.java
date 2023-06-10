@@ -101,8 +101,8 @@ public class ShulkerPeak extends Module {
             int curX = x + (i % shulkerWidth) * spacing;
             int curY = y + (i / 9)*spacing;
 
-            ir.renderInGuiWithOverrides(item, curX, curY);
-            ir.renderGuiItemOverlay(r, item, curX, curY);
+            ir.renderInGuiWithOverrides(mStack, item, curX, curY);
+            ir.renderGuiItemOverlay(mStack, r, item, curX, curY);
 
             i++;
         }

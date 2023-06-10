@@ -134,7 +134,7 @@ public class RenderUtils {
 		bufferBuilder.vertex(matrix, (float)(start.x - regionX), (float)start.y, (float)(start.z - regionZ)).next();
 		bufferBuilder.vertex(matrix, (float)end.x - regionX, (float)end.y, (float)end.z - regionZ).next();
 		
-		BufferRenderer.drawWithShader(bufferBuilder.end());
+		BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
 
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);

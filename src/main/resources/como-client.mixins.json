@@ -35,7 +35,6 @@
     "render/CameraMixin",
     "render/RenderTickCounterMixin",
     "render/SignBlockEntityRendererMixin",
-    "render/Matrix4fMixin",
 
     "screen/MultiplayerScreenMixin",
     "screen/DeathScreenMixin",

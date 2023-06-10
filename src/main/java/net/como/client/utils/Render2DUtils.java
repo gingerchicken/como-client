@@ -27,7 +27,7 @@ public class Render2DUtils {
         private void open(MatrixStack matrixStack, VertexFormat.DrawMode drawMode, VertexFormat format) {
             this.matrix = matrixStack.peek().getPositionMatrix();
             this.bufferBuilder = Tessellator.getInstance().getBuffer();
-            RenderSystem.setShader(GameRenderer::getPositionShader);
+            RenderSystem.setShader(GameRenderer::getPositionProgram);
 
             this.bufferBuilder.begin(drawMode, format);
         }
@@ -41,7 +41,7 @@ public class Render2DUtils {
         }
 
         public void close() {
-            BufferRenderer.drawWithShader(this.bufferBuilder.end());            
+            BufferRenderer.draw(this.bufferBuilder.end());            
         }
 
         public void vertex2D(int x, int y) {

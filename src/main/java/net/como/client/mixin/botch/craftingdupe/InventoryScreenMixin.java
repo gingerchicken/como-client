@@ -36,7 +36,12 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         // Make sure the mod is enabled.
         if (!this.getCraftingDupe().isEnabled()) return;
 
-        addDrawableChild(new ButtonWidget(this.x + 130, this.height / 2 - 24, 40, 20, Text.of("Dupe"), b -> performDupe()));
+        addDrawableChild(
+            new ButtonWidget.Builder(Text.of("Dupe"), b -> performDupe())
+            .position(this.x + 130, this.height / 2 - 24)
+            .size(40, 20)
+            .build()
+        );
     }
     
     private void performDupe() {

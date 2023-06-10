@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import net.como.client.ComoClient;
 import net.como.client.events.client.OnDisconnectedEvent;
+import net.como.client.events.client.PlayerChatEvent;
 import net.como.client.events.packet.OnEntityStatusEvent;
 import net.como.client.events.packet.OnGameStateChangeEvent;
 import net.como.client.events.packet.OnResourcePackSendEvent;
@@ -50,5 +51,13 @@ public class ClientPlayNetworkHandlerMixin {
     @Inject(at = @At("HEAD"), method="onDisconnected(Lnet/minecraft/text/Text;)V", cancellable = true)
     public void onDisconnected(Text reason, CallbackInfo ci) {
         ComoClient.getInstance().emitter.triggerEvent(new OnDisconnectedEvent(reason, ci));
+    }
+
+    @Inject(at = @At("HEAD"), method="sendChatMessage(Ljava/lang/String;)V", cancellable = true)
+    public void onSendChatMessage(String message, CallbackInfo ci) {
+        // Handle commands etc.
+        ComoClient.getInstance().processChatPost(message, ci);
+
+        ComoClient.getInstance().emitter.triggerEvent(new PlayerChatEvent(message, ci));
     }
 }

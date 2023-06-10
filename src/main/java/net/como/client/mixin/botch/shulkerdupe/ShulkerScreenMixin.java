@@ -38,9 +38,14 @@ public class ShulkerScreenMixin extends Screen {
         double x = ComoClient.getClient().getWindow().getScaledWidth() / 2 - width/2;
         double y = ((this.height - 166) / 2) - height - padding;
 
-        this.buttonWidget = this.addDrawableChild(new ButtonWidget((int)x, (int)y, (int)width, (int)height, buttonText, (button) -> {
-            this.ShulkerDupe().performDupe = true;
-        }));
+        this.buttonWidget = this.addDrawableChild(
+            new ButtonWidget.Builder(Text.of("Dupe"), (button) -> {
+                this.ShulkerDupe().performDupe = true;
+            })
+            .position((int)x, (int)y)
+            .size((int)width, (int)height)
+            .build()
+        );
 
         this.buttonWidget.active = ShulkerDupe().shouldActivateButton();
     }

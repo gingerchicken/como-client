@@ -84,11 +84,11 @@ public class ChatUtils {
     public static void sendChatMessage(String message, boolean handleCommands) {
         // If it starts with a / send a command
         if (message.startsWith("/") && handleCommands) {
-            ComoClient.getClient().player.sendCommand(message.substring(1), null);
+            ComoClient.me().networkHandler.sendCommand(message.substring(1));
             return;
         }
         
-        ComoClient.me().sendChatMessage(message, null);
+        ComoClient.me().networkHandler.sendChatMessage(message);
     }
 
     public static void sendChatMessage(String message) {

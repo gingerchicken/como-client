@@ -15,6 +15,7 @@ import net.minecraft.nbt.NbtString;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
 import net.minecraft.text.Text;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
 public class NbtUtils {
@@ -56,7 +57,7 @@ public class NbtUtils {
 
         // Get the item nbt
         NbtCompound itemNbt = new NbtCompound();
-        itemNbt.putString("id", Registry.ITEM.getId(targetStack.getItem()).toString());
+        itemNbt.putString("id", Registries.ITEM.getId(targetStack.getItem()).toString());
         itemNbt.putInt("Count", targetStack.getCount());
         if (targetStack.hasNbt()) itemNbt.put("tag", targetStack.getNbt());
         
