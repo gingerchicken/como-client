@@ -15,7 +15,7 @@ import net.minecraft.nbt.NbtString;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
 import net.minecraft.text.Text;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 
 public class NbtUtils {
     public static NbtCompound enchantment(String enchantmentName, Short level) {

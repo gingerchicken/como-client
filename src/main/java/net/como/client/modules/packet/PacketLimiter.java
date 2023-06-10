@@ -11,7 +11,7 @@ import net.como.client.events.client.ClientTickEvent;
 import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
-import net.minecraft.network.Packet;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.KeepAliveC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 

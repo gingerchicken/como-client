@@ -21,7 +21,7 @@ public class Hitmarker extends Module {
     public static final Identifier HITMARKER_TEXTURE = new Identifier("como-client", "textures/gui/misc/hitmarker.png");
     public static final Identifier HITMARKER_SOUND = new Identifier("como-client:hitmarker");
     
-    public static final SoundEvent HITMARKER_SOUND_EVENT = new SoundEvent(HITMARKER_SOUND);
+    public static final SoundEvent HITMARKER_SOUND_EVENT = SoundEvent.of(HITMARKER_SOUND);
 
     public static final int HITMARKER_WIDTH  = 32;
     public static final int HITMARKER_HEIGHT = 32;

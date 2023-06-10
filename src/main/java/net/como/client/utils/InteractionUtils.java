@@ -12,6 +12,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 
 public class InteractionUtils {
     public static ClientPlayerInteractionManager getManager() {        
@@ -43,13 +44,12 @@ public class InteractionUtils {
     }
 
     public static void fireActive(Hand hand) {
-        Vec3d pos = ComoClient.me().getPos();
         ClientWorld world = ComoClient.me().clientWorld;
 
         BlockHitResult result = new BlockHitResult(
-            pos,
+            ComoClient.me().getPos(),
             Direction.DOWN,
-            new BlockPos(pos),
+            ComoClient.me().getBlockPos(),
             false
         );
 

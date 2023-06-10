@@ -127,7 +127,7 @@ public class Vec3 {
     }
 
     public BlockPos toBlockPos() {
-        return new BlockPos(x, y, z);
+        return new BlockPos((int)x, (int)y, (int)z);
     }
 
     @Override

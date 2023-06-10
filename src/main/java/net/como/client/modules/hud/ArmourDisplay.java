@@ -11,6 +11,7 @@ import net.como.client.modules.Module;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.Window;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.client.MinecraftClient;
 
@@ -35,7 +36,7 @@ public class ArmourDisplay extends Module {
         this.removeListen(InGameHudRenderEvent.class);
     }
 
-    private void renderDisplay(int x, int y, int length) {
+    private void renderDisplay(MatrixStack mStack, int x, int y, int length) {
         MinecraftClient client = ComoClient.getClient();
         ItemRenderer ir = client.getItemRenderer();
         TextRenderer r  = client.textRenderer;
@@ -72,8 +73,8 @@ public class ArmourDisplay extends Module {
         // Render each item
         for (ItemStack item : armour) {
             // Render the item on the screen
-            ir.renderInGuiWithOverrides(item, curX, curY);
-            ir.renderGuiItemOverlay(r, item, curX, curY);
+            ir.renderInGuiWithOverrides(mStack, item, curX, curY);
+            ir.renderGuiItemOverlay(mStack, r, item, curX, curY);
 
             // Calculate where we are going to render the next item
             curX += width;
@@ -84,6 +85,8 @@ public class ArmourDisplay extends Module {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "InGameHudRenderEvent": {
+                InGameHudRenderEvent e = (InGameHudRenderEvent)event;
+                
                 Window window = ComoClient.getClient().getWindow();
 
                 int x = window.getScaledWidth() / 2 + 5;
@@ -91,7 +94,7 @@ public class ArmourDisplay extends Module {
 
                 if (ComoClient.me().getAir() < 300) y -= 10;
 
-                this.renderDisplay(x, y, 91);
+                this.renderDisplay(e.mStack, x, y, 91);
 
                 break;
             }

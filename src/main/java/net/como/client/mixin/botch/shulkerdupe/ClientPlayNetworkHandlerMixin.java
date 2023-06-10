@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import net.como.client.ComoClient;
 import net.como.client.modules.dupes.ShulkerDupe;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.network.Packet;
+import net.minecraft.network.packet.Packet;
 
 
 @Mixin(ClientPlayNetworkHandler.class)

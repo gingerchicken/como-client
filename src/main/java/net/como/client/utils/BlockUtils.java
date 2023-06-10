@@ -16,7 +16,8 @@ import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 
@@ -31,7 +32,7 @@ public class BlockUtils {
 		ids.add(id);
 	}
 	public static void initialiseIdList() {
-		for (Identifier id : Registry.ITEM.getIds()) {
+		for (Identifier id : Registries.ITEM.getIds()) {
 			addId(id.toString());
 		}
 	}
@@ -54,12 +55,12 @@ public class BlockUtils {
 	}
 	
 	public static String getName(Block block) {
-		return Registry.BLOCK.getId(block).toString();
+		return Registries.BLOCK.getId(block).toString();
 	}
 	
 	public static Block getBlockFromName(String name) {
 		try {
-			return Registry.BLOCK.get(new Identifier(name));
+			return Registries.BLOCK.get(new Identifier(name));
 			
 		} catch(InvalidIdentifierException e) {
 			return Blocks.AIR;

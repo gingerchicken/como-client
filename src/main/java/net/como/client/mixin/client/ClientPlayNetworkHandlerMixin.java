@@ -13,7 +13,7 @@ import net.como.client.events.packet.OnResourcePackSendEvent;
 import net.como.client.events.packet.OnWorldTimeUpdateEvent;
 import net.como.client.events.packet.SendPacketEvent;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.network.Packet;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.network.packet.s2c.play.ResourcePackSendS2CPacket;

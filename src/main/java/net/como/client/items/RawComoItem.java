@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 
 public class RawComoItem implements CreativeItem {
     private String itemType;
@@ -22,7 +22,7 @@ public class RawComoItem implements CreativeItem {
     }
 
     public RawComoItem(ItemStack stack) {
-        this.itemType = Registry.ITEM.getId(stack.getItem()).toString();
+        this.itemType = Registries.ITEM.getId(stack.getItem()).toString();
         this.encodedNbt = Base64.getEncoder().encodeToString(
             stack.getNbt().asString().getBytes()
         );
@@ -41,7 +41,7 @@ public class RawComoItem implements CreativeItem {
             Identifier id = Identifier.fromCommandInput(reader);
 
             // Get the item
-            return Registry.ITEM.get(id);
+            return Registries.ITEM.get(id);
         } catch (Exception e) {
             return null;
         }

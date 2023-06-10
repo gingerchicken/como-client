@@ -13,7 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Quaternion;
+import org.joml.Quaternionf;
 
 public class MapArtESP extends Module {
     public MapArtESP() {
@@ -87,7 +87,7 @@ public class MapArtESP extends Module {
      * @param textRenderer The text renderer
      * @param scale The scale
      */
-    private void renderSide(MatrixStack matrixStack, TextRenderer textRenderer, Quaternion quaternion, String sideName, float scale) {
+    private void renderSide(MatrixStack matrixStack, TextRenderer textRenderer, Quaternionf quaternion, String sideName, float scale) {
         matrixStack.push();
 
         matrixStack.multiply(quaternion);
@@ -109,7 +109,7 @@ public class MapArtESP extends Module {
         matrixStack.push();
 
         matrixStack.translate(64, 0, 128);
-        renderSide(matrixStack, textRenderer, new Quaternion(0, 0, 0, 0), "Bottom", scale);
+        renderSide(matrixStack, textRenderer, new Quaternionf(0, 0, 0, 0), "Bottom", scale);
 
         matrixStack.pop();
     }
@@ -124,7 +124,7 @@ public class MapArtESP extends Module {
         matrixStack.push();
 
         matrixStack.translate(64, 0, 0);
-        renderSide(matrixStack, textRenderer, new Quaternion(0, 1, 0, 0), "Top", scale);
+        renderSide(matrixStack, textRenderer, new Quaternionf(0, 1, 0, 0), "Top", scale);
 
         matrixStack.pop();
     }
@@ -140,7 +140,7 @@ public class MapArtESP extends Module {
         matrixStack.push();
 
         matrixStack.translate(0, 0, 64);
-        renderSide(matrixStack, textRenderer, new Quaternion(0, 0.7f, 0, -0.7f), "Left", scale);
+        renderSide(matrixStack, textRenderer, new Quaternionf(0, 0.7f, 0, -0.7f), "Left", scale);
 
         matrixStack.pop();
     }
@@ -155,7 +155,7 @@ public class MapArtESP extends Module {
         matrixStack.push();
 
         matrixStack.translate(128, 0, 64);
-        renderSide(matrixStack, textRenderer, new Quaternion(0, 0.7f, 0, 0.7f), "Right", scale);
+        renderSide(matrixStack, textRenderer, new Quaternionf(0, 0.7f, 0, 0.7f), "Right", scale);
 
         matrixStack.pop();
     }
@@ -183,8 +183,8 @@ public class MapArtESP extends Module {
         double y = ComoClient.me().getBlockPos().getY();
         double outY = 1280;
 
-        BlockPos min = new BlockPos(0, y - outY, 0);
-        BlockPos max = new BlockPos(min.getX() + 128, y + outY, min.getZ() + 128);
+        BlockPos min = new BlockPos(0, (int)(y - outY), 0);
+        BlockPos max = new BlockPos((int)(min.getX() + 128), (int)(y + outY), min.getZ() + 128);
 
         Box borderBox = new Box(min, max);
 

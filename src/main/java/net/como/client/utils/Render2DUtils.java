@@ -16,7 +16,7 @@ import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.Matrix4f;
+import org.joml.Matrix4f;
 import net.minecraft.util.math.Vec2f;
 
 public class Render2DUtils {

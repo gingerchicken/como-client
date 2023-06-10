@@ -17,7 +17,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 
 public class ItemEggCommand extends Command {
 
@@ -41,7 +42,7 @@ public class ItemEggCommand extends Command {
         }
 
         // Get the item
-        Item item = Registry.ITEM.get(id);
+        Item item = Registries.ITEM.get(id);
 
         ItemStack stack = new ItemStack(item);
 

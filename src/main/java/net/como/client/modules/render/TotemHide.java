@@ -4,7 +4,7 @@ import net.como.client.ComoClient;
 import net.como.client.events.Event;
 import net.como.client.events.render.RenderItemEvent;
 import net.como.client.modules.Module;
-import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 
 public class TotemHide extends Module {
     public TotemHide() {
@@ -35,7 +35,7 @@ public class TotemHide extends Module {
                 if (e.entity != ComoClient.me()) break;
 
                 // Only left hand/first person
-                if (e.renderMode != ModelTransformation.Mode.FIRST_PERSON_LEFT_HAND) break;
+                if (e.renderMode != ModelTransformationMode.FIRST_PERSON_LEFT_HAND) break;
                 
                 // Only do it for totems
                 if (e.stack.getItem().toString() != "totem_of_undying") break;

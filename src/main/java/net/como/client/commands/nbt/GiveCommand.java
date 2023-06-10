@@ -15,7 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 
 public class GiveCommand extends Command {
 
@@ -49,7 +49,7 @@ public class GiveCommand extends Command {
             return true;
         }
 
-        ItemStack stack = new ItemStack(Registry.ITEM.get(id));
+        ItemStack stack = new ItemStack(Registries.ITEM.get(id));
 
         // Get item count
         if (args.length > 1) {
