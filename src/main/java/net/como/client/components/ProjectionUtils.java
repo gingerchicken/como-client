@@ -95,11 +95,7 @@ public class ProjectionUtils {
     }
 
     public static void resetProjection() {
-        MinecraftClient mc = ComoClient.getClient();
-
-        RenderSystem.setProjectionMatrix(new Matrix4f().setOrtho(0, mc.getWindow().getFramebufferWidth(), mc.getWindow().getFramebufferHeight(), 0, 1000, 3000));
-    
-        // TODO is this needed? is it the same as unscaledProjection()?
+        scaleProjection((float)ComoClient.getClient().getWindow().getScaleFactor());
     }
 
     private static void toScreen(Vector4f vec) {

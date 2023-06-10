@@ -14,16 +14,18 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+
+import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 @Mixin(GameRenderer.class)
 public abstract class ProjectionUtilsMixin {
     @Inject(method = "renderWorld", at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", args = { "ldc=hand" }), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void onRenderWorld(float tickDelta, long limitTime, MatrixStack matrices, CallbackInfo info, boolean bl, Camera camera, MatrixStack matrixStack, double d, Matrix4f matrix4f) {
+    public void onRenderWorld(float tickDelta, long limitTime, MatrixStack matrices, CallbackInfo info, boolean bl, Camera camera, MatrixStack matrixStack, double d, float f, float g, Matrix4f matrix4f, Matrix3f matrix3f) {
         MinecraftClient client = ComoClient.getClient();
         if ((client == null || client.world == null || ComoClient.me() == null)) return;
 
-        client.getProfiler().push("como-client_render");
+        client.getProfiler().push("como-client_render_2d");
         
         ProjectionUtils.getInstance().update(matrices, matrix4f);
 

@@ -17,7 +17,7 @@ import net.minecraft.client.util.math.MatrixStack;
 
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
-    @Inject(at = @At("HEAD"), method="bobViewWhenHurt(Lnet/minecraft/client/util/math/MatrixStack;F)V", cancellable = true)
+    @Inject(at = @At("HEAD"), method="bobView(Lnet/minecraft/client/util/math/MatrixStack;F)V", cancellable = true)
     void onBobViewWhenHurt(MatrixStack mStack, float f, CallbackInfo ci) {
         ComoClient.getInstance().emitter.triggerEvent(new BobViewWhenHurtEvent(mStack, f, ci));
     }
