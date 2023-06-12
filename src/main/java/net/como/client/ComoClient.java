@@ -315,7 +315,7 @@ public class ComoClient {
         this.registerModule(new MapArtESP());
         this.registerModule(new NoEntityRender());
         this.registerModule(new ExploitSkid());
-        this.registerModule(new RoboWalk());
+        this.registerModule(new RoboWalk()); // he brokey
         this.registerModule(new Placer());
         this.registerModule(new CreativeKill());
 
