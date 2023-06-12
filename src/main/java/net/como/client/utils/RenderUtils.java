@@ -573,9 +573,9 @@ public class RenderUtils {
 
 	public static void renderBlockBox(MatrixStack mStack, BlockPos bPos, float r, float g, float b, float a) {
 		renderBlockBox(mStack, new Vec3d(
-			bPos.getX() + 0.5,
+			bPos.getX(),
 			bPos.getY(),
-			bPos.getZ() + 0.5
+			bPos.getZ()
 		), r, g, b, a);
 	}
 
