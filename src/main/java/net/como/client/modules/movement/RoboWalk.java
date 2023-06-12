@@ -6,6 +6,7 @@ import net.como.client.events.packet.SendPacketEvent;
 import net.como.client.modules.Module;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.network.ClientConnection;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.network.packet.c2s.play.VehicleMoveC2SPacket;
@@ -106,11 +107,11 @@ public class RoboWalk extends Module {
         // Handle the ignore
         if (this.doIgnore()) return;
 
-        // Send the packet
-        ComoClient.me().networkHandler.getConnection().send(packet);
-
         // Don't capture the next packet
         this.ignoreNext = true;
+
+        // Send the packet
+        ComoClient.me().networkHandler.getConnection().send(packet);
     }
 
     /**
