@@ -56,7 +56,7 @@
     "botch/autoreconnect/GameMenuScreenMixin",
 
     "botch/shulkerdupe/ShulkerScreenMixin",
-    "botch/shulkerdupe/ClientPlayNetworkHandlerMixin",
+    "botch/shulkerdupe/ClientConnectionMixin",
 
     "botch/craftingdupe/InventoryScreenMixin",
 

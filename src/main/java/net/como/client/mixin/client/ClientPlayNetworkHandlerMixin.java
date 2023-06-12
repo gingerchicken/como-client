@@ -23,10 +23,10 @@ import net.minecraft.text.Text;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandlerMixin {
-    @Inject(at = @At("HEAD"), method="sendPacket(Lnet/minecraft/network/Packet;)V", cancellable = true)
-    public void onSendPacket(Packet<?> packet, CallbackInfo ci) {
-        ComoClient.getInstance().emitter.triggerEvent(new SendPacketEvent(packet, ci));
-    }
+    // @Inject(at = @At("HEAD"), method="sendPacket(Lnet/minecraft/network/Packet;)V", cancellable = true)
+    // public void onSendPacket(Packet<?> packet, CallbackInfo ci) {
+    //     ComoClient.getInstance().emitter.triggerEvent(new SendPacketEvent(packet, ci));
+    // }
 
     @Inject(at = @At("HEAD"), method="onWorldTimeUpdate(Lnet/minecraft/network/packet/s2c/play/WorldTimeUpdateS2CPacket;)V", cancellable=true)
     public void onWorldTimeUpdate(WorldTimeUpdateS2CPacket packet, CallbackInfo ci) {
