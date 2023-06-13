@@ -23,10 +23,13 @@ public class Render2DUtils {
     public static class BufferContainer {
         Matrix4f matrix;
         BufferBuilder bufferBuilder;
+        Tessellator tessellator;
 
         private void open(MatrixStack matrixStack, VertexFormat.DrawMode drawMode, VertexFormat format) {
             this.matrix = matrixStack.peek().getPositionMatrix();
-            this.bufferBuilder = Tessellator.getInstance().getBuffer();
+            this.tessellator = RenderSystem.renderThreadTesselator();
+            this.bufferBuilder = tessellator.getBuffer();
+
             RenderSystem.setShader(GameRenderer::getPositionProgram);
 
             this.bufferBuilder.begin(drawMode, format);
@@ -41,15 +44,15 @@ public class Render2DUtils {
         }
 
         public void close() {
-            BufferRenderer.draw(this.bufferBuilder.end());            
+            tessellator.draw();
         }
 
         public void vertex2D(int x, int y) {
-            this.bufferBuilder.vertex(x, y, 0).next();
+            this.bufferBuilder.vertex(matrix, x, y, 0).next();
         }
 
         public void vertex2D(double x, double y) {
-            this.bufferBuilder.vertex(x, y, 0).next();
+            this.bufferBuilder.vertex(matrix, (int)x, (int)y, 0).next();
         }
     }
 
