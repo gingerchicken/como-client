@@ -7,7 +7,7 @@ import net.como.client.config.settings.Setting;
 import net.como.client.events.Event;
 import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.modules.Module;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
@@ -36,23 +36,23 @@ public class Watermark extends Module {
         this.removeListen(InGameHudRenderEvent.class);
     }
 
-    public static void render(MatrixStack matrixStack, Double scale, double x, double y) {
-        matrixStack.push();
-        matrixStack.translate(x, y, 0);
+    public static void render(DrawContext context, Double scale, double x, double y) {
+        context.getMatrices().push();
+        context.getMatrices().translate(x, y, 0);
 
-        RenderSystem.setShaderTexture(0, WATERMARK_TEXTURE);
+        // RenderSystem.setShaderTexture(0, WATERMARK_TEXTURE);
         RenderSystem.setShaderColor(1, 1, 1, 1);
 
         // Scaling
         int width  = (int)(BACKGROUND_WIDTH * scale);
         int height = (int)(BACKGROUND_HEIGHT * scale);
 
-        DrawableHelper.drawTexture(matrixStack, 0, 0, 0, 0, width, height, width, height);
+        context.drawTexture(WATERMARK_TEXTURE, 0, 0, 0, 0, width, height, width, height);
 
-        matrixStack.pop();
+        context.getMatrices().pop();
     }
 
-    public static void render(MatrixStack matrixStack, Double scale) {
+    public static void render(DrawContext context, Double scale) {
         // Scaling
         int width  = (int)(BACKGROUND_WIDTH * scale);
         int height = (int)(BACKGROUND_HEIGHT * scale);
@@ -60,7 +60,7 @@ public class Watermark extends Module {
         int x = ComoClient.getClient().getWindow().getScaledWidth() - width;
         int y = ComoClient.getClient().getWindow().getScaledHeight() - height;
 
-        render(matrixStack, scale, x, y);
+        render(context, scale, x, y);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class Watermark extends Module {
             case "InGameHudRenderEvent": {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
-                render(e.mStack, this.getDoubleSetting("Scale") / 6);
+                render(e.context, this.getDoubleSetting("Scale") / 6);
 
                 break;
             }

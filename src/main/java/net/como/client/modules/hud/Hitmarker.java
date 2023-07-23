@@ -10,7 +10,7 @@ import net.como.client.events.client.OnAttackEntityEvent;
 import net.como.client.events.packet.OnGameStateChangeEvent;
 import net.como.client.events.render.InGameHudRenderEvent;
 import net.como.client.modules.Module;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
@@ -60,8 +60,8 @@ public class Hitmarker extends Module {
         this.removeListen(InGameHudRenderEvent.class);
     }
 
-    public void render(MatrixStack matrixStack, float partialTicks) {
-        RenderSystem.setShaderTexture(0, HITMARKER_TEXTURE);
+    public void render(DrawContext context, float partialTicks) {
+        // RenderSystem.setShaderTexture(0, HITMARKER_TEXTURE);
         float k = 0.75f;
         RenderSystem.setShaderColor(k, k, k, k);
 
@@ -77,7 +77,7 @@ public class Hitmarker extends Module {
         int x = ComoClient.getClient().getWindow().getScaledWidth() / 2 - width / 2 + offsetX;
         int y = ComoClient.getClient().getWindow().getScaledHeight() / 2 - height / 2 + offsetY;
 
-        DrawableHelper.drawTexture(matrixStack, x, y, 0, 0, width, height, width, height);
+        context.drawTexture(HITMARKER_TEXTURE, x, y, 0, 0, width, height, width, height);
     }
 
     public void doHitmarker() {

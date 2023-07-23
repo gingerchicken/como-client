@@ -11,6 +11,7 @@ import net.como.client.utils.RenderUtils;
 import net.como.client.utils.ThirdPartyUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -26,7 +27,7 @@ public class TitleScreenLogoMixin extends Screen {
 
 
     @Inject(method = "render", at = @At("TAIL"))
-    private void onRender(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
+    private void onRender(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo info) {
         if (ComoClient.getInstance().getModules().get("hidetitlemessage").isEnabled()) return;
 
         MinecraftClient client = ComoClient.getClient();
@@ -38,6 +39,12 @@ public class TitleScreenLogoMixin extends Screen {
         int x = client.getWindow().getScaledWidth() - tr.getWidth(text) - padding;
         int y = ThirdPartyUtils.isMeteorLoaded() ? 12 + padding : padding;
 
-        tr.drawWithShadow(matrices, Text.of(text), x, y, Colour.GREEN.toARGB());
+        context.drawText(
+            tr,
+            text,
+            x,
+            y,
+            Colour.GREEN.toARGB()
+        );
     }
 }

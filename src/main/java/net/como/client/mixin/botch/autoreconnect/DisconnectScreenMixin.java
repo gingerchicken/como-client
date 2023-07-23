@@ -34,9 +34,6 @@ public class DisconnectScreenMixin extends Screen {
     @Shadow
 	@Final
 	private Screen parent;
-	
-	@Shadow
-	private int reasonHeight;
 
     public DisconnectScreenMixin(Text title) {
         super(title);
@@ -66,8 +63,12 @@ public class DisconnectScreenMixin extends Screen {
 
         this.getAutoReconnect().startCountdown();
 
+        // Approximate the reason height
+        // TODO just add the damn thing as a widget
+        int reasonHeight = 50;
+
         int backButtonX = width / 2 - 100;
-		int backButtonY = Math.min(height / 2 + this.reasonHeight / 2 + 9, height - 30);
+		int backButtonY = Math.min(height / 2 + reasonHeight / 2 + 9, height - 30);
 
         reconnectButton = this.addDrawableChild(
 			new ButtonWidget.Builder(

@@ -16,7 +16,7 @@ import net.como.client.modules.Module;
 import net.minecraft.block.Block;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.inventory.Inventories;
@@ -70,17 +70,25 @@ public class ShulkerPeak extends Module {
         return items;
     }
 
-    private void renderBackground(MatrixStack matrices, ItemStack stack, int x, int y) {
-        RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
+    private void renderBackground(DrawContext context, ItemStack stack, int x, int y) {
+        // RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
 
-        DrawableHelper.drawTexture(matrices, x, y, 0, 0, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+        context.drawTexture(BACKGROUND_TEXTURE, x, y, 0, 0, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
         TextRenderer r = ComoClient.getClient().textRenderer;
 
         // r.draw(matrices, stack.getName(), x + 7, y - 4, 0xFF404040);
-        r.draw(matrices, stack.getName(), x + 7, y + 6, 0xFF404040);
+        // r.draw(matrices, stack.getName(), x + 7, y + 6, 0xFF404040);
+        context.drawText(
+            r,
+            stack.getName(),
+            x + 7,
+            y - 4,
+            0xFF404040,
+            true
+        );
     }
 
-    private void renderShulkerDisplay(MatrixStack mStack, ItemStack stack, int x, int y) {
+    private void renderShulkerDisplay(DrawContext context, ItemStack stack, int x, int y) {
         List<ItemStack> items = this.getItems(stack);
         ItemRenderer ir = ComoClient.getClient().getItemRenderer();
         TextRenderer r = ComoClient.getClient().textRenderer;
@@ -88,7 +96,7 @@ public class ShulkerPeak extends Module {
         GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 
         // Render background
-        this.renderBackground(mStack, stack, x, y);
+        this.renderBackground(context, stack, x, y);
 
         // Item offsets
         x += 8;
@@ -101,8 +109,7 @@ public class ShulkerPeak extends Module {
             int curX = x + (i % shulkerWidth) * spacing;
             int curY = y + (i / 9)*spacing;
 
-            ir.renderInGuiWithOverrides(mStack, item, curX, curY);
-            ir.renderGuiItemOverlay(mStack, r, item, curX, curY);
+            context.drawItem(item, curX, curY);
 
             i++;
         }
@@ -137,7 +144,7 @@ public class ShulkerPeak extends Module {
                 int y = e.y - 16;
 
                 // Render the tool tip
-                this.renderShulkerDisplay(e.mStack, e.stack, x, y);
+                this.renderShulkerDisplay(e.context, e.stack, x, y);
 
                 break;
             }
@@ -157,7 +164,7 @@ public class ShulkerPeak extends Module {
                 int x = ComoClient.getClient().getWindow().getScaledWidth()/2 - BACKGROUND_WIDTH/2;
                 int y = (int)(32/ComoClient.getClient().getWindow().getScaleFactor());
 
-                this.renderShulkerDisplay(e.mStack, stack, x, y);
+                this.renderShulkerDisplay(e.context, stack, x, y);
 
                 break;
             }

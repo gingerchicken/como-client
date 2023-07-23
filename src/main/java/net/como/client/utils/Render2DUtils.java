@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.como.client.ComoClient;
 import net.como.client.misc.Colour;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.GameRenderer;
@@ -169,31 +169,27 @@ public class Render2DUtils {
         );
     }
 
-    public static void renderSimpleText(MatrixStack matrixStack, String text, int x, int y, float scale, Colour colour) {
-        begin(matrixStack, new Colour(255, 255, 255, 255));
-        matrixStack.translate(x, y, 0);
-        matrixStack.scale(scale, scale, 1);
+    public static void renderSimpleText(DrawContext context, String text, int x, int y, float scale, Colour colour) {
+        begin(context.getMatrices(), new Colour(255, 255, 255, 255));
+        context.getMatrices().translate(x, y, 0);
+        context.getMatrices().scale(scale, scale, 1);
         
-        ComoClient.getInstance().textRenderer.drawWithShadow(
-            matrixStack,
-            Text.of(text),
-            0,
-            0,
-            colour.toARGB()
-        );
+        context.drawText(ComoClient.getInstance().textRenderer, text, 0, 0, colour.toARGB(), true);
 
-        finish(matrixStack);
+        finish(context.getMatrices());
     }
 
-    public static void renderSimpleText(MatrixStack matrixStack, String text, int x, int y, Colour colour) {
-        renderSimpleText(matrixStack, text, x, y, 1, colour);
+    public static void renderSimpleText(DrawContext context, String text, int x, int y, Colour colour) {
+        renderSimpleText(context, text, x, y, 1, colour);
     }
 
-    public static void renderHeart(MatrixStack matrixStack, int x, int y) {
+    public static void renderHeart(DrawContext context, int x, int y) {
         int u = 16 + (2 * 2 + 0) * 9;
 
-        DrawableHelper.drawTexture(matrixStack, x, y, u, 9, 9, 9, 256, 256);
-        DrawableHelper.drawTexture(matrixStack, x, y, u, 0, 9, 9, 256, 256);
+        // context.drawTexture(x, y, u, 9, 9, 9, 256, 256);
+        // context.drawTexture(x, y, u, 0, 9, 9, 256, 256);
+
+        // TODO this is borked as I don't know the texture id for the heart.
     }
 
     public static void renderCircle(MatrixStack matrixStack, double x, double y, double radius, Colour colour) {

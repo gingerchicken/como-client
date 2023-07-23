@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.ComoClient;
 import net.como.client.modules.dupes.ShulkerDupe;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.ShulkerBoxScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -50,8 +51,8 @@ public class ShulkerScreenMixin extends Screen {
         this.buttonWidget.active = ShulkerDupe().shouldActivateButton();
     }
 
-    @Inject(at = @At("TAIL"), method = "render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V")
-    public void renderScreen(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    @Inject(at = @At("TAIL"), method = "render(Lnet/minecraft/client/gui/DrawContext;IIF)V")
+    public void renderScreen(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         ShulkerDupe shulkerDupe = this.ShulkerDupe();
         
         // Make sure that the dupe is enabled.

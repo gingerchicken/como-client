@@ -3,11 +3,12 @@ package net.como.client.events.render;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.como.client.events.Event;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class RenderHealthBarEvent extends Event {
-    public MatrixStack matrices;
+    public DrawContext context;
     public PlayerEntity player;
     public int x;
     public int y;
@@ -20,8 +21,8 @@ public class RenderHealthBarEvent extends Event {
     public boolean blinking;
     public CallbackInfo ci;
 
-    public RenderHealthBarEvent(MatrixStack matrices, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci) {
-        this.matrices = matrices;
+    public RenderHealthBarEvent(DrawContext context, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci) {
+        this.context = context;
         this.player = player;
         this.x = x;
         this.y = y;
