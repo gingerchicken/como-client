@@ -122,7 +122,7 @@ public class BetterNameTags extends Module {
                     PlayerEntity player = (PlayerEntity)entity;
                     
                     this.displayNameTag(player, e.mStack, e.tickDelta);
-                    ProjectionUtils.resetProjection();
+                    ProjectionUtils.getInstance().resetProjection();
                 }
 
                 break;

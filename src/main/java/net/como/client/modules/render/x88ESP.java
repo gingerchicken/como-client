@@ -152,7 +152,7 @@ public class x88ESP extends Module {
     public void fireEvent(Event event) {
         switch (event.getClass().getSimpleName()) {
             case "InGameHudRenderEvent": {
-                ProjectionUtils.unscaledProjection();
+                ProjectionUtils.getInstance().unscaledProjection();
 
                 // Get all of the entities
                 Iterable<Entity> ents = ComoClient.getClient().world.getEntities();
@@ -180,7 +180,7 @@ public class x88ESP extends Module {
                     this.renderx88Box((LivingEntity)entity, tickDelta, mStack);
                 }
 
-                ProjectionUtils.resetProjection();
+                ProjectionUtils.getInstance().resetProjection();
                 break;
             }
 

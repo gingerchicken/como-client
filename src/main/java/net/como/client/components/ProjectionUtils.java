@@ -1,6 +1,7 @@
 package net.como.client.components;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.systems.VertexSorter;
 
 import net.como.client.ComoClient;
 import net.como.client.misc.maths.Vec3;
@@ -22,6 +23,9 @@ public class ProjectionUtils {
 
     private Matrix4f model;
     private Matrix4f projection;
+
+    private VertexSorter vertexSorter;
+    private boolean is3D;
 
     private double windowScale;
 
@@ -82,19 +86,22 @@ public class ProjectionUtils {
         return getScale(pos.to3d(), tickDelta);
     }
 
-    public static void unscaledProjection() {
+    public void unscaledProjection() {
         MinecraftClient mc = ComoClient.getClient();
 
-        RenderSystem.setProjectionMatrix(new Matrix4f().setOrtho(0, mc.getWindow().getFramebufferWidth(), mc.getWindow().getFramebufferHeight(), 0, 1000, 3000));
+        vertexSorter = RenderSystem.getVertexSorting();
+        RenderSystem.setProjectionMatrix(new Matrix4f().setOrtho(0, mc.getWindow().getFramebufferWidth(), mc.getWindow().getFramebufferHeight(), 0, 1000, 21000), VertexSorter.BY_Z);
+        this.is3D = false;
     }
 
-    public static void scaleProjection(float scale) {
+    public void scaleProjection(float scale) {
         MinecraftClient mc = ComoClient.getClient();
 
-        RenderSystem.setProjectionMatrix(new Matrix4f().setOrtho(0, (float) (mc.getWindow().getFramebufferWidth() / mc.getWindow().getScaleFactor()), (float) (mc.getWindow().getFramebufferHeight() / mc.getWindow().getScaleFactor()), 0, 1000, 3000));
+        RenderSystem.setProjectionMatrix(new Matrix4f().setOrtho(0, (float) (mc.getWindow().getFramebufferWidth() / mc.getWindow().getScaleFactor()), (float) (mc.getWindow().getFramebufferHeight() / mc.getWindow().getScaleFactor()), 0, 1000, 21000), vertexSorter);
+        this.is3D = true;
     }
 
-    public static void resetProjection() {
+    public void resetProjection() {
         scaleProjection((float)ComoClient.getClient().getWindow().getScaleFactor());
     }
 
@@ -105,5 +112,13 @@ public class ProjectionUtils {
         vec.y = vec.y * newW + 0.5f;
         vec.z = vec.z * newW + 0.5f;
         vec.w = newW;
+    }
+
+    /**
+     * Checks if the projection is 3D.
+     * @return True if the projection is 3D, false otherwise.
+     */
+    public boolean is3D() {
+        return is3D;
     }
 }

@@ -53,11 +53,11 @@ public class TargetCircle {
 
         Vec3 pos = new Vec3(entityPos);
 
-        ProjectionUtils.unscaledProjection();
+        ProjectionUtils.getInstance().unscaledProjection();
 
         // Get the 2D position
         boolean visible = ProjectionUtils.getInstance().to2D(pos, 1);
-        ProjectionUtils.resetProjection();
+        ProjectionUtils.getInstance().resetProjection();
 
         if (!visible) return false;
 
