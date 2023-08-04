@@ -39,12 +39,6 @@ public class TitleScreenLogoMixin extends Screen {
         int x = client.getWindow().getScaledWidth() - tr.getWidth(text) - padding;
         int y = ThirdPartyUtils.isMeteorLoaded() ? 12 + padding : padding;
 
-        context.drawText(
-            tr,
-            text,
-            x,
-            y,
-            Colour.GREEN.toARGB()
-        );
+        context.drawText(tr, text, x, y, Colour.GREEN.toARGB(), true);
     }
 }

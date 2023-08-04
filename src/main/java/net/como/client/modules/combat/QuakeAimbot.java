@@ -24,6 +24,7 @@ import net.como.client.utils.RenderUtils;
 import net.como.client.utils.RotationUtils;
 import net.como.client.utils.RotationUtils.Rotation;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -538,7 +539,7 @@ public class QuakeAimbot extends Module {
                 float tickDelta = ((InGameHudRenderEvent)event).tickDelta;
 
                 // Get mStack
-                MatrixStack mStack = ((InGameHudRenderEvent)event).mStack;
+                DrawContext context = ((InGameHudRenderEvent)event).context;
 
                 // Update the circles
                 // TODO replace this with a setting update event
@@ -548,7 +549,7 @@ public class QuakeAimbot extends Module {
                 this.aimbotThink(tickDelta);
 
                 // Render overall circle
-                this.renderCircles(mStack);
+                this.renderCircles(context);
 
                 break;
             }
@@ -582,7 +583,7 @@ public class QuakeAimbot extends Module {
         }
     }
 
-    private void renderCircles(MatrixStack mStack) {
+    private void renderCircles(DrawContext context) {
         // TODO add configs for the colours
 
         if (!this.getBoolSetting("UseCircles")) {
@@ -590,7 +591,7 @@ public class QuakeAimbot extends Module {
         }
         
         // FOV Circle
-        if (this.getBoolSetting("RenderFOVCircle")) this.targetCircle.render(mStack);
+        if (this.getBoolSetting("RenderFOVCircle")) this.targetCircle.render(context);
 
         // Ignore Smoothing Circle
         if (this.getBoolSetting("RenderIgnoreCircle") && this.getBoolSetting("Smoothing")) this.antiSmoothCircle.render(mStack);

@@ -2,7 +2,7 @@ package net.como.client.gui.impl.widgets;
 
 import net.como.client.gui.Widget;
 import net.como.client.modules.hud.Watermark;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.math.Vec3d;
 
 public class BouncyWidget implements Widget {
@@ -26,13 +26,13 @@ public class BouncyWidget implements Widget {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         Vec3d currentPos = this.pos;
         Vec3d nextPos = this.getNextPosition();
 
         Vec3d lerpedPos = currentPos.lerp(nextPos, delta);
 
-        Watermark.render(matrices, lerpedPos.z, lerpedPos.x, lerpedPos.y);
+        Watermark.render(context, lerpedPos.z, lerpedPos.x, lerpedPos.y);
     }
 
     /**

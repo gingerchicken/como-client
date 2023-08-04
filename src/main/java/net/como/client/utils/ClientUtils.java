@@ -211,7 +211,7 @@ public class ClientUtils {
      * @param entity
      */
     public static boolean canSee(Entity ent, Vec3d pos, float tickDelta) {
-        return ent.world.raycast(
+        return ComoClient.getClient().world.raycast(
             new RaycastContext(
                 ent.getCameraPosVec(tickDelta), // My position
                 pos, // The position to check

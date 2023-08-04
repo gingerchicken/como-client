@@ -192,11 +192,11 @@ public class Render2DUtils {
         // TODO this is borked as I don't know the texture id for the heart.
     }
 
-    public static void renderCircle(MatrixStack matrixStack, double x, double y, double radius, Colour colour) {
+    public static void renderCircle(DrawContext context, double x, double y, double radius, Colour colour) {
         // Render a circle using opengl
 
-        begin(matrixStack, colour);
-        BufferContainer bufferContainer = new BufferContainer(matrixStack);
+        begin(context.getMatrices(), colour);
+        BufferContainer bufferContainer = new BufferContainer(context.getMatrices());
 
         for (double i = 0; i < 360; i += 0.01d) {
             double angle = Math.toRadians(i);
@@ -207,6 +207,6 @@ public class Render2DUtils {
         }
 
         bufferContainer.close();
-        finish(matrixStack);
+        finish(context.getMatrices());
     }
 }

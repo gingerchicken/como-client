@@ -24,7 +24,7 @@ public class ServerUtils {
     public static void connectToServer(ServerInfo info, Screen prevScreen) {
         if (info == null) return;
 
-        ConnectScreen.connect(prevScreen, ComoClient.getClient(), ServerAddress.parse(info.address), info);
+        ConnectScreen.connect(prevScreen, ComoClient.getClient(), ServerAddress.parse(info.address), info, false);
     }
 
     public static AbstractClientPlayerEntity getPlayerByName(String name) {

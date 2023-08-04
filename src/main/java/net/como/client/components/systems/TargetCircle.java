@@ -9,6 +9,7 @@ import net.como.client.misc.Colour;
 import net.como.client.misc.maths.Vec3;
 import net.como.client.utils.Render2DUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
@@ -125,7 +126,7 @@ public class TargetCircle {
      * Render the circle.
      * @param matrixStack The matrix stack.
      */
-    public void render(MatrixStack matrixStack) {
+    public void render(DrawContext context) {
         // Get the window
 
         Window window = MinecraftClient.getInstance().getWindow();
@@ -133,6 +134,6 @@ public class TargetCircle {
         double width  = window.getScaledWidth();
         double height = window.getScaledHeight();
 
-        Render2DUtils.renderCircle(matrixStack, width / 2, height / 2, this.getRadius(), colour);
+        Render2DUtils.renderCircle(context, width / 2, height / 2, this.getRadius(), colour);
     }
 }
