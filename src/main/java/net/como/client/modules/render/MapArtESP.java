@@ -9,6 +9,7 @@ import net.como.client.events.render.RenderWorldEvent;
 import net.como.client.modules.Module;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -87,13 +88,15 @@ public class MapArtESP extends Module {
      * @param textRenderer The text renderer
      * @param scale The scale
      */
-    private void renderSide(MatrixStack matrixStack, TextRenderer textRenderer, Quaternionf quaternion, String sideName, float scale) {
+    private void renderSide(DrawContext context, TextRenderer textRenderer, Quaternionf quaternion, String sideName, float scale) {
+        MatrixStack matrixStack = context.getMatrices();
+
         matrixStack.push();
 
         matrixStack.multiply(quaternion);
         matrixStack.scale(scale*-0.025F, scale*-0.025F, 0);
 
-        textRenderer.draw(matrixStack, sideName, -textRenderer.getWidth(sideName) / 2, 0, 0xFFFFFF);
+        context.drawText(textRenderer, sideName, -textRenderer.getWidth(sideName) / 2, 0, 0xFFFFFF, false);
 
         matrixStack.pop();
     }
@@ -105,11 +108,12 @@ public class MapArtESP extends Module {
      * @param textRenderer The text renderer
      * @param scale The scale
      */
-    private void renderBottom(MatrixStack matrixStack, TextRenderer textRenderer, float scale) {
+    private void renderBottom(DrawContext context, TextRenderer textRenderer, float scale) {
+        MatrixStack matrixStack = context.getMatrices();
         matrixStack.push();
 
         matrixStack.translate(64, 0, 128);
-        renderSide(matrixStack, textRenderer, new Quaternionf(0, 0, 0, 0), "Bottom", scale);
+        renderSide(context, textRenderer, new Quaternionf(0, 0, 0, 0), "Bottom", scale);
 
         matrixStack.pop();
     }
@@ -120,11 +124,12 @@ public class MapArtESP extends Module {
      * @param textRenderer The text renderer
      * @param scale The scale
      */
-    private void renderTop(MatrixStack matrixStack, TextRenderer textRenderer, float scale) {
+    private void renderTop(DrawContext context, TextRenderer textRenderer, float scale) {
+        MatrixStack matrixStack = context.getMatrices();
         matrixStack.push();
 
         matrixStack.translate(64, 0, 0);
-        renderSide(matrixStack, textRenderer, new Quaternionf(0, 1, 0, 0), "Top", scale);
+        renderSide(context, textRenderer, new Quaternionf(0, 1, 0, 0), "Top", scale);
 
         matrixStack.pop();
     }
@@ -136,11 +141,12 @@ public class MapArtESP extends Module {
      * @param textRenderer The text renderer
      * @param scale The scale
      */
-    private void renderLeft(MatrixStack matrixStack, TextRenderer textRenderer, float scale) {
+    private void renderLeft(DrawContext context, TextRenderer textRenderer, float scale) {
+        MatrixStack matrixStack = context.getMatrices();
         matrixStack.push();
 
         matrixStack.translate(0, 0, 64);
-        renderSide(matrixStack, textRenderer, new Quaternionf(0, 0.7f, 0, -0.7f), "Left", scale);
+        renderSide(context, textRenderer, new Quaternionf(0, 0.7f, 0, -0.7f), "Left", scale);
 
         matrixStack.pop();
     }
@@ -151,34 +157,36 @@ public class MapArtESP extends Module {
      * @param textRenderer The text renderer
      * @param scale The scale
      */
-    private void renderRight(MatrixStack matrixStack, TextRenderer textRenderer, float scale) {
+    private void renderRight(DrawContext context, TextRenderer textRenderer, float scale) {
+        MatrixStack matrixStack = context.getMatrices();
         matrixStack.push();
 
         matrixStack.translate(128, 0, 64);
-        renderSide(matrixStack, textRenderer, new Quaternionf(0, 0.7f, 0, 0.7f), "Right", scale);
+        renderSide(context, textRenderer, new Quaternionf(0, 0.7f, 0, 0.7f), "Right", scale);
 
         matrixStack.pop();
     }
 
-    private void renderSides(MatrixStack matrixStack) {
+    private void renderSides(DrawContext context) {
         float scale = (float)(double)this.getDoubleSetting("LabelScale");
 
         TextRenderer textRenderer = ComoClient.getClient().textRenderer;
         
+        MatrixStack matrixStack = context.getMatrices();
         matrixStack.push();
 
         RenderUtils.applyRenderOffset(matrixStack);
         translateMapRegion(matrixStack);
 
-        this.renderTop(matrixStack, textRenderer, scale);
-        this.renderBottom(matrixStack, textRenderer, scale);
-        this.renderLeft(matrixStack, textRenderer, scale);
-        this.renderRight(matrixStack, textRenderer, scale);
+        this.renderTop(context, textRenderer, scale);
+        this.renderBottom(context, textRenderer, scale);
+        this.renderLeft(context, textRenderer, scale);
+        this.renderRight(context, textRenderer, scale);
 
         matrixStack.pop();
     }
 
-    private void renderBoundaries(MatrixStack matrixStack) {
+    private void renderBoundaries(DrawContext context) {
         // Create the box
         double y = ComoClient.me().getBlockPos().getY();
         double outY = 1280;
@@ -187,6 +195,10 @@ public class MapArtESP extends Module {
         BlockPos max = new BlockPos((int)(min.getX() + 128), (int)(y + outY), min.getZ() + 128);
 
         Box borderBox = new Box(min, max);
+
+
+        // Get the matrix stack
+        MatrixStack matrixStack = context.getMatrices();
 
         // Render the box
         matrixStack.push();
@@ -213,6 +225,7 @@ public class MapArtESP extends Module {
                 // Get the matrix stack
                 MatrixStack matrixStack = e.mStack;
                 
+                // TODO get the DrawContext
                 this.renderBoundaries(matrixStack);
 
                 if (this.getBoolSetting("ShowSides")) {

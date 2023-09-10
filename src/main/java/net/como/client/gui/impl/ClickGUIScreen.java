@@ -33,6 +33,7 @@ import net.como.client.utils.ChatUtils;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.ImGuiUtils;
 import net.como.client.utils.RenderUtils;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class ClickGUIScreen extends ImGuiScreen {
@@ -319,7 +320,7 @@ public class ClickGUIScreen extends ImGuiScreen {
      * @param matrices the matrix stack
      * @param tickDelta the tick delta
      */
-    public void renderBackground(MatrixStack matrices, float tickDelta) {
+    public void renderBackground(DrawContext context, float tickDelta) {
         // Current background darkness
         float current = this.backgroundDarkness;
 
@@ -335,7 +336,7 @@ public class ClickGUIScreen extends ImGuiScreen {
         Colour s = new Colour(0, 0, 0, 100*d);
         Colour e = new Colour(0, 0, 0, 150*d);
 
-        this.fillGradient(matrices, 0, 0, this.width, this.height, s.toARGB(), e.toARGB());
+        context.fillGradient(0, 0, this.width, this.height, s.toARGB(), e.toARGB());
     }
 
     @Override
@@ -814,17 +815,17 @@ public class ClickGUIScreen extends ImGuiScreen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         // Render background
-        this.renderBackground(matrices, delta);
+        this.renderBackground(context, delta);
 
         // Render Bouncy widgets
         for (BouncyWidget widget : this.bouncyWidgets) {
-            widget.render(matrices, mouseX, mouseY, delta);
+            widget.render(context, mouseX, mouseY, delta);
         }
 
         // Render everything else
-        super.render(matrices, mouseX, mouseY, delta);
+        super.render(context, mouseX, mouseY, delta);
     }
 
     // Binds

@@ -43,14 +43,14 @@ public class RenderUtils {
 
 	public static VertexBuffer simpleMobBox;
 	static {
-		simpleMobBox = new VertexBuffer();
+		simpleMobBox = new VertexBuffer(VertexBuffer.Usage.STATIC);
 		Box bb = new Box(-0.5, 0, -0.5, 0.5, 1, 0.5);
 		RenderUtils.drawOutlinedBox(bb, simpleMobBox);
 	}
 
 	public static VertexBuffer blockBox;
 	static {
-		blockBox = new VertexBuffer();
+		blockBox = new VertexBuffer(VertexBuffer.Usage.STATIC);
 		Box bb = new Box(-0.5, 0, -0.5, 0.5, 1, 0.5);
 		RenderUtils.drawOutlinedBox(bb, blockBox);
 	}

@@ -183,7 +183,7 @@ public class TotemPopCount extends Module {
 
                 if (e.packet.getStatus() != 35) break;
 
-                Entity entity = e.packet.getEntity(ComoClient.me().world);
+                Entity entity = e.packet.getEntity(ComoClient.me().getWorld());
                 
                 // I mean I have no idea how that would work but like whatever.
                 if (!(entity instanceof PlayerEntity)) break;

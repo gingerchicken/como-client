@@ -11,6 +11,7 @@ import net.como.client.utils.ClientUtils;
 import net.como.client.utils.Render2DUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
@@ -40,12 +41,12 @@ public class MinifiedHealth extends Module {
         this.removeListen(RenderHealthBarEvent.class);
     }
 
-    private void renderHealthBar(MatrixStack matrices, int x, int y) {
+    private void renderHealthBar(DrawContext context, int x, int y) {
         VertexConsumerProvider.Immediate immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
 
         ComoClient.getClient().textRenderer.drawWithOutline(
             this.getHealth().asOrderedText(),
-            (float)x, (float)y, (new Colour(255, 19, 19, 255)).toARGB(), (new Colour(0, 0, 0, 150)).toARGB(), matrices.peek().getPositionMatrix(), immediate, 255
+            (float)x, (float)y, (new Colour(255, 19, 19, 255)).toARGB(), (new Colour(0, 0, 0, 150)).toARGB(), context.getMatrices().peek().getPositionMatrix(), immediate, 255
         );
         
         immediate.draw();
@@ -66,7 +67,7 @@ public class MinifiedHealth extends Module {
             case "InGameHudRenderEvent": {
                 InGameHudRenderEvent e = (InGameHudRenderEvent)event;
 
-                this.renderHealthBar(e.mStack, ComoClient.getClient().getWindow().getScaledWidth() / 2 - 91, ComoClient.getClient().getWindow().getScaledHeight() - 38);
+                this.renderHealthBar(e.context, ComoClient.getClient().getWindow().getScaledWidth() / 2 - 91, ComoClient.getClient().getWindow().getScaledHeight() - 38);
 
                 break;
             }
@@ -74,7 +75,7 @@ public class MinifiedHealth extends Module {
                 RenderHealthBarEvent e = (RenderHealthBarEvent)event;
                 e.ci.cancel();
 
-                Render2DUtils.renderHeart(e.matrices, e.x + textRenderer.getWidth(this.getHealth()) + 2, e.y);
+                Render2DUtils.renderHeart(e.context, e.x + textRenderer.getWidth(this.getHealth()) + 2, e.y);
 
                 break;
             }

@@ -239,7 +239,7 @@ public class QuakeAimbot extends Module {
         if (!this.getBoolSetting("PredictBlockWall")) return predictedPos;
 
         // Check if there is anything in the way of this position
-        BlockHitResult hitResult = target.world.raycast(
+        BlockHitResult hitResult = target.getWorld().raycast(
             new RaycastContext(
                 targetPos,
                 predictedPos,
@@ -594,10 +594,10 @@ public class QuakeAimbot extends Module {
         if (this.getBoolSetting("RenderFOVCircle")) this.targetCircle.render(context);
 
         // Ignore Smoothing Circle
-        if (this.getBoolSetting("RenderIgnoreCircle") && this.getBoolSetting("Smoothing")) this.antiSmoothCircle.render(mStack);
+        if (this.getBoolSetting("RenderIgnoreCircle") && this.getBoolSetting("Smoothing")) this.antiSmoothCircle.render(context);
         
         // Shoot Circle
-        if (this.getBoolSetting("RenderShootCircle") && this.getBoolSetting("AutoShoot")) this.shootCircle.render(mStack);
+        if (this.getBoolSetting("RenderShootCircle") && this.getBoolSetting("AutoShoot")) this.shootCircle.render(context);
     }
 
     // Setting Types

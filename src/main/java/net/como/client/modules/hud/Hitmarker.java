@@ -191,7 +191,7 @@ public class Hitmarker extends Module {
 
                 if (!this.shouldDrawHitmarker) break;
 
-                this.render(e.mStack, e.tickDelta);
+                this.render(e.context, e.tickDelta);
                 
                 break;
             }

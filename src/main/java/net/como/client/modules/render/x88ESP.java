@@ -19,6 +19,7 @@ import net.como.client.utils.ClientUtils;
 import net.como.client.utils.MathsUtils;
 import net.como.client.utils.Render2DUtils;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -60,7 +61,7 @@ public class x88ESP extends Module {
         this.removeListen(renderLabelIfPresentEvent.class);
     }
 
-    private void renderx88Box(LivingEntity entity, float tickDelta, MatrixStack mStack) {
+    private void renderx88Box(DrawContext context, LivingEntity entity, float tickDelta) {
         // Rendering the 2D bounding box
         Box2D box = Box2D.fromEntity(entity, tickDelta);
 
@@ -70,8 +71,9 @@ public class x88ESP extends Module {
         Vec3 min = box.min;
 
         // Render the box
-        Render2DUtils.renderBox(mStack, (int)min.x, (int)min.y, (int)max.x, (int)max.y, Colour.fromHealth(entity));
-        Render2DUtils.renderBox(mStack, (int)min.x - 1, (int)min.y - 1, (int)max.x + 1, (int)max.y + 1);
+        // TODO will this break? Perhaps change it to DrawContext
+        Render2DUtils.renderBox(context.getMatrices(), (int)min.x, (int)min.y, (int)max.x, (int)max.y, Colour.fromHealth(entity));
+        Render2DUtils.renderBox(context.getMatrices(), (int)min.x - 1, (int)min.y - 1, (int)max.x + 1, (int)max.y + 1);
 
         // Rendering the look tracer
         // Get the look length setting
@@ -89,7 +91,7 @@ public class x88ESP extends Module {
         // Project the positions to 2D
         if (ProjectionUtils.getInstance().to2D(projectedEndPos, 1) && ProjectionUtils.getInstance().to2D(projectedEyePos, 1)) {
             // Render the line
-            Render2DUtils.renderLine(mStack, (int)projectedEyePos.x, (int)projectedEyePos.y, (int)projectedEndPos.x, (int)projectedEndPos.y);
+            Render2DUtils.renderLine(context.getMatrices(), (int)projectedEyePos.x, (int)projectedEyePos.y, (int)projectedEndPos.x, (int)projectedEndPos.y);
         }
 
         // Render the attributes
@@ -135,14 +137,14 @@ public class x88ESP extends Module {
         for (Attribute attribute : bottomAttributes) {
             Text text = attribute.getText();
 
-            textRenderer.draw(mStack, text, (int)bottomPos.x, (int)bottomPos.y, attribute.getColour());
+            context.drawText(textRenderer, text, (int)bottomPos.x, (int)bottomPos.y, attribute.getColour(), false);
 
             if (!text.getString().isBlank()) bottomPos.add(0, textHeight, 0);
         }
 
         // Render the top attributes
         for (Attribute attribute : topAttributes) {
-            textRenderer.draw(mStack, attribute.getText(), (int)topPos.x, (int)topPos.y, attribute.getColour());
+            context.drawText(textRenderer, attribute.getText(), (int)topPos.x, (int)topPos.y, attribute.getColour(), false);
 
             topPos.add(0, -textHeight, 0);
         }
@@ -174,10 +176,10 @@ public class x88ESP extends Module {
                     float tickDelta = ((InGameHudRenderEvent)event).tickDelta;
 
                     // Get the matrix stack
-                    MatrixStack mStack = ((InGameHudRenderEvent)event).mStack;
+                    DrawContext context = ((InGameHudRenderEvent)event).context;
 
                     // Render the entity
-                    this.renderx88Box((LivingEntity)entity, tickDelta, mStack);
+                    this.renderx88Box(context, (LivingEntity)entity, tickDelta);
                 }
 
                 ProjectionUtils.getInstance().resetProjection();

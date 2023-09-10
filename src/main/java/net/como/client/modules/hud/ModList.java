@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 import net.como.client.ComoClient;
 import net.como.client.config.settings.Setting;
@@ -227,6 +228,7 @@ public class ModList extends Module {
 
                 TextRenderer textRenderer = ComoClient.getInstance().textRenderer;
                 List<Module> enabledMods = new ArrayList<Module>();
+                DrawContext context = e.context;
                 
                 for (String moduleName : ComoClient.getInstance().getModules().keySet()) {
                     Module module = ComoClient.getInstance().getModules().get(moduleName);
@@ -243,8 +245,8 @@ public class ModList extends Module {
 
                 float scale = (float)this.getSetting("Scale").value;
 
-                e.mStack.push();
-                e.mStack.scale(scale, scale, 0);
+                context.getMatrices().push();
+                context.getMatrices().scale(scale, scale, 0);
 
                 int display = 0;
 
@@ -270,17 +272,17 @@ public class ModList extends Module {
                     int y = 1+10*(display + (pos.isBottom() ? 1 : 0)) + (int)deltaHeight;
                     y = pos.isBottom() ? MAX_HEIGHT - y : y;
 
-                    x = textRenderer.drawWithShadow(e.mStack, module.getName(), x, y, this.getColouringMode().getColour(display, enabledMods.size()));
+                    x = context.drawTextWithShadow(textRenderer, module.getName(), x, y, this.getColouringMode().getColour(display, enabledMods.size()));
 
                     if (module.hasListOption()) {
                         // The +2 is just for the space
-                        textRenderer.drawWithShadow(e.mStack, String.format("[%s]", module.listOption()), x + 2, y, 0xFFadadad);
+                        context.drawTextWithShadow(textRenderer, String.format("[%s]", module.listOption()), x + 2, y, 0xFFadadad);
                     }                    
                     
                     display++;
                 }
 
-                e.mStack.pop();
+                context.getMatrices().pop();
             }
         } 
     }
