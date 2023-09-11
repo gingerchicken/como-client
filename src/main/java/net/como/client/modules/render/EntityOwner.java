@@ -14,6 +14,7 @@ import net.como.client.modules.Module;
 import net.como.client.utils.ClientUtils;
 import net.como.client.utils.RenderUtils;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
@@ -35,7 +36,7 @@ public class EntityOwner extends Module {
         this.setCategory("Render");
     }
     
-    private void renderName(String name, Vec3d pos, float tickDelta, MatrixStack mStack) {
+    private void renderName(String name, Vec3d pos, float tickDelta, DrawContext context) {
         GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glEnable(GL11.GL_LINE_SMOOTH);
@@ -44,6 +45,8 @@ public class EntityOwner extends Module {
 
         RenderSystem.setShader(GameRenderer::getPositionProgram);
         
+        MatrixStack mStack = context.getMatrices();
+
         mStack.push();
 
         RenderUtils.applyRegionalRenderOffset(mStack);
@@ -66,7 +69,7 @@ public class EntityOwner extends Module {
         float x = -r.getWidth(Text.of(name))/2;
 		float y = -10;
 
-        r.draw(mStack, Text.of(name), x, y, 0xFFFFFFFF);
+        context.drawText(r, Text.of(name), (int)x, (int)y, 0xFFFFFFFF, false);
 
         mStack.pop();
 
@@ -115,7 +118,9 @@ public class EntityOwner extends Module {
                     if (uuid == null) continue;
 
                     String name = ClientUtils.getPlayerUsername(uuid);
-                    this.renderName(name, entity.getLerpedPos(e.tickDelta), e.tickDelta, e.mStack);
+
+                    // TODO 1.20 brokey
+                    // this.renderName(name, entity.getLerpedPos(e.tickDelta), e.tickDelta, e.mStack);
                 }
 
                 break;

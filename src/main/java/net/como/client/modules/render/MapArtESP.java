@@ -186,7 +186,7 @@ public class MapArtESP extends Module {
         matrixStack.pop();
     }
 
-    private void renderBoundaries(DrawContext context) {
+    private void renderBoundaries(MatrixStack matrixStack) {
         // Create the box
         double y = ComoClient.me().getBlockPos().getY();
         double outY = 1280;
@@ -195,10 +195,6 @@ public class MapArtESP extends Module {
         BlockPos max = new BlockPos((int)(min.getX() + 128), (int)(y + outY), min.getZ() + 128);
 
         Box borderBox = new Box(min, max);
-
-
-        // Get the matrix stack
-        MatrixStack matrixStack = context.getMatrices();
 
         // Render the box
         matrixStack.push();
@@ -225,7 +221,6 @@ public class MapArtESP extends Module {
                 // Get the matrix stack
                 MatrixStack matrixStack = e.mStack;
                 
-                // TODO get the DrawContext
                 this.renderBoundaries(matrixStack);
 
                 if (this.getBoolSetting("ShowSides")) {
@@ -241,7 +236,8 @@ public class MapArtESP extends Module {
                     }
 
                     // Render the sides
-                    this.renderSides(matrixStack);
+                    // TODO get the DrawContext
+                    // this.renderSides(matrixStack);
 
                     matrixStack.pop();
                 }
